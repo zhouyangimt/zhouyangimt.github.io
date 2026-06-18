@@ -1,6 +1,6 @@
 ---
 title: "Hugo静态博客从入门到部署：比WordPress快10倍"
-date: 2025-06-12
+date: 2026-06-12
 tags: ["独立开发", "工具教程", "Hugo"]
 description: "为什么你应该用静态博客？Hugo安装、主题选择、部署到GitHub Pages完整教程。"
 ---
@@ -87,7 +87,7 @@ hugo new posts/my-first-post.md
 ```yaml
 ---
 title: "文章标题"
-date: 2025-06-12
+date: 2026-06-12
 tags: ["标签1", "标签2"]
 description: "文章摘要"
 ---

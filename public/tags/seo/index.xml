@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SEO on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/seo/</link><description>Recent content in SEO on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 14 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/seo/index.xml" rel="self" type="application/rss+xml"/><item><title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title><link>https://zhouyang.github.io/posts/seo-basics-for-blog/</link><pubDate>Sat, 14 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/seo-basics-for-blog/</guid><description>&lt;h2 id="程序员为什么需要seo"&gt;程序员为什么需要SEO？&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SEO on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/seo/</link><description>Recent content in SEO on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/seo/index.xml" rel="self" type="application/rss+xml"/><item><title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title><link>https://zhouyang.github.io/posts/seo-basics-for-blog/</link><pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/seo-basics-for-blog/</guid><description>&lt;h2 id="程序员为什么需要seo"&gt;程序员为什么需要SEO？&lt;/h2&gt;
 &lt;p&gt;你写了很好的技术文章，但如果搜索引擎找不到，就等于没人看。&lt;/p&gt;
 &lt;p&gt;SEO（搜索引擎优化）不是玄学。对程序员来说，它就是一个&lt;strong&gt;匹配问题&lt;/strong&gt;——让用户搜索的词，匹配你写的内容。&lt;/p&gt;
 &lt;h2 id="基础一关键词研究"&gt;基础一：关键词研究&lt;/h2&gt;
@@ -7,7 +7,7 @@
 &lt;ul&gt;
 &lt;li&gt;「Python自动化脚本」&lt;/li&gt;
 &lt;li&gt;「GitHub Pages部署教程」&lt;/li&gt;
-&lt;li&gt;「2025年最好的AI编程工具」&lt;/li&gt;
+&lt;li&gt;「2026年最好的AI编程工具」&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="怎么找关键词"&gt;怎么找关键词？&lt;/h3&gt;
 &lt;ol&gt;
@@ -62,7 +62,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;好标题&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;「Python自动化脚本：10个日常重复工作的代码解决方案」&lt;/li&gt;
-&lt;li&gt;「GitHub Pages搭建博客：2025年免费部署实战教程」&lt;/li&gt;
+&lt;li&gt;「GitHub Pages搭建博客：2026年免费部署实战教程」&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;坏标题&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
@@ -87,8 +87,8 @@
 /posts/hugo-static-blog-guide/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;坏URL&lt;/strong&gt;：&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;/posts/123/
-/posts/article-2025-06-01/
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description></item><item><title>Google AdSense申请全攻略：从被拒到通过的实战经验</title><link>https://zhouyang.github.io/posts/google-adsense-apply-guide/</link><pubDate>Fri, 13 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/google-adsense-apply-guide/</guid><description>&lt;h2 id="为什么选adsense"&gt;为什么选AdSense？&lt;/h2&gt;
+/posts/article-2026-06-01/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description></item><item><title>Google AdSense申请全攻略：从被拒到通过的实战经验</title><link>https://zhouyang.github.io/posts/google-adsense-apply-guide/</link><pubDate>Sat, 13 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/google-adsense-apply-guide/</guid><description>&lt;h2 id="为什么选adsense"&gt;为什么选AdSense？&lt;/h2&gt;
 &lt;p&gt;Google AdSense是最简单的网站变现方式。挂上代码，Google自动匹配广告，有人点你就赚钱。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;

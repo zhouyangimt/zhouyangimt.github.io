@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>工具教程 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</link><description>Recent content in 工具教程 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 18 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyang.github.io/posts/hermes-agent-guide/</link><pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>工具教程 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</link><description>Recent content in 工具教程 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyang.github.io/posts/hermes-agent-guide/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/NousResearch/hermes-agent"&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;
 &lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;
 &lt;ul&gt;
@@ -27,7 +27,7 @@
 &lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes cron create &lt;span style="color:#e6db74"&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 每天早上8点&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
-&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
+&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
 &lt;p&gt;WordPress的痛点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;需要服务器/PHP/MySQL&lt;/li&gt;
@@ -70,7 +70,7 @@
  static/ ← 图片/CSS/JS
  hugo.toml ← 配置文件
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="选主题"&gt;选主题&lt;/h2&gt;
-&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2025版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Wed, 04 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
+&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Thu, 04 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;完全免费&lt;/strong&gt;：GitHub Pages 免费托管，无流量限制&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;极速&lt;/strong&gt;：Hugo 是Go写的，构建速度毫秒级&lt;/li&gt;
@@ -104,13 +104,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用 Markdown 写内容，Front Matter 里设置标题、日期、标签：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;title&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;我的第一篇文章&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2025-06-04&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2026-06-04&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;tags&lt;/span&gt;: [&lt;span style="color:#e6db74"&gt;&amp;#34;入门&amp;#34;&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="第五步本地预览"&gt;第五步：本地预览&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hugo server -D
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:1313&lt;/code&gt;，边写边看效果。&lt;/p&gt;</description></item><item><title>2025年AI编程助手完全指南：选型、配置与最佳实践</title><link>https://zhouyang.github.io/posts/ai-coding-assistant-guide-2025/</link><pubDate>Tue, 03 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-coding-assistant-guide-2025/</guid><description>&lt;h2 id="2025年ai编程助手的格局"&gt;2025年AI编程助手的格局&lt;/h2&gt;
-&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2025年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:1313&lt;/code&gt;，边写边看效果。&lt;/p&gt;</description></item><item><title>2026年AI编程助手完全指南：选型、配置与最佳实践</title><link>https://zhouyang.github.io/posts/ai-coding-assistant-guide-2026/</link><pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-coding-assistant-guide-2026/</guid><description>&lt;h2 id="2026年ai编程助手的格局"&gt;2026年AI编程助手的格局&lt;/h2&gt;
+&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2026年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;
 &lt;h2 id="第一类终端cli型"&gt;第一类：终端/CLI型&lt;/h2&gt;
 &lt;p&gt;这类工具运行在终端里，直接操作代码库。&lt;/p&gt;
 &lt;h3 id="claude-code"&gt;Claude Code&lt;/h3&gt;
@@ -207,8 +207,8 @@
 &lt;li&gt;&lt;strong&gt;快速原型&lt;/strong&gt;：Bolt.new（最快从零到有）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="最后建议"&gt;最后建议&lt;/h2&gt;
-&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description></item><item><title>零代码基础？用AI从零搭建一个个人网站（2025实战）</title><link>https://zhouyang.github.io/posts/ai-build-website-zero/</link><pubDate>Mon, 02 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-build-website-zero/</guid><description>&lt;h2 id="你不需要学编程来做网站了"&gt;你不需要学编程来做网站了&lt;/h2&gt;
-&lt;p&gt;2025年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description></item><item><title>零代码基础？用AI从零搭建一个个人网站（2026实战）</title><link>https://zhouyang.github.io/posts/ai-build-website-zero/</link><pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-build-website-zero/</guid><description>&lt;h2 id="你不需要学编程来做网站了"&gt;你不需要学编程来做网站了&lt;/h2&gt;
+&lt;p&gt;2026年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这篇文章带你从零到一，用AI搭建一个能访问、能赚钱的个人网站。&lt;/p&gt;
 &lt;h2 id="第一步买域名10分钟"&gt;第一步：买域名（10分钟）&lt;/h2&gt;
 &lt;p&gt;推荐 &lt;a href="https://www.namesilo.com"&gt;NameSilo&lt;/a&gt; 或 &lt;a href="https://porkbun.com"&gt;Porkbun&lt;/a&gt;，便宜且支持支付宝。&lt;/p&gt;
@@ -218,7 +218,7 @@
 &lt;/ul&gt;
 &lt;p&gt;选个简短好记的名字，比如 &lt;code&gt;yourname.com&lt;/code&gt; 或你的项目名。&lt;/p&gt;
 &lt;h2 id="第二步选工具决定前先看这里"&gt;第二步：选工具（决定前先看这里）&lt;/h2&gt;
-&lt;p&gt;2025年有三个主流路线：&lt;/p&gt;
+&lt;p&gt;2026年有三个主流路线：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;AI + 静态博客（Hugo）&lt;/strong&gt;：免费、极快、SEO友好。适合博客/内容站。本文用这个。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;AI + Framer/Webflow&lt;/strong&gt;：拖拽式建站，设计精美。适合作品集/落地页。月费$10+。&lt;/li&gt;
@@ -277,8 +277,8 @@
 			&lt;/tr&gt;
 	&lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;**总花费：$10 + 一个下午。**值不值？你自己判断。&lt;/p&gt;</description></item><item><title>Claude Code vs Cursor vs GitHub Copilot：2025年AI编程助手深度横评</title><link>https://zhouyang.github.io/posts/claude-code-vs-cursor-vs-copilot/</link><pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/claude-code-vs-cursor-vs-copilot/</guid><description>&lt;h2 id="为什么需要ai编程助手"&gt;为什么需要AI编程助手？&lt;/h2&gt;
-&lt;p&gt;2025年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;
+&lt;p&gt;**总花费：$10 + 一个下午。**值不值？你自己判断。&lt;/p&gt;</description></item><item><title>Claude Code vs Cursor vs GitHub Copilot：2026年AI编程助手深度横评</title><link>https://zhouyang.github.io/posts/claude-code-vs-cursor-vs-copilot/</link><pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/claude-code-vs-cursor-vs-copilot/</guid><description>&lt;h2 id="为什么需要ai编程助手"&gt;为什么需要AI编程助手？&lt;/h2&gt;
+&lt;p&gt;2026年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;
 &lt;p&gt;这篇文章聚焦三大主流选手，帮你做出明智选择。&lt;/p&gt;
 &lt;h2 id="claude-code"&gt;Claude Code&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Anthropic出品，终端里的AI程序员。&lt;/strong&gt;&lt;/p&gt;
@@ -300,7 +300,7 @@
 &lt;/ul&gt;
 &lt;h2 id="github-copilot"&gt;GitHub Copilot&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;微软出品，最老牌的AI编程助手。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2025年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;
+&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2026年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：日常编码、多IDE用户、团队协作&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：个人$10/月，含Copilot Chat&lt;/li&gt;

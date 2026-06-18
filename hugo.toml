@@ -4,8 +4,8 @@ title = '独立开发与AI实战'
 theme = 'minimal'
 
 [params]
-  description = 'AI工具教程 · 独立开发 · 加密货币入门 · 副业思路'
-  author = '周洋'
+  description = 'AI工具教程 · 独立开发 · 副业思路 · 编程与效率'
+  author = 'zhouyang'
 
 [markup]
   [markup.goldmark]

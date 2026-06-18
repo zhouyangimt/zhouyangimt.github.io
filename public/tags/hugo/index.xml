@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/hugo/</link><description>Recent content in Hugo on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 12 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/hugo/</link><description>Recent content in Hugo on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 12 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
 &lt;p&gt;WordPress的痛点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;需要服务器/PHP/MySQL&lt;/li&gt;
@@ -41,7 +41,7 @@
  static/ ← 图片/CSS/JS
  hugo.toml ← 配置文件
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="选主题"&gt;选主题&lt;/h2&gt;
-&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2025版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Wed, 04 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
+&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Thu, 04 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;完全免费&lt;/strong&gt;：GitHub Pages 免费托管，无流量限制&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;极速&lt;/strong&gt;：Hugo 是Go写的，构建速度毫秒级&lt;/li&gt;
@@ -75,7 +75,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用 Markdown 写内容，Front Matter 里设置标题、日期、标签：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;title&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;我的第一篇文章&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2025-06-04&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2026-06-04&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;tags&lt;/span&gt;: [&lt;span style="color:#e6db74"&gt;&amp;#34;入门&amp;#34;&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="第五步本地预览"&gt;第五步：本地预览&lt;/h2&gt;

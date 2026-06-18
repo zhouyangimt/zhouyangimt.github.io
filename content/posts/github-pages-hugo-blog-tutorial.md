@@ -1,6 +1,6 @@
 ---
-title: "GitHub Pages + Hugo 搭建免费博客完整教程（2025版）"
-date: 2025-06-04
+title: "GitHub Pages + Hugo 搭建免费博客完整教程（2026版）"
+date: 2026-06-04
 tags: ["独立开发", "工具教程", "Hugo"]
 description: "从零开始用Hugo和GitHub Pages搭建免费、高速的个人博客，含自定义域名配置。"
 ---
@@ -56,7 +56,7 @@ hugo new posts/my-first-post.md
 ```yaml
 ---
 title: "我的第一篇文章"
-date: 2025-06-04
+date: 2026-06-04
 tags: ["入门"]
 ---
 ```

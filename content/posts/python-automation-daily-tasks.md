@@ -1,9 +1,11 @@
 ---
 title: "用Python自动化你的10个日常重复工作（附完整代码）"
-date: 2025-06-05
+date: 2026-06-05
 tags: ["Python", "自动化", "独立开发"]
 description: "文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。"
 ---
+
+![Python自动化编程](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=630&fit=crop)
 
 ## 你每天在浪费多少时间？
 
@@ -146,3 +148,5 @@ print(f"备份完成: {dst}")
 依赖安装: `pip install pillow pandas openpyxl playwright`
 
 > 这些脚本任何一个单独拎出来都能省你每天至少10分钟。10个加起来就是小半天。
+
+![让代码替你工作](https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=630&fit=crop)

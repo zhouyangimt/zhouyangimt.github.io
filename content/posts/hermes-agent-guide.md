@@ -1,6 +1,6 @@
 ---
 title: "Hermes Agent 入门指南：你的24小时AI助手"
-date: 2025-06-18
+date: 2026-06-18
 tags: ["AI", "Hermes", "工具教程", "自动化"]
 description: "从零开始配置 Hermes Agent，一个开源、支持多平台的 AI 编程助手，让你拥有一个永不休息的数字员工。"
 ---

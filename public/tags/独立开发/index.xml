@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>独立开发 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</link><description>Recent content in 独立开发 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 15 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml"/><item><title>从零到一：2025年独立开发者如何构建第一个SaaS产品</title><link>https://zhouyang.github.io/posts/build-first-saas-2025/</link><pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/build-first-saas-2025/</guid><description>&lt;h2 id="独立开发saas还能赚钱吗"&gt;独立开发SaaS还能赚钱吗？&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>独立开发 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</link><description>Recent content in 独立开发 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 15 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml"/><item><title>从零到一：2026年独立开发者如何构建第一个SaaS产品</title><link>https://zhouyang.github.io/posts/build-first-saas-2026/</link><pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/build-first-saas-2026/</guid><description>&lt;h2 id="独立开发saas还能赚钱吗"&gt;独立开发SaaS还能赚钱吗？&lt;/h2&gt;
 &lt;p&gt;能。但不是「我有一个改变世界的想法，融500万美金」那种SaaS。&lt;/p&gt;
 &lt;p&gt;是这种：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -88,7 +88,7 @@
 &lt;li&gt;复杂的数据分析&lt;/li&gt;
 &lt;li&gt;移动App（先做Web）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;时间预算：2周内上线。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title><link>https://zhouyang.github.io/posts/seo-basics-for-blog/</link><pubDate>Sat, 14 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/seo-basics-for-blog/</guid><description>&lt;h2 id="程序员为什么需要seo"&gt;程序员为什么需要SEO？&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;时间预算：2周内上线。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title><link>https://zhouyang.github.io/posts/seo-basics-for-blog/</link><pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/seo-basics-for-blog/</guid><description>&lt;h2 id="程序员为什么需要seo"&gt;程序员为什么需要SEO？&lt;/h2&gt;
 &lt;p&gt;你写了很好的技术文章，但如果搜索引擎找不到，就等于没人看。&lt;/p&gt;
 &lt;p&gt;SEO（搜索引擎优化）不是玄学。对程序员来说，它就是一个&lt;strong&gt;匹配问题&lt;/strong&gt;——让用户搜索的词，匹配你写的内容。&lt;/p&gt;
 &lt;h2 id="基础一关键词研究"&gt;基础一：关键词研究&lt;/h2&gt;
@@ -97,7 +97,7 @@
 &lt;ul&gt;
 &lt;li&gt;「Python自动化脚本」&lt;/li&gt;
 &lt;li&gt;「GitHub Pages部署教程」&lt;/li&gt;
-&lt;li&gt;「2025年最好的AI编程工具」&lt;/li&gt;
+&lt;li&gt;「2026年最好的AI编程工具」&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="怎么找关键词"&gt;怎么找关键词？&lt;/h3&gt;
 &lt;ol&gt;
@@ -152,7 +152,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;好标题&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;「Python自动化脚本：10个日常重复工作的代码解决方案」&lt;/li&gt;
-&lt;li&gt;「GitHub Pages搭建博客：2025年免费部署实战教程」&lt;/li&gt;
+&lt;li&gt;「GitHub Pages搭建博客：2026年免费部署实战教程」&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;坏标题&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
@@ -177,8 +177,8 @@
 /posts/hugo-static-blog-guide/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;坏URL&lt;/strong&gt;：&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;/posts/123/
-/posts/article-2025-06-01/
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description></item><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
+/posts/article-2026-06-01/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description></item><item><title>Hugo静态博客从入门到部署：比WordPress快10倍</title><link>https://zhouyang.github.io/posts/hugo-static-blog-guide/</link><pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hugo-static-blog-guide/</guid><description>&lt;h2 id="wordpress-vs-静态博客"&gt;WordPress vs 静态博客&lt;/h2&gt;
 &lt;p&gt;WordPress的痛点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;需要服务器/PHP/MySQL&lt;/li&gt;
@@ -221,7 +221,7 @@
  static/ ← 图片/CSS/JS
  hugo.toml ← 配置文件
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="选主题"&gt;选主题&lt;/h2&gt;
-&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title><link>https://zhouyang.github.io/posts/notion-template-sell-gumroad/</link><pubDate>Wed, 11 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/notion-template-sell-gumroad/</guid><description>&lt;h2 id="为什么是notion模板"&gt;为什么是Notion模板？&lt;/h2&gt;
+&lt;p&gt;推荐几个适合中文博客的：&lt;/p&gt;</description></item><item><title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title><link>https://zhouyang.github.io/posts/notion-template-sell-gumroad/</link><pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/notion-template-sell-gumroad/</guid><description>&lt;h2 id="为什么是notion模板"&gt;为什么是Notion模板？&lt;/h2&gt;
 &lt;p&gt;Notion全球用户超过1亿人。有人在Notion里管理人生，有人管理项目，有人记账。&lt;/p&gt;
 &lt;p&gt;但大部分人不会「设计」一套好用的Notion系统。这就是你的机会。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;卖模板 = 设计一次，卖无数次。真正的被动收入。&lt;/strong&gt;&lt;/p&gt;
@@ -314,7 +314,7 @@
 &lt;li&gt;写产品描述（参考第三步）&lt;/li&gt;
 &lt;li&gt;发布&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description></item><item><title>独立开发者2025技术栈选择指南：少即是多</title><link>https://zhouyang.github.io/posts/indie-dev-tech-stack-2025/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/indie-dev-tech-stack-2025/</guid><description>&lt;h2 id="独立开发者的选型哲学"&gt;独立开发者的选型哲学&lt;/h2&gt;
+&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description></item><item><title>独立开发者2026技术栈选择指南：少即是多</title><link>https://zhouyang.github.io/posts/indie-dev-tech-stack-2026/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/indie-dev-tech-stack-2026/</guid><description>&lt;h2 id="独立开发者的选型哲学"&gt;独立开发者的选型哲学&lt;/h2&gt;
 &lt;p&gt;大公司选技术栈看生态、看招聘、看长期维护。独立开发者只有一个标准——&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;能不能让我一个人，在一周内，把想法变成能收钱的产品？&lt;/strong&gt;&lt;/p&gt;
@@ -325,7 +325,7 @@
 &lt;ul&gt;
 &lt;li&gt;生态最大，AI工具（Cursor/v0）对React支持最好&lt;/li&gt;
 &lt;li&gt;Vercel一键部署，免费额度够用&lt;/li&gt;
-&lt;li&gt;组件库多（shadcn/ui是2025年首选）&lt;/li&gt;
+&lt;li&gt;组件库多（shadcn/ui是2026年首选）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;备选: 纯HTML + HTMX + Alpine.js&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -391,8 +391,8 @@
 部署: GitHub Pages + Vercel
 支付: LemonSqueezy（支持支付宝）
 域名: Porkbun
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;全年运营成本: ~$50（域名 + LemonSqueezy手续费）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>2025年适合程序员的6个副业方向：从接私活到被动收入</title><link>https://zhouyang.github.io/posts/programmer-side-hustle-2025/</link><pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/programmer-side-hustle-2025/</guid><description>&lt;h2 id="程序员的副业不只是接私活"&gt;程序员的副业，不只是接私活&lt;/h2&gt;
-&lt;p&gt;很多程序员想到副业就是「外包」「接私活」——累、不稳定、天花板低。2025年，我们有更好的选择。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;全年运营成本: ~$50（域名 + LemonSqueezy手续费）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>2026年适合程序员的6个副业方向：从接私活到被动收入</title><link>https://zhouyang.github.io/posts/programmer-side-hustle-2026/</link><pubDate>Sat, 06 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/programmer-side-hustle-2026/</guid><description>&lt;h2 id="程序员的副业不只是接私活"&gt;程序员的副业，不只是接私活&lt;/h2&gt;
+&lt;p&gt;很多程序员想到副业就是「外包」「接私活」——累、不稳定、天花板低。2026年，我们有更好的选择。&lt;/p&gt;
 &lt;p&gt;以下是6条经过验证的路线，按从「快速来钱」到「被动收入」排序。&lt;/p&gt;
 &lt;h2 id="1-技术写作--内容站"&gt;1. 技术写作 / 内容站&lt;/h2&gt;
 &lt;ul&gt;
@@ -426,7 +426,8 @@
 &lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 解决一个小痛点 → 做成SaaS → 按月收费&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: ~$20/月（服务器）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;: PDF转换工具、图片压缩API、定时监控服务——功能单一但精准。&lt;/p&gt;</description></item><item><title>用Python自动化你的10个日常重复工作（附完整代码）</title><link>https://zhouyang.github.io/posts/python-automation-daily-tasks/</link><pubDate>Thu, 05 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/python-automation-daily-tasks/</guid><description>&lt;h2 id="你每天在浪费多少时间"&gt;你每天在浪费多少时间？&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;: PDF转换工具、图片压缩API、定时监控服务——功能单一但精准。&lt;/p&gt;</description></item><item><title>用Python自动化你的10个日常重复工作（附完整代码）</title><link>https://zhouyang.github.io/posts/python-automation-daily-tasks/</link><pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/python-automation-daily-tasks/</guid><description>&lt;p&gt;&lt;img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;amp;h=630&amp;amp;fit=crop" alt="Python自动化编程"&gt;&lt;/p&gt;
+&lt;h2 id="你每天在浪费多少时间"&gt;你每天在浪费多少时间？&lt;/h2&gt;
 &lt;p&gt;想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。&lt;/p&gt;
 &lt;p&gt;Python最擅长干这个。下面10个脚本，复制即用。&lt;/p&gt;
 &lt;h2 id="1-批量重命名文件"&gt;1. 批量重命名文件&lt;/h2&gt;
@@ -513,7 +514,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;shutil&lt;span style="color:#f92672"&gt;.&lt;/span&gt;copytree(src, dst)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(&lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;备份完成: &lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;dst&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="把这些串起来"&gt;把这些串起来&lt;/h2&gt;
-&lt;p&gt;用cron定时任务每天跑一遍:&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2025版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Wed, 04 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
+&lt;p&gt;用cron定时任务每天跑一遍:&lt;/p&gt;</description></item><item><title>GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</title><link>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</link><pubDate>Thu, 04 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/github-pages-hugo-blog-tutorial/</guid><description>&lt;h2 id="为什么选-hugo--github-pages"&gt;为什么选 Hugo + GitHub Pages？&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;完全免费&lt;/strong&gt;：GitHub Pages 免费托管，无流量限制&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;极速&lt;/strong&gt;：Hugo 是Go写的，构建速度毫秒级&lt;/li&gt;
@@ -547,13 +548,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用 Markdown 写内容，Front Matter 里设置标题、日期、标签：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;title&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;我的第一篇文章&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2025-06-04&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;date&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;2026-06-04&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;tags&lt;/span&gt;: [&lt;span style="color:#e6db74"&gt;&amp;#34;入门&amp;#34;&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;---
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="第五步本地预览"&gt;第五步：本地预览&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hugo server -D
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:1313&lt;/code&gt;，边写边看效果。&lt;/p&gt;</description></item><item><title>零代码基础？用AI从零搭建一个个人网站（2025实战）</title><link>https://zhouyang.github.io/posts/ai-build-website-zero/</link><pubDate>Mon, 02 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-build-website-zero/</guid><description>&lt;h2 id="你不需要学编程来做网站了"&gt;你不需要学编程来做网站了&lt;/h2&gt;
-&lt;p&gt;2025年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:1313&lt;/code&gt;，边写边看效果。&lt;/p&gt;</description></item><item><title>零代码基础？用AI从零搭建一个个人网站（2026实战）</title><link>https://zhouyang.github.io/posts/ai-build-website-zero/</link><pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ai-build-website-zero/</guid><description>&lt;h2 id="你不需要学编程来做网站了"&gt;你不需要学编程来做网站了&lt;/h2&gt;
+&lt;p&gt;2026年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这篇文章带你从零到一，用AI搭建一个能访问、能赚钱的个人网站。&lt;/p&gt;
 &lt;h2 id="第一步买域名10分钟"&gt;第一步：买域名（10分钟）&lt;/h2&gt;
 &lt;p&gt;推荐 &lt;a href="https://www.namesilo.com"&gt;NameSilo&lt;/a&gt; 或 &lt;a href="https://porkbun.com"&gt;Porkbun&lt;/a&gt;，便宜且支持支付宝。&lt;/p&gt;
@@ -563,7 +564,7 @@
 &lt;/ul&gt;
 &lt;p&gt;选个简短好记的名字，比如 &lt;code&gt;yourname.com&lt;/code&gt; 或你的项目名。&lt;/p&gt;
 &lt;h2 id="第二步选工具决定前先看这里"&gt;第二步：选工具（决定前先看这里）&lt;/h2&gt;
-&lt;p&gt;2025年有三个主流路线：&lt;/p&gt;
+&lt;p&gt;2026年有三个主流路线：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;AI + 静态博客（Hugo）&lt;/strong&gt;：免费、极快、SEO友好。适合博客/内容站。本文用这个。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;AI + Framer/Webflow&lt;/strong&gt;：拖拽式建站，设计精美。适合作品集/落地页。月费$10+。&lt;/li&gt;

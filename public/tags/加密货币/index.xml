@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>加密货币 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/</link><description>Recent content in 加密货币 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 10 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/index.xml" rel="self" type="application/rss+xml"/><item><title>什么是以太坊Gas费？一文看懂链上手续费机制</title><link>https://zhouyang.github.io/posts/ethereum-gas-fee-explained/</link><pubDate>Tue, 10 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ethereum-gas-fee-explained/</guid><description>&lt;h2 id="为什么要付gas费"&gt;为什么要付Gas费？&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>加密货币 on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/</link><description>Recent content in 加密货币 on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 10 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/index.xml" rel="self" type="application/rss+xml"/><item><title>什么是以太坊Gas费？一文看懂链上手续费机制</title><link>https://zhouyang.github.io/posts/ethereum-gas-fee-explained/</link><pubDate>Wed, 10 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/ethereum-gas-fee-explained/</guid><description>&lt;h2 id="为什么要付gas费"&gt;为什么要付Gas费？&lt;/h2&gt;
 &lt;p&gt;你在以太坊上做任何操作——转账、换币、买NFT——都需要全网节点帮你验证和执行。Gas费就是付给这些节点的「工钱」。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;类比：Gas费 = 银行转账手续费。但银行是你付了就得办，链上是价高者先办。&lt;/p&gt;
@@ -38,7 +38,7 @@
 &lt;li&gt;周末/亚洲凌晨 → Gas低谷&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;EIP-1559之后&lt;/strong&gt;：
-以太坊2021年改版后，Gas费分成两部分：&lt;/p&gt;</description></item><item><title>空投（Airdrop）入门：免费领币的正确姿势与风险提醒</title><link>https://zhouyang.github.io/posts/airdrop-farming-beginner/</link><pubDate>Mon, 09 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/airdrop-farming-beginner/</guid><description>&lt;h2 id="空投是什么"&gt;空投是什么？&lt;/h2&gt;
+以太坊2021年改版后，Gas费分成两部分：&lt;/p&gt;</description></item><item><title>空投（Airdrop）入门：免费领币的正确姿势与风险提醒</title><link>https://zhouyang.github.io/posts/airdrop-farming-beginner/</link><pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/airdrop-farming-beginner/</guid><description>&lt;h2 id="空投是什么"&gt;空投是什么？&lt;/h2&gt;
 &lt;p&gt;空投（Airdrop）是项目方免费向用户发放代币的行为。可以理解为「新App上线做活动，早期用户领红包」。&lt;/p&gt;
 &lt;p&gt;2023-2024年，Arbitrum空投单人最高$10000+，Optimism、Aptos、Sui等空投也让很多人赚到了钱。&lt;/p&gt;
 &lt;h2 id="空投的逻辑"&gt;空投的逻辑&lt;/h2&gt;
@@ -75,7 +75,7 @@
 &lt;li&gt;交互多样性（不只做一种操作）&lt;/li&gt;
 &lt;li&gt;金额大小（不需要大额，但要有真实轨迹）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id="当前值得关注的项目2025年上半年"&gt;当前值得关注的项目（2025年上半年）&lt;/h2&gt;
+&lt;h2 id="当前值得关注的项目2026年上半年"&gt;当前值得关注的项目（2026年上半年）&lt;/h2&gt;
 &lt;table&gt;
 	&lt;thead&gt;
 			&lt;tr&gt;
@@ -125,7 +125,7 @@
 &lt;/ol&gt;
 &lt;h2 id="空投的正确心态"&gt;空投的正确心态&lt;/h2&gt;
 &lt;p&gt;把它当成「用零钱买彩票」——花点Gas费参与，万一中了就赚，不中也无所谓。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;千万不要&lt;/strong&gt;：借钱冲、卖房冲、辞职冲空投。这是赌博，不是投资。&lt;/p&gt;</description></item><item><title>加密货币钱包入门：从安装到第一笔转账（新手友好）</title><link>https://zhouyang.github.io/posts/crypto-wallet-beginner/</link><pubDate>Sun, 08 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/crypto-wallet-beginner/</guid><description>&lt;h2 id="为什么你需要一个加密钱包"&gt;为什么你需要一个加密钱包？&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;千万不要&lt;/strong&gt;：借钱冲、卖房冲、辞职冲空投。这是赌博，不是投资。&lt;/p&gt;</description></item><item><title>加密货币钱包入门：从安装到第一笔转账（新手友好）</title><link>https://zhouyang.github.io/posts/crypto-wallet-beginner/</link><pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/crypto-wallet-beginner/</guid><description>&lt;h2 id="为什么你需要一个加密钱包"&gt;为什么你需要一个加密钱包？&lt;/h2&gt;
 &lt;p&gt;不管你是想收空投、玩DeFi、还是买NFT，第一步永远是——&lt;strong&gt;有一个钱包&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;本文用最简单的方式，带你从零开始。&lt;/p&gt;
 &lt;h2 id="什么是加密钱包"&gt;什么是加密钱包？&lt;/h2&gt;

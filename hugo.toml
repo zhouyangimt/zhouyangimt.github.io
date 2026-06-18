@@ -1,7 +1,7 @@
-baseURL = 'https://zhouyang.github.io/'
-locale = 'zh-CN'
+baseURL = 'https://zhouyangimt.github.io/'
 title = '独立开发与AI实战'
 theme = 'minimal'
+buildFuture = true
 
 [params]
   description = 'AI工具教程 · 独立开发 · 副业思路 · 编程与效率'
@@ -18,10 +18,14 @@ theme = 'minimal'
     url = '/'
     weight = 1
   [[menu.main]]
-    name = '文章'
+    name = '技术文章'
     url = '/posts/'
     weight = 2
   [[menu.main]]
+    name = 'Chinese Cuisine'
+    url = '/cuisine/'
+    weight = 3
+  [[menu.main]]
     name = '关于'
     url = '/about/'
-    weight = 3
+    weight = 4

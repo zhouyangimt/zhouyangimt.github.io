@@ -1,1 +1,129 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/</link><description>Recent content in Tags on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>AI</title><link>https://zhouyang.github.io/tags/ai/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/ai/</guid><description/></item><item><title>Hermes</title><link>https://zhouyang.github.io/tags/hermes/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/hermes/</guid><description/></item><item><title>工具教程</title><link>https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</guid><description/></item><item><title>自动化</title><link>https://zhouyang.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</guid><description/></item><item><title>副业</title><link>https://zhouyang.github.io/tags/%E5%89%AF%E4%B8%9A/</link><pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E5%89%AF%E4%B8%9A/</guid><description/></item><item><title>独立开发</title><link>https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</link><pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</guid><description/></item><item><title>SEO</title><link>https://zhouyang.github.io/tags/seo/</link><pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/seo/</guid><description/></item><item><title>入门</title><link>https://zhouyang.github.io/tags/%E5%85%A5%E9%97%A8/</link><pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E5%85%A5%E9%97%A8/</guid><description/></item><item><title>Hugo</title><link>https://zhouyang.github.io/tags/hugo/</link><pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/hugo/</guid><description/></item><item><title>Notion</title><link>https://zhouyang.github.io/tags/notion/</link><pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/notion/</guid><description/></item><item><title>编程</title><link>https://zhouyang.github.io/tags/%E7%BC%96%E7%A8%8B/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/%E7%BC%96%E7%A8%8B/</guid><description/></item><item><title>Python</title><link>https://zhouyang.github.io/tags/python/</link><pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/tags/python/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Tags on 独立开发与AI实战</title>
+		<link>https://zhouyangimt.github.io/tags/</link>
+		<description>Recent content in Tags on 独立开发与AI实战</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyangimt.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Classic</title>
+				<link>https://zhouyangimt.github.io/tags/classic/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/classic/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Sichuan</title>
+				<link>https://zhouyangimt.github.io/tags/sichuan/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/sichuan/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Spicy</title>
+				<link>https://zhouyangimt.github.io/tags/spicy/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/spicy/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Tofu</title>
+				<link>https://zhouyangimt.github.io/tags/tofu/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/tofu/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>AI</title>
+				<link>https://zhouyangimt.github.io/tags/ai/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/ai/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Hermes</title>
+				<link>https://zhouyangimt.github.io/tags/hermes/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/hermes/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>工具教程</title>
+				<link>https://zhouyangimt.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>自动化</title>
+				<link>https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>副业</title>
+				<link>https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/</link>
+				<pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>独立开发</title>
+				<link>https://zhouyangimt.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</link>
+				<pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>SEO</title>
+				<link>https://zhouyangimt.github.io/tags/seo/</link>
+				<pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/seo/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>入门</title>
+				<link>https://zhouyangimt.github.io/tags/%E5%85%A5%E9%97%A8/</link>
+				<pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E5%85%A5%E9%97%A8/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Hugo</title>
+				<link>https://zhouyangimt.github.io/tags/hugo/</link>
+				<pubDate>Fri, 12 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/hugo/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Notion</title>
+				<link>https://zhouyangimt.github.io/tags/notion/</link>
+				<pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/notion/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>编程</title>
+				<link>https://zhouyangimt.github.io/tags/%E7%BC%96%E7%A8%8B/</link>
+				<pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/%E7%BC%96%E7%A8%8B/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Python</title>
+				<link>https://zhouyangimt.github.io/tags/python/</link>
+				<pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/tags/python/</guid>
+				<description></description>
+			</item>
+	</channel>
+</rss>

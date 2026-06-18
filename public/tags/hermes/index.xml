@@ -1,81 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hermes on 独立开发与AI实战</title><link>https://zhouyangimt.github.io/tags/hermes/</link><description>Recent content in Hermes on 独立开发与AI实战</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyangimt.github.io/tags/hermes/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title><link>https://zhouyangimt.github.io/posts/hermes-agent-config/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-config/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;
-&lt;p&gt;上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。&lt;/p&gt;
-&lt;p&gt;Hermes 的核心优势之一是&lt;strong&gt;不绑定任何模型厂商&lt;/strong&gt;。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。&lt;/p&gt;
-&lt;p&gt;今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。&lt;/p&gt;
-&lt;h2 id="配置文件在哪"&gt;配置文件在哪&lt;/h2&gt;
-&lt;p&gt;Hermes 的配置分布在两个文件：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;~/.hermes/config.yaml # 主配置：模型、工具集、人格、安全策略等
-~/.hermes/.env # 密钥（API Key、Token），单独存放防止泄露
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接编辑也行，但 Hermes 提供了更安全的方式：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 查看当前配置&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 用编辑器打开 config.yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config edit
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 逐项设置（推荐，不会搞乱缩进）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config set model.default &lt;span style="color:#e6db74"&gt;&amp;#34;anthropic/claude-sonnet-4&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config set agent.max_turns &lt;span style="color:#ae81ff"&gt;90&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 管理密钥（更安全，会做本地加密）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes auth
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先说最重要的 providers。&lt;/p&gt;
-&lt;h2 id="providers20-模型提供商怎么选"&gt;Providers：20+ 模型提供商怎么选&lt;/h2&gt;
-&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;第一类：聚合平台（性价比首选）&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Provider&lt;/th&gt;
-					&lt;th&gt;特点&lt;/th&gt;
-					&lt;th&gt;适合场景&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;strong&gt;OpenRouter&lt;/strong&gt;&lt;/td&gt;
-					&lt;td&gt;聚合 200+ 模型，按用量计费&lt;/td&gt;
-					&lt;td&gt;日常主力，模型随便试&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;strong&gt;Nous Portal&lt;/strong&gt;&lt;/td&gt;
-					&lt;td&gt;Hermes 官方配套，OAuth 登录&lt;/td&gt;
-					&lt;td&gt;想省事的默认选择&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;strong&gt;Hugging Face&lt;/strong&gt;&lt;/td&gt;
-					&lt;td&gt;开源模型托管，免费额度&lt;/td&gt;
-					&lt;td&gt;跑开源模型、研究调试&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;第二类：厂商直连（性能最优）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyangimt.github.io/posts/hermes-agent-guide/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://github.com/NousResearch/hermes-agent"&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;
-&lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;完全开源&lt;/strong&gt;，不绑定任何厂商&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;支持 20+ 模型提供商&lt;/strong&gt;，OpenRouter、Anthropic、DeepSeek、OpenAI 随便切&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;持久化记忆&lt;/strong&gt;——它会记住你是谁、你的偏好、你的项目&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;技能系统&lt;/strong&gt;——学会一个新技能就保存下来，越用越聪明&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="安装"&gt;安装&lt;/h2&gt;
-&lt;p&gt;一行命令搞定：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="快速上手"&gt;快速上手&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 进入交互模式&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 一句话提问&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes chat -q &lt;span style="color:#e6db74"&gt;&amp;#34;帮我写一个 Python 爬虫&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 切换模型&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes model
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="接入飞书"&gt;接入飞书&lt;/h2&gt;
-&lt;p&gt;Hermes 原生支持飞书，配置好后你就能在飞书里和它聊天：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway setup &lt;span style="color:#75715e"&gt;# 选择 Feishu&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway run &lt;span style="color:#75715e"&gt;# 启动网关&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="定时任务"&gt;定时任务&lt;/h2&gt;
-&lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes cron create &lt;span style="color:#e6db74"&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 每天早上8点&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
-&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Hermes on 独立开发与AI实战</title>
+		<link>https://zhouyangimt.github.io/tags/hermes/</link>
+		<description>Recent content in Hermes on 独立开发与AI实战</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyangimt.github.io/tags/hermes/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title>
+				<link>https://zhouyangimt.github.io/posts/hermes-agent-config/</link>
+				<pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/hermes-agent-config/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href=&#34;https://zhouyangimt.github.io/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;&#xA;&lt;p&gt;上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。&lt;/p&gt;&#xA;&lt;p&gt;Hermes 的核心优势之一是&lt;strong&gt;不绑定任何模型厂商&lt;/strong&gt;。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。&lt;/p&gt;&#xA;&lt;p&gt;今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。&lt;/p&gt;&#xA;&lt;h2 id=&#34;配置文件在哪&#34;&gt;配置文件在哪&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 的配置分布在两个文件：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/.hermes/config.yaml   # 主配置：模型、工具集、人格、安全策略等&#xA;~/.hermes/.env          # 密钥（API Key、Token），单独存放防止泄露&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接编辑也行，但 Hermes 提供了更安全的方式：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看当前配置&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 用编辑器打开 config.yaml&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config edit&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 逐项设置（推荐，不会搞乱缩进）&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config set model.default &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;anthropic/claude-sonnet-4&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config set agent.max_turns &lt;span style=&#34;color:#ae81ff&#34;&gt;90&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 管理密钥（更安全，会做本地加密）&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes auth&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先说最重要的 providers。&lt;/p&gt;&#xA;&lt;h2 id=&#34;providers20-模型提供商怎么选&#34;&gt;Providers：20+ 模型提供商怎么选&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;第一类：聚合平台（性价比首选）&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Provider&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;特点&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;适合场景&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;OpenRouter&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;聚合 200+ 模型，按用量计费&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;日常主力，模型随便试&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Nous Portal&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Hermes 官方配套，OAuth 登录&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;想省事的默认选择&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Hugging Face&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;开源模型托管，免费额度&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;跑开源模型、研究调试&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;第二类：厂商直连（性能最优）&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 入门指南：你的24小时AI助手</title>
+				<link>https://zhouyangimt.github.io/posts/hermes-agent-guide/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/hermes-agent-guide/</guid>
+				<description>&lt;h2 id=&#34;什么是-hermes-agent&#34;&gt;什么是 Hermes Agent？&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/NousResearch/hermes-agent&#34;&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;&#xA;&lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;完全开源&lt;/strong&gt;，不绑定任何厂商&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;支持 20+ 模型提供商&lt;/strong&gt;，OpenRouter、Anthropic、DeepSeek、OpenAI 随便切&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;持久化记忆&lt;/strong&gt;——它会记住你是谁、你的偏好、你的项目&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;技能系统&lt;/strong&gt;——学会一个新技能就保存下来，越用越聪明&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;&#xA;&lt;p&gt;一行命令搞定：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;快速上手&#34;&gt;快速上手&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 进入交互模式&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 一句话提问&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes chat -q &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;帮我写一个 Python 爬虫&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 切换模型&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes model&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;接入飞书&#34;&gt;接入飞书&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 原生支持飞书，配置好后你就能在飞书里和它聊天：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes gateway setup    &lt;span style=&#34;color:#75715e&#34;&gt;# 选择 Feishu&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes gateway run      &lt;span style=&#34;color:#75715e&#34;&gt;# 启动网关&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;定时任务&#34;&gt;定时任务&lt;/h2&gt;&#xA;&lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes cron create &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# 每天早上8点&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;&#xA;&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

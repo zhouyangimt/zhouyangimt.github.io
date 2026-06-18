@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hermes on 独立开发与AI实战</title><link>https://zhouyang.github.io/tags/hermes/</link><description>Recent content in Hermes on 独立开发与AI实战</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 18 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.github.io/tags/hermes/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyang.github.io/posts/hermes-agent-guide/</link><pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate><guid>https://zhouyang.github.io/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/NousResearch/hermes-agent"&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;
+&lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;完全开源&lt;/strong&gt;，不绑定任何厂商&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;支持 20+ 模型提供商&lt;/strong&gt;，OpenRouter、Anthropic、DeepSeek、OpenAI 随便切&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;持久化记忆&lt;/strong&gt;——它会记住你是谁、你的偏好、你的项目&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;技能系统&lt;/strong&gt;——学会一个新技能就保存下来，越用越聪明&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="安装"&gt;安装&lt;/h2&gt;
+&lt;p&gt;一行命令搞定：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="快速上手"&gt;快速上手&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 进入交互模式&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 一句话提问&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes chat -q &lt;span style="color:#e6db74"&gt;&amp;#34;帮我写一个 Python 爬虫&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 切换模型&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes model
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="接入飞书"&gt;接入飞书&lt;/h2&gt;
+&lt;p&gt;Hermes 原生支持飞书，配置好后你就能在飞书里和它聊天：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway setup &lt;span style="color:#75715e"&gt;# 选择 Feishu&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway run &lt;span style="color:#75715e"&gt;# 启动网关&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="定时任务"&gt;定时任务&lt;/h2&gt;
+&lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes cron create &lt;span style="color:#e6db74"&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 每天早上8点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
+&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item></channel></rss>

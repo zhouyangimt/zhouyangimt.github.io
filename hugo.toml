@@ -1,0 +1,27 @@
+baseURL = 'https://zhouyang.github.io/'
+locale = 'zh-CN'
+title = '独立开发与AI实战'
+theme = 'minimal'
+
+[params]
+  description = 'AI工具教程 · 独立开发 · 加密货币入门 · 副业思路'
+  author = '周洋'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[menu]
+  [[menu.main]]
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    name = '文章'
+    url = '/posts/'
+    weight = 2
+  [[menu.main]]
+    name = '关于'
+    url = '/about/'
+    weight = 3

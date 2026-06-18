@@ -1,0 +1,161 @@
+[
+  {
+    "slug": "claude-code-vs-cursor-vs-copilot",
+    "title": "Claude Code vs Cursor vs GitHub Copilot：2025年AI编程助手深度横评",
+    "date": "2025-06-01",
+    "tags": [
+      "AI",
+      "工具教程",
+      "编程"
+    ],
+    "description": "横向对比三大AI编程工具的功能、价格和适用场景，帮你选出最适合的那一个。"
+  },
+  {
+    "slug": "ai-build-website-zero",
+    "title": "零代码基础？用AI从零搭建一个个人网站（2025实战）",
+    "date": "2025-06-02",
+    "tags": [
+      "AI",
+      "工具教程",
+      "独立开发"
+    ],
+    "description": "不需要学HTML/CSS，用AI工具一步步搭建你的第一个网站，从域名到上线全流程。"
+  },
+  {
+    "slug": "ai-coding-assistant-guide-2025",
+    "title": "2025年AI编程助手完全指南：选型、配置与最佳实践",
+    "date": "2025-06-03",
+    "tags": [
+      "AI",
+      "编程",
+      "工具教程"
+    ],
+    "description": "全面梳理2025年主流AI编程助手，包括在线版和本地版，帮你做出明智选择。"
+  },
+  {
+    "slug": "github-pages-hugo-blog-tutorial",
+    "title": "GitHub Pages + Hugo 搭建免费博客完整教程（2025版）",
+    "date": "2025-06-04",
+    "tags": [
+      "独立开发",
+      "工具教程",
+      "Hugo"
+    ],
+    "description": "从零开始用Hugo和GitHub Pages搭建免费、高速的个人博客，含自定义域名配置。"
+  },
+  {
+    "slug": "python-automation-daily-tasks",
+    "title": "用Python自动化你的10个日常重复工作（附完整代码）",
+    "date": "2025-06-05",
+    "tags": [
+      "Python",
+      "自动化",
+      "独立开发"
+    ],
+    "description": "文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。"
+  },
+  {
+    "slug": "programmer-side-hustle-2025",
+    "title": "2025年适合程序员的6个副业方向：从接私活到被动收入",
+    "date": "2025-06-06",
+    "tags": [
+      "副业",
+      "独立开发"
+    ],
+    "description": "盘点程序员可行的副业路径，从技术写作到SaaS产品，分析收入潜力和门槛。"
+  },
+  {
+    "slug": "indie-dev-tech-stack-2025",
+    "title": "独立开发者2025技术栈选择指南：少即是多",
+    "date": "2025-06-07",
+    "tags": [
+      "独立开发",
+      "编程"
+    ],
+    "description": "独立开发者选技术栈的原则：快速交付、低成本维护、一个人能hold住。"
+  },
+  {
+    "slug": "crypto-wallet-beginner",
+    "title": "加密货币钱包入门：从安装到第一笔转账（新手友好）",
+    "date": "2025-06-08",
+    "tags": [
+      "加密货币",
+      "入门"
+    ],
+    "description": "MetaMask安装、助记词保管、Gas费是什么——钱包入门的所有问题一次讲清楚。"
+  },
+  {
+    "slug": "airdrop-farming-beginner",
+    "title": "空投（Airdrop）入门：免费领币的正确姿势与风险提醒",
+    "date": "2025-06-09",
+    "tags": [
+      "加密货币",
+      "空投",
+      "入门"
+    ],
+    "description": "什么是以太坊L2空投？怎么参与？有哪些坑？新手友好的一站式指南。"
+  },
+  {
+    "slug": "ethereum-gas-fee-explained",
+    "title": "什么是以太坊Gas费？一文看懂链上手续费机制",
+    "date": "2025-06-10",
+    "tags": [
+      "加密货币",
+      "入门"
+    ],
+    "description": "用大白话解释Gas、Gwei、Gas Limit，以及怎么省钱。"
+  },
+  {
+    "slug": "notion-template-sell-gumroad",
+    "title": "Notion模板赚钱实战：从设计到上架Gumroad全流程",
+    "date": "2025-06-11",
+    "tags": [
+      "副业",
+      "独立开发",
+      "Notion"
+    ],
+    "description": "不用写代码也能赚钱——设计一套Notion模板，挂到Gumroad上卖。"
+  },
+  {
+    "slug": "hugo-static-blog-guide",
+    "title": "Hugo静态博客从入门到部署：比WordPress快10倍",
+    "date": "2025-06-12",
+    "tags": [
+      "独立开发",
+      "工具教程",
+      "Hugo"
+    ],
+    "description": "为什么你应该用静态博客？Hugo安装、主题选择、部署到GitHub Pages完整教程。"
+  },
+  {
+    "slug": "google-adsense-apply-guide",
+    "title": "Google AdSense申请全攻略：从被拒到通过的实战经验",
+    "date": "2025-06-13",
+    "tags": [
+      "副业",
+      "SEO"
+    ],
+    "description": "AdSense申请的条件、常见被拒原因、内容策略——一次性说清楚。"
+  },
+  {
+    "slug": "seo-basics-for-blog",
+    "title": "SEO入门：让搜索引擎找到你的技术博客（写给程序员）",
+    "date": "2025-06-14",
+    "tags": [
+      "SEO",
+      "独立开发",
+      "入门"
+    ],
+    "description": "关键词研究、标题优化、内链策略——程序员写博客必备的SEO基础。"
+  },
+  {
+    "slug": "build-first-saas-2025",
+    "title": "从零到一：2025年独立开发者如何构建第一个SaaS产品",
+    "date": "2025-06-15",
+    "tags": [
+      "独立开发",
+      "副业"
+    ],
+    "description": "选方向、搭MVP、定价、获客——独立开发者做SaaS的完整框架。"
+  }
+]

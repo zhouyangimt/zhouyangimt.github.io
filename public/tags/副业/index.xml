@@ -1,320 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>副业 on 独立开发与AI实战</title><link>https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/</link><description>Recent content in 副业 on 独立开发与AI实战</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 15 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/index.xml" rel="self" type="application/rss+xml"/><item><title>从零到一：2026年独立开发者如何构建第一个SaaS产品</title><link>https://zhouyangimt.github.io/posts/build-first-saas-2026/</link><pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/build-first-saas-2026/</guid><description>&lt;h2 id="独立开发saas还能赚钱吗"&gt;独立开发SaaS还能赚钱吗？&lt;/h2&gt;
-&lt;p&gt;能。但不是「我有一个改变世界的想法，融500万美金」那种SaaS。&lt;/p&gt;
-&lt;p&gt;是这种：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;一个有明确痛点的小工具，月费$5-20，服务几千个用户，月入$5000-20000。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这叫&lt;strong&gt;Micro-SaaS&lt;/strong&gt;或&lt;strong&gt;独立开发者SaaS&lt;/strong&gt;。本文讲的就是这个。&lt;/p&gt;
-&lt;h2 id="第一步找到对的点子"&gt;第一步：找到对的点子&lt;/h2&gt;
-&lt;h3 id="方向错了后面全白费"&gt;方向错了，后面全白费&lt;/h3&gt;
-&lt;p&gt;好点子的标准：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;解决真问题&lt;/strong&gt;：用户愿意付钱解决&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;市场够小&lt;/strong&gt;：大公司看不上&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;你能做&lt;/strong&gt;：技术栈在你能力范围内&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;可触达&lt;/strong&gt;：你找得到目标用户&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="怎么找点子"&gt;怎么找点子？&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;方法一：从自己的痛点出发&lt;/strong&gt;
-你最近因为什么东西不爽？有没有「要是有个工具能……就好了」的时刻？&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;方法二：看现有产品的差评&lt;/strong&gt;
-去G2、Product Hunt、Reddit看竞品的差评。用户抱怨什么，就是你的机会。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;方法三：挖缝隙市场&lt;/strong&gt;
-大平台的API生态里有很多机会：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Slack App、Notion集成、Figma插件&lt;/li&gt;
-&lt;li&gt;Chrome扩展、VS Code插件&lt;/li&gt;
-&lt;li&gt;Shopify App、WordPress插件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="一些方向参考"&gt;一些方向参考&lt;/h3&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;方向&lt;/th&gt;
-					&lt;th&gt;例子&lt;/th&gt;
-					&lt;th&gt;难度&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;PDF工具&lt;/td&gt;
-					&lt;td&gt;合并、压缩、转换&lt;/td&gt;
-					&lt;td&gt;低&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;API封装&lt;/td&gt;
-					&lt;td&gt;数据接口转卖&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;自动化&lt;/td&gt;
-					&lt;td&gt;定时任务、监控&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;数据分析&lt;/td&gt;
-					&lt;td&gt;报表生成&lt;/td&gt;
-					&lt;td&gt;中高&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;AI工具&lt;/td&gt;
-					&lt;td&gt;文案、图片生成&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="第二步验证想法"&gt;第二步：验证想法&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;不要一开始就写代码。&lt;/strong&gt; 先验证：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;做一个Landing Page（Carrd/Notion都行），描述你的产品&lt;/li&gt;
-&lt;li&gt;放一个「抢先体验」邮箱收集按钮&lt;/li&gt;
-&lt;li&gt;去目标用户聚集的地方发帖&lt;/li&gt;
-&lt;li&gt;看有多少人留邮箱&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;50个人留邮箱 = 可以做。500个 = 赶紧做。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id="第三步搭mvp"&gt;第三步：搭MVP&lt;/h2&gt;
-&lt;p&gt;MVP（最小可行产品）只有一个目标：&lt;strong&gt;验证用户愿意付钱&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;MVP该有的&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;核心功能（只做一件事）&lt;/li&gt;
-&lt;li&gt;支付（接Stripe/LemonSqueezy）&lt;/li&gt;
-&lt;li&gt;基础登录（Supabase Auth）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;MVP不该有的&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;精美的UI（能用就行）&lt;/li&gt;
-&lt;li&gt;管理后台（手动改数据库）&lt;/li&gt;
-&lt;li&gt;多语言&lt;/li&gt;
-&lt;li&gt;复杂的数据分析&lt;/li&gt;
-&lt;li&gt;移动App（先做Web）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;时间预算：2周内上线。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Google AdSense申请全攻略：从被拒到通过的实战经验</title><link>https://zhouyangimt.github.io/posts/google-adsense-apply-guide/</link><pubDate>Sat, 13 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/google-adsense-apply-guide/</guid><description>&lt;h2 id="为什么选adsense"&gt;为什么选AdSense？&lt;/h2&gt;
-&lt;p&gt;Google AdSense是最简单的网站变现方式。挂上代码，Google自动匹配广告，有人点你就赚钱。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;申请免费&lt;/li&gt;
-&lt;li&gt;自动匹配，不用自己找广告主&lt;/li&gt;
-&lt;li&gt;覆盖面最广（几乎所有广告主都投Google）&lt;/li&gt;
-&lt;li&gt;中文站也能做&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;审核严（尤其对中文站）&lt;/li&gt;
-&lt;li&gt;单价不高（中文流量CPC低）&lt;/li&gt;
-&lt;li&gt;影响用户体验（广告太多读者反感）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="申请前你的站必须达标"&gt;申请前：你的站必须达标&lt;/h2&gt;
-&lt;h3 id="硬性条件"&gt;硬性条件&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;内容数量&lt;/strong&gt;：至少20-30篇原创文章（越多越好）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;内容质量&lt;/strong&gt;：每篇500字以上，有价值，不能是AI灌水&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;网站完整&lt;/strong&gt;：有关于页面、联系方式、隐私政策&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;域名年龄&lt;/strong&gt;：最好6个月以上（新域名通过率低）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;合规内容&lt;/strong&gt;：不能有成人、盗版、赌博等违规内容&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="加分项"&gt;加分项&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;HTTPS（必须）&lt;/li&gt;
-&lt;li&gt;网站速度够快&lt;/li&gt;
-&lt;li&gt;有独立域名（不要用免费二级域名）&lt;/li&gt;
-&lt;li&gt;网站设计清爽、导航清晰&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="常见被拒原因"&gt;常见被拒原因&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;原因&lt;/th&gt;
-					&lt;th&gt;怎么解决&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;内容不足&lt;/td&gt;
-					&lt;td&gt;写到30篇再申请&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;低质量内容&lt;/td&gt;
-					&lt;td&gt;删掉AI水文，重写&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;网站太新&lt;/td&gt;
-					&lt;td&gt;等域名满6个月&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;缺少必要页面&lt;/td&gt;
-					&lt;td&gt;加关于/联系/隐私政策页&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;违反政策&lt;/td&gt;
-					&lt;td&gt;检查有没有违规内容&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;流量太低&lt;/td&gt;
-					&lt;td&gt;先做SEO，有自然流量再申&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="申请流程"&gt;申请流程&lt;/h2&gt;
-&lt;h3 id="第一步准备工作"&gt;第一步：准备工作&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;确保网站有30+篇高质量文章&lt;/li&gt;
-&lt;li&gt;添加以下页面：
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;/about/&lt;/code&gt; — 关于你和这个网站&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/contact/&lt;/code&gt; — 联系方式&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/privacy/&lt;/code&gt; — 隐私政策（可以AI生成模板）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;网站有HTTPS&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="第二步提交申请"&gt;第二步：提交申请&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;访问 &lt;a href="https://adsense.google.com"&gt;adsense.google.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;用Google账号登录&lt;/li&gt;
-&lt;li&gt;输入你的网站URL&lt;/li&gt;
-&lt;li&gt;提交审核&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="第三步等待审核"&gt;第三步：等待审核&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;通常1-2周出结果&lt;/li&gt;
-&lt;li&gt;可能会被要求添加 &lt;code&gt;ads.txt&lt;/code&gt; 文件&lt;/li&gt;
-&lt;li&gt;审核期间继续发文章&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="第四步审核通过后"&gt;第四步：审核通过后&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;Google会给你一段广告代码&lt;/li&gt;
-&lt;li&gt;贴到你网站的 &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; 标签里&lt;/li&gt;
-&lt;li&gt;创建广告单元（推荐「自动广告」模式）&lt;/li&gt;
-&lt;li&gt;广告开始展示&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="提高通过率的技巧"&gt;提高通过率的技巧&lt;/h2&gt;
-&lt;h3 id="1-用二级域名申请"&gt;1. 用二级域名申请&lt;/h3&gt;
-&lt;p&gt;如果你的主域名有一些不成熟的内容，可以用 &lt;code&gt;blog.yourdomain.com&lt;/code&gt; 这种干净的二级域名申请。&lt;/p&gt;</description></item><item><title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title><link>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</link><pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</guid><description>&lt;h2 id="为什么是notion模板"&gt;为什么是Notion模板？&lt;/h2&gt;
-&lt;p&gt;Notion全球用户超过1亿人。有人在Notion里管理人生，有人管理项目，有人记账。&lt;/p&gt;
-&lt;p&gt;但大部分人不会「设计」一套好用的Notion系统。这就是你的机会。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;卖模板 = 设计一次，卖无数次。真正的被动收入。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id="第一步选一个能卖的品类"&gt;第一步：选一个能卖的品类&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;品类&lt;/th&gt;
-					&lt;th&gt;目标用户&lt;/th&gt;
-					&lt;th&gt;定价参考&lt;/th&gt;
-					&lt;th&gt;竞争&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;个人财务追踪&lt;/td&gt;
-					&lt;td&gt;上班族&lt;/td&gt;
-					&lt;td&gt;$5-15&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;项目管理&lt;/td&gt;
-					&lt;td&gt;自由职业者&lt;/td&gt;
-					&lt;td&gt;$10-25&lt;/td&gt;
-					&lt;td&gt;高&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;习惯养成&lt;/td&gt;
-					&lt;td&gt;学生/上班族&lt;/td&gt;
-					&lt;td&gt;$5-10&lt;/td&gt;
-					&lt;td&gt;高&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;周报/日报模板&lt;/td&gt;
-					&lt;td&gt;职场人&lt;/td&gt;
-					&lt;td&gt;$3-8&lt;/td&gt;
-					&lt;td&gt;低&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;内容日历&lt;/td&gt;
-					&lt;td&gt;自媒体&lt;/td&gt;
-					&lt;td&gt;$8-15&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;阅读/学习笔记&lt;/td&gt;
-					&lt;td&gt;学生&lt;/td&gt;
-					&lt;td&gt;$5-10&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;求职追踪&lt;/td&gt;
-					&lt;td&gt;求职者&lt;/td&gt;
-					&lt;td&gt;$5-12&lt;/td&gt;
-					&lt;td&gt;低&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;建议从「低竞争+你熟悉的」品类切入。&lt;/strong&gt; 比如你是程序员就做项目管理模板，是学生就做学习笔记。&lt;/p&gt;
-&lt;h2 id="第二步设计你的模板"&gt;第二步：设计你的模板&lt;/h2&gt;
-&lt;p&gt;优秀Notion模板的要素：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;开箱即用&lt;/strong&gt;：用户复制后立刻能用，不需要自己改结构&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;数据关联&lt;/strong&gt;：用Relation和Rollup让数据联动（这是新手不会做的）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;视图多样&lt;/strong&gt;：日历、看板、表格、画廊，多种视图切换&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;美学在线&lt;/strong&gt;：封面图、Emoji图标、配色协调&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;说明文档&lt;/strong&gt;：模板里包含使用指南&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="第三步包装与定价"&gt;第三步：包装与定价&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;定价策略&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;单模板：$5-15&lt;/li&gt;
-&lt;li&gt;Bundle（3-5个模板）：$15-40&lt;/li&gt;
-&lt;li&gt;免费模板 → 收集邮箱 → 卖高价模板&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Landing Page要素&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;3-5张高质量截图&lt;/li&gt;
-&lt;li&gt;功能列表（Bullet points）&lt;/li&gt;
-&lt;li&gt;包含什么（模板+教程+后续更新）&lt;/li&gt;
-&lt;li&gt;用户评价（初期可以找人免费试用换评价）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="第四步上架gumroad"&gt;第四步：上架Gumroad&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://gumroad.com"&gt;Gumroad&lt;/a&gt; 是最简单的数字产品平台：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;注册账号&lt;/li&gt;
-&lt;li&gt;创建产品 → Digital Product&lt;/li&gt;
-&lt;li&gt;上传模板文件（Notion里点「Duplicate」链接即可）&lt;/li&gt;
-&lt;li&gt;设置价格&lt;/li&gt;
-&lt;li&gt;写产品描述（参考第三步）&lt;/li&gt;
-&lt;li&gt;发布&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description></item><item><title>2026年适合程序员的6个副业方向：从接私活到被动收入</title><link>https://zhouyangimt.github.io/posts/programmer-side-hustle-2026/</link><pubDate>Sat, 06 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/programmer-side-hustle-2026/</guid><description>&lt;h2 id="程序员的副业不只是接私活"&gt;程序员的副业，不只是接私活&lt;/h2&gt;
-&lt;p&gt;很多程序员想到副业就是「外包」「接私活」——累、不稳定、天花板低。2026年，我们有更好的选择。&lt;/p&gt;
-&lt;p&gt;以下是6条经过验证的路线，按从「快速来钱」到「被动收入」排序。&lt;/p&gt;
-&lt;h2 id="1-技术写作--内容站"&gt;1. 技术写作 / 内容站&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 极低（你会写文档就会这个）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $200-$2000/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 写技术博客 → 挂Google AdSense / 接Sponsorship&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $0（GitHub Pages + 你的时间）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;回报周期&lt;/strong&gt;: 3-6个月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;为什么推荐&lt;/strong&gt;: 程序员天然有内容可写——踩过的坑、学的新技术、项目复盘。一篇高质量文章能吃几年搜索流量。&lt;/p&gt;
-&lt;h2 id="2-chrome扩展开发"&gt;2. Chrome扩展开发&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 中低&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $100-$5000/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 开发实用小插件 → Chrome Web Store → 免费+付费版&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $5（Chrome开发者注册费）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;案例&lt;/strong&gt;: 一个「网页截图+标注」的扩展，月活10万，Freemium模式月入$2000+。&lt;/p&gt;
-&lt;h2 id="3-notionexcel模板"&gt;3. Notion/Excel模板&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 极低&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $100-$2000/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 设计模板 → Gumroad/淘宝上架&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $0&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;热门品类&lt;/strong&gt;: 个人财务追踪、项目管理、习惯养成、周报模板。&lt;/p&gt;
-&lt;h2 id="4-apisaas微产品"&gt;4. API/SaaS微产品&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 中高&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $500-$10000/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 解决一个小痛点 → 做成SaaS → 按月收费&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: ~$20/月（服务器）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;: PDF转换工具、图片压缩API、定时监控服务——功能单一但精准。&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>副业 on 独立开发与AI实战</title>
+		<link>https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/</link>
+		<description>Recent content in 副业 on 独立开发与AI实战</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 15 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyangimt.github.io/tags/%E5%89%AF%E4%B8%9A/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>从零到一：2026年独立开发者如何构建第一个SaaS产品</title>
+				<link>https://zhouyangimt.github.io/posts/build-first-saas-2026/</link>
+				<pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/build-first-saas-2026/</guid>
+				<description>&lt;h2 id=&#34;独立开发saas还能赚钱吗&#34;&gt;独立开发SaaS还能赚钱吗？&lt;/h2&gt;&#xA;&lt;p&gt;能。但不是「我有一个改变世界的想法，融500万美金」那种SaaS。&lt;/p&gt;&#xA;&lt;p&gt;是这种：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;一个有明确痛点的小工具，月费$5-20，服务几千个用户，月入$5000-20000。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;这叫&lt;strong&gt;Micro-SaaS&lt;/strong&gt;或&lt;strong&gt;独立开发者SaaS&lt;/strong&gt;。本文讲的就是这个。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一步找到对的点子&#34;&gt;第一步：找到对的点子&lt;/h2&gt;&#xA;&lt;h3 id=&#34;方向错了后面全白费&#34;&gt;方向错了，后面全白费&lt;/h3&gt;&#xA;&lt;p&gt;好点子的标准：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;解决真问题&lt;/strong&gt;：用户愿意付钱解决&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;市场够小&lt;/strong&gt;：大公司看不上&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;你能做&lt;/strong&gt;：技术栈在你能力范围内&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;可触达&lt;/strong&gt;：你找得到目标用户&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;怎么找点子&#34;&gt;怎么找点子？&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;方法一：从自己的痛点出发&lt;/strong&gt;&#xA;你最近因为什么东西不爽？有没有「要是有个工具能……就好了」的时刻？&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;方法二：看现有产品的差评&lt;/strong&gt;&#xA;去G2、Product Hunt、Reddit看竞品的差评。用户抱怨什么，就是你的机会。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;方法三：挖缝隙市场&lt;/strong&gt;&#xA;大平台的API生态里有很多机会：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Slack App、Notion集成、Figma插件&lt;/li&gt;&#xA;&lt;li&gt;Chrome扩展、VS Code插件&lt;/li&gt;&#xA;&lt;li&gt;Shopify App、WordPress插件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;一些方向参考&#34;&gt;一些方向参考&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;方向&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;例子&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;难度&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;PDF工具&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;合并、压缩、转换&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;API封装&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;数据接口转卖&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自动化&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;定时任务、监控&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;数据分析&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;报表生成&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;AI工具&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;文案、图片生成&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;第二步验证想法&#34;&gt;第二步：验证想法&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;不要一开始就写代码。&lt;/strong&gt; 先验证：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;做一个Landing Page（Carrd/Notion都行），描述你的产品&lt;/li&gt;&#xA;&lt;li&gt;放一个「抢先体验」邮箱收集按钮&lt;/li&gt;&#xA;&lt;li&gt;去目标用户聚集的地方发帖&lt;/li&gt;&#xA;&lt;li&gt;看有多少人留邮箱&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;50个人留邮箱 = 可以做。500个 = 赶紧做。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;第三步搭mvp&#34;&gt;第三步：搭MVP&lt;/h2&gt;&#xA;&lt;p&gt;MVP（最小可行产品）只有一个目标：&lt;strong&gt;验证用户愿意付钱&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;MVP该有的&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;核心功能（只做一件事）&lt;/li&gt;&#xA;&lt;li&gt;支付（接Stripe/LemonSqueezy）&lt;/li&gt;&#xA;&lt;li&gt;基础登录（Supabase Auth）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;MVP不该有的&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;精美的UI（能用就行）&lt;/li&gt;&#xA;&lt;li&gt;管理后台（手动改数据库）&lt;/li&gt;&#xA;&lt;li&gt;多语言&lt;/li&gt;&#xA;&lt;li&gt;复杂的数据分析&lt;/li&gt;&#xA;&lt;li&gt;移动App（先做Web）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;时间预算：2周内上线。&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Google AdSense申请全攻略：从被拒到通过的实战经验</title>
+				<link>https://zhouyangimt.github.io/posts/google-adsense-apply-guide/</link>
+				<pubDate>Sat, 13 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/google-adsense-apply-guide/</guid>
+				<description>&lt;h2 id=&#34;为什么选adsense&#34;&gt;为什么选AdSense？&lt;/h2&gt;&#xA;&lt;p&gt;Google AdSense是最简单的网站变现方式。挂上代码，Google自动匹配广告，有人点你就赚钱。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;申请免费&lt;/li&gt;&#xA;&lt;li&gt;自动匹配，不用自己找广告主&lt;/li&gt;&#xA;&lt;li&gt;覆盖面最广（几乎所有广告主都投Google）&lt;/li&gt;&#xA;&lt;li&gt;中文站也能做&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;审核严（尤其对中文站）&lt;/li&gt;&#xA;&lt;li&gt;单价不高（中文流量CPC低）&lt;/li&gt;&#xA;&lt;li&gt;影响用户体验（广告太多读者反感）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;申请前你的站必须达标&#34;&gt;申请前：你的站必须达标&lt;/h2&gt;&#xA;&lt;h3 id=&#34;硬性条件&#34;&gt;硬性条件&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;内容数量&lt;/strong&gt;：至少20-30篇原创文章（越多越好）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;内容质量&lt;/strong&gt;：每篇500字以上，有价值，不能是AI灌水&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;网站完整&lt;/strong&gt;：有关于页面、联系方式、隐私政策&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;域名年龄&lt;/strong&gt;：最好6个月以上（新域名通过率低）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;合规内容&lt;/strong&gt;：不能有成人、盗版、赌博等违规内容&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;加分项&#34;&gt;加分项&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;HTTPS（必须）&lt;/li&gt;&#xA;&lt;li&gt;网站速度够快&lt;/li&gt;&#xA;&lt;li&gt;有独立域名（不要用免费二级域名）&lt;/li&gt;&#xA;&lt;li&gt;网站设计清爽、导航清晰&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;常见被拒原因&#34;&gt;常见被拒原因&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;原因&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;怎么解决&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;内容不足&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;写到30篇再申请&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低质量内容&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;删掉AI水文，重写&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;网站太新&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;等域名满6个月&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;缺少必要页面&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;加关于/联系/隐私政策页&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;违反政策&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;检查有没有违规内容&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;流量太低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;先做SEO，有自然流量再申&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;申请流程&#34;&gt;申请流程&lt;/h2&gt;&#xA;&lt;h3 id=&#34;第一步准备工作&#34;&gt;第一步：准备工作&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;确保网站有30+篇高质量文章&lt;/li&gt;&#xA;&lt;li&gt;添加以下页面：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;/about/&lt;/code&gt; — 关于你和这个网站&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;/contact/&lt;/code&gt; — 联系方式&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;/privacy/&lt;/code&gt; — 隐私政策（可以AI生成模板）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;网站有HTTPS&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;第二步提交申请&#34;&gt;第二步：提交申请&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;访问 &lt;a href=&#34;https://adsense.google.com&#34;&gt;adsense.google.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;用Google账号登录&lt;/li&gt;&#xA;&lt;li&gt;输入你的网站URL&lt;/li&gt;&#xA;&lt;li&gt;提交审核&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;第三步等待审核&#34;&gt;第三步：等待审核&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;通常1-2周出结果&lt;/li&gt;&#xA;&lt;li&gt;可能会被要求添加 &lt;code&gt;ads.txt&lt;/code&gt; 文件&lt;/li&gt;&#xA;&lt;li&gt;审核期间继续发文章&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;第四步审核通过后&#34;&gt;第四步：审核通过后&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Google会给你一段广告代码&lt;/li&gt;&#xA;&lt;li&gt;贴到你网站的 &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; 标签里&lt;/li&gt;&#xA;&lt;li&gt;创建广告单元（推荐「自动广告」模式）&lt;/li&gt;&#xA;&lt;li&gt;广告开始展示&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;提高通过率的技巧&#34;&gt;提高通过率的技巧&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-用二级域名申请&#34;&gt;1. 用二级域名申请&lt;/h3&gt;&#xA;&lt;p&gt;如果你的主域名有一些不成熟的内容，可以用 &lt;code&gt;blog.yourdomain.com&lt;/code&gt; 这种干净的二级域名申请。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title>
+				<link>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</link>
+				<pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</guid>
+				<description>&lt;h2 id=&#34;为什么是notion模板&#34;&gt;为什么是Notion模板？&lt;/h2&gt;&#xA;&lt;p&gt;Notion全球用户超过1亿人。有人在Notion里管理人生，有人管理项目，有人记账。&lt;/p&gt;&#xA;&lt;p&gt;但大部分人不会「设计」一套好用的Notion系统。这就是你的机会。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;卖模板 = 设计一次，卖无数次。真正的被动收入。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一步选一个能卖的品类&#34;&gt;第一步：选一个能卖的品类&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;品类&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;目标用户&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;定价参考&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;竞争&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;个人财务追踪&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;上班族&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-15&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;项目管理&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自由职业者&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$10-25&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;习惯养成&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;学生/上班族&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-10&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;周报/日报模板&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;职场人&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$3-8&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;内容日历&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自媒体&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$8-15&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;阅读/学习笔记&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;学生&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-10&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;求职追踪&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;求职者&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-12&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;建议从「低竞争+你熟悉的」品类切入。&lt;/strong&gt; 比如你是程序员就做项目管理模板，是学生就做学习笔记。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第二步设计你的模板&#34;&gt;第二步：设计你的模板&lt;/h2&gt;&#xA;&lt;p&gt;优秀Notion模板的要素：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;开箱即用&lt;/strong&gt;：用户复制后立刻能用，不需要自己改结构&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;数据关联&lt;/strong&gt;：用Relation和Rollup让数据联动（这是新手不会做的）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;视图多样&lt;/strong&gt;：日历、看板、表格、画廊，多种视图切换&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;美学在线&lt;/strong&gt;：封面图、Emoji图标、配色协调&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;说明文档&lt;/strong&gt;：模板里包含使用指南&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;第三步包装与定价&#34;&gt;第三步：包装与定价&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;定价策略&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;单模板：$5-15&lt;/li&gt;&#xA;&lt;li&gt;Bundle（3-5个模板）：$15-40&lt;/li&gt;&#xA;&lt;li&gt;免费模板 → 收集邮箱 → 卖高价模板&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Landing Page要素&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;3-5张高质量截图&lt;/li&gt;&#xA;&lt;li&gt;功能列表（Bullet points）&lt;/li&gt;&#xA;&lt;li&gt;包含什么（模板+教程+后续更新）&lt;/li&gt;&#xA;&lt;li&gt;用户评价（初期可以找人免费试用换评价）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第四步上架gumroad&#34;&gt;第四步：上架Gumroad&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gumroad.com&#34;&gt;Gumroad&lt;/a&gt; 是最简单的数字产品平台：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;注册账号&lt;/li&gt;&#xA;&lt;li&gt;创建产品 → Digital Product&lt;/li&gt;&#xA;&lt;li&gt;上传模板文件（Notion里点「Duplicate」链接即可）&lt;/li&gt;&#xA;&lt;li&gt;设置价格&lt;/li&gt;&#xA;&lt;li&gt;写产品描述（参考第三步）&lt;/li&gt;&#xA;&lt;li&gt;发布&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>2026年适合程序员的6个副业方向：从接私活到被动收入</title>
+				<link>https://zhouyangimt.github.io/posts/programmer-side-hustle-2026/</link>
+				<pubDate>Sat, 06 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/programmer-side-hustle-2026/</guid>
+				<description>&lt;h2 id=&#34;程序员的副业不只是接私活&#34;&gt;程序员的副业，不只是接私活&lt;/h2&gt;&#xA;&lt;p&gt;很多程序员想到副业就是「外包」「接私活」——累、不稳定、天花板低。2026年，我们有更好的选择。&lt;/p&gt;&#xA;&lt;p&gt;以下是6条经过验证的路线，按从「快速来钱」到「被动收入」排序。&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-技术写作--内容站&#34;&gt;1. 技术写作 / 内容站&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 极低（你会写文档就会这个）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $200-$2000/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 写技术博客 → 挂Google AdSense / 接Sponsorship&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $0（GitHub Pages + 你的时间）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;回报周期&lt;/strong&gt;: 3-6个月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;为什么推荐&lt;/strong&gt;: 程序员天然有内容可写——踩过的坑、学的新技术、项目复盘。一篇高质量文章能吃几年搜索流量。&lt;/p&gt;&#xA;&lt;h2 id=&#34;2-chrome扩展开发&#34;&gt;2. Chrome扩展开发&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 中低&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $100-$5000/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 开发实用小插件 → Chrome Web Store → 免费+付费版&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $5（Chrome开发者注册费）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;案例&lt;/strong&gt;: 一个「网页截图+标注」的扩展，月活10万，Freemium模式月入$2000+。&lt;/p&gt;&#xA;&lt;h2 id=&#34;3-notionexcel模板&#34;&gt;3. Notion/Excel模板&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 极低&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $100-$2000/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 设计模板 → Gumroad/淘宝上架&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: $0&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;热门品类&lt;/strong&gt;: 个人财务追踪、项目管理、习惯养成、周报模板。&lt;/p&gt;&#xA;&lt;h2 id=&#34;4-apisaas微产品&#34;&gt;4. API/SaaS微产品&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;门槛&lt;/strong&gt;: 中高&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;收入潜力&lt;/strong&gt;: $500-$10000/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;方式&lt;/strong&gt;: 解决一个小痛点 → 做成SaaS → 按月收费&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;启动成本&lt;/strong&gt;: ~$20/月（服务器）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;: PDF转换工具、图片压缩API、定时监控服务——功能单一但精准。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

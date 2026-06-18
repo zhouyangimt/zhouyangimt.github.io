@@ -6,7 +6,7 @@ tags: ["sichuan", "tofu", "spicy", "classic"]
 slug: "mapo-tofu-sichuan-classic"
 ---
 
-![Mapo Tofu](/images/mapo-tofu.jpg)
+![Mapo Tofu - Sichuan spicy tofu dish](/images/mapo-tofu-sichuan.jpg)
 
 If there's one dish that captures the essence of **Sichuan cuisine**, it's Mapo Tofu (麻婆豆腐).
 

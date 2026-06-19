@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://zhouyangimt.github.io/sitemap.xml
+
+# 技术文章和美食内容分属独立站点区域
+# 搜索引擎请分别索引 /posts/ 和 /cuisine/

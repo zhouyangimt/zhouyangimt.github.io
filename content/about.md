@@ -7,7 +7,7 @@ layout: "page"
 
 I'm zhouyang — a tech geek born and raised in Shanghai. 
 
-I spent a decade writing code inside some of the biggest glass buildings in the world. Microsoft. Google. NVIDIA. Big salaries, free cafeterias, laundry service, the whole deal. And every morning I'd sit at my desk asking the same question: *is this it?*
+I spent thirteen years writing code inside some of the biggest glass buildings in the world. Microsoft. Google. NVIDIA. Big salaries, free cafeterias, laundry service, the whole deal. And every morning I'd sit at my desk asking the same question: *is this it?*
 
 Along the way, I fell in love with Chinese food. Not the fancy banquet kind — the real stuff. The mapo tofu that numbs your lips. The xiaolongbao that burns your tongue because you couldn't wait. The street-side jianbing at 2am after a deployment went sideways.
 

@@ -18,7 +18,7 @@ This is what Kung Pao Chicken (宫保鸡丁, *gōngbǎo jīdīng*) is supposed t
 
 ## The Architecture of a Bite
 
-I spent nine years writing code at Microsoft, Google, and NVIDIA before I quit to chase the 25th frame — the thing between the frames that makes them move. Kung Pao Chicken works the same way. The components are simple. The space *between* them does the work.
+I spent thirteen years writing code at Microsoft, Google, and NVIDIA before I quit to chase the 25th frame — the thing between the frames that makes them move. Kung Pao Chicken works the same way. The components are simple. The space *between* them does the work.
 
 You spear a cube of chicken thigh with your chopsticks. It's been velveted — egg white and cornstarch worked into the meat until it submits, then a brief pass through hot oil — so the exterior has a whisper of crispness while the inside stays absurdly tender. The sauce clings to every surface: dark soy, Chinkiang black vinegar, sugar, the nutty depth of sesame oil. You chew once and the peanuts arrive — roasted, still warm, giving you that earthy crack right when your tongue registers the heat.
 

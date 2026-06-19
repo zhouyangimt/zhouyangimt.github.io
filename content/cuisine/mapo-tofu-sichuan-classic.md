@@ -16,6 +16,8 @@ The magic is in the combination: tender cubes of silken tofu, ground pork (or be
 
 Legend says it was invented in 1862 by a pockmarked (*má*) old woman (*pó*) who ran a small restaurant near the Wanfu Bridge in Chengdu. Her tofu dish became so popular that people simply called it "Pockmarked Granny's Tofu."
 
+![Mapo Tofu closeup — silky tofu in fiery red chili oil](/images/mapo-tofu-closeup.jpg)
+
 ## The Secret Sauce
 
 What separates a good Mapo Tofu from a great one comes down to three things:

@@ -45,6 +45,7 @@
 <p>上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。</p>
 <p>Hermes 的核心优势之一是<strong>不绑定任何模型厂商</strong>。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。</p>
 <p>今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。</p>
+<p><img src="/images/hermes-architecture.png" alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"></p>
 <h2 id="配置文件在哪">配置文件在哪</h2>
 <p>Hermes 的配置分布在两个文件：</p>
 <pre tabindex="0"><code>~/.hermes/config.yaml   # 主配置：模型、工具集、人格、安全策略等

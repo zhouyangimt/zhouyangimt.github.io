@@ -13,6 +13,8 @@ Hermes 的核心优势之一是**不绑定任何模型厂商**。OpenRouter、An
 
 今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。
 
+![Hermes Agent 整体架构：用户层 → 消息路由 → 模型层](/images/hermes-architecture.png)
+
 ## 配置文件在哪
 
 Hermes 的配置分布在两个文件：

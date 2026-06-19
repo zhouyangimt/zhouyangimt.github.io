@@ -4,9 +4,17 @@
   <p class="subtitle">{{ .Site.Params.description }}</p>
 </section>
 
+<!-- 技术文章板块 -->
+<section class="section-header">
+  <div class="section-title-row">
+    <h2>📝 技术文章</h2>
+    <a href="/posts/index.xml" class="rss-badge" title="技术文章 RSS">RSS</a>
+  </div>
+  <p class="section-desc">AI · 编程 · 工具 · 自动化 · 独立开发</p>
+</section>
 <section class="post-list">
-  {{ $posts := where .Site.RegularPages "Section" "posts" }}
-  {{ range $posts }}
+  {{ $tech := where .Site.RegularPages "Section" "posts" | first 5 }}
+  {{ range $tech }}
   <article class="post-card">
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <div class="meta">
@@ -21,5 +29,39 @@
     <a href="{{ .RelPermalink }}" class="read-more">阅读全文 →</a>
   </article>
   {{ end }}
+  <div class="section-more">
+    <a href="/posts/" class="btn-more">查看全部技术文章 →</a>
+  </div>
+</section>
+
+<!-- 美食板块 -->
+<section class="section-header cuisine-header">
+  <div class="section-title-row">
+    <h2>🍜 Chinese Cuisine</h2>
+    <a href="/cuisine/index.xml" class="rss-badge" title="Chinese Cuisine RSS">RSS</a>
+  </div>
+  <p class="section-desc">A visual journey through China's most iconic dishes</p>
+</section>
+<section class="cuisine-grid">
+  {{ $food := where .Site.RegularPages "Section" "cuisine" | first 4 }}
+  {{ range $food }}
+  <article class="cuisine-card">
+    {{ $img := "" }}
+    {{ if .Params.images }}{{ $img = index .Params.images 0 }}{{ end }}
+    {{ with $img }}
+    <div class="cuisine-thumb">
+      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+    </div>
+    {{ end }}
+    <div class="cuisine-info">
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
+      <p class="summary">{{ .Summary | truncate 100 }}</p>
+    </div>
+  </article>
+  {{ end }}
+  <div class="section-more">
+    <a href="/cuisine/" class="btn-more">Explore All Dishes →</a>
+  </div>
 </section>
 {{ end }}

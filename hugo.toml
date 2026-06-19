@@ -12,6 +12,11 @@ buildFuture = true
     [markup.goldmark.renderer]
       unsafe = true
 
+# 禁用混合 RSS，使用分板块独立 RSS
+[outputs]
+  home = ['HTML']
+  section = ['HTML', 'RSS']
+
 [menu]
   [[menu.main]]
     name = '首页'

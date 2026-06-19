@@ -12,7 +12,7 @@ The first time I ate real Mapo Tofu, I was nineteen years old, one year into my 
 
 The bowl arrived hissing. Not metaphorically — the sauce was still bubbling against the ceramic, little crimson volcanoes popping through the oil. The smell hit me in layers: first the fermented funk of doubanjiang (豆瓣酱, *dòubànjiàng*), aged in clay jars until it goes dark and dangerous; then garlic and ginger fried to the edge of charcoal; then something metallic and electric that I couldn't place. That last one was the Sichuan peppercorn — freshly toasted, freshly ground, released onto the dish like a cloud of static electricity.
 
-I took a spoonful. The tofu collapsed on my tongue before I could chew. The sauce was so red it should have been a warning label, and the heat built like a recursive function — slow at first, then exponential. By the third spoonful my lips were buzzing, my forehead was wet, and my chopsticks were moving independent of my brain. I finished the bowl. I did not, for the record, ever date a Sichuan girl. But I have eaten Mapo Tofu at least once a month for the fifteen years since.
+I took a spoonful. The tofu collapsed on my tongue before I could chew. The sauce was so red it should have been a warning label, and the heat built like a recursive function — slow at first, then exponential. By the third spoonful my lips were buzzing, my forehead was wet, and my chopsticks were moving independent of my brain. I finished the bowl. I did not, for the record, ever date a Sichuan girl. But I have eaten Mapo Tofu at least once a month for the sixteen years since.
 
 ![Mapo Tofu close-up — the trembling tofu, the crimson oil, the scallion confetti](/images/mapo-tofu-2.jpg)
 

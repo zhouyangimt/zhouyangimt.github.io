@@ -7,10 +7,10 @@
 <!-- 技术文章板块 -->
 <section class="section-header">
   <div class="section-title-row">
-    <h2>📝 技术文章</h2>
-    <a href="/posts/index.xml" class="rss-badge" title="技术文章 RSS">RSS</a>
+    <h2>📝 Tech</h2>
+    <a href="/posts/index.xml" class="rss-badge" title="Tech RSS">RSS</a>
   </div>
-  <p class="section-desc">AI · 编程 · 工具 · 自动化 · 独立开发</p>
+  <p class="section-desc">AI · Programming · Tools · Automation · Indie Hacking</p>
 </section>
 <section class="post-list">
   {{ $tech := where .Site.RegularPages "Section" "posts" | first 5 }}
@@ -26,11 +26,11 @@
       {{ end }}
     </div>
     <p class="summary">{{ .Summary | truncate 200 }}</p>
-    <a href="{{ .RelPermalink }}" class="read-more">阅读全文 →</a>
+    <a href="{{ .RelPermalink }}" class="read-more">Read more →</a>
   </article>
   {{ end }}
   <div class="section-more">
-    <a href="/posts/" class="btn-more">查看全部技术文章 →</a>
+    <a href="/posts/" class="btn-more">All tech articles →</a>
   </div>
 </section>
 
@@ -61,7 +61,7 @@
   </article>
   {{ end }}
   <div class="section-more">
-    <a href="/cuisine/" class="btn-more">Explore All Dishes →</a>
+    <a href="/cuisine/" class="btn-more">Explore all dishes →</a>
   </div>
 </section>
 {{ end }}

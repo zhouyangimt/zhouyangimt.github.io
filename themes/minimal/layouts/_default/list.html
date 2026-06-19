@@ -1,11 +1,21 @@
 {{ define "main" }}
 <section class="post-list">
-  <h2>分类：{{ .Title }}</h2>
+  {{ if eq .Section "cuisine" }}
+  <h2>🍜 {{ .Title }}</h2>
+  <p class="section-desc" style="margin-bottom:20px">A visual journey through China's most iconic dishes</p>
+  {{ else }}
+  <h2>📝 {{ .Title }}</h2>
+  {{ end }}
   {{ range .Pages }}
   <article class="post-card">
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
     <p class="summary">{{ .Summary | truncate 150 }}</p>
+    {{ if eq $.Section "cuisine" }}
+    <a href="{{ .RelPermalink }}" class="read-more">Read more →</a>
+    {{ else }}
+    <a href="{{ .RelPermalink }}" class="read-more">阅读全文 →</a>
+    {{ end }}
   </article>
   {{ end }}
 </section>

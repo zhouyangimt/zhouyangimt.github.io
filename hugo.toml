@@ -1,10 +1,10 @@
 baseURL = 'https://zhouyangimt.github.io/'
-title = '独立开发与AI实战'
+title = 'zhouyang — The 25th Frame'
 theme = 'minimal'
 buildFuture = true
 
 [params]
-  description = 'AI工具教程 · 独立开发 · 副业思路 · 编程与效率'
+  description = 'Tech from Shanghai. Daydreamer. ex-Microsoft, ex-Google, ex-NVIDIA. Sharing code with China, sharing cuisine with the world.'
   author = 'zhouyang'
 
 [markup]
@@ -19,11 +19,11 @@ buildFuture = true
 
 [menu]
   [[menu.main]]
-    name = '首页'
+    name = 'Home'
     url = '/'
     weight = 1
   [[menu.main]]
-    name = '技术文章'
+    name = 'Tech'
     url = '/posts/'
     weight = 2
   [[menu.main]]
@@ -31,6 +31,6 @@ buildFuture = true
     url = '/cuisine/'
     weight = 3
   [[menu.main]]
-    name = '关于'
+    name = 'About'
     url = '/about/'
     weight = 4

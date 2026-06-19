@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +7,14 @@
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <link rel="stylesheet" href="/css/style.css">
   {{ if .IsHome }}
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="技术文章 RSS">
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">
   {{ else if eq .Section "posts" }}
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="技术文章 RSS">
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   {{ else if eq .Section "cuisine" }}
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">
   {{ else }}
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="技术文章 RSS">
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">
   {{ end }}
 </head>
@@ -26,8 +26,8 @@
         {{ range .Site.Menus.main }}
         <a href="{{ .URL }}">{{ .Name }}</a>
         {{ end }}
-        <a href="/posts/index.xml" title="技术文章 RSS">📡 技术</a>
-        <a href="/cuisine/index.xml" title="Chinese Cuisine RSS">📡 美食</a>
+        <a href="/posts/index.xml" title="Tech RSS">📡 Tech</a>
+        <a href="/cuisine/index.xml" title="Chinese Cuisine RSS">📡 Food</a>
       </div>
     </nav>
   </header>
@@ -35,7 +35,7 @@
     {{ block "main" . }}{{ end }}
   </main>
   <footer>
-    <p>© {{ now.Format "2006" }} {{ .Site.Params.author }} · Powered by Hugo</p>
+    <p>© {{ now.Format "2006" }} {{ .Site.Params.author }} · Shanghai · Chasing the 25th frame</p>
   </footer>
 </body>
 </html>

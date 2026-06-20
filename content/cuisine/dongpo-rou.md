@@ -32,47 +32,31 @@ I spent thirteen years waiting for code to compile at Microsoft, Google, and NVI
 
 ## The Poet Who Cooked
 
-Su Dongpo was many things: the greatest poet of the Song dynasty, a calligrapher whose scrolls now sell for small fortunes, a civil engineer who dredged West Lake and built the Su Causeway that still carries traffic today. He was also, on at least two occasions, exiled for writing poems that annoyed the emperor.
-
-The second exile sent him to Huangzhou in 1080, a Yangtze backwater where pork was cheap and nobody knew how to cook it. The locals boiled it into gray submission. Su, bored and hungry, wrote a poem that doubled as a recipe:
-
-> *"Fill the pot with water, add a gentle fire. Let it cook until the meat is tender and the sauce is thick."*
-
-He braised the belly low and slow, suspended in Shaoxing wine, sweetened with sugar, darkened with soy. The result was so good the dish followed his name for the next nine hundred years.
-
-Su Dongpo was a genius at everything he touched — poetry, painting, politics, engineering — and when he applied that same intensity to a cheap cut of pork, he produced something permanent. The civil engineering is museum plaques. The poetry lives in textbooks. The pork lives on tables, in clay pots, in the trembling fourth cube you're already dreading will be the last. I know which legacy I'd rather have.
+Su Dongpo was a Song dynasty poet, exiled to Huangzhou in 1080 for offending the emperor. Pork was cheap there, and nobody knew how to cook it. So Su braised pork belly low and slow in Shaoxing wine, sweetened with sugar, darkened with soy. The result was so good the dish took his name for the next nine hundred years.
 
 ## The Enemies of Dongpo Rou
 
-Dongpo Rou's greatest enemy is impatience. The dish has been compromised in every possible way by cooks who won't wait.
+**Impatience.** Less than two hours and the collagen hasn't converted to gelatin — you're eating pork stew with soy sauce, not Dongpo Rou. Lou Wai Lou does four hours. They're not showing off.
 
-**The braise.** Less than two hours and you're eating pork stew with soy sauce. The collagen hasn't converted to gelatin. The fat hasn't rendered properly. The sauce is thin and watery instead of syrupy. Lou Wai Lou does four hours. They're not showing off — they're doing it right.
+**The wine.** Shaoxing cooking wine (绍兴酒, *Shàoxīng jiǔ*) is non-negotiable. Not white wine, not whatever's open. Its nutty, oxidized profile permeates the pork during the long braise. Substituting is like cooking coq au vin with Bud Light.
 
-**The wine.** Shaoxing cooking wine (绍兴酒, *Shàoxīng jiǔ*) is non-negotiable. Not white wine, not beer, not "whatever's open." Shaoxing wine has a specific nutty, oxidized profile — somewhere between dry sherry and something stranger — that permeates the pork during the long braise. Substituting is like cooking coq au vin with Bud Light.
+**The sugar.** Rock sugar (冰糖, *bīngtáng*) only. It melts slower, caramelizes gentler, and produces a lacquered gloss that granulated sugar can't match. The difference is visible from across the restaurant.
 
-**The sugar.** Rock sugar (冰糖, *bīngtáng*) only. Not white granulated. Not brown. Rock sugar melts slower, caramelizes gentler, and produces a gloss that mirrors light like polished lacquer. Granulated sugar goes matte and grainy. The difference is visible from across the restaurant.
+**The cut.** Pork belly (五花肉, *wǔhuā ròu*) is the only cut with enough collagen to survive a three-hour braise. Shoulder won't work. Loin is a disaster. It needs the five clear layers.
 
-**The cut.** Pork belly (五花肉, *wǔhuā ròu*), specifically the center section with five clear layers: skin, fat, lean, fat, lean. Shoulder won't work. Loin is a disaster. Pork belly is the only cut with enough collagen to survive a three-hour braise without turning into cotton floss.
-
-I've seen Dongpo Rou served as thin slices on a white plate with a drizzle of "reduction" that was clearly cornstarch slurry. I've seen it diced into cubes so small they disintegrated in the pot. I've seen it "deconstructed" — dry pork with a shot glass of sauce on the side, because some chef watched too much food TV.
-
-The real thing is four cubes, dark as lacquer, trembling on a bed of blanched bok choy, sauce pooled beneath. Anything else is a different dish. Call it braised pork belly and we're fine. Don't call it Dongpo Rou.
+The real thing is four cubes, dark as lacquer, trembling on a bed of blanched bok choy, sauce pooled beneath. Anything else is a different dish.
 
 ![Dongpo Rou served with steamed mantou buns — the classic pairing](/images/dongpo-rou-3.jpg)
 
 ## How to Eat It
 
-With *mantou* (馒头) — plain steamed buns, no filling, fluffy as clouds — or over white rice. Both are correct. I prefer mantou because tearing the bun, bedding the pork inside, and watching the sauce stain the white dough is one of the great sensory experiences in Chinese food.
+Over white rice, or with *mantou* (馒头) — plain steamed buns, fluffy as clouds. I prefer mantou because tearing the bun, bedding the pork inside, and watching the sauce stain the white dough is one of the great sensory experiences in Chinese food.
 
-Chopsticks. Lift a cube. It should tremble. If it doesn't, send it back and explain why. Place it on the bun. Press gently — the lean meat should separate into strands without resistance. Fold the bun over. Eat it like a sandwich, sauce running down your wrist. Accept that.
+Chopsticks. Lift a cube. It should tremble. Press gently — the lean meat should separate into strands without resistance. Fold the bun over and eat it like a sandwich, sauce running down your wrist. Accept that.
 
-The bok choy underneath the pork is not a garnish. The leaves have absorbed the braising liquid during the final fifteen minutes of cooking. They are the vegetable equivalent of the pork itself. Eat them.
+The bok choy underneath is not a garnish. It has absorbed the braising liquid during the final minutes of cooking. Eat it.
 
-Between bites, drink hot tea. Tieguanyin oolong cuts through the fat better than anything. Don't drink beer — the carbonation fights the richness and you'll feel bloated before the third cube. Don't drink cold water. Cold water congeals the pork fat on your palate. My grandmother taught me this and I've tested it enough times to know she was right.
-
-The dish serves four cubes. The first is novelty. The second is understanding. The third is when you start to worry it'll end. The fourth is a small death you'll think about for days.
-
-When it's over, you'll sit there, looking at the empty clay pot, the sauce-stained bun fragments, the chopsticks resting on their porcelain holder. And you'll understand why a poet who could have written anything chose to write a pork recipe instead.
+Between bites, drink hot tea. Tieguanyin oolong cuts through the fat better than anything. Don't drink cold water — it congeals the pork fat on your palate.
 
 ---
 

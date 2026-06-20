@@ -28,13 +28,7 @@ And the meat isn't just protein — it's a flavor delivery system. Every granule
 
 ## The Pockmarked Woman Who Started It All
 
-Every dish that matters has an origin story. Mapo Tofu's is better than most.
-
-In 1862, near Wanfu Bridge (万福桥) in Chengdu, a woman named Chen ran a roadside stall. She'd survived smallpox, leaving her face pitted and scarred. Her customers — laborers hauling oil across the bridge — called her *Chén Māpó* (陈麻婆): "Pockmarked Old Woman Chen." Not kind. Accurate.
-
-Her specialty was tofu stewed with minced beef in spicy fermented bean paste. It cost nothing. It filled you for a day. Porters would stop, sweat through their shirts, return the next day with three friends. They didn't say "let's eat Chen's tofu." They said: "Let's eat *Má Pó's* tofu."
-
-The restaurant — Chen Mapo Tofu — still operates in Chengdu, now in a multi-story building with air conditioning, but the recipe is the same one she ladled from a wok 160 years ago. I ate there once, during Chinese New Year, on a solo trip when my NVIDIA team had the week off. The tofu was better than my roommate's Wujiaochang joint. The line was longer. Some things scale. Some don't.
+In 1862, a woman named Chen ran a roadside stall near Wanfu Bridge in Chengdu. Smallpox had scarred her face — customers called her *Chén Māpó* (陈麻婆): "Pockmarked Old Woman Chen." Her tofu-and-beef stew cost nothing and filled laborers for a day. They started calling the dish *Má Pó's tofu*. The name stuck. Her restaurant still runs in Chengdu today, same recipe, 160 years later.
 
 ![Mapo Tofu — the rich crimson sauce coating each cube of tofu](/images/mapo-tofu-3.jpg)
 
@@ -54,7 +48,7 @@ Mapo Tofu is deceptively simple — tofu, meat, bean paste, peppercorns — but 
 
 The version of "Mapo Tofu" at Panda Express and 90% of Chinese-American buffets is not Mapo Tofu. It's ground chicken in brown cornstarch slurry with a whisper of chili flake and cubed firm tofu that gave up hours ago. It doesn't numb. It exists to fill a steam-table tray next to the orange chicken.
 
-The Japanese version — *mābō dōfu* (マーボー豆腐) — was adapted in the 1950s by Chen Kenmin, a Sichuan-born chef who moved to Japan. Less numbing, more sweetness, often over *donburi*. His son Chen Kenichi became the "Szechuan Sage" on Iron Chef Japan. I respect the Japanese version. It's its own thing. But if you've only eaten Japanese mābō dōfu and think you know Mapo Tofu, you don't. You know a remix. Go to Chengdu.
+The Japanese version — *mābō dōfu* — is sweeter and milder, a 1950s adaptation by Sichuan-born chef Chen Kenmin. It's a valid remix. It's not Mapo Tofu.
 
 And the vegetarian version — minced shiitake mushrooms instead of beef — is not Mapo Tofu. It's Mapo-Style Tofu. The distinction matters the same way "vegetarian bacon" matters. Call it what it is and we're fine.
 

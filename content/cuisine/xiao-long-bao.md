@@ -30,13 +30,7 @@ The whole sequence takes about four seconds. You spend four seconds in another d
 
 ## The Man Who Invented a Magic Trick
 
-Huang Mingxian (黄明贤) ran a snack shop in Nanxiang's Guyi Garden. It was 1871. He sold large steamed buns, the kind workers bought by the bag. But his richest customers wanted smaller portions and fancier food.
-
-Huang tried an experiment. He took the aspic from pork skin and bones — the gelatinized stock that sets like Jell-O in cold weather — cubed it, and wrapped it inside a miniature pork dumpling. During steaming, the gelatin melted. The dumpling became a self-contained soup bowl.
-
-He called it "Nanxiang Big Meat Bun" (南翔大肉馒头) at first. Terrible name. It took decades to get to "Xiao Long Bao." But the invention was instant. By 1900, the shop had lines around the block. By 1950, XLB had spread to every corner of Shanghai. By 2000, Din Tai Fung had turned it into a global obsession.
-
-I've eaten XLB in San Gabriel, Flushing, Sydney, Vancouver, and a mall food court in Singapore that I will not dignify by naming. The Nanxiang original is still the best. The skin is thinner. The soup is richer. The vinegar at that shop — aged in clay pots for three years — tastes like it was brewed by alchemists.
+In 1871, Huang Mingxian (黄明贤) ran a snack shop in Nanxiang's Guyi Garden. His experiment was simple and brilliant: he cubed aspic — gelatinized pork stock — and wrapped it inside a miniature dumpling. During steaming, the gelatin melted. The dumpling became a self-contained soup bowl. From Nanxiang, XLB spread across Shanghai, and by the 2000s, Din Tai Fung had turned it into a global obsession.
 
 ## The Enemies of Xiao Long Bao
 
@@ -56,20 +50,14 @@ Bad XLB is everywhere, and it wears the name with no shame. Here's what you're f
 
 Your first XLB will be a tragedy. Mine was. I was seven years old, at Nanxiang with my parents, and I bit straight into the dumpling like it was a grape. The soup geysered onto my chin, my shirt, and the woman at the next table. She was very kind about it. My mother was not.
 
-Here is the method, learned through three decades of trial and error:
+Here is the method:
 
-1. Pour black vinegar into your dish. Add ginger shreds. A tablespoon is plenty — don't drown it.
-2. Lift the dumpling by the pleated crown, the thickest part. The bottom skin is thin and will tear if you pinch too hard.
-3. Dip it in the vinegar. Let it sit three seconds. The vinegar cools the soup slightly and cuts the richness.
-4. Transfer it to your soup spoon. This is not optional. You need a spoon. Anyone who tells you to bite XLB directly from chopsticks is trying to hurt you.
-5. Bite a small hole in the side of the skin. Let the steam escape. Let a little soup dribble onto the spoon. Blow on it. Wait five seconds. The soup is still 90°C.
-6. Sip the soup from the spoon. Then eat the dumpling in one bite, ginger shreds clinging.
+1. Pour black vinegar into your dish with ginger shreds.
+2. Transfer the dumpling to your soup spoon — this is not optional.
+3. Bite a small hole in the side of the skin. Let the steam escape and the soup cool for a few seconds.
+4. Sip the soup from the spoon, then eat the dumpling in one bite.
 
-The sixth step is where the magic happens. Soup, skin, pork, vinegar, and ginger — all in a single mouthful. A complete dish compressed into the space of a ping-pong ball.
-
-My father, who ate at Guyi Garden every Sunday for forty years before he passed, used to say the measure of a restaurant wasn't the food — it was how long people stayed after the bill was paid. At that Nanxiang shop, tables lingered for half an hour, sometimes an hour, ordering another basket just to keep the conversation going.
-
-That's XLB. Not a meal. An excuse to stay.
+Soup, skin, pork, vinegar, and ginger — all in a single mouthful. A complete dish compressed into the space of a ping-pong ball.
 
 ---
 

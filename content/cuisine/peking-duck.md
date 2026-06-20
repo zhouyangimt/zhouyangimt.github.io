@@ -24,13 +24,7 @@ This takes days. Workers pump air between skin and fat to separate them. The bir
 
 ## Two Schools, One Obsession
 
-Beijing's duck establishment divides into two camps, arguing about technique since before your country existed.
-
-**Quanjude (全聚德)**, 1864, treats carving like precision engineering. Each duck yields exactly 108 slices — skin and meat together, each piece carrying its proportional share of crackling. The hung oven. The cleaver a blur. When I watched that chef outside Qianmen, I counted — got to about sixty before I surrendered to the spectacle.
-
-**Bianyifang (便宜坊)** opened in 1416. The Ming dynasty. Zhu Di was emperor. The Forbidden City was new construction. And Bianyifang was already roasting ducks in a closed oven (焖炉, *mènlú*): skin first, meat second. Skin arrives as pure golden shards. Meat follows separately — stir-fried or simmered into soup. Two courses, each doing exactly what it was designed to do.
-
-Both are correct. Both are pursuing the same goal through different roads: skin that shatters, flavor that haunts.
+Beijing's duck tradition splits between Quanjude (全聚德, 1864), famous for 108 perfect slices from a hung oven, and Bianyifang (便宜坊, 1416), which does a closed-oven roast that separates skin and meat into two courses. Both chase the same thing: skin that shatters.
 
 ![Peking Duck wrapped in thin pancakes — the essential assembly](/images/peking-duck-2.jpg)
 
@@ -51,11 +45,7 @@ Your first wrap will be clumsy. The pancake will tear, the sauce will squirt, a 
 
 ## The Bones Get a Second Life
 
-A proper Peking Duck dinner doesn't end when the skin is gone. The remaining carcass — meat still clinging to every curve and crevice — returns to the kitchen and comes back as one of two things.
-
-Either a milky **duck bone soup** (鸭架汤, *yājià tāng*), boiled with tofu and napa cabbage until the broth turns opaque. Or a **salt-and-pepper stir-fry** (椒盐鸭架, *jiāoyán yājià*) of the chopped frame, tossed in a screaming-hot wok with garlic, dried chilies, and Sichuan peppercorn salt.
-
-Order both if they'll let you. You've already committed. There's no halfway with this meal.
+A proper Peking Duck dinner doesn't end when the skin is gone. The carcass goes back to the kitchen and returns as duck bone soup (鸭架汤) with tofu and cabbage, or salt-and-pepper stir-fried frame (椒盐鸭架). Order both. You've already committed.
 
 ## Don't Settle
 
@@ -69,8 +59,6 @@ If the skin doesn't shatter when you bite it, send it back. If the pancakes aren
 
 ## The Thing You Chase
 
-Here's what I've learned since quitting tech to chase food: the great dishes encode a worldview. Peking Duck encodes patience — three days of prep for thirty seconds of shattering texture. It encodes precision — 108 cuts, not 107, not 109. It encodes respect for the ingredient — every part of the bird used, the bones given a second act.
-
-Next time you're in Beijing, skip the conference hotel. Walk into an alleyway off Qianmen or a side street in Dongcheng. Follow the smell of fruitwood smoke. Order the duck. Wait for the cart, the cleaver, the first shard of skin to land on your tongue and shatter like glass.
+Great dishes encode a worldview. Peking Duck encodes patience — three days of prep for thirty seconds of shattering texture. Next time you're in Beijing, skip the conference hotel. Walk into an alleyway off Qianmen. Follow the smell of fruitwood smoke. Wait for the cart, the cleaver, the first shard of skin landing on your tongue and cracking like glass.
 
 That crackle is worth more than any stock option I ever vested.

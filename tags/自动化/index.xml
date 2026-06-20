@@ -10,9 +10,16 @@
 		
 		
 		
-			<lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</title>
+				<link>https://zhouyangimt.github.io/posts/hermes-agent-cron/</link>
+				<pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyangimt.github.io/posts/hermes-agent-cron/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是&lt;a href=&#34;https://zhouyangimt.github.io/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;、&lt;a href=&#34;https://zhouyangimt.github.io/posts/hermes-agent-config/&#34;&gt;配置详解&lt;/a&gt;和 &lt;a href=&#34;https://zhouyangimt.github.io/posts/hermes-agent-skills/&#34;&gt;Skills 系统&lt;/a&gt;。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。&lt;/p&gt;&#xA;&lt;p&gt;前几篇聊的都是「你跟 Hermes 对话时它能干什么」。但有个场景一直没展开：&lt;strong&gt;你不在电脑前的时候，Hermes 能不能自己干活？&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;答案是能。而且不需要你写 cron 脚本、配 systemd timer、搭 CI pipeline。你只需要用自然语言告诉 Hermes「每天这个时候帮我做这件事」，它到点就自己跑。&lt;/p&gt;&#xA;&lt;h2 id=&#34;为什么不用传统-cron&#34;&gt;为什么不用传统 cron&lt;/h2&gt;&#xA;&lt;p&gt;传统 cron 能干的事有限：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 传统 cron：能跑脚本、发 curl、写文件——但没法「思考」&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt; * * * /usr/bin/python3 /opt/scripts/daily_report.py&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt; * * * curl -X POST -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{}&amp;#39;&lt;/span&gt; https://api.example.com/daily&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;问题是：你写的脚本逻辑是固定的。数据源变了？格式换了？中间步骤出错了？脚本只会在那儿 crash，不会自己想办法绕过去。&lt;/p&gt;&#xA;&lt;p&gt;Hermes Cron 不一样。你给的不是一段固定脚本，而是一个&lt;strong&gt;任务描述&lt;/strong&gt;。Agent 在执行时会：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;先理解任务意图&lt;/li&gt;&#xA;&lt;li&gt;根据当前情况决定用什么工具&lt;/li&gt;&#xA;&lt;li&gt;出错时自动调整策略&lt;/li&gt;&#xA;&lt;li&gt;完成后把结果推送到你指定的地方&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;换句话说：传统 cron 跑的是代码，Hermes Cron 跑的是&lt;strong&gt;判断力&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyangimt.github.io/images/hermes-cron-workflow.png&#34; alt=&#34;Hermes Cron 定时任务工作流：从定义到执行到通知的完整链路&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;创建第一个-cron-任务&#34;&gt;创建第一个 cron 任务&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 的 cron 管理有两种方式：CLI 命令和配置文件。&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title>
 				<link>https://zhouyangimt.github.io/posts/hermes-agent-config/</link>

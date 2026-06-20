@@ -1,8 +1,9 @@
-<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>用Python自动化你的10个日常重复工作（附完整代码） | 独立开发与AI实战</title><meta name=description content="文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。"><link rel=stylesheet href=/css/style.css><link rel=alternate type=application/rss+xml href=/index.xml title=独立开发与AI实战></head><body><header><nav><a href=/ class=logo>独立开发与AI实战</a><div class=nav-links><a href=/>首页</a>
-<a href=/posts/>技术文章</a>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>用Python自动化你的10个日常重复工作（附完整代码） | zhouyang — The 25th Frame</title><meta name=description content="文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。"><link rel=stylesheet href=/css/style.css><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
-<a href=/about/>关于</a>
-<a href=/index.xml title=RSS>RSS</a></div></nav></header><main><article class=single-post><header><h1>用Python自动化你的10个日常重复工作（附完整代码）</h1><div class=meta><time>2026-06-05</time>
+<a href=/about/>About</a>
+<a href=/posts/index.xml title="Tech RSS">📡 Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS">📡 Food</a></div></nav></header><main><article class=single-post><header><h1>用Python自动化你的10个日常重复工作（附完整代码）</h1><div class=meta><time>2026-06-05</time>
 <span class=tags><span class=tag>Python</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><p><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;h=630&amp;fit=crop" alt=Python自动化编程></p><h2 id=你每天在浪费多少时间>你每天在浪费多少时间？</h2><p>想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。</p><p>Python最擅长干这个。下面10个脚本，复制即用。</p><h2 id=1-批量重命名文件>1. 批量重命名文件</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
 </span></span><span style=display:flex><span>path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./images&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i, f <span style=color:#f92672>in</span> enumerate(os<span style=color:#f92672>.</span>listdir(path)):
@@ -79,4 +80,4 @@
 </span></span></code></pre></div><h2 id=把这些串起来>把这些串起来</h2><p>用cron定时任务每天跑一遍:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 每天早8点自动整理、备份</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * python3 /path/to/auto.py
 </span></span></code></pre></div><p>依赖安装: <code>pip install pillow pandas openpyxl playwright</code></p><blockquote><p>这些脚本任何一个单独拎出来都能省你每天至少10分钟。10个加起来就是小半天。</p></blockquote><p><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&amp;h=630&amp;fit=crop" alt=让代码替你工作></p></div></article><nav class=post-nav><a href=/posts/github-pages-hugo-blog-tutorial/ class=prev>← GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</a>
-<a href=/posts/programmer-side-hustle-2026/ class=next>2026年适合程序员的6个副业方向：从接私活到被动收入 →</a></nav></main><footer><p>© 2026 zhouyang · Powered by Hugo</p></footer></body></html>
+<a href=/posts/programmer-side-hustle-2026/ class=next>2026年适合程序员的6个副业方向：从接私活到被动收入 →</a></nav></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>

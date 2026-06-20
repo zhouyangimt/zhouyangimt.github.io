@@ -26,8 +26,11 @@
         {{ range .Site.Menus.main }}
         <a href="{{ .URL }}">{{ .Name }}</a>
         {{ end }}
-        <a href="/posts/index.xml" title="Tech RSS">📡 Tech</a>
-        <a href="/cuisine/index.xml" title="Chinese Cuisine RSS">📡 Food</a>
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
       </div>
     </nav>
   </header>

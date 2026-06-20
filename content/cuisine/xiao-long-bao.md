@@ -3,7 +3,8 @@ title: "Xiao Long Bao: The Soup That Lives Inside a Dumpling"
 date: 2026-06-20
 description: "Eighteen pleats, translucent skin, and a spoonful of scalding pork broth sealed inside — Shanghai's greatest export is part dumpling, part magic trick."
 tags: ["shanghai", "pork", "dumpling", "steamed", "classic"]
-slug: "xiao-long-bao"
+6|slug: "xiao-long-bao"
+images: ["/images/xiao-long-bao-1.jpg"]
 ---
 
 ![Xiao Long Bao in a bamboo steamer — translucent skins shimmering with broth sealed inside, steam rising](/images/xiao-long-bao-1.jpg)

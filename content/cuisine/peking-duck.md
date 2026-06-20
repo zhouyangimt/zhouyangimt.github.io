@@ -3,7 +3,8 @@ title: "Peking Duck: The Skin That Shatters Like Glass"
 date: 2026-06-20
 description: "Lacquered skin cracking under a cleaver, tender meat wrapped in whisper-thin pancakes — Peking Duck isn't just a meal, it's six centuries of Beijing culinary obsession on a plate."
 tags: ["beijing", "duck", "roast", "classic", "imperial"]
-slug: "peking-duck"
+6|slug: "peking-duck"
+images: ["/images/peking-duck-1.jpg"]
 ---
 
 ![Peking Duck — glossy mahogany skin, carved tableside](/images/peking-duck-1.jpg)

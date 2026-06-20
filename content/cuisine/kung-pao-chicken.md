@@ -3,7 +3,8 @@ title: "Kung Pao Chicken: The Stir-Fry That Made Sichuan Famous"
 date: 2026-06-19
 description: "Tender chicken cubes, crunchy peanuts, and dried chilies collide in a sweet-savory-spicy sauce that tingles with Sichuan peppercorns — this is the dish that taught the world what málà really means."
 tags: ["sichuan", "chicken", "spicy", "stir-fry", "classic"]
-slug: "kung-pao-chicken"
+6|slug: "kung-pao-chicken"
+images: ["/images/kung-pao-chicken-1.jpg"]
 ---
 
 ![Kung Pao Chicken — glazed chicken cubes with dried chilies and peanuts](/images/kung-pao-chicken-1.jpg)

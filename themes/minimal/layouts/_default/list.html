@@ -10,7 +10,7 @@
   <article class="post-card">
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
-    <p class="summary">{{ .Summary | truncate 150 }}</p>
+    <p class="summary">{{ .Summary | plainify | truncate 150 }}</p>
     {{ if eq $.Section "cuisine" }}
     <a href="{{ .RelPermalink }}" class="read-more">Read more →</a>
     {{ else }}

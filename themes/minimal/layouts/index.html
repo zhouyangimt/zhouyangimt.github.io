@@ -80,7 +80,7 @@
     <div class="cuisine-info">
       <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
       <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
-      <p class="summary">{{ .Summary | truncate 100 }}</p>
+      <p class="summary">{{ .Summary | plainify | truncate 100 }}</p>
     </div>
   </article>
   {{ end }}

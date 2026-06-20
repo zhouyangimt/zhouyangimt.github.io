@@ -32,13 +32,11 @@ The sound matters too. Peanuts crack under your molars. Scallions snap wetly. Ch
 
 ## The Governor's Chicken
 
-Kung Pao isn't a cooking technique. It's a person.
+Kung Pao isn't a cooking technique. It's a title.
 
-Ding Baozhen (丁宝桢) governed Sichuan province during the twilight of the Qing dynasty. He was, by all accounts, a serious man — fought corruption, rebuilt irrigation systems, probably never smiled in a portrait. His official title was *Gōngbǎo* (宫保), "Palace Guardian," the kind of imperial honorific that sounds like it should come with a sword and a pavilion.
+Ding Baozhen (丁宝桢) was *Gōngbǎo* (宫保) — "Palace Guardian," the Qing dynasty equivalent of a cabinet minister with a sword. Serious man. Serious job. And one completely unserious obsession: a private chef who could make diced chicken with peanuts exactly the way he liked it.
 
-But Ding had a weakness, and that weakness was diced chicken with peanuts.
-
-His private chef perfected it for him. When dinner guests asked what they were eating, the answer was simple: "Gōngbǎo's chicken." The name stuck. Ding died in 1886, bequeathing China a flood-control system in Sichuan and, entirely by accident, the stir-fry that would outlive every dynasty.
+When dinner guests asked what they were eating, someone said "Gōngbǎo's chicken." The name stuck. Ding died in 1886 and bequeathed China, entirely by accident, the stir-fry that would outlive every dynasty.
 
 ## The Enemies of Kung Pao Chicken
 
@@ -61,13 +59,9 @@ Real Kung Pao Chicken has exactly:
 
 ## The Guizhou Question
 
-Here's where things get interesting.
+Ding Baozhen was born in Guizhou. His family kitchen made this dish with *ciba* chili paste — fermented, dark, a slower burn than Sichuan's whole dried chilies. When Ding moved to Sichuan to govern, his chef swapped the paste for whole facing-heaven chilies, whole peppercorns, whole peanuts. The Sichuan version is what went global.
 
-Ding Baozhen was born in Guizhou province. His family kitchen made a version of this dish using *ciba* chili paste — fermented, dark, persistent — instead of whole dried chilies. The Guizhou version has deeper heat, a slower burn, the kind of spiciness that doesn't announce itself until you've already taken a second bite. When Ding moved to Sichuan to govern, his chef adapted the dish to local ingredients: whole facing-heaven chilies, whole Sichuan peppercorns, whole peanuts.
-
-Two provinces. Two versions. One origin story.
-
-Sichuan locals will tell you the Guizhou version is wrong. Guizhou locals will tell you they had it first. Both are arguing about something Ding Baozhen himself probably never worried about — the man just wanted his chicken. But the Sichuan version, with its visible chilies and theatrical *málà*, is what went global. It's the version my father ordered in that Chengdu alleyway, and it's the version I'll defend with code-review-level pedantry until I die.
+Two provinces claim it. The man himself probably never worried about either one — he just wanted his chicken.
 
 ## How to Eat It
 

@@ -164,6 +164,7 @@ nav {
   border-radius: 8px;
   padding: 25px;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 .post-card h2 { font-size: 1.4em; margin-bottom: 8px; }
 .post-card h2 a { color: var(--accent); text-decoration: none; }
@@ -177,7 +178,15 @@ nav {
   margin-left: 5px;
   font-size: 0.85em;
 }
-.summary { color: var(--text-muted); margin-bottom: 12px; }
+.summary {
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.6;
+}
 .read-more { color: var(--accent); text-decoration: none; font-size: 0.9em; }
 .read-more:hover { text-decoration: underline; }
 

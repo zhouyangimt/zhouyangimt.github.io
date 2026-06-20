@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v={{ now.Format "200601021504" }}">
   {{ if .IsHome }}
   <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">

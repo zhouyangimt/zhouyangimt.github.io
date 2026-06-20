@@ -2,8 +2,9 @@
 <a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
 <a href=/about/>About</a>
-<a href=/posts/index.xml title="Tech RSS">📡 Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS">📡 Food</a></div></nav></header><main><article class=single-post><header><h1>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</h1><div class=meta><time>2026-06-20</time>
+<span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</h1><div class=meta><time>2026-06-20</time>
 <span class=tags><span class=tag>AI</span><span class=tag>Hermes</span><span class=tag>工具教程</span><span class=tag>自动化</span></span></div></header><div class=content><p>这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是<a href=/posts/hermes-agent-guide/>入门指南</a>、<a href=/posts/hermes-agent-config/>配置详解</a>和 <a href=/posts/hermes-agent-skills/>Skills 系统</a>。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。</p><p>前几篇聊的都是「你跟 Hermes 对话时它能干什么」。但有个场景一直没展开：<strong>你不在电脑前的时候，Hermes 能不能自己干活？</strong></p><p>答案是能。而且不需要你写 cron 脚本、配 systemd timer、搭 CI pipeline。你只需要用自然语言告诉 Hermes「每天这个时候帮我做这件事」，它到点就自己跑。</p><h2 id=为什么不用传统-cron>为什么不用传统 cron</h2><p>传统 cron 能干的事有限：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 传统 cron：能跑脚本、发 curl、写文件——但没法「思考」</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * /usr/bin/python3 /opt/scripts/daily_report.py
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>9</span> * * * curl -X POST -d <span style=color:#e6db74>&#39;{}&#39;</span> https://api.example.com/daily

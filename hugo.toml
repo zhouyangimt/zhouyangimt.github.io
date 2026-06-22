@@ -1,4 +1,4 @@
-baseURL = 'https://zhouyangimt.github.io/'
+baseURL = 'https://zhouyang.dev/'
 title = 'zhouyang — The 25th Frame'
 theme = 'minimal'
 buildFuture = true

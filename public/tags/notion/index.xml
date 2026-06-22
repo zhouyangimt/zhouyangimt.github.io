@@ -1,24 +1,94 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Notion on zhouyang — The 25th Frame</title>
-		<link>https://zhouyangimt.github.io/tags/notion/</link>
-		<description>Recent content in Notion on zhouyang — The 25th Frame</description>
-		<generator>Hugo</generator>
-		<language>en</language>
-		
-		
-		
-		
-			<lastBuildDate>Thu, 11 Jun 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://zhouyangimt.github.io/tags/notion/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title>
-				<link>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</link>
-				<pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyangimt.github.io/posts/notion-template-sell-gumroad/</guid>
-				<description>&lt;h2 id=&#34;为什么是notion模板&#34;&gt;为什么是Notion模板？&lt;/h2&gt;&#xA;&lt;p&gt;Notion全球用户超过1亿人。有人在Notion里管理人生，有人管理项目，有人记账。&lt;/p&gt;&#xA;&lt;p&gt;但大部分人不会「设计」一套好用的Notion系统。这就是你的机会。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;卖模板 = 设计一次，卖无数次。真正的被动收入。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一步选一个能卖的品类&#34;&gt;第一步：选一个能卖的品类&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;品类&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;目标用户&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;定价参考&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;竞争&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;个人财务追踪&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;上班族&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-15&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;项目管理&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自由职业者&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$10-25&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;习惯养成&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;学生/上班族&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-10&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;周报/日报模板&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;职场人&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$3-8&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;内容日历&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;自媒体&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$8-15&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;阅读/学习笔记&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;学生&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-10&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;求职追踪&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;求职者&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$5-12&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;建议从「低竞争+你熟悉的」品类切入。&lt;/strong&gt; 比如你是程序员就做项目管理模板，是学生就做学习笔记。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第二步设计你的模板&#34;&gt;第二步：设计你的模板&lt;/h2&gt;&#xA;&lt;p&gt;优秀Notion模板的要素：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;开箱即用&lt;/strong&gt;：用户复制后立刻能用，不需要自己改结构&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;数据关联&lt;/strong&gt;：用Relation和Rollup让数据联动（这是新手不会做的）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;视图多样&lt;/strong&gt;：日历、看板、表格、画廊，多种视图切换&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;美学在线&lt;/strong&gt;：封面图、Emoji图标、配色协调&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;说明文档&lt;/strong&gt;：模板里包含使用指南&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;第三步包装与定价&#34;&gt;第三步：包装与定价&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;定价策略&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;单模板：$5-15&lt;/li&gt;&#xA;&lt;li&gt;Bundle（3-5个模板）：$15-40&lt;/li&gt;&#xA;&lt;li&gt;免费模板 → 收集邮箱 → 卖高价模板&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;Landing Page要素&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;3-5张高质量截图&lt;/li&gt;&#xA;&lt;li&gt;功能列表（Bullet points）&lt;/li&gt;&#xA;&lt;li&gt;包含什么（模板+教程+后续更新）&lt;/li&gt;&#xA;&lt;li&gt;用户评价（初期可以找人免费试用换评价）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第四步上架gumroad&#34;&gt;第四步：上架Gumroad&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gumroad.com&#34;&gt;Gumroad&lt;/a&gt; 是最简单的数字产品平台：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;注册账号&lt;/li&gt;&#xA;&lt;li&gt;创建产品 → Digital Product&lt;/li&gt;&#xA;&lt;li&gt;上传模板文件（Notion里点「Duplicate」链接即可）&lt;/li&gt;&#xA;&lt;li&gt;设置价格&lt;/li&gt;&#xA;&lt;li&gt;写产品描述（参考第三步）&lt;/li&gt;&#xA;&lt;li&gt;发布&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notion on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/notion/</link><description>Recent content in Notion on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 11 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/notion/index.xml" rel="self" type="application/rss+xml"/><item><title>Notion模板赚钱实战：从设计到上架Gumroad全流程</title><link>https://zhouyang.dev/posts/notion-template-sell-gumroad/</link><pubDate>Thu, 11 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/notion-template-sell-gumroad/</guid><description>&lt;h2 id="为什么是notion模板"&gt;为什么是Notion模板？&lt;/h2&gt;
+&lt;p&gt;Notion全球用户超过1亿人。有人在Notion里管理人生，有人管理项目，有人记账。&lt;/p&gt;
+&lt;p&gt;但大部分人不会「设计」一套好用的Notion系统。这就是你的机会。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;卖模板 = 设计一次，卖无数次。真正的被动收入。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="第一步选一个能卖的品类"&gt;第一步：选一个能卖的品类&lt;/h2&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;品类&lt;/th&gt;
+					&lt;th&gt;目标用户&lt;/th&gt;
+					&lt;th&gt;定价参考&lt;/th&gt;
+					&lt;th&gt;竞争&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;个人财务追踪&lt;/td&gt;
+					&lt;td&gt;上班族&lt;/td&gt;
+					&lt;td&gt;$5-15&lt;/td&gt;
+					&lt;td&gt;中&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;项目管理&lt;/td&gt;
+					&lt;td&gt;自由职业者&lt;/td&gt;
+					&lt;td&gt;$10-25&lt;/td&gt;
+					&lt;td&gt;高&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;习惯养成&lt;/td&gt;
+					&lt;td&gt;学生/上班族&lt;/td&gt;
+					&lt;td&gt;$5-10&lt;/td&gt;
+					&lt;td&gt;高&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;周报/日报模板&lt;/td&gt;
+					&lt;td&gt;职场人&lt;/td&gt;
+					&lt;td&gt;$3-8&lt;/td&gt;
+					&lt;td&gt;低&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;内容日历&lt;/td&gt;
+					&lt;td&gt;自媒体&lt;/td&gt;
+					&lt;td&gt;$8-15&lt;/td&gt;
+					&lt;td&gt;中&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;阅读/学习笔记&lt;/td&gt;
+					&lt;td&gt;学生&lt;/td&gt;
+					&lt;td&gt;$5-10&lt;/td&gt;
+					&lt;td&gt;中&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;求职追踪&lt;/td&gt;
+					&lt;td&gt;求职者&lt;/td&gt;
+					&lt;td&gt;$5-12&lt;/td&gt;
+					&lt;td&gt;低&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;建议从「低竞争+你熟悉的」品类切入。&lt;/strong&gt; 比如你是程序员就做项目管理模板，是学生就做学习笔记。&lt;/p&gt;
+&lt;h2 id="第二步设计你的模板"&gt;第二步：设计你的模板&lt;/h2&gt;
+&lt;p&gt;优秀Notion模板的要素：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;开箱即用&lt;/strong&gt;：用户复制后立刻能用，不需要自己改结构&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数据关联&lt;/strong&gt;：用Relation和Rollup让数据联动（这是新手不会做的）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;视图多样&lt;/strong&gt;：日历、看板、表格、画廊，多种视图切换&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;美学在线&lt;/strong&gt;：封面图、Emoji图标、配色协调&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;说明文档&lt;/strong&gt;：模板里包含使用指南&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="第三步包装与定价"&gt;第三步：包装与定价&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;定价策略&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;单模板：$5-15&lt;/li&gt;
+&lt;li&gt;Bundle（3-5个模板）：$15-40&lt;/li&gt;
+&lt;li&gt;免费模板 → 收集邮箱 → 卖高价模板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Landing Page要素&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;3-5张高质量截图&lt;/li&gt;
+&lt;li&gt;功能列表（Bullet points）&lt;/li&gt;
+&lt;li&gt;包含什么（模板+教程+后续更新）&lt;/li&gt;
+&lt;li&gt;用户评价（初期可以找人免费试用换评价）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="第四步上架gumroad"&gt;第四步：上架Gumroad&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://gumroad.com"&gt;Gumroad&lt;/a&gt; 是最简单的数字产品平台：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册账号&lt;/li&gt;
+&lt;li&gt;创建产品 → Digital Product&lt;/li&gt;
+&lt;li&gt;上传模板文件（Notion里点「Duplicate」链接即可）&lt;/li&gt;
+&lt;li&gt;设置价格&lt;/li&gt;
+&lt;li&gt;写产品描述（参考第三步）&lt;/li&gt;
+&lt;li&gt;发布&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Gumroad手续费：免费版10%，Pro版$10/月+更低费率。&lt;/p&gt;</description></item></channel></rss>

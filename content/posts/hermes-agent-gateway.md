@@ -491,4 +491,4 @@ sudo systemctl enable --now hermes-gateway
 
 这篇文章把 Gateway 讲透了。下一篇是 Hermes 系列最后一篇——**实战：搭建你的第一个 AI 工作流**。我们会把六篇里讲到的所有东西（配置、Skills、Cron、Gateway）全部串起来，从零搭建一个完整可用的 AI 自动化流程。
 
-系列导航：[01 入门指南](/posts/hermes-agent-guide/) | [02 配置详解](/posts/hermes-agent-config/) | [03 Skills 系统](/posts/hermes-agent-skills/) | [04 Cron 定时任务](/posts/hermes-agent-cron/) | **05 多平台集成** | [06 实战工作流](/posts/hermes-agent-workflow/)（待发布）
+系列导航：[01 入门指南](/posts/hermes-agent-guide/) | [02 配置详解](/posts/hermes-agent-config/) | [03 Skills 系统](/posts/hermes-agent-skills/) | [04 Cron 定时任务](/posts/hermes-agent-cron/) | **05 多平台集成** | [06 实战工作流](/posts/hermes-agent-workflow/)

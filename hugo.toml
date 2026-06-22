@@ -34,3 +34,7 @@ buildFuture = true
     name = 'About'
     url = '/about/'
     weight = 4
+  [[menu.main]]
+    name = 'Privacy'
+    url = '/privacy/'
+    weight = 5

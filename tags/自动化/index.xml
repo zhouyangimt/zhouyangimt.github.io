@@ -1,4 +1,85 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>自动化 on zhouyang — The 25th Frame</title><link>https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link><description>Recent content in 自动化 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 21 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title><link>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;和 &lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>自动化 on zhouyang — The 25th Frame</title><link>https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link><description>Recent content in 自动化 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 22 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</title><link>https://zhouyangimt.github.io/posts/hermes-agent-workflow/</link><pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-workflow/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第六篇，也是最后一篇。前五篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;和&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-gateway/"&gt;多平台集成&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;前五篇把 Hermes 的每个组件都拆开讲透了。但这就像你学会了发动机、变速箱、悬挂系统各自怎么工作——你还是不知道&lt;strong&gt;怎么把车造出来&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这篇就是把零件拼成整车的过程。我们从头搭建一个完整可用的 AI 工作流：&lt;strong&gt;每日 AI 资讯摘要&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id="为什么选这个场景"&gt;为什么选这个场景&lt;/h2&gt;
+&lt;p&gt;不是随便挑的。这个场景恰好需要用到 Hermes 全部核心能力：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Skills&lt;/strong&gt;：定义摘要格式、信息源、筛选标准&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cron&lt;/strong&gt;：每天早上 8 点自动触发&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;多模型切换&lt;/strong&gt;：搜索用便宜模型，摘要用强模型&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gateway&lt;/strong&gt;：结果推送到 Telegram 和飞书&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而且这个场景&lt;strong&gt;真的有用&lt;/strong&gt;。我跑了三周，每天早上一杯咖啡的时间就能看完 AI 圈 24 小时内最重要的事，不用自己刷 Twitter、HN、Reddit、ArXiv。省下来的时间比我写这套东西花的时间多得多。&lt;/p&gt;
+&lt;h2 id="整体架构"&gt;整体架构&lt;/h2&gt;
+&lt;p&gt;先看全貌，知道每个组件在什么位置：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyangimt.github.io/images/hermes-workflow-architecture.png" alt="Hermes 工作流架构图"&gt;&lt;/p&gt;
+&lt;p&gt;六个环节，环环相扣。下面逐个搭建。&lt;/p&gt;
+&lt;h2 id="第一步创建-ai-digest-skill"&gt;第一步：创建 AI Digest Skill&lt;/h2&gt;
+&lt;p&gt;Skill 是整个工作流的灵魂。它定义了 Hermes 要怎么搜、怎么筛、怎么写。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;~/.hermes/skills/&lt;/code&gt; 下创建 &lt;code&gt;ai-daily-digest.md&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# AI Daily Digest
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;生成每日 AI 领域重要资讯摘要。按固定格式输出中文摘要，
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;每条包含标题、一句话要点、原文链接。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 信息源（按优先级）
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; Hacker News (news.ycombinator.com) — AI/ML 相关热帖
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;2.&lt;/span&gt; Reddit r/MachineLearning — 当日热门讨论
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;3.&lt;/span&gt; GitHub Trending — AI 相关仓库
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;4.&lt;/span&gt; ArXiv — cs.AI / cs.CL 当天新论文（选 3 篇最有价值的）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 筛选标准
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 只收录 24 小时内的内容
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 优先选择有实质讨论的（HN 评论 &amp;gt; 50，Reddit 点赞 &amp;gt; 100）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 论文只选有代码开源或方法有突破性的
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 略过纯营销文、币圈、NFT 相关内容
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 输出格式
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\`\`\`
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📡 AI 每日速递 — 2026年X月X日
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;🔥 头条
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; 【标题】
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 要点：一句话总结
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 🔗 链接
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📋 必读
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（3-5 条精选，格式同上）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📄 论文速览
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（1-3 篇，包含论文标题 + 核心贡献一句话）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;🛠 工具 &amp;amp; 开源
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（1-3 个值得关注的仓库）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\`\`\`
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 执行流程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; 依次访问 4 个信息源，使用 web_search 工具搜索
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;2.&lt;/span&gt; 按筛选标准过滤，保留 8-15 条候选
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;3.&lt;/span&gt; 按重要程度排序，选出头条 1 条 + 必读 3-5 条
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;4.&lt;/span&gt; 搜索论文和工具仓库
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;5.&lt;/span&gt; 按输出格式生成完整摘要
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;6.&lt;/span&gt; 保存到 ~/digests/YYYY-MM-DD.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;7.&lt;/span&gt; 将摘要文本返回（Gateway 会负责推送到各平台）
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 质量要求
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 每条要点必须是自己读过内容后总结的，禁止直接翻译标题
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 中文流畅自然，避免机翻腔
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 如果当天没有够格的内容，宁可少写不要凑数
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 Skill 大约 300 行。因为 Hermes 采用渐进式加载，平时只占 ~100 token 的名字和简介，只有每天 8 点真正跑的时候才展开全部内容。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title><link>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;和 &lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：&lt;strong&gt;多平台集成&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id="为什么需要多平台"&gt;为什么需要多平台&lt;/h2&gt;
 &lt;p&gt;先说说真实场景。我自己是这样用的：&lt;/p&gt;

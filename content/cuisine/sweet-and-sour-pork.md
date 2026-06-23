@@ -4,7 +4,7 @@ date: 2026-06-23
 description: "Double-fried pork shoulder in a shattering batter shell, tossed through a white-vinegar glaze with pineapple and bell pepper — the dish that taught the world sweet-and-sour, then watched them ruin it."
 tags: ["cantonese", "pork", "sweet-sour", "classic", "fried"]
 slug: "sweet-and-sour-pork"
-images: ["/images/sweet-and-sour-pork-1.jpg"]
+images: ["/images/sweet-and-sour-pork-1.jpg", "/images/sweet-and-sour-pork-2.jpg", "/images/sweet-and-sour-pork-3.jpg"]
 ---
 
 ![Sweet and Sour Pork — glossy glazed pork chunks with bell pepper and pineapple on a white plate in a Cantonese restaurant](/images/sweet-and-sour-pork-1.jpg)

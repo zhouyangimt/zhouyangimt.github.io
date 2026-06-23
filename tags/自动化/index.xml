@@ -1,4 +1,68 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>自动化 on zhouyang — The 25th Frame</title><link>https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link><description>Recent content in 自动化 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 22 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyangimt.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml"/><item><title>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</title><link>https://zhouyangimt.github.io/posts/hermes-agent-workflow/</link><pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-workflow/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第六篇，也是最后一篇。前五篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;和&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-gateway/"&gt;多平台集成&lt;/a&gt;。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>自动化 on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link><description>Recent content in 自动化 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 23 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml"/><item><title>Python 自动化实战：Web Scraping 入门到实战</title><link>https://zhouyang.dev/posts/python-web-scraping/</link><pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-web-scraping/</guid><description>&lt;h2 id="为什么独立开发者要学爬虫"&gt;为什么独立开发者要学爬虫？&lt;/h2&gt;
+&lt;p&gt;我做过的产品里，有好几个的起点都是爬虫。&lt;/p&gt;
+&lt;p&gt;比如我写过一个宠物领养信息聚合站——爬了 4 个领养平台的公开信息，去重、分类、加上地理位置搜索。上线第一周零推广，纯靠搜索引擎自然流量每天 200+ 访客。因为用户确实有这个需求，而之前没人把这些信息汇总起来。&lt;/p&gt;
+&lt;p&gt;还写过一个二手相机价格监控器，每天爬几个主流交易平台的特定型号价格，低于设定阈值就推通知。我自己用它在闲鱼上淘到一台 9 成新的 Sony A7M3，比市场价便宜 2000 块。&lt;/p&gt;
+&lt;p&gt;爬虫不是&amp;quot;非法抓数据&amp;quot;——它是独立开发者的信息杠杆。你不需要爬用户隐私、不需要绕过付费墙、不需要做任何灰色地带的事。互联网上有大量&lt;strong&gt;合法公开的数据&lt;/strong&gt;散落各处，没人把它们结构化、没人把它们串联起来。这就是你的机会。&lt;/p&gt;
+&lt;p&gt;今天这篇文章从零开始讲 Python Web Scraping，附带两个实战案例。&lt;/p&gt;
+&lt;h2 id="核心流程"&gt;核心流程&lt;/h2&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/web-scraping-flow.png" alt="爬虫工作流程"&gt;&lt;/p&gt;
+&lt;p&gt;整个爬虫就四个环节：发请求 → 解析 → 提取 → 存储。任何一个爬虫项目都是这个流程的变体。&lt;/p&gt;
+&lt;h2 id="第一件事装库"&gt;第一件事：装库&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests beautifulsoup4 lxml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;requests&lt;/code&gt;：发 HTTP 请求，带回网页 HTML&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;beautifulsoup4&lt;/code&gt;：把 HTML 解析成可查询的树结构&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lxml&lt;/code&gt;：更快的解析器，soup 的底层引擎&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="实战一爬-github-trending"&gt;实战一：爬 GitHub Trending&lt;/h2&gt;
+&lt;p&gt;第一个案例，爬 GitHub Trending 页面，拿到当天的热门仓库名、描述、Stars 数。这个页面不需要登录，反爬宽松，适合练手。&lt;/p&gt;
+&lt;h3 id="第一步看页面结构"&gt;第一步：看页面结构&lt;/h3&gt;
+&lt;p&gt;先打开 &lt;a href="https://github.com/trending"&gt;https://github.com/trending&lt;/a&gt; ，按 F12 打开开发者工具，找到仓库列表的 HTML 结构。你会看到每个仓库是一个 &lt;code&gt;&amp;lt;article&amp;gt;&lt;/code&gt; 标签，里面包含标题链接、描述、Stars 数等信息。&lt;/p&gt;
+&lt;h3 id="第二步写代码"&gt;第二步：写代码&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; bs4 &lt;span style="color:#f92672"&gt;import&lt;/span&gt; BeautifulSoup
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; csv
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; datetime &lt;span style="color:#f92672"&gt;import&lt;/span&gt; datetime
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;url &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;https://github.com/trending&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;headers &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;User-Agent&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;resp &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(url, headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;headers)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; BeautifulSoup(resp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text, &lt;span style="color:#e6db74"&gt;&amp;#34;lxml&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;repos &lt;span style="color:#f92672"&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; article &lt;span style="color:#f92672"&gt;in&lt;/span&gt; soup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find_all(&lt;span style="color:#e6db74"&gt;&amp;#34;article&amp;#34;&lt;/span&gt;, class_&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;Box-row&amp;#34;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 仓库名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; h2 &lt;span style="color:#f92672"&gt;=&lt;/span&gt; article&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find(&lt;span style="color:#e6db74"&gt;&amp;#34;h2&amp;#34;&lt;/span&gt;, class_&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;h3&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; h2:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; repo_name &lt;span style="color:#f92672"&gt;=&lt;/span&gt; h2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get_text(strip&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)&lt;span style="color:#f92672"&gt;.&lt;/span&gt;replace(&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;\n&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;)&lt;span style="color:#f92672"&gt;.&lt;/span&gt;replace(&lt;span style="color:#e6db74"&gt;&amp;#34; &amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 描述&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; desc_tag &lt;span style="color:#f92672"&gt;=&lt;/span&gt; article&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find(&lt;span style="color:#e6db74"&gt;&amp;#34;p&amp;#34;&lt;/span&gt;, class_&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;col-9&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; description &lt;span style="color:#f92672"&gt;=&lt;/span&gt; desc_tag&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get_text(strip&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; desc_tag &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Stars&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; stars_tag &lt;span style="color:#f92672"&gt;=&lt;/span&gt; article&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find(&lt;span style="color:#e6db74"&gt;&amp;#34;span&amp;#34;&lt;/span&gt;, class_&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;d-inline-block float-sm-right&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; stars &lt;span style="color:#f92672"&gt;=&lt;/span&gt; stars_tag&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get_text(strip&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; stars_tag &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; repos&lt;span style="color:#f92672"&gt;.&lt;/span&gt;append({
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: repo_name,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;: description,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;stars&amp;#34;&lt;/span&gt;: stars,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; })
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 存 CSV&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;filename &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;github_trending_&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;datetime&lt;span style="color:#f92672"&gt;.&lt;/span&gt;now()&lt;span style="color:#f92672"&gt;.&lt;/span&gt;strftime(&lt;span style="color:#e6db74"&gt;&amp;#39;%Y%m&lt;/span&gt;&lt;span style="color:#e6db74"&gt;%d&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;.csv&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;with&lt;/span&gt; open(filename, &lt;span style="color:#e6db74"&gt;&amp;#34;w&amp;#34;&lt;/span&gt;, newline&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;, encoding&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; f:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; writer &lt;span style="color:#f92672"&gt;=&lt;/span&gt; csv&lt;span style="color:#f92672"&gt;.&lt;/span&gt;DictWriter(f, fieldnames&lt;span style="color:#f92672"&gt;=&lt;/span&gt;[&lt;span style="color:#e6db74"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;stars&amp;#34;&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; writer&lt;span style="color:#f92672"&gt;.&lt;/span&gt;writeheader()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; writer&lt;span style="color:#f92672"&gt;.&lt;/span&gt;writerows(repos)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(&lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;抓到 &lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;len(repos)&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt; 个仓库，已保存到 &lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;filename&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="关键点"&gt;关键点&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;User-Agent 必须设&lt;/strong&gt;。GitHub 会检查这个头，不带 UA 直接返回 403。这在爬虫里是基本操作——几乎所有正经网站都会检查 UA。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</title><link>https://zhouyang.dev/posts/hermes-agent-workflow/</link><pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-workflow/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第六篇，也是最后一篇。前五篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;和&lt;a href="https://zhouyang.dev/posts/hermes-agent-gateway/"&gt;多平台集成&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;前五篇把 Hermes 的每个组件都拆开讲透了。但这就像你学会了发动机、变速箱、悬挂系统各自怎么工作——你还是不知道&lt;strong&gt;怎么把车造出来&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这篇就是把零件拼成整车的过程。我们从头搭建一个完整可用的 AI 工作流：&lt;strong&gt;每日 AI 资讯摘要&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id="为什么选这个场景"&gt;为什么选这个场景&lt;/h2&gt;
@@ -12,7 +76,7 @@
 &lt;p&gt;而且这个场景&lt;strong&gt;真的有用&lt;/strong&gt;。我跑了三周，每天早上一杯咖啡的时间就能看完 AI 圈 24 小时内最重要的事，不用自己刷 Twitter、HN、Reddit、ArXiv。省下来的时间比我写这套东西花的时间多得多。&lt;/p&gt;
 &lt;h2 id="整体架构"&gt;整体架构&lt;/h2&gt;
 &lt;p&gt;先看全貌，知道每个组件在什么位置：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyangimt.github.io/images/hermes-workflow-architecture.png" alt="Hermes 工作流架构图"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-workflow-architecture.png" alt="Hermes 工作流架构图"&gt;&lt;/p&gt;
 &lt;p&gt;六个环节，环环相扣。下面逐个搭建。&lt;/p&gt;
 &lt;h2 id="第一步创建-ai-digest-skill"&gt;第一步：创建 AI Digest Skill&lt;/h2&gt;
 &lt;p&gt;Skill 是整个工作流的灵魂。它定义了 Hermes 要怎么搜、怎么筛、怎么写。&lt;/p&gt;
@@ -79,7 +143,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 每条要点必须是自己读过内容后总结的，禁止直接翻译标题
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 中文流畅自然，避免机翻腔
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 如果当天没有够格的内容，宁可少写不要凑数
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 Skill 大约 300 行。因为 Hermes 采用渐进式加载，平时只占 ~100 token 的名字和简介，只有每天 8 点真正跑的时候才展开全部内容。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title><link>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-gateway/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;和 &lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 Skill 大约 300 行。因为 Hermes 采用渐进式加载，平时只占 ~100 token 的名字和简介，只有每天 8 点真正跑的时候才展开全部内容。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title><link>https://zhouyang.dev/posts/hermes-agent-gateway/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-gateway/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;和 &lt;a href="https://zhouyang.dev/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：&lt;strong&gt;多平台集成&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id="为什么需要多平台"&gt;为什么需要多平台&lt;/h2&gt;
 &lt;p&gt;先说说真实场景。我自己是这样用的：&lt;/p&gt;
@@ -91,7 +155,7 @@
 &lt;p&gt;三个平台，三种场景，一个 Hermes 实例。不是三个实例，不是一个平台配一次——&lt;strong&gt;一个实例接入所有平台，按规则智能分发&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id="gateway-架构"&gt;Gateway 架构&lt;/h2&gt;
 &lt;p&gt;先搞清楚 Hermes Gateway 是怎么工作的：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyangimt.github.io/images/hermes-gateway-architecture.png" alt="Hermes Gateway 多平台架构图"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-gateway-architecture.png" alt="Hermes Gateway 多平台架构图"&gt;&lt;/p&gt;
 &lt;p&gt;Gateway 是一个独立的进程，它做的事很简单：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;接收消息&lt;/strong&gt;：监听各平台的 webhook 或长连接&lt;/li&gt;
@@ -103,7 +167,7 @@
 &lt;h2 id="接入飞书"&gt;接入飞书&lt;/h2&gt;
 &lt;p&gt;飞书的接入相对复杂，因为涉及应用创建和权限审批。但好处是飞书的富文本能力最强，卡片消息、按钮交互都能搞。&lt;/p&gt;
 &lt;h3 id="step-1创建飞书应用"&gt;Step 1：创建飞书应用&lt;/h3&gt;
-&lt;p&gt;先去 &lt;a href="https://open.feishu.cn"&gt;飞书开放平台&lt;/a&gt; 创建一个企业自建应用：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</title><link>https://zhouyangimt.github.io/posts/hermes-agent-cron/</link><pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-cron/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;和 &lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。&lt;/p&gt;
+&lt;p&gt;先去 &lt;a href="https://open.feishu.cn"&gt;飞书开放平台&lt;/a&gt; 创建一个企业自建应用：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</title><link>https://zhouyang.dev/posts/hermes-agent-cron/</link><pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-cron/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;和 &lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。&lt;/p&gt;
 &lt;p&gt;前几篇聊的都是「你跟 Hermes 对话时它能干什么」。但有个场景一直没展开：&lt;strong&gt;你不在电脑前的时候，Hermes 能不能自己干活？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;答案是能。而且不需要你写 cron 脚本、配 systemd timer、搭 CI pipeline。你只需要用自然语言告诉 Hermes「每天这个时候帮我做这件事」，它到点就自己跑。&lt;/p&gt;
 &lt;h2 id="为什么不用传统-cron"&gt;为什么不用传统 cron&lt;/h2&gt;
@@ -120,13 +184,13 @@
 &lt;li&gt;完成后把结果推送到你指定的地方&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;换句话说：传统 cron 跑的是代码，Hermes Cron 跑的是&lt;strong&gt;判断力&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyangimt.github.io/images/hermes-cron-workflow.png" alt="Hermes Cron 定时任务工作流：从定义到执行到通知的完整链路"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-cron-workflow.png" alt="Hermes Cron 定时任务工作流：从定义到执行到通知的完整链路"&gt;&lt;/p&gt;
 &lt;h2 id="创建第一个-cron-任务"&gt;创建第一个 cron 任务&lt;/h2&gt;
-&lt;p&gt;Hermes 的 cron 管理有两种方式：CLI 命令和配置文件。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title><link>https://zhouyangimt.github.io/posts/hermes-agent-config/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-config/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;
+&lt;p&gt;Hermes 的 cron 管理有两种方式：CLI 命令和配置文件。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title><link>https://zhouyang.dev/posts/hermes-agent-config/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-config/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;
 &lt;p&gt;上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。&lt;/p&gt;
 &lt;p&gt;Hermes 的核心优势之一是&lt;strong&gt;不绑定任何模型厂商&lt;/strong&gt;。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。&lt;/p&gt;
 &lt;p&gt;今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyangimt.github.io/images/hermes-architecture.png" alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-architecture.png" alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"&gt;&lt;/p&gt;
 &lt;h2 id="配置文件在哪"&gt;配置文件在哪&lt;/h2&gt;
 &lt;p&gt;Hermes 的配置分布在两个文件：&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;~/.hermes/config.yaml # 主配置：模型、工具集、人格、安全策略等
@@ -146,7 +210,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes auth
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先说最重要的 providers。&lt;/p&gt;
 &lt;h2 id="providers20-模型提供商怎么选"&gt;Providers：20+ 模型提供商怎么选&lt;/h2&gt;
-&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</title><link>https://zhouyangimt.github.io/posts/hermes-agent-skills/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-skills/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第三篇。前两篇分别是&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;和&lt;a href="https://zhouyangimt.github.io/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;——建议先看完那两篇再回来看这篇，因为本文默认你已经有跑起来的 Hermes 了。&lt;/p&gt;
+&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</title><link>https://zhouyang.dev/posts/hermes-agent-skills/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-skills/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第三篇。前两篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;和&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;——建议先看完那两篇再回来看这篇，因为本文默认你已经有跑起来的 Hermes 了。&lt;/p&gt;
 &lt;p&gt;前两篇聊了安装和配置。但有一个问题我一直没回答：&lt;strong&gt;你教会 Hermes 的东西，下次还能用吗？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;大部分 AI 助手是金鱼——每次对话结束就清零了。你费劲调好的工作流，下次得从头教。但 Hermes 的设计思路不一样：它有一个 Skills 系统，让你把「怎么干活」写成标准化文档，下次自动加载。&lt;/p&gt;
 &lt;p&gt;换句话说，Skills 就是 Hermes 的 SOP。&lt;/p&gt;
@@ -163,7 +227,7 @@
 &lt;p&gt;&lt;strong&gt;系统级 Skill：《systematic-debugging》&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这个 Skill 定义了四阶段调试法——根因分析→模式比对→假设验证→实施修复。核心就一条铁律：&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加载这个 Skill 后，Hermes 遇到 bug 不会上来就改代码，而是先读错误信息、尝试复现、查 git diff 找最近改动、追踪数据流找到源头。然后才动手。&lt;/p&gt;</description></item><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyangimt.github.io/posts/hermes-agent-guide/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加载这个 Skill 后，Hermes 遇到 bug 不会上来就改代码，而是先读错误信息、尝试复现、查 git diff 找最近改动、追踪数据流找到源头。然后才动手。&lt;/p&gt;</description></item><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyang.dev/posts/hermes-agent-guide/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://github.com/NousResearch/hermes-agent"&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;
 &lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;
 &lt;ul&gt;
@@ -192,7 +256,7 @@
 &lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes cron create &lt;span style="color:#e6db74"&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 每天早上8点&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
-&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item><item><title>用Python自动化你的10个日常重复工作（附完整代码）</title><link>https://zhouyangimt.github.io/posts/python-automation-daily-tasks/</link><pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyangimt.github.io/posts/python-automation-daily-tasks/</guid><description>&lt;p&gt;&lt;img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;amp;h=630&amp;amp;fit=crop" alt="Python自动化编程"&gt;&lt;/p&gt;
+&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item><item><title>用Python自动化你的10个日常重复工作（附完整代码）</title><link>https://zhouyang.dev/posts/python-automation-daily-tasks/</link><pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-automation-daily-tasks/</guid><description>&lt;p&gt;&lt;img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;amp;h=630&amp;amp;fit=crop" alt="Python自动化编程"&gt;&lt;/p&gt;
 &lt;h2 id="你每天在浪费多少时间"&gt;你每天在浪费多少时间？&lt;/h2&gt;
 &lt;p&gt;想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。&lt;/p&gt;
 &lt;p&gt;Python最擅长干这个。下面10个脚本，复制即用。&lt;/p&gt;

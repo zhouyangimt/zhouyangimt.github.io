@@ -1,237 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程 on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/%E7%BC%96%E7%A8%8B/</link><description>Recent content in 编程 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>独立开发者2026技术栈选择指南：少即是多</title><link>https://zhouyang.dev/posts/indie-dev-tech-stack-2026/</link><pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/indie-dev-tech-stack-2026/</guid><description>&lt;h2 id="独立开发者的选型哲学"&gt;独立开发者的选型哲学&lt;/h2&gt;
-&lt;p&gt;大公司选技术栈看生态、看招聘、看长期维护。独立开发者只有一个标准——&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;能不能让我一个人，在一周内，把想法变成能收钱的产品？&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;基于这个标准，这是我的推荐。&lt;/p&gt;
-&lt;h2 id="前端选一个用到死"&gt;前端：选一个，用到死&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;首选: Next.js (React)&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;生态最大，AI工具（Cursor/v0）对React支持最好&lt;/li&gt;
-&lt;li&gt;Vercel一键部署，免费额度够用&lt;/li&gt;
-&lt;li&gt;组件库多（shadcn/ui是2026年首选）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;备选: 纯HTML + HTMX + Alpine.js&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;如果你觉得React太重&lt;/li&gt;
-&lt;li&gt;适合内容站、简单工具&lt;/li&gt;
-&lt;li&gt;文件少、部署简单、维护成本极低&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;不推荐&lt;/strong&gt;: Vue/Nuxt（生态不如React）、Angular（太重）、Svelte（太小众）&lt;/p&gt;
-&lt;h2 id="后端能不写就不写"&gt;后端：能不写就不写&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;首选: Supabase / Firebase&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据库、认证、存储一站式&lt;/li&gt;
-&lt;li&gt;免费额度对独立开发者完全够&lt;/li&gt;
-&lt;li&gt;不用自己搭服务器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;如果需要自定义后端: Python (FastAPI)&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;写起来快、AI生成质量高&lt;/li&gt;
-&lt;li&gt;部署到 Railway / Fly.io ——按用量计费，不操心运维&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="数据库postgresql永远是正确答案"&gt;数据库：PostgreSQL永远是正确答案&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Supabase内置Postgres&lt;/li&gt;
-&lt;li&gt;不需要学新的查询语言&lt;/li&gt;
-&lt;li&gt;AI工具对Postgres支持最好&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="部署与运维"&gt;部署与运维&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;项目类型&lt;/th&gt;
-					&lt;th&gt;推荐部署方案&lt;/th&gt;
-					&lt;th&gt;月费&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;静态博客/内容站&lt;/td&gt;
-					&lt;td&gt;GitHub Pages / Cloudflare Pages&lt;/td&gt;
-					&lt;td&gt;$0&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;Next.js全栈应用&lt;/td&gt;
-					&lt;td&gt;Vercel&lt;/td&gt;
-					&lt;td&gt;$0-$20&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;Python后端&lt;/td&gt;
-					&lt;td&gt;Railway / Fly.io&lt;/td&gt;
-					&lt;td&gt;$0-$5&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;数据库&lt;/td&gt;
-					&lt;td&gt;Supabase&lt;/td&gt;
-					&lt;td&gt;$0-$25&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="一个真实的技术栈我在用"&gt;一个真实的技术栈（我在用）&lt;/h2&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;前端: Hugo（内容站） / Next.js（应用）
-后端: Python FastAPI（需要时）
-数据库: Supabase PostgreSQL
-部署: GitHub Pages + Vercel
-支付: LemonSqueezy（支持支付宝）
-域名: Porkbun
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;全年运营成本: ~$50（域名 + LemonSqueezy手续费）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>2026年AI编程助手完全指南：选型、配置与最佳实践</title><link>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</link><pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</guid><description>&lt;h2 id="2026年ai编程助手的格局"&gt;2026年AI编程助手的格局&lt;/h2&gt;
-&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2026年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;
-&lt;h2 id="第一类终端cli型"&gt;第一类：终端/CLI型&lt;/h2&gt;
-&lt;p&gt;这类工具运行在终端里，直接操作代码库。&lt;/p&gt;
-&lt;h3 id="claude-code"&gt;Claude Code&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Anthropic&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：200K上下文、理解力强、擅长架构级别的工作&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：API计费，Max计划$200/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="codex-openai"&gt;Codex (OpenAI)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：OpenAI&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：轻量级、速度快、和GPT-4深度集成&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费额度 + API计费&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="hermes-agent"&gt;Hermes Agent&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Nous Research（开源）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：完全开源、支持20+模型提供商、持久化记忆、技能系统&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费（自带API Key）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="第二类ide集成型"&gt;第二类：IDE集成型&lt;/h2&gt;
-&lt;h3 id="cursor"&gt;Cursor&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：VS Code Fork&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Tab预测补全、内联编辑&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $20/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="windsurf"&gt;Windsurf&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：独立IDE&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Cascade多文件编辑、自动上下文&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $15/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="github-copilot"&gt;GitHub Copilot&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：IDE插件&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：覆盖面最广、Agent模式&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：$10/月（个人）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="第三类在线web型"&gt;第三类：在线/Web型&lt;/h2&gt;
-&lt;h3 id="boltnew--v0dev"&gt;Bolt.new / v0.dev&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：一句话生成全栈应用&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;适合&lt;/strong&gt;：快速原型、前端组件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="本地-vs-云端怎么选"&gt;本地 vs 云端：怎么选？&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;因素&lt;/th&gt;
-					&lt;th&gt;本地终端型&lt;/th&gt;
-					&lt;th&gt;IDE集成型&lt;/th&gt;
-					&lt;th&gt;Web型&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;代码库理解&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;编码速度&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;架构/重构&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;上手难度&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-					&lt;td&gt;低&lt;/td&gt;
-					&lt;td&gt;极低&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;隐私&lt;/td&gt;
-					&lt;td&gt;好&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-					&lt;td&gt;差&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="我的工作流供参考"&gt;我的工作流（供参考）&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;日常编码&lt;/strong&gt;：Cursor（Tab补全太香了）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;大型重构&lt;/strong&gt;：Claude Code（理解力天花板）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;自动化任务/定时任务&lt;/strong&gt;：Hermes Agent（开源 + cron）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;快速原型&lt;/strong&gt;：Bolt.new（最快从零到有）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="最后建议"&gt;最后建议&lt;/h2&gt;
-&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description></item><item><title>Claude Code vs Cursor vs GitHub Copilot：2026年AI编程助手深度横评</title><link>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</link><pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</guid><description>&lt;h2 id="为什么需要ai编程助手"&gt;为什么需要AI编程助手？&lt;/h2&gt;
-&lt;p&gt;2026年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;
-&lt;p&gt;这篇文章聚焦三大主流选手，帮你做出明智选择。&lt;/p&gt;
-&lt;h2 id="claude-code"&gt;Claude Code&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Anthropic出品，终端里的AI程序员。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Claude Code 是一个命令行工具，你在终端里用自然语言描述需求，它直接读代码、写代码、跑测试。它的核心优势是 &lt;strong&gt;深度理解大型代码库&lt;/strong&gt;——200K上下文窗口，能一口气吃掉整个项目。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：后端开发、重构、代码审查&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：按API用量计费，Max计划$200/月含大量额度&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：代码质量高、擅长复杂逻辑、理解项目架构&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：纯命令行，没有IDE集成；Max计划贵&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="cursor"&gt;Cursor&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;基于VS Code的AI-first编辑器。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Cursor 本质上是 VS Code + 深度AI集成。它的杀手功能是 &lt;strong&gt;Tab补全&lt;/strong&gt;和&lt;strong&gt;Inline编辑&lt;/strong&gt;——AI预测你下一步要写什么，一键接受。体验非常流畅。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：全栈开发、前端、日常编码&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版可用，Pro版$20/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：体验丝滑、VS Code生态兼容、速度快&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：大项目重构不如Claude Code深；重度使用需Pro&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="github-copilot"&gt;GitHub Copilot&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;微软出品，最老牌的AI编程助手。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2026年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：日常编码、多IDE用户、团队协作&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：个人$10/月，含Copilot Chat&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：覆盖面最广、企业友好、Chat功能好用&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：代码建议有时「幻觉」；Agent模式还不够成熟&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="我的推荐"&gt;我的推荐&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;你的情况&lt;/th&gt;
-					&lt;th&gt;推荐&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;独立开发者/个人项目&lt;/td&gt;
-					&lt;td&gt;Cursor（性价比最高）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;大型项目/后端重构&lt;/td&gt;
-					&lt;td&gt;Claude Code（理解力最强）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;多IDE/团队协作&lt;/td&gt;
-					&lt;td&gt;GitHub Copilot（生态最好）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;不想花钱&lt;/td&gt;
-					&lt;td&gt;Cursor免费版 + 开源自补全插件&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="最后"&gt;最后&lt;/h2&gt;
-&lt;p&gt;没有「最好」的工具，只有「最适合」的工具。建议三个都试用一周，感受一下哪个更契合你的工作流。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;利益声明：本文为独立评测，无任何商业合作。&lt;/p&gt;
-&lt;/blockquote&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>编程 on zhouyang — The 25th Frame</title>
+		<link>https://zhouyang.dev/tags/%E7%BC%96%E7%A8%8B/</link>
+		<description>Recent content in 编程 on zhouyang — The 25th Frame</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyang.dev/tags/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>独立开发者2026技术栈选择指南：少即是多</title>
+				<link>https://zhouyang.dev/posts/indie-dev-tech-stack-2026/</link>
+				<pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/indie-dev-tech-stack-2026/</guid>
+				<description>&lt;h2 id=&#34;独立开发者的选型哲学&#34;&gt;独立开发者的选型哲学&lt;/h2&gt;&#xA;&lt;p&gt;大公司选技术栈看生态、看招聘、看长期维护。独立开发者只有一个标准——&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;能不能让我一个人，在一周内，把想法变成能收钱的产品？&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;基于这个标准，这是我的推荐。&lt;/p&gt;&#xA;&lt;h2 id=&#34;前端选一个用到死&#34;&gt;前端：选一个，用到死&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;首选: Next.js (React)&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;生态最大，AI工具（Cursor/v0）对React支持最好&lt;/li&gt;&#xA;&lt;li&gt;Vercel一键部署，免费额度够用&lt;/li&gt;&#xA;&lt;li&gt;组件库多（shadcn/ui是2026年首选）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;备选: 纯HTML + HTMX + Alpine.js&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如果你觉得React太重&lt;/li&gt;&#xA;&lt;li&gt;适合内容站、简单工具&lt;/li&gt;&#xA;&lt;li&gt;文件少、部署简单、维护成本极低&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;不推荐&lt;/strong&gt;: Vue/Nuxt（生态不如React）、Angular（太重）、Svelte（太小众）&lt;/p&gt;&#xA;&lt;h2 id=&#34;后端能不写就不写&#34;&gt;后端：能不写就不写&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;首选: Supabase / Firebase&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;数据库、认证、存储一站式&lt;/li&gt;&#xA;&lt;li&gt;免费额度对独立开发者完全够&lt;/li&gt;&#xA;&lt;li&gt;不用自己搭服务器&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;如果需要自定义后端: Python (FastAPI)&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;写起来快、AI生成质量高&lt;/li&gt;&#xA;&lt;li&gt;部署到 Railway / Fly.io ——按用量计费，不操心运维&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;数据库postgresql永远是正确答案&#34;&gt;数据库：PostgreSQL永远是正确答案&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Supabase内置Postgres&lt;/li&gt;&#xA;&lt;li&gt;不需要学新的查询语言&lt;/li&gt;&#xA;&lt;li&gt;AI工具对Postgres支持最好&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;部署与运维&#34;&gt;部署与运维&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;项目类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;推荐部署方案&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;月费&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;静态博客/内容站&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;GitHub Pages / Cloudflare Pages&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$0&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Next.js全栈应用&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Vercel&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$0-$20&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Python后端&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Railway / Fly.io&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$0-$5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;数据库&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Supabase&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$0-$25&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;一个真实的技术栈我在用&#34;&gt;一个真实的技术栈（我在用）&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;前端: Hugo（内容站） / Next.js（应用）&#xA;后端: Python FastAPI（需要时）&#xA;数据库: Supabase PostgreSQL&#xA;部署: GitHub Pages + Vercel&#xA;支付: LemonSqueezy（支持支付宝）&#xA;域名: Porkbun&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;全年运营成本: ~$50（域名 + LemonSqueezy手续费）&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>2026年AI编程助手完全指南：选型、配置与最佳实践</title>
+				<link>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</link>
+				<pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</guid>
+				<description>&lt;h2 id=&#34;2026年ai编程助手的格局&#34;&gt;2026年AI编程助手的格局&lt;/h2&gt;&#xA;&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2026年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一类终端cli型&#34;&gt;第一类：终端/CLI型&lt;/h2&gt;&#xA;&lt;p&gt;这类工具运行在终端里，直接操作代码库。&lt;/p&gt;&#xA;&lt;h3 id=&#34;claude-code&#34;&gt;Claude Code&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Anthropic&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：200K上下文、理解力强、擅长架构级别的工作&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：API计费，Max计划$200/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;codex-openai&#34;&gt;Codex (OpenAI)&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：OpenAI&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：轻量级、速度快、和GPT-4深度集成&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费额度 + API计费&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;hermes-agent&#34;&gt;Hermes Agent&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Nous Research（开源）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：完全开源、支持20+模型提供商、持久化记忆、技能系统&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费（自带API Key）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第二类ide集成型&#34;&gt;第二类：IDE集成型&lt;/h2&gt;&#xA;&lt;h3 id=&#34;cursor&#34;&gt;Cursor&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：VS Code Fork&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Tab预测补全、内联编辑&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $20/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;windsurf&#34;&gt;Windsurf&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：独立IDE&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Cascade多文件编辑、自动上下文&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $15/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;github-copilot&#34;&gt;GitHub Copilot&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：IDE插件&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：覆盖面最广、Agent模式&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：$10/月（个人）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第三类在线web型&#34;&gt;第三类：在线/Web型&lt;/h2&gt;&#xA;&lt;h3 id=&#34;boltnew--v0dev&#34;&gt;Bolt.new / v0.dev&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：一句话生成全栈应用&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;适合&lt;/strong&gt;：快速原型、前端组件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;本地-vs-云端怎么选&#34;&gt;本地 vs 云端：怎么选？&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;因素&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;本地终端型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;IDE集成型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Web型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;代码库理解&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;编码速度&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;架构/重构&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;上手难度&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;极低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;隐私&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;好&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;差&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;我的工作流供参考&#34;&gt;我的工作流（供参考）&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;日常编码&lt;/strong&gt;：Cursor（Tab补全太香了）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;大型重构&lt;/strong&gt;：Claude Code（理解力天花板）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;自动化任务/定时任务&lt;/strong&gt;：Hermes Agent（开源 + cron）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;快速原型&lt;/strong&gt;：Bolt.new（最快从零到有）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;最后建议&#34;&gt;最后建议&lt;/h2&gt;&#xA;&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Claude Code vs Cursor vs GitHub Copilot：2026年AI编程助手深度横评</title>
+				<link>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</link>
+				<pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</guid>
+				<description>&lt;h2 id=&#34;为什么需要ai编程助手&#34;&gt;为什么需要AI编程助手？&lt;/h2&gt;&#xA;&lt;p&gt;2026年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;&#xA;&lt;p&gt;这篇文章聚焦三大主流选手，帮你做出明智选择。&lt;/p&gt;&#xA;&lt;h2 id=&#34;claude-code&#34;&gt;Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Anthropic出品，终端里的AI程序员。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Claude Code 是一个命令行工具，你在终端里用自然语言描述需求，它直接读代码、写代码、跑测试。它的核心优势是 &lt;strong&gt;深度理解大型代码库&lt;/strong&gt;——200K上下文窗口，能一口气吃掉整个项目。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：后端开发、重构、代码审查&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：按API用量计费，Max计划$200/月含大量额度&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：代码质量高、擅长复杂逻辑、理解项目架构&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：纯命令行，没有IDE集成；Max计划贵&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;cursor&#34;&gt;Cursor&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;基于VS Code的AI-first编辑器。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Cursor 本质上是 VS Code + 深度AI集成。它的杀手功能是 &lt;strong&gt;Tab补全&lt;/strong&gt;和&lt;strong&gt;Inline编辑&lt;/strong&gt;——AI预测你下一步要写什么，一键接受。体验非常流畅。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：全栈开发、前端、日常编码&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版可用，Pro版$20/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：体验丝滑、VS Code生态兼容、速度快&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：大项目重构不如Claude Code深；重度使用需Pro&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;github-copilot&#34;&gt;GitHub Copilot&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;微软出品，最老牌的AI编程助手。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2026年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：日常编码、多IDE用户、团队协作&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：个人$10/月，含Copilot Chat&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：覆盖面最广、企业友好、Chat功能好用&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：代码建议有时「幻觉」；Agent模式还不够成熟&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;我的推荐&#34;&gt;我的推荐&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;你的情况&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;推荐&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;独立开发者/个人项目&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cursor（性价比最高）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;大型项目/后端重构&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Claude Code（理解力最强）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;多IDE/团队协作&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;GitHub Copilot（生态最好）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;不想花钱&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cursor免费版 + 开源自补全插件&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;最后&#34;&gt;最后&lt;/h2&gt;&#xA;&lt;p&gt;没有「最好」的工具，只有「最适合」的工具。建议三个都试用一周，感受一下哪个更契合你的工作流。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;利益声明：本文为独立评测，无任何商业合作。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+			</item>
+	</channel>
+</rss>

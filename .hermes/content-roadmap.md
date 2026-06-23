@@ -18,7 +18,7 @@
 
 ## 系列 2：Python 自动化实战（4-5篇）
 - [x] 用Python自动化10个日常重复工作（已有）
-- [ ] Web Scraping 入门到实战
+- [x] Web Scraping 入门到实战
 - [ ] API 自动化：调用50+免费API
 - [ ] 数据分析自动化：Pandas 实战
 - [ ] 定时任务 & 监控脚本

@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhouyang.dev/tags/cantonese/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/classic/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/fried/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/home-cooking/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/pork/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhouyang.dev/posts/</loc>
     <lastmod>2026-06-23T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,7 +29,25 @@
     <loc>https://zhouyang.dev/posts/python-web-scraping/</loc>
     <lastmod>2026-06-23T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zhouyang.dev/tags/sichuan/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/spicy/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/stir-fry/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/sweet-and-sour-pork/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/sweet-sour/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhouyang.dev/tags/</loc>
+    <lastmod>2026-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/twice-cooked-pork/</loc>
     <lastmod>2026-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/</loc>
@@ -30,12 +66,6 @@
     <lastmod>2026-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/beef/</loc>
-    <lastmod>2026-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/cuisine/</loc>
-    <lastmod>2026-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/classic/</loc>
     <lastmod>2026-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/gansu/</loc>
@@ -68,9 +98,6 @@
     <loc>https://zhouyang.dev/tags/bbq/</loc>
     <lastmod>2026-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhouyang.dev/tags/cantonese/</loc>
-    <lastmod>2026-06-21T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhouyang.dev/cuisine/char-siu/</loc>
     <lastmod>2026-06-21T00:00:00+00:00</lastmod>
   </url><url>
@@ -80,16 +107,7 @@
     <loc>https://zhouyang.dev/posts/hermes-agent-gateway/</loc>
     <lastmod>2026-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhouyang.dev/tags/pork/</loc>
-    <lastmod>2026-06-21T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhouyang.dev/tags/roast/</loc>
-    <lastmod>2026-06-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/sichuan/</loc>
-    <lastmod>2026-06-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/spicy/</loc>
     <lastmod>2026-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/beijing/</loc>
@@ -147,9 +165,6 @@
     <lastmod>2026-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/cuisine/kung-pao-chicken/</loc>
-    <lastmod>2026-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/stir-fry/</loc>
     <lastmod>2026-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/hermes-agent-guide/</loc>

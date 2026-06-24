@@ -285,6 +285,6 @@ conn.commit()
 
 ---
 
-**系列导航**：[01 日常任务自动化](/posts/python-automation-daily-tasks/) | **02 Web Scraping 实战** | [03 API 自动化（即将更新）](/posts/)
+**系列导航**：[01 日常任务自动化](/posts/python-automation-daily-tasks/) | **02 Web Scraping 实战** | [03 API 自动化](/posts/python-api-automation/)
 
 *Python 自动化实战系列，下一篇：API 自动化——把你产品接上 50+ 免费数据源。*

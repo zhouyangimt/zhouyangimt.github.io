@@ -1,85 +1,178 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>用Python自动化你的10个日常重复工作（附完整代码） | zhouyang — The 25th Frame</title><meta name=description content="文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。"><link rel=stylesheet href="/css/style.css?v=202606240411"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
-<a href=/posts/>Tech</a>
-<a href=/cuisine/>Chinese Cuisine</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<span class=rss-links><span class=rss-label>RSS</span>
-<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>用Python自动化你的10个日常重复工作（附完整代码）</h1><div class=meta><time>2026-06-05</time>
-<span class=tags><span class=tag>Python</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><p><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;h=630&amp;fit=crop" alt=Python自动化编程></p><h2 id=你每天在浪费多少时间>你每天在浪费多少时间？</h2><p>想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。</p><p>Python最擅长干这个。下面10个脚本，复制即用。</p><h2 id=1-批量重命名文件>1. 批量重命名文件</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
-</span></span><span style=display:flex><span>path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./images&#34;</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i, f <span style=color:#f92672>in</span> enumerate(os<span style=color:#f92672>.</span>listdir(path)):
-</span></span><span style=display:flex><span>    os<span style=color:#f92672>.</span>rename(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>path<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>f<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>, <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>path<span style=color:#e6db74>}</span><span style=color:#e6db74>/photo_</span><span style=color:#e6db74>{</span>i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#e6db74>:</span><span style=color:#e6db74>03d</span><span style=color:#e6db74>}</span><span style=color:#e6db74>.jpg&#34;</span>)
-</span></span></code></pre></div><h2 id=2-自动整理下载文件夹>2. 自动整理下载文件夹</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os<span style=color:#f92672>,</span> shutil
-</span></span><span style=display:flex><span>downloads <span style=color:#f92672>=</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>expanduser(<span style=color:#e6db74>&#34;~/Downloads&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> f <span style=color:#f92672>in</span> os<span style=color:#f92672>.</span>listdir(downloads):
-</span></span><span style=display:flex><span>    ext <span style=color:#f92672>=</span> f<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#34;.&#34;</span>)[<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>lower()
-</span></span><span style=display:flex><span>    dest <span style=color:#f92672>=</span> os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(downloads, ext)
-</span></span><span style=display:flex><span>    os<span style=color:#f92672>.</span>makedirs(dest, exist_ok<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
-</span></span><span style=display:flex><span>    shutil<span style=color:#f92672>.</span>move(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(downloads, f), dest)
-</span></span></code></pre></div><h2 id=3-定时发送邮件>3. 定时发送邮件</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> smtplib
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> email.mime.text <span style=color:#f92672>import</span> MIMEText
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>msg <span style=color:#f92672>=</span> MIMEText(<span style=color:#e6db74>&#34;这是自动发送的日报&#34;</span>)
-</span></span><span style=display:flex><span>msg[<span style=color:#e6db74>&#34;Subject&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;每日报告&#34;</span>
-</span></span><span style=display:flex><span>msg[<span style=color:#e6db74>&#34;From&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;you@qq.com&#34;</span>
-</span></span><span style=display:flex><span>msg[<span style=color:#e6db74>&#34;To&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;boss@qq.com&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>with</span> smtplib<span style=color:#f92672>.</span>SMTP_SSL(<span style=color:#e6db74>&#34;smtp.qq.com&#34;</span>, <span style=color:#ae81ff>465</span>) <span style=color:#66d9ef>as</span> s:
-</span></span><span style=display:flex><span>    s<span style=color:#f92672>.</span>login(<span style=color:#e6db74>&#34;you@qq.com&#34;</span>, <span style=color:#e6db74>&#34;授权码&#34;</span>)
-</span></span><span style=display:flex><span>    s<span style=color:#f92672>.</span>send_message(msg)
-</span></span></code></pre></div><h2 id=4-批量压缩图片>4. 批量压缩图片</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> PIL <span style=color:#f92672>import</span> Image
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> f <span style=color:#f92672>in</span> os<span style=color:#f92672>.</span>listdir(<span style=color:#e6db74>&#34;photos&#34;</span>):
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> f<span style=color:#f92672>.</span>endswith((<span style=color:#e6db74>&#34;.jpg&#34;</span>, <span style=color:#e6db74>&#34;.png&#34;</span>)):
-</span></span><span style=display:flex><span>        img <span style=color:#f92672>=</span> Image<span style=color:#f92672>.</span>open(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;photos/</span><span style=color:#e6db74>{</span>f<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        img<span style=color:#f92672>.</span>save(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;compressed/</span><span style=color:#e6db74>{</span>f<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>, quality<span style=color:#f92672>=</span><span style=color:#ae81ff>60</span>, optimize<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
-</span></span></code></pre></div><h2 id=5-excel数据提取>5. Excel数据提取</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
-</span></span><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_excel(<span style=color:#e6db74>&#34;sales.xlsx&#34;</span>)
-</span></span><span style=display:flex><span>summary <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#34;region&#34;</span>)[<span style=color:#e6db74>&#34;revenue&#34;</span>]<span style=color:#f92672>.</span>sum()
-</span></span><span style=display:flex><span>summary<span style=color:#f92672>.</span>to_csv(<span style=color:#e6db74>&#34;summary.csv&#34;</span>)
-</span></span></code></pre></div><h2 id=6-网页定时截图>6. 网页定时截图</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> playwright.sync_api <span style=color:#f92672>import</span> sync_playwright
-</span></span><span style=display:flex><span><span style=color:#66d9ef>with</span> sync_playwright() <span style=color:#66d9ef>as</span> p:
-</span></span><span style=display:flex><span>    browser <span style=color:#f92672>=</span> p<span style=color:#f92672>.</span>chromium<span style=color:#f92672>.</span>launch()
-</span></span><span style=display:flex><span>    page <span style=color:#f92672>=</span> browser<span style=color:#f92672>.</span>new_page()
-</span></span><span style=display:flex><span>    page<span style=color:#f92672>.</span>goto(<span style=color:#e6db74>&#34;https://your-site.com&#34;</span>)
-</span></span><span style=display:flex><span>    page<span style=color:#f92672>.</span>screenshot(path<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;screenshot.png&#34;</span>)
-</span></span></code></pre></div><h2 id=7-批量下载文件>7. 批量下载文件</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>urls <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;https://example.com/file1.pdf&#34;</span>, <span style=color:#e6db74>&#34;https://example.com/file2.pdf&#34;</span>]
-</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i, url <span style=color:#f92672>in</span> enumerate(urls):
-</span></span><span style=display:flex><span>    r <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> open(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;download_</span><span style=color:#e6db74>{</span>i<span style=color:#e6db74>}</span><span style=color:#e6db74>.pdf&#34;</span>, <span style=color:#e6db74>&#34;wb&#34;</span>) <span style=color:#66d9ef>as</span> f:
-</span></span><span style=display:flex><span>        f<span style=color:#f92672>.</span>write(r<span style=color:#f92672>.</span>content)
-</span></span></code></pre></div><h2 id=8-监控网站变化>8. 监控网站变化</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests<span style=color:#f92672>,</span> hashlib<span style=color:#f92672>,</span> time
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://target-site.com&#34;</span>
-</span></span><span style=display:flex><span>prev <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
-</span></span><span style=display:flex><span>    content <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url)<span style=color:#f92672>.</span>text
-</span></span><span style=display:flex><span>    h <span style=color:#f92672>=</span> hashlib<span style=color:#f92672>.</span>md5(content<span style=color:#f92672>.</span>encode())<span style=color:#f92672>.</span>hexdigest()
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> h <span style=color:#f92672>!=</span> prev:
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;网站更新了!&#34;</span>)
-</span></span><span style=display:flex><span>        prev <span style=color:#f92672>=</span> h
-</span></span><span style=display:flex><span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>3600</span>)
-</span></span></code></pre></div><h2 id=9-自动生成周报>9. 自动生成周报</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime, timedelta
-</span></span><span style=display:flex><span>week <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now() <span style=color:#f92672>-</span> timedelta(days<span style=color:#f92672>=</span><span style=color:#ae81ff>7</span>)
-</span></span><span style=display:flex><span>start <span style=color:#f92672>=</span> week<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m.</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>end <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m.</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;本周工作总结 (</span><span style=color:#e6db74>{</span>start<span style=color:#e6db74>}</span><span style=color:#e6db74> - </span><span style=color:#e6db74>{</span>end<span style=color:#e6db74>}</span><span style=color:#e6db74>)&#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;完成事项:&#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;1. &#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;2. &#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;下周计划:&#34;</span>)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;1. &#34;</span>)
-</span></span></code></pre></div><h2 id=10-数据备份脚本>10. 数据备份脚本</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> shutil<span style=color:#f92672>,</span> os
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>src <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/path/to/important/data&#34;</span>
-</span></span><span style=display:flex><span>dst <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;/backup/backup_</span><span style=color:#e6db74>{</span>datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y%m</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
-</span></span><span style=display:flex><span>shutil<span style=color:#f92672>.</span>copytree(src, dst)
-</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;备份完成: </span><span style=color:#e6db74>{</span>dst<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span></code></pre></div><h2 id=把这些串起来>把这些串起来</h2><p>用cron定时任务每天跑一遍:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 每天早8点自动整理、备份</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * python3 /path/to/auto.py
-</span></span></code></pre></div><p>依赖安装: <code>pip install pillow pandas openpyxl playwright</code></p><blockquote><p>这些脚本任何一个单独拎出来都能省你每天至少10分钟。10个加起来就是小半天。</p></blockquote><p><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&amp;h=630&amp;fit=crop" alt=让代码替你工作></p></div></article><nav class=post-nav><a href=/posts/github-pages-hugo-blog-tutorial/ class=prev>← GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</a>
-<a href=/posts/programmer-side-hustle-2026/ class=next>2026年适合程序员的6个副业方向：从接私活到被动收入 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用Python自动化你的10个日常重复工作（附完整代码） | zhouyang — The 25th Frame</title>
+  <meta name="description" content="文件整理、邮件发送、数据报表……这些烦人的重复工作，让Python替你干。">
+  <link rel="stylesheet" href="/css/style.css?v=202606241349">
+  
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">zhouyang — The 25th Frame</a>
+      <div class="nav-links">
+        
+        <a href="/">Home</a>
+        
+        <a href="/posts/">Tech</a>
+        
+        <a href="/cuisine/">Chinese Cuisine</a>
+        
+        <a href="/about/">About</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    
+<article class="single-post">
+  <header>
+    <h1>用Python自动化你的10个日常重复工作（附完整代码）</h1>
+    <div class="meta">
+      <time>2026-06-05</time>
+      
+      <span class="tags">
+        <span class="tag">Python</span><span class="tag">自动化</span><span class="tag">独立开发</span>
+      </span>
+      
+    </div>
+  </header>
+  <div class="content">
+    <p><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;h=630&amp;fit=crop" alt="Python自动化编程"></p>
+<h2 id="你每天在浪费多少时间">你每天在浪费多少时间？</h2>
+<p>想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。</p>
+<p>Python最擅长干这个。下面10个脚本，复制即用。</p>
+<h2 id="1-批量重命名文件">1. 批量重命名文件</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./images&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, f <span style="color:#f92672">in</span> enumerate(os<span style="color:#f92672">.</span>listdir(path)):
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>f<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">/photo_</span><span style="color:#e6db74">{</span>i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#e6db74">:</span><span style="color:#e6db74">03d</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.jpg&#34;</span>)
+</span></span></code></pre></div><h2 id="2-自动整理下载文件夹">2. 自动整理下载文件夹</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os<span style="color:#f92672">,</span> shutil
+</span></span><span style="display:flex;"><span>downloads <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>expanduser(<span style="color:#e6db74">&#34;~/Downloads&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(downloads):
+</span></span><span style="display:flex;"><span>    ext <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;.&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>lower()
+</span></span><span style="display:flex;"><span>    dest <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(downloads, ext)
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>makedirs(dest, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    shutil<span style="color:#f92672">.</span>move(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(downloads, f), dest)
+</span></span></code></pre></div><h2 id="3-定时发送邮件">3. 定时发送邮件</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> smtplib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>msg <span style="color:#f92672">=</span> MIMEText(<span style="color:#e6db74">&#34;这是自动发送的日报&#34;</span>)
+</span></span><span style="display:flex;"><span>msg[<span style="color:#e6db74">&#34;Subject&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;每日报告&#34;</span>
+</span></span><span style="display:flex;"><span>msg[<span style="color:#e6db74">&#34;From&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;you@qq.com&#34;</span>
+</span></span><span style="display:flex;"><span>msg[<span style="color:#e6db74">&#34;To&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;boss@qq.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> smtplib<span style="color:#f92672">.</span>SMTP_SSL(<span style="color:#e6db74">&#34;smtp.qq.com&#34;</span>, <span style="color:#ae81ff">465</span>) <span style="color:#66d9ef">as</span> s:
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">.</span>login(<span style="color:#e6db74">&#34;you@qq.com&#34;</span>, <span style="color:#e6db74">&#34;授权码&#34;</span>)
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">.</span>send_message(msg)
+</span></span></code></pre></div><h2 id="4-批量压缩图片">4. 批量压缩图片</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(<span style="color:#e6db74">&#34;photos&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> f<span style="color:#f92672">.</span>endswith((<span style="color:#e6db74">&#34;.jpg&#34;</span>, <span style="color:#e6db74">&#34;.png&#34;</span>)):
+</span></span><span style="display:flex;"><span>        img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;photos/</span><span style="color:#e6db74">{</span>f<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        img<span style="color:#f92672">.</span>save(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;compressed/</span><span style="color:#e6db74">{</span>f<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, quality<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>, optimize<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><h2 id="5-excel数据提取">5. Excel数据提取</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_excel(<span style="color:#e6db74">&#34;sales.xlsx&#34;</span>)
+</span></span><span style="display:flex;"><span>summary <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;region&#34;</span>)[<span style="color:#e6db74">&#34;revenue&#34;</span>]<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>summary<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;summary.csv&#34;</span>)
+</span></span></code></pre></div><h2 id="6-网页定时截图">6. 网页定时截图</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> playwright.sync_api <span style="color:#f92672">import</span> sync_playwright
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> sync_playwright() <span style="color:#66d9ef">as</span> p:
+</span></span><span style="display:flex;"><span>    browser <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>chromium<span style="color:#f92672">.</span>launch()
+</span></span><span style="display:flex;"><span>    page <span style="color:#f92672">=</span> browser<span style="color:#f92672">.</span>new_page()
+</span></span><span style="display:flex;"><span>    page<span style="color:#f92672">.</span>goto(<span style="color:#e6db74">&#34;https://your-site.com&#34;</span>)
+</span></span><span style="display:flex;"><span>    page<span style="color:#f92672">.</span>screenshot(path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;screenshot.png&#34;</span>)
+</span></span></code></pre></div><h2 id="7-批量下载文件">7. 批量下载文件</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>urls <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;https://example.com/file1.pdf&#34;</span>, <span style="color:#e6db74">&#34;https://example.com/file2.pdf&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, url <span style="color:#f92672">in</span> enumerate(urls):
+</span></span><span style="display:flex;"><span>    r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;download_</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">.pdf&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>write(r<span style="color:#f92672">.</span>content)
+</span></span></code></pre></div><h2 id="8-监控网站变化">8. 监控网站变化</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests<span style="color:#f92672">,</span> hashlib<span style="color:#f92672">,</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://target-site.com&#34;</span>
+</span></span><span style="display:flex;"><span>prev <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    content <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)<span style="color:#f92672">.</span>text
+</span></span><span style="display:flex;"><span>    h <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>md5(content<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>hexdigest()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> h <span style="color:#f92672">!=</span> prev:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;网站更新了!&#34;</span>)
+</span></span><span style="display:flex;"><span>        prev <span style="color:#f92672">=</span> h
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">3600</span>)
+</span></span></code></pre></div><h2 id="9-自动生成周报">9. 自动生成周报</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
+</span></span><span style="display:flex;"><span>week <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> timedelta(days<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>start <span style="color:#f92672">=</span> week<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%m.</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>end <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%m.</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;本周工作总结 (</span><span style="color:#e6db74">{</span>start<span style="color:#e6db74">}</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">{</span>end<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;完成事项:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;1. &#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;2. &#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;下周计划:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;1. &#34;</span>)
+</span></span></code></pre></div><h2 id="10-数据备份脚本">10. 数据备份脚本</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> shutil<span style="color:#f92672">,</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>src <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/path/to/important/data&#34;</span>
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;/backup/backup_</span><span style="color:#e6db74">{</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>shutil<span style="color:#f92672">.</span>copytree(src, dst)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;备份完成: </span><span style="color:#e6db74">{</span>dst<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><h2 id="把这些串起来">把这些串起来</h2>
+<p>用cron定时任务每天跑一遍:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 每天早8点自动整理、备份</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * * python3 /path/to/auto.py
+</span></span></code></pre></div><p>依赖安装: <code>pip install pillow pandas openpyxl playwright</code></p>
+<blockquote>
+<p>这些脚本任何一个单独拎出来都能省你每天至少10分钟。10个加起来就是小半天。</p>
+</blockquote>
+<p><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&amp;h=630&amp;fit=crop" alt="让代码替你工作"></p>
+
+  </div>
+</article>
+
+<nav class="post-nav">
+  
+  <a href="/posts/github-pages-hugo-blog-tutorial/" class="prev">← GitHub Pages &#43; Hugo 搭建免费博客完整教程（2026版）</a>
+  
+  
+  <a href="/posts/programmer-side-hustle-2026/" class="next">2026年适合程序员的6个副业方向：从接私活到被动收入 →</a>
+  
+</nav>
+
+<section class="comments">
+  <h2>💬 Comments</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="zhouyangimt/zhouyangimt.github.io"
+          issue-term="pathname"
+          label="comment"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
+  </footer>
+</body>
+</html>

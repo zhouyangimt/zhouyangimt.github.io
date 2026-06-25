@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhouyang.dev/tags/chicken/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/chongqing/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/classic/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/laziji/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhouyang.dev/tags/pandas/</loc>
     <lastmod>2026-06-25T00:00:00+00:00</lastmod>
   </url><url>
@@ -12,6 +27,12 @@
     <lastmod>2026-06-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/python-pandas-analysis/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/sichuan-cuisine/</loc>
+    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/spicy/</loc>
     <lastmod>2026-06-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/</loc>
@@ -36,15 +57,6 @@
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/cantonese/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/chicken/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/cuisine/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/classic/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/fish/</loc>
@@ -93,9 +105,6 @@
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/cuisine/sichuan-boiled-fish/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/spicy/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/stir-fry/</loc>

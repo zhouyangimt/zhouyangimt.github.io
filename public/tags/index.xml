@@ -14,6 +14,27 @@
 		
 			<atom:link href="https://zhouyang.dev/tags/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>Chicken</title>
+				<link>https://zhouyang.dev/tags/chicken/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/chicken/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Chongqing</title>
+				<link>https://zhouyang.dev/tags/chongqing/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/chongqing/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Classic</title>
+				<link>https://zhouyang.dev/tags/classic/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/classic/</guid>
+				<description></description>
+			</item>
+			<item>
 				<title>Pandas</title>
 				<link>https://zhouyang.dev/tags/pandas/</link>
 				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
@@ -25,6 +46,20 @@
 				<link>https://zhouyang.dev/tags/python/</link>
 				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://zhouyang.dev/tags/python/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Sichuan-Cuisine</title>
+				<link>https://zhouyang.dev/tags/sichuan-cuisine/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/sichuan-cuisine/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Spicy</title>
+				<link>https://zhouyang.dev/tags/spicy/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/spicy/</guid>
 				<description></description>
 			</item>
 			<item>
@@ -67,20 +102,6 @@
 				<link>https://zhouyang.dev/tags/cantonese/</link>
 				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://zhouyang.dev/tags/cantonese/</guid>
-				<description></description>
-			</item>
-			<item>
-				<title>Chicken</title>
-				<link>https://zhouyang.dev/tags/chicken/</link>
-				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/tags/chicken/</guid>
-				<description></description>
-			</item>
-			<item>
-				<title>Classic</title>
-				<link>https://zhouyang.dev/tags/classic/</link>
-				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/tags/classic/</guid>
 				<description></description>
 			</item>
 			<item>
@@ -137,13 +158,6 @@
 				<link>https://zhouyang.dev/tags/sichuan/</link>
 				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://zhouyang.dev/tags/sichuan/</guid>
-				<description></description>
-			</item>
-			<item>
-				<title>Spicy</title>
-				<link>https://zhouyang.dev/tags/spicy/</link>
-				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/tags/spicy/</guid>
 				<description></description>
 			</item>
 			<item>

@@ -570,6 +570,6 @@ structure_hash = hashlib.md5(
 
 ---
 
-**系列导航**：[01 日常任务自动化](/posts/python-automation-daily-tasks/) | [02 Web Scraping 实战](/posts/python-web-scraping/) | **03 API 自动化** | [04 数据分析自动化（即将更新）](/posts/)
+**系列导航**：[01 日常任务自动化](/posts/python-automation-daily-tasks/) | [02 Web Scraping 实战](/posts/python-web-scraping/) | **03 API 自动化** | [04 数据分析自动化](/posts/python-pandas-analysis/)
 
 *Python 自动化实战系列，下一篇：数据分析自动化——Pandas 实战，把 API 拿回来的数据变成洞察。*

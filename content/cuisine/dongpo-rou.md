@@ -47,6 +47,21 @@ Su Dongpo was a Song dynasty poet, exiled to Huangzhou in 1080 for offending the
 
 The real thing is four cubes, dark as lacquer, trembling on a bed of blanched bok choy, sauce pooled beneath. Anything else is a different dish.
 
+## Dongpo Rou vs. Hong Shao Rou
+
+Westerners often hear "red-braised pork" and assume Dongpo Rou and Hong Shao Rou are the same dish. They're not. They're first cousins who took different paths in life.
+
+|          | Dongpo Rou           | Hong Shao Rou         |
+|----------|----------------------|-----------------------|
+| **Shape**  | One massive cube (4–5 cm³), served whole | Small chunks or thick slices, stir-fried loose |
+| **Method** | Blanched, then *steamed*. The gentle heat preserves the cube's architecture | Sugar caramelized first, then *stewed*. High heat builds the sauce |
+| **Texture** | Falls apart under chopstick pressure. Gelatinous, trembling, custard-soft | Firm bite, skin springy, meat with chew — you know you're eating pork |
+| **Flavor** | Sweet-leaning, deeply wine-scented, fat rendered completely translucent | Savory-sweet balance, soy sauce forward, the caramelized sugar carries the finish |
+| **Origin**   | Su Dongpo's exile kitchen, Hangzhou — a poet's experiment that became a classic | Every Chinese grandmother's stove — no single inventor, infinite variations |
+| **Soul**     | Refinement. One piece of pork belly, given three hours of undivided attention | Generosity. A pot of pork, sticky and dark, meant to be shared over rice |
+
+The simplest test: pick it up with chopsticks. If it trembles and threatens to collapse, it's Dongpo Rou. If it holds its shape with a confident bounce, it's Hong Shao Rou. Both are worth your time. Only one was invented by a poet who was also arguably the greatest calligrapher of the Song dynasty. That's a high bar for a pork dish.
+
 ![Dongpo Rou served with steamed mantou buns — the classic pairing](/images/dongpo-rou-3.jpg)
 
 ## How to Eat It

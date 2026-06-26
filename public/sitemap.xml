@@ -2,7 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhouyang.dev/tags/braised/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhouyang.dev/tags/cron/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/home-cooking/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/cuisine/hong-shao-rou/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/pork/</loc>
     <lastmod>2026-06-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/</loc>
@@ -12,6 +27,12 @@
     <lastmod>2026-06-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/python-cron-monitoring/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/savory-sweet/</loc>
+    <lastmod>2026-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/shanghai/</loc>
     <lastmod>2026-06-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/</loc>
@@ -30,9 +51,6 @@
     <lastmod>2026-06-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/chicken/</loc>
-    <lastmod>2026-06-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/cuisine/</loc>
     <lastmod>2026-06-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/chongqing/</loc>
@@ -62,9 +80,6 @@
     <loc>https://zhouyang.dev/tags/api/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhouyang.dev/tags/braised/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhouyang.dev/tags/cantonese/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
@@ -75,9 +90,6 @@
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/hangzhou/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/home-cooking/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/cuisine/dongpo-rou-recipe/</loc>
@@ -99,9 +111,6 @@
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/mala/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/pork/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/python-api-automation/</loc>
@@ -210,9 +219,6 @@
     <lastmod>2026-06-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/cuisine/peking-duck/</loc>
-    <lastmod>2026-06-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/shanghai/</loc>
     <lastmod>2026-06-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/steamed/</loc>

@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhouyang.dev/tea/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/baijiu/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/classic/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/green-tea/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/guizhou/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/hangzhou/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/longjing/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tea/longjing-one-leaf-one-spring/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/moutai/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/origin-story/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/sauce-aroma/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/tags/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/baijiu/moutai-puzzle/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhouyang.dev/baijiu/</loc>
+    <lastmod>2026-06-28T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhouyang.dev/cuisine/</loc>
     <lastmod>2026-06-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -9,9 +54,6 @@
     <lastmod>2026-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/posts/prompt-engineering-handbook/</loc>
-    <lastmod>2026-06-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/classic/</loc>
     <lastmod>2026-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/pork/</loc>
@@ -26,13 +68,7 @@
     <loc>https://zhouyang.dev/tags/sichuan/</loc>
     <lastmod>2026-06-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhouyang.dev/tags/</loc>
-    <lastmod>2026-06-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhouyang.dev/cuisine/yu-xiang-rou-si/</loc>
-    <lastmod>2026-06-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/</loc>
     <lastmod>2026-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/%E5%B7%A5%E5%85%B7%E6%95%99%E7%A8%8B/</loc>
@@ -108,9 +144,6 @@
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/tags/fried/</loc>
-    <lastmod>2026-06-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhouyang.dev/tags/hangzhou/</loc>
     <lastmod>2026-06-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhouyang.dev/cuisine/dongpo-rou-recipe/</loc>

@@ -88,4 +88,66 @@
     <a href="/cuisine/" class="btn-more">Explore all dishes →</a>
   </div>
 </section>
+
+<!-- 茶文化板块 -->
+<section class="section-header tea-header">
+  <div class="section-title-row">
+    <h2>🍵 Chinese Tea</h2>
+    <a href="/tea/index.xml" class="rss-badge" title="Chinese Tea RSS">RSS</a>
+  </div>
+  <p class="section-desc">Six tea types, a thousand mountains, rituals that turn leaves into ceremony</p>
+</section>
+<section class="cuisine-grid">
+  {{ $tea := where .Site.RegularPages "Section" "tea" | first 2 }}
+  {{ range $tea }}
+  <article class="cuisine-card">
+    {{ $img := "" }}
+    {{ if .Params.images }}{{ $img = index .Params.images 0 }}{{ end }}
+    {{ with $img }}
+    <div class="cuisine-thumb">
+      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+    </div>
+    {{ end }}
+    <div class="cuisine-info">
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
+      <p class="summary">{{ .Summary | plainify | truncate 100 }}</p>
+    </div>
+  </article>
+  {{ end }}
+  <div class="section-more">
+    <a href="/tea/" class="btn-more">Explore all teas →</a>
+  </div>
+</section>
+
+<!-- 白酒文化板块 -->
+<section class="section-header baijiu-header">
+  <div class="section-title-row">
+    <h2>🥃 Baijiu</h2>
+    <a href="/baijiu/index.xml" class="rss-badge" title="Baijiu RSS">RSS</a>
+  </div>
+  <p class="section-desc">The world's most consumed spirit — four aromas, a thousand distilleries, stories in every cup</p>
+</section>
+<section class="cuisine-grid">
+  {{ $baijiu := where .Site.RegularPages "Section" "baijiu" | first 2 }}
+  {{ range $baijiu }}
+  <article class="cuisine-card">
+    {{ $img := "" }}
+    {{ if .Params.images }}{{ $img = index .Params.images 0 }}{{ end }}
+    {{ with $img }}
+    <div class="cuisine-thumb">
+      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+    </div>
+    {{ end }}
+    <div class="cuisine-info">
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <div class="meta"><time>{{ .Date.Format "2006-01-02" }}</time></div>
+      <p class="summary">{{ .Summary | plainify | truncate 100 }}</p>
+    </div>
+  </article>
+  {{ end }}
+  <div class="section-more">
+    <a href="/baijiu/" class="btn-more">Explore baijiu →</a>
+  </div>
+</section>
 {{ end }}

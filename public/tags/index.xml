@@ -10,14 +10,14 @@
 		
 		
 		
-			<lastBuildDate>Sat, 27 Jun 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="https://zhouyang.dev/tags/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>AI</title>
-				<link>https://zhouyang.dev/tags/ai/</link>
-				<pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/tags/ai/</guid>
+				<title>Baijiu</title>
+				<link>https://zhouyang.dev/tags/baijiu/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/baijiu/</guid>
 				<description></description>
 			</item>
 			<item>
@@ -25,6 +25,62 @@
 				<link>https://zhouyang.dev/tags/classic/</link>
 				<pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://zhouyang.dev/tags/classic/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Green-Tea</title>
+				<link>https://zhouyang.dev/tags/green-tea/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/green-tea/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Guizhou</title>
+				<link>https://zhouyang.dev/tags/guizhou/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/guizhou/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Hangzhou</title>
+				<link>https://zhouyang.dev/tags/hangzhou/</link>
+				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/hangzhou/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Longjing</title>
+				<link>https://zhouyang.dev/tags/longjing/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/longjing/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Moutai</title>
+				<link>https://zhouyang.dev/tags/moutai/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/moutai/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Origin-Story</title>
+				<link>https://zhouyang.dev/tags/origin-story/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/origin-story/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Sauce-Aroma</title>
+				<link>https://zhouyang.dev/tags/sauce-aroma/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/sauce-aroma/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>AI</title>
+				<link>https://zhouyang.dev/tags/ai/</link>
+				<pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/tags/ai/</guid>
 				<description></description>
 			</item>
 			<item>
@@ -193,13 +249,6 @@
 				<link>https://zhouyang.dev/tags/fried/</link>
 				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://zhouyang.dev/tags/fried/</guid>
-				<description></description>
-			</item>
-			<item>
-				<title>Hangzhou</title>
-				<link>https://zhouyang.dev/tags/hangzhou/</link>
-				<pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/tags/hangzhou/</guid>
 				<description></description>
 			</item>
 			<item>

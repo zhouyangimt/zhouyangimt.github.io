@@ -1,0 +1,35 @@
+{{ define "main" }}
+<section class="cuisine-index">
+  {{ .Content }}
+
+  <div class="cuisine-grid" id="cuisine-grid">
+    {{ range .Pages }}
+    <article class="cuisine-card">
+      <a href="{{ .RelPermalink }}">
+        {{ $img := index .Params.images 0 }}
+        {{ if $img }}
+        <div class="cuisine-thumb">
+          <img src="{{ $img }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="cuisine-info">
+          <h3>{{ .Title }}</h3>
+          <div class="cuisine-tags">
+            {{ range .Params.tags }}
+            <span class="cuisine-tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          <p class="cuisine-desc">{{ .Params.description | truncate 80 }}</p>
+        </div>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+
+  {{ if not .Pages }}
+  <div class="cuisine-empty">
+    <p>Articles brewing. First pot arriving soon.</p>
+  </div>
+  {{ end }}
+</section>
+{{ end }}

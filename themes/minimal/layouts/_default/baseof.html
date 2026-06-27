@@ -10,10 +10,16 @@
   {{ if .IsHome }}
   <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">
+  <link rel="alternate" type="application/rss+xml" href="/tea/index.xml" title="Chinese Tea RSS">
+  <link rel="alternate" type="application/rss+xml" href="/baijiu/index.xml" title="Baijiu RSS">
   {{ else if eq .Section "posts" }}
   <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   {{ else if eq .Section "cuisine" }}
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">
+  {{ else if eq .Section "tea" }}
+  <link rel="alternate" type="application/rss+xml" href="/tea/index.xml" title="Chinese Tea RSS">
+  {{ else if eq .Section "baijiu" }}
+  <link rel="alternate" type="application/rss+xml" href="/baijiu/index.xml" title="Baijiu RSS">
   {{ else }}
   <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
   <link rel="alternate" type="application/rss+xml" href="/cuisine/index.xml" title="Chinese Cuisine RSS">

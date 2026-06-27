@@ -14,28 +14,28 @@ A visual encyclopedia of China's most iconic dishes. **14 published · 95 incomi
   <div class="taxonomy-section">
     <h3>🏛️ The Eight Great Cuisines</h3>
     <div class="cuisine-grid-taxonomy">
-      <div class="taxo-card"><span class="taxo-badge sichuan">🌶</span><strong>Sichuan</strong><span class="taxo-sub">川</span></div>
-      <div class="taxo-card"><span class="taxo-badge cantonese">🥡</span><strong>Cantonese</strong><span class="taxo-sub">粤</span></div>
-      <div class="taxo-card"><span class="taxo-badge jiangsu">🦀</span><strong>Jiangsu</strong><span class="taxo-sub">苏</span></div>
-      <div class="taxo-card"><span class="taxo-badge zhejiang">🍖</span><strong>Zhejiang</strong><span class="taxo-sub">浙</span></div>
-      <div class="taxo-card"><span class="taxo-badge fujian">🍲</span><strong>Fujian</strong><span class="taxo-sub">闽</span></div>
-      <div class="taxo-card"><span class="taxo-badge hunan">🌶️</span><strong>Hunan</strong><span class="taxo-sub">湘</span></div>
-      <div class="taxo-card"><span class="taxo-badge anhui">🧄</span><strong>Anhui</strong><span class="taxo-sub">徽</span></div>
-      <div class="taxo-card"><span class="taxo-badge shandong">🧅</span><strong>Shandong</strong><span class="taxo-sub">鲁</span></div>
+      <div class="taxo-card"><span class="taxo-badge sichuan">🌶</span><strong>Sichuan</strong><span class="taxo-sub">川</span><p>Mapo Tofu, Kung Pao Chicken, Twice-Cooked Pork, Boiled Fish</p></div>
+      <div class="taxo-card"><span class="taxo-badge cantonese">🥡</span><strong>Cantonese</strong><span class="taxo-sub">粤</span><p>Char Siu, White Cut Chicken, Claypot Rice, Dim Sum</p></div>
+      <div class="taxo-card"><span class="taxo-badge jiangsu">🦀</span><strong>Jiangsu</strong><span class="taxo-sub">苏</span><p>Squirrel Fish, Lion's Head Meatballs, Nanjing Salted Duck</p></div>
+      <div class="taxo-card"><span class="taxo-badge zhejiang">🍖</span><strong>Zhejiang</strong><span class="taxo-sub">浙</span><p>Dongpo Pork, Longjing Shrimp, West Lake Vinegar Fish</p></div>
+      <div class="taxo-card"><span class="taxo-badge fujian">🍲</span><strong>Fujian</strong><span class="taxo-sub">闽</span><p>Buddha Jumps Over the Wall, Lychee Pork</p></div>
+      <div class="taxo-card"><span class="taxo-badge hunan">🌶️</span><strong>Hunan</strong><span class="taxo-sub">湘</span><p>Chopped Pepper Fish Head, Stir-Fried Pork</p></div>
+      <div class="taxo-card"><span class="taxo-badge anhui">🧄</span><strong>Anhui</strong><span class="taxo-sub">徽</span><p>Stinky Mandarin Fish, Hairy Tofu</p></div>
+      <div class="taxo-card"><span class="taxo-badge shandong">🧅</span><strong>Shandong</strong><span class="taxo-sub">鲁</span><p>Braised Intestines, Scallion Sea Cucumber</p></div>
     </div>
   </div>
 
   <div class="taxonomy-section">
     <h3>➕ Four Special Collections</h3>
     <div class="cuisine-grid-taxonomy extra">
-      <div class="taxo-card extra"><span class="taxo-badge street">🍢</span><strong>Street Eats</strong></div>
-      <div class="taxo-card extra"><span class="taxo-badge noodles">🍜</span><strong>Noodles</strong></div>
-      <div class="taxo-card extra"><span class="taxo-badge bbq">🔥</span><strong>Chinese BBQ</strong></div>
-      <div class="taxo-card extra"><span class="taxo-badge regional">🏮</span><strong>Regional Gems</strong></div>
+      <div class="taxo-card extra"><span class="taxo-badge street">🍢</span><strong>Street Eats</strong><p>Jianbing, Roujiamo, Shengjianbao, Skewers</p></div>
+      <div class="taxo-card extra"><span class="taxo-badge noodles">🍜</span><strong>Noodles</strong><p>Lanzhou Beef Noodles, Dan Dan Noodles, Zhajiangmian, Daoxiaomian</p></div>
+      <div class="taxo-card extra"><span class="taxo-badge bbq">🔥</span><strong>Chinese BBQ</strong><p>Xinjiang Lamb Skewers, Zhanjiang Oysters, Northeast Cold Noodles</p></div>
+      <div class="taxo-card extra"><span class="taxo-badge regional">🏮</span><strong>Regional Gems</strong><p>Peking Duck, Shanghai Benbang, Chongqing Hotpot, Yunnan Cross-Bridge Noodles</p></div>
     </div>
   </div>
 
-  <p class="taxonomy-note">109 dishes across all categories. Filter below or search by tags.</p>
+  <p class="taxonomy-note">Filter by region with the tabs below, or use the blog&rsquo;s built-in tag search for ingredients and cooking methods.</p>
 </div>
 
 <style>

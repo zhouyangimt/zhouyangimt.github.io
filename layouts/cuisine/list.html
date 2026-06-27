@@ -1,0 +1,91 @@
+{{ define "main" }}
+<section class="cuisine-index">
+  {{ .Content }}
+
+  <!-- Region filter tabs -->
+  <nav class="cuisine-nav">
+    <a href="#" class="cuisine-tab active" data-region="all">All (14)</a>
+    <a href="#" class="cuisine-tab" data-region="sichuan">🌶 Sichuan (6)</a>
+    <a href="#" class="cuisine-tab" data-region="cantonese">🥡 Cantonese (2)</a>
+    <a href="#" class="cuisine-tab" data-region="shanghai">🥟 Shanghai (2)</a>
+    <a href="#" class="cuisine-tab" data-region="beijing">🦆 Beijing (1)</a>
+    <a href="#" class="cuisine-tab" data-region="hangzhou">🍖 Hangzhou (1)</a>
+    <a href="#" class="cuisine-tab" data-region="gansu">🍜 Gansu (1)</a>
+  </nav>
+
+  <!-- Dish grid -->
+  <div class="cuisine-grid" id="cuisine-grid">
+    {{ range .Pages }}
+    <article class="cuisine-card" data-tags="{{ delimit .Params.tags " " }}">
+      <a href="{{ .RelPermalink }}">
+        {{ $img := index .Params.images 0 }}
+        {{ if $img }}
+        <div class="cuisine-thumb">
+          <img src="{{ $img }}" alt="{{ .Title }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="cuisine-info">
+          <h3>{{ .Title }}</h3>
+          <div class="cuisine-tags">
+            {{ range .Params.tags }}
+            <span class="cuisine-tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          <p class="cuisine-desc">{{ .Params.description | truncate 80 }}</p>
+        </div>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+
+  <!-- Empty state -->
+  <div class="cuisine-empty" id="cuisine-empty" style="display:none">
+    <p>No dishes found for this region yet. <a href="#" class="cuisine-tab-reset">Show all →</a></p>
+  </div>
+
+  <hr style="margin:40px 0 20px">
+
+  <!-- Coming soon preview -->
+  <h3>📋 Coming Soon</h3>
+  <p style="color:#888"><em>109 Chinese dishes across 8 great cuisines — new ones drop daily.</em></p>
+</section>
+
+<script>
+(function(){
+  const activeClass = 'active';
+  const tabs = document.querySelectorAll('.cuisine-tab');
+  const cards = document.querySelectorAll('.cuisine-card');
+  const empty = document.getElementById('cuisine-empty');
+  const grid = document.getElementById('cuisine-grid');
+
+  function filter(region) {
+    let visible = 0;
+    cards.forEach(card => {
+      const tags = card.getAttribute('data-tags') || '';
+      const match = region === 'all' || tags.includes(region);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    empty.style.display = visible === 0 ? '' : 'none';
+    grid.style.display = visible === 0 ? 'none' : '';
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      tabs.forEach(t => t.classList.remove(activeClass));
+      this.classList.add(activeClass);
+      filter(this.getAttribute('data-region'));
+    });
+  });
+
+  // reset link in empty state
+  document.querySelector('.cuisine-tab-reset')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    tabs.forEach(t => t.classList.remove(activeClass));
+    tabs[0].classList.add(activeClass);
+    filter('all');
+  });
+})();
+</script>
+{{ end }}

@@ -1,9 +1,52 @@
 ---
-title: "How to Cook Real Mapo Tofu: The Sichuan Way"
+title: 'How to Cook Real Mapo Tofu: The Sichuan Way'
 date: 2026-06-24
-description: "A step-by-step practical guide to making authentic Sichuan Mapo Tofu at home — silken tofu in a crimson lake of doubanjiang and fermented black beans, electrified by freshly ground Sichuan peppercorns."
-tags: ["sichuan", "tofu", "spicy", "recipe", "classic"]
-slug: "mapo-tofu-recipe"
+description: A step-by-step practical guide to making authentic Sichuan Mapo Tofu
+  at home — silken tofu in a crimson lake of doubanjiang and fermented black beans,
+  electrified by freshly ground Sichuan peppercorns.
+tags:
+- sichuan
+- tofu
+- spicy
+- recipe
+- classic
+slug: mapo-tofu-recipe
+recipeCuisine: Sichuan
+recipeCategory: Main Course
+prepTime: PT15M
+cookTime: PT15M
+totalTime: PT30M
+recipeYield: 4 servings
+calories: 320 kcal
+recipeIngredients:
+- 400g silken tofu
+- 100g ground beef (80/20)
+- 1.5 tbsp Pixian doubanjiang
+- 1 tbsp fermented black beans (douchi)
+- 1 tsp Sichuan peppercorns
+- 3 cloves garlic, minced
+- 1-inch piece ginger, minced
+- 3 stalks scallions
+- 1 tsp light soy sauce
+- 1 tbsp Shaoxing wine
+- 1 tbsp cornstarch (mixed with 2 tbsp water)
+- 2 tbsp vegetable oil
+- 150ml water or stock
+- Salt for blanching
+- 1/2 tsp sugar (optional)
+recipeInstructions:
+- 'Prep all ingredients: dice tofu into 1.5cm cubes, mince garlic/ginger, chop black
+  beans, mix cornstarch slurry, slice scallions, toast and grind Sichuan peppercorns.'
+- Blanch tofu cubes in salted boiling water for 30 seconds. Drain gently.
+- Heat oil in wok, add doubanjiang, stir 30-45 seconds until oil turns brick-red.
+  Add black beans, garlic, ginger — stir 20 seconds.
+- Add ground beef, break into crumbles, cook until browned.
+- Pour in water/stock and soy sauce. Bring to simmer. Slide in tofu. Cook 3 minutes
+  without stirring.
+- Drizzle cornstarch slurry in three stages, gently shaking wok between each. Sauce
+  should coat tofu.
+- Sprinkle ground Sichuan peppercorn, garnish with scallion greens. Serve immediately
+  over rice.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 麻婆豆腐的正宗做法。
 

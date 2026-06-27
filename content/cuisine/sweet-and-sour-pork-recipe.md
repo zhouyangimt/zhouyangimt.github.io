@@ -1,9 +1,50 @@
 ---
-title: "How to Cook Sweet and Sour Pork: The Real Cantonese Way"
+title: 'How to Cook Sweet and Sour Pork: The Real Cantonese Way'
 date: 2026-06-24
-description: "A practical step-by-step guide to making authentic Cantonese Sweet and Sour Pork at home — double-fried pork shoulder in a shattering batter shell, tossed through a white-vinegar glaze with pineapple and bell pepper."
-tags: ["cantonese", "pork", "sweet-sour", "recipe", "classic", "fried"]
-slug: "sweet-and-sour-pork-recipe"
+description: A practical step-by-step guide to making authentic Cantonese Sweet and
+  Sour Pork at home — double-fried pork shoulder in a shattering batter shell, tossed
+  through a white-vinegar glaze with pineapple and bell pepper.
+tags:
+- cantonese
+- pork
+- sweet-sour
+- recipe
+- classic
+- fried
+slug: sweet-and-sour-pork-recipe
+recipeCuisine: Cantonese
+recipeCategory: Main Course
+prepTime: PT20M
+cookTime: PT15M
+totalTime: PT35M
+recipeYield: 4 servings
+calories: 480 kcal
+recipeIngredients:
+- 400g pork shoulder, cut into 2cm cubes
+- 1 tbsp light soy sauce
+- 1 egg, beaten
+- 4 tbsp cornstarch
+- Oil for deep frying
+- 3 tbsp white sugar
+- 3 tbsp Chinkiang black vinegar
+- 2 tbsp ketchup
+- 1 tbsp light soy sauce (for sauce)
+- 1/4 tsp salt
+- 60ml water
+- 1 tsp cornstarch + 2 tbsp water (slurry)
+- 1/2 green bell pepper, chunked
+- 1/2 red bell pepper, chunked
+- 1/2 onion, chunked
+- 100g pineapple chunks
+recipeInstructions:
+- Marinate pork cubes in soy sauce for 10 minutes.
+- 'Coat pork: dip in beaten egg, then dredge in cornstarch. Let rest 5 minutes.'
+- Deep fry pork at 170C for 3-4 minutes until golden and crispy. Drain.
+- 'Make sauce: combine sugar, vinegar, ketchup, soy sauce, salt, water in a bowl.'
+- In clean wok, stir-fry bell peppers and onion for 1 minute on high heat. Add pineapple.
+- Pour in sauce mixture, bring to boil. Add cornstarch slurry, stir until thickened
+  and glossy.
+- Add fried pork, toss quickly to coat. Serve immediately while pork is still crisp.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 糖醋里脊（咕噜肉）的正宗做法。
 

@@ -1,10 +1,50 @@
 ---
-title: "How to Cook Twice-Cooked Pork: The Sichuan Way"
+title: 'How to Cook Twice-Cooked Pork: The Sichuan Way'
 date: 2026-06-24
-description: "A step-by-step practical guide to making authentic Sichuan Twice-Cooked Pork (回锅肉) at home — pork belly boiled whole, sliced thin, then wok-seared in its own fat with Pixian doubanjiang and garlic sprouts."
-tags: ["sichuan", "pork", "spicy", "recipe", "classic", "stir-fry", "home-cooking"]
-slug: "twice-cooked-pork-recipe"
-related: "/cuisine/twice-cooked-pork/"
+description: A step-by-step practical guide to making authentic Sichuan Twice-Cooked
+  Pork (回锅肉) at home — pork belly boiled whole, sliced thin, then wok-seared in its
+  own fat with Pixian doubanjiang and garlic sprouts.
+tags:
+- sichuan
+- pork
+- spicy
+- recipe
+- classic
+- stir-fry
+- home-cooking
+slug: twice-cooked-pork-recipe
+related: /cuisine/twice-cooked-pork/
+recipeCuisine: Sichuan
+recipeCategory: Main Course
+prepTime: PT30M
+cookTime: PT15M
+totalTime: PT45M
+recipeYield: 4 servings
+calories: 520 kcal
+recipeIngredients:
+- 400g pork belly, in one piece
+- 2 tbsp Pixian doubanjiang
+- 1 tbsp fermented black beans (douchi)
+- 1 tbsp sweet bean paste (tianmianjiang)
+- 3 cloves garlic, sliced
+- 1-inch ginger, sliced
+- 3-4 green garlic or leeks, sliced diagonally
+- 6 dried red chilies
+- 1 tsp Sichuan peppercorns
+- 1 tbsp light soy sauce
+- 1 tsp dark soy sauce
+- 1 tsp sugar
+- Vegetable oil
+recipeInstructions:
+- Boil pork belly whole in water with ginger and scallions for 25 minutes until just
+  cooked through. Cool, then slice into thin pieces (3mm).
+- Heat wok with minimal oil. Add pork slices, stir-fry until they curl and edges brown.
+  Remove.
+- In same wok, add doubanjiang and stir until oil turns red. Add black beans, sweet
+  bean paste.
+- Add garlic, ginger, dried chilies, Sichuan peppercorns. Stir 20 seconds.
+- Return pork. Add soy sauces and sugar. Toss on high heat 1 minute.
+- Add green garlic/leeks. Toss 30 seconds until just wilted. Serve immediately.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 回锅肉的正宗做法。
 

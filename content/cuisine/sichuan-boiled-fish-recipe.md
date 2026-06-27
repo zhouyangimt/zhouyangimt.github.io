@@ -1,10 +1,54 @@
 ---
-title: "How to Cook Sichuan Boiled Fish: The Chili Oil Bath"
+title: 'How to Cook Sichuan Boiled Fish: The Chili Oil Bath'
 date: 2026-06-24
-description: "A step-by-step guide to making authentic 水煮鱼 at home — tender white fish poached in a crimson lake of chili oil and Sichuan peppercorns, finished with the sizzling pour that defines the dish."
-tags: ["sichuan", "fish", "spicy", "mala", "recipe", "classic"]
-slug: "sichuan-boiled-fish-recipe"
-related: "/cuisine/sichuan-boiled-fish/"
+description: A step-by-step guide to making authentic 水煮鱼 at home — tender white fish
+  poached in a crimson lake of chili oil and Sichuan peppercorns, finished with the
+  sizzling pour that defines the dish.
+tags:
+- sichuan
+- fish
+- spicy
+- mala
+- recipe
+- classic
+slug: sichuan-boiled-fish-recipe
+related: /cuisine/sichuan-boiled-fish/
+recipeCuisine: Sichuan
+recipeCategory: Main Course
+prepTime: PT20M
+cookTime: PT20M
+totalTime: PT40M
+recipeYield: 4 servings
+calories: 380 kcal
+recipeIngredients:
+- 500g firm white fish fillets (basa, tilapia, or grass carp)
+- 1 egg white
+- 2 tbsp cornstarch
+- 1 tbsp Shaoxing wine
+- 1/2 tsp salt
+- 200g bean sprouts
+- 200g napa cabbage, shredded
+- 4 tbsp Sichuan doubanjiang
+- 4 cloves garlic, minced
+- 2-inch ginger, sliced
+- 3 scallions
+- 15 dried red chilies
+- 2 tbsp Sichuan peppercorns
+- 500ml chicken stock or water
+- 2 tbsp light soy sauce
+- 4 tbsp vegetable oil
+recipeInstructions:
+- Slice fish into 5mm thick pieces. Marinate with egg white, cornstarch, Shaoxing
+  wine, salt for 15 minutes.
+- Blanch bean sprouts and cabbage in boiling water for 30 seconds. Drain and lay in
+  serving bowl.
+- Heat 2 tbsp oil. Add doubanjiang, half the garlic, ginger. Stir until oil is red.
+- Add stock and soy sauce. Bring to boil. Slide in fish pieces one by one. Simmer
+  2-3 minutes until opaque.
+- Pour fish and broth over the vegetables in the serving bowl.
+- Top with remaining garlic, scallions, dried chilies, and Sichuan peppercorns.
+- Heat remaining 2 tbsp oil until smoking. Carefully pour over the spices — it should
+  sizzle violently. Serve immediately.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 水煮鱼的正宗做法。
 

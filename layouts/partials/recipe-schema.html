@@ -1,0 +1,46 @@
+{{/* Recipe Schema JSON-LD — injects only on recipe pages (slug contains '-recipe') */}}
+{{ if and (eq .Section "cuisine") (in .Slug "-recipe") }}
+{{ $defaultImage := "" }}
+{{ with .Params.images }}{{ $defaultImage = index . 0 | absURL }}{{ end }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "image": [
+    {{ range $i, $img := .Params.images }}
+    "{{ $img | absURL }}"{{ if ne (add $i 1) (len $.Params.images) }},{{ end }}
+    {{ end }}
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.author }}"
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02" }}",
+  {{ with .Params.recipeCuisine }}"recipeCuisine": "{{ . }}",{{ end }}
+  {{ with .Params.recipeCategory }}"recipeCategory": "{{ . }}",{{ end }}
+  {{ with .Params.prepTime }}"prepTime": "{{ . }}",{{ end }}
+  {{ with .Params.cookTime }}"cookTime": "{{ . }}",{{ end }}
+  {{ with .Params.totalTime }}"totalTime": "{{ . }}",{{ end }}
+  {{ with .Params.recipeYield }}"recipeYield": "{{ . }}",{{ end }}
+  {{ with .Params.calories }}"nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "{{ . }}"
+  },{{ end }}
+  "recipeIngredient": [
+    {{ range $i, $ing := .Params.recipeIngredients }}
+    "{{ $ing }}"{{ if ne (add $i 1) (len $.Params.recipeIngredients) }},{{ end }}
+    {{ end }}
+  ],
+  "recipeInstructions": [
+    {{ range $i, $step := .Params.recipeInstructions }}
+    {
+      "@type": "HowToStep",
+      "text": "{{ $step }}"
+    }{{ if ne (add $i 1) (len $.Params.recipeInstructions) }},{{ end }}
+    {{ end }}
+  ]
+}
+</script>
+{{ end }}

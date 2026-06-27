@@ -28,7 +28,7 @@
 - [x] AI编程助手完全指南（已有）
 - [x] Claude vs Cursor vs Copilot 横评（已有）
 - [x] 零代码用AI搭建网站（已有）
-- [ ] Prompt Engineering 实战手册
+- [x] Prompt Engineering 实战手册
 - [ ] AI Debugging：让AI帮你修bug
 
 ## 系列 4：独立开发者全栈生存指南（5-6篇）

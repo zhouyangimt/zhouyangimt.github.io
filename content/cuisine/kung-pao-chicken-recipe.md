@@ -1,10 +1,48 @@
 ---
-title: "How to Cook Kung Pao Chicken: The Real Way"
+title: 'How to Cook Kung Pao Chicken: The Real Way'
 date: 2026-06-24
-slug: "kung-pao-chicken-recipe"
-description: "A step-by-step guide to making authentic 宫保鸡丁 at home — no bell peppers, no ketchup, just the real Sichuan málà magic."
-tags: ["sichuan", "chicken", "spicy", "stir-fry", "recipe", "classic"]
-related: "/cuisine/kung-pao-chicken/"
+slug: kung-pao-chicken-recipe
+description: A step-by-step guide to making authentic 宫保鸡丁 at home — no bell peppers,
+  no ketchup, just the real Sichuan málà magic.
+tags:
+- sichuan
+- chicken
+- spicy
+- stir-fry
+- recipe
+- classic
+related: /cuisine/kung-pao-chicken/
+recipeCuisine: Sichuan
+recipeCategory: Main Course
+prepTime: PT20M
+cookTime: PT10M
+totalTime: PT30M
+recipeYield: 3 servings
+calories: 450 kcal
+recipeIngredients:
+- 350g chicken thighs, diced
+- 2 tbsp light soy sauce
+- 1 tbsp Shaoxing wine
+- 1 tbsp cornstarch
+- 3 tbsp Chinkiang black vinegar
+- 2 tbsp sugar
+- 1 tbsp dark soy sauce
+- 1 tsp sesame oil
+- 10 dried red chilies (chao tian jiao)
+- 1 tsp Sichuan peppercorns
+- 4 cloves garlic, sliced
+- 1-inch ginger, sliced
+- 3 scallions, cut into 1-inch segments
+- 80g roasted peanuts
+- Vegetable oil for frying
+recipeInstructions:
+- Marinate diced chicken with soy sauce, Shaoxing wine, and cornstarch for 15 minutes.
+- 'Mix sauce: combine vinegar, sugar, dark soy, sesame oil. Set aside.'
+- Heat oil in wok. Fry chicken in batches until golden. Remove.
+- Leave 1 tbsp oil in wok. Add dried chilies and Sichuan peppercorns, fry until fragrant.
+- Add garlic, ginger, scallion whites. Stir 15 seconds.
+- Return chicken. Pour sauce around edges of wok. Toss on high heat 30 seconds.
+- Add peanuts and scallion greens. Toss once. Serve immediately.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 宫保鸡丁的正宗做法。
 

@@ -1,9 +1,46 @@
 ---
-title: "How to Cook Dongpo Pork: The Poet's Recipe"
+title: 'How to Cook Dongpo Pork: The Poet''s Recipe'
 date: 2026-06-24
-description: "A practical step-by-step guide to making Su Dongpo's legendary braised pork belly at home — four ingredients, three hours, no water added."
-tags: ["hangzhou", "pork", "braised", "classic", "zhejiang", "recipe"]
-slug: "dongpo-rou-recipe"
+description: A practical step-by-step guide to making Su Dongpo's legendary braised
+  pork belly at home — four ingredients, three hours, no water added.
+tags:
+- hangzhou
+- pork
+- braised
+- classic
+- zhejiang
+- recipe
+slug: dongpo-rou-recipe
+recipeCuisine: Zhejiang
+recipeCategory: Main Course
+prepTime: PT20M
+cookTime: PT3H
+totalTime: PT3H20M
+recipeYield: 4 servings
+calories: 680 kcal
+recipeIngredients:
+- 500g pork belly, skin-on, in one piece
+- 200ml Shaoxing wine
+- 200ml water
+- 50g rock sugar (bingtang)
+- 2 tbsp dark soy sauce
+- 3 slices ginger
+- 2 scallions, tied in knots
+- 2 star anise
+- 1 cinnamon stick
+- 4 slices ginger (for blanching)
+- Bok choy for serving
+recipeInstructions:
+- Blanch pork belly in boiling water with ginger slices for 5 minutes. Remove, pat
+  dry.
+- Cut pork belly into 4 equal cubes (4-5cm each). Tie each cube with kitchen twine
+  to hold shape.
+- Place ginger slices and scallion knots in the bottom of a clay pot. Arrange pork
+  cubes skin-side down.
+- Pour Shaoxing wine and water over pork. Add rock sugar, dark soy, star anise, cinnamon.
+- Bring to boil, then reduce to lowest simmer. Cover and cook 2 hours.
+- Carefully flip each cube skin-side up. Cover and simmer another 45 minutes.
+- Remove twine. Serve cubes on blanched bok choy. Spoon reduced sauce over top.
 ---
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 东坡肉的正宗做法。
 

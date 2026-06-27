@@ -76,4 +76,4 @@ Between bites, drink hot tea. Tieguanyin oolong cuts through the fat better than
 
 ---
 
-*Hungry for more Hangzhou? [Beggar's Chicken](/cuisine/beggars-chicken/) is another West Lake legend — lotus leaves, clay, and a chicken that gives up all its secrets.*
+*Next in the Hangzhou series: West Lake Vinegar Fish, a dish so delicate it's served on a bed of lotus leaves. Coming soon.*

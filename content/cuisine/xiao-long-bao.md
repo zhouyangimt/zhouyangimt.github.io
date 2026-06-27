@@ -62,4 +62,4 @@ Soup, skin, pork, vinegar, and ginger — all in a single mouthful. A complete d
 
 ---
 
-*Looking for Shanghai's other dumpling dynasty? [Shengjianbao](/cuisine/shengjianbao/) is the pan-fried cousin — same family, different fight.*
+*Next in the Shanghai series: Pan-fried Shengjianbao — the crispy-bottomed cousin that fights dirty. Coming soon.*

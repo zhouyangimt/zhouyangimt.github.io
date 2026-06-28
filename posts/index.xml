@@ -1,4 +1,243 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/posts/</link><description>Recent content in Posts on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 24 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Python 自动化实战：API 自动化——调用50+免费API</title><link>https://zhouyang.dev/posts/python-api-automation/</link><pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-api-automation/</guid><description>&lt;h2 id="为什么你应该优先用-api-而不是爬虫"&gt;为什么你应该优先用 API 而不是爬虫？&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/posts/</link><description>Recent content in Posts on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>AI编程工具链：AI Debugging — 让AI帮你修bug</title><link>https://zhouyang.dev/posts/ai-debugging-guide/</link><pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/ai-debugging-guide/</guid><description>&lt;h2 id="调试是ai最被低估的能力"&gt;调试是AI最被低估的能力&lt;/h2&gt;
+&lt;p&gt;大多数人用AI写代码，但很少人用它&lt;strong&gt;修bug&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;一个反直觉的事实：AI调试往往比AI写代码&lt;strong&gt;更靠谱&lt;/strong&gt;。原因很简单——
+写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。&lt;/p&gt;
+&lt;p&gt;这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：&lt;strong&gt;拿到报错之后，怎么用AI最快地找到根因并修复。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/ai-debugging-flow.png" alt="AI 调试工作流"&gt;&lt;/p&gt;
+&lt;h2 id="ai擅长修什么bug"&gt;AI擅长修什么bug&lt;/h2&gt;
+&lt;p&gt;不是所有bug都适合丢给AI。先分清地盘：&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;类型&lt;/th&gt;
+					&lt;th&gt;AI表现&lt;/th&gt;
+					&lt;th&gt;说明&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;语法/类型错误&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;Traceback 直接给结论&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;空指针/AttributeError&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;AI一眼看出哪里可能为 None&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;依赖版本冲突&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;只要告诉它版本号&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;API调用参数错误&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;训练数据里有大量文档&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;并发/竞态条件&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;需要好的上下文&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;业务逻辑错误&lt;/td&gt;
+					&lt;td&gt;⭐⭐&lt;/td&gt;
+					&lt;td&gt;需要你解释「什么是对」&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;性能瓶颈/内存泄漏&lt;/td&gt;
+					&lt;td&gt;⭐⭐&lt;/td&gt;
+					&lt;td&gt;需要 profiling 数据配合&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;框架特有行为&lt;/td&gt;
+					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
+					&lt;td&gt;取决于框架的文档覆盖率&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;一句话总结：&lt;strong&gt;AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="标准流程三步法"&gt;标准流程：三步法&lt;/h2&gt;
+&lt;p&gt;我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。&lt;/p&gt;
+&lt;h3 id="第一步给上下文别只贴报错"&gt;第一步：给上下文，别只贴报错&lt;/h3&gt;
+&lt;p&gt;错误示范——90%的人这么做：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;❌ 用户：我代码报错了，帮我看看
+❌ 用户：（贴了半行报错信息）
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;AI只能瞎猜。&lt;/p&gt;
+&lt;p&gt;正确做法：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;✅ 我用 FastAPI 写了一个接口，报错如下：
+✅ （完整 Traceback）
+✅
+✅ 相关代码：
+✅ （贴出报错涉及的那个函数或文件片段，50-100行）
+✅
+✅ 环境：
+✅ - Python 3.11
+✅ - FastAPI 0.115
+✅ - Pydantic v2
+✅ - 数据库是 PostgreSQL，用 SQLAlchemy 2.0 async
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;关键信息清单：&lt;/strong&gt; 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。&lt;/p&gt;</description></item><item><title>AI编程工具链：Prompt Engineering 实战手册</title><link>https://zhouyang.dev/posts/prompt-engineering-handbook/</link><pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/prompt-engineering-handbook/</guid><description>&lt;h2 id="你的prompt决定了ai的上限"&gt;你的Prompt，决定了AI的上限&lt;/h2&gt;
+&lt;p&gt;很多人的认知还停留在「我直接告诉AI要干嘛就行了」。但实际情况是——&lt;strong&gt;同样的模型，不同质量的prompt，产出的代码质量差距可以有10倍以上。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个真实的例子：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;❌ 「帮我写一个爬虫」
+✅ 「用 Python 写一个爬虫，抓取 &lt;a href="https://example.com/news"&gt;https://example.com/news&lt;/a&gt; 的新闻标题和链接，用 requests + BeautifulSoup，输出为 JSON 文件，需要处理异常（超时、404），加上请求间隔（3秒）避免被封。」&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第一个人得到的是几十行能跑但脆弱的代码。第二个人得到的是可以直接部署的生产级脚本。&lt;/p&gt;
+&lt;p&gt;这就是Prompt Engineering的威力：&lt;strong&gt;把模糊的需求变成精确的指令。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/prompt-engineering-workflow.png" alt="Prompt Engineering 工作流"&gt;&lt;/p&gt;
+&lt;h2 id="核心框架四步法"&gt;核心框架：四步法&lt;/h2&gt;
+&lt;p&gt;我用了两年AI编程工具，总结出这套「四步法」。它能适配90%的编码场景。&lt;/p&gt;
+&lt;h3 id="第一步角色设定role"&gt;第一步：角色设定（Role）&lt;/h3&gt;
+&lt;p&gt;告诉AI「你是谁」和「AI是谁」，建立上下文边界。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;你是一名有10年经验的Python后端工程师，擅长编写高可读性、
+可维护的代码。你的代码风格遵循 PEP 8，并且你会主动添加
+类型注解和 docstring。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;为什么有效？&lt;/strong&gt; AI模型的训练数据中，特定角色的输出质量远高于通用输出。「Senior Engineer」这个角色对应的训练样本本身就是高质量的。&lt;/p&gt;
+&lt;h3 id="第二步任务拆解task-decomposition"&gt;第二步：任务拆解（Task Decomposition）&lt;/h3&gt;
+&lt;p&gt;大任务拆成小任务，逐个击破。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;❌ 「用React写一个电商网站」
+✅ 「请分步骤完成以下任务：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;创建商品列表组件，支持分页&lt;/li&gt;
+&lt;li&gt;实现购物车状态管理（zustand）&lt;/li&gt;
+&lt;li&gt;添加搜索栏（防抖500ms）&lt;/li&gt;
+&lt;li&gt;集成支付Mock接口
+每完成一步，先让我确认再继续。」&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;一个prompt只做一件事。&lt;/strong&gt; AI在单次对话中的注意力是有限的——任务越多，每个任务的质量就越低。&lt;/p&gt;
+&lt;h3 id="第三步约束与范例constraints--examples"&gt;第三步：约束与范例（Constraints &amp;amp; Examples）&lt;/h3&gt;
+&lt;p&gt;这可能是最被低估的一步。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;要求：
+- 使用 Python 3.11+
+- 依赖：requests, pydantic v2
+- 所有函数必须有类型注解
+- 错误处理覆盖网络异常、解析异常、数据校验异常
+
+参考风格：
+```python
+def fetch_data(url: str, timeout: int = 10) -&amp;gt; dict[str, Any]:
+ &amp;#34;&amp;#34;&amp;#34;Fetch JSON data from URL with error handling.&amp;#34;&amp;#34;&amp;#34;
+ try:
+ resp = requests.get(url, timeout=timeout)
+ resp.raise_for_status()
+ return resp.json()
+ except requests.RequestException as e:
+ raise DataFetchError(f&amp;#34;Failed to fetch {url}: {e}&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;
+**给AI看一段你满意的代码，比花500字描述风格要求更有效。**
+
+### 第四步：产出规格（Output Spec）
+
+明确告诉AI「输出成什么样」。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;请输出以下文件结构：
+src/
+├── fetcher.py # 数据抓取模块
+├── parser.py # 数据解析模块
+├── models.py # Pydantic 模型
+└── main.py # 入口，命令行参数支持&lt;/p&gt;</description></item><item><title>Python 自动化实战：定时任务 &amp; 监控脚本</title><link>https://zhouyang.dev/posts/python-cron-monitoring/</link><pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-cron-monitoring/</guid><description>&lt;h2 id="你写的那堆脚本还活着吗"&gt;你写的那堆脚本还活着吗？&lt;/h2&gt;
+&lt;p&gt;回顾一下前面四篇文章你写了什么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一篇&lt;/strong&gt;：10 个日常自动化脚本——文件整理、批量改名、邮件发送&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二篇&lt;/strong&gt;：GitHub Trending 爬虫 + 价格监控器&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第三篇&lt;/strong&gt;：调用 50+ 免费 API 拉数据&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第四篇&lt;/strong&gt;：Pandas 数据分析模板，自动出报表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现在我问你一个扎心的问题：&lt;strong&gt;这些脚本，你现在还在跑吗？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我自己的教训是这样的：写完前三篇的脚本后，我把它们扔在服务器上，手动跑了两次，觉得效果不错。然后一个月没碰。等我想起来再跑一次，发现爬虫脚本因为目标网站改版挂了，API key 过期了，数据分析脚本拉到的 CSV 还是一个月前的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;脚本不自动跑，等于没写。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这不是鸡汤，是实打实的时间账。你花 2 小时写了个竞品价格监控器，然后每次都手动 &lt;code&gt;python monitor.py&lt;/code&gt;，两个月跑了 3 次——平摊下来每次花费 40 分钟。如果写成 Cron 任务每小时自动跑一次，它在一个月内替你执行了 720 次检查。成本摊到每次检查，几乎为零。&lt;/p&gt;
+&lt;p&gt;这篇文章就是解决这个问题的。我会把你前面的所有脚本串起来，配上系统监控和异常告警，搭一个完整的自动化流水线。&lt;/p&gt;
+&lt;h2 id="自动化调度架构"&gt;自动化调度架构&lt;/h2&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/cron-scheduling-architecture.png" alt="定时任务调度架构"&gt;&lt;/p&gt;
+&lt;p&gt;整套架构分四层：&lt;strong&gt;数据获取层&lt;/strong&gt;负责拉数据（爬虫、API、数据库导出），&lt;strong&gt;分析处理层&lt;/strong&gt;负责把原始数据变成洞察（Pandas 聚合、异常检测），&lt;strong&gt;系统监控层&lt;/strong&gt;保证服务器本身不出问题（磁盘、服务、SSL），&lt;strong&gt;通知层&lt;/strong&gt;负责在你需要知道的时候把消息推到你的手机上。&lt;/p&gt;
+&lt;p&gt;Cron 是所有层的总调度器——它会按你设的时间表，准时把每一层的脚本叫起来干活。&lt;/p&gt;
+&lt;h2 id="cron-基础别怕五分钟学会"&gt;Cron 基础：别怕，五分钟学会&lt;/h2&gt;
+&lt;p&gt;很多人听到 Cron 就觉得是运维的活。其实它简单到可笑——就一个文本文件，每行一条规则。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 编辑你的 crontab&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;crontab -e
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 格式：分 时 日 月 星期 命令&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ┌──── 分钟 (0-59)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# │ ┌──── 小时 (0-23)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# │ │ ┌──── 日期 (1-31)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# │ │ │ ┌──── 月份 (1-12)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# │ │ │ │ ┌──── 星期 (0=周日, 6=周六)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# │ │ │ │ │&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# * * * * * 要执行的命令&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;五个时间字段加一个命令。下面是最常用的几种写法：&lt;/p&gt;</description></item><item><title>Python 自动化实战：数据分析自动化——Pandas 实战</title><link>https://zhouyang.dev/posts/python-pandas-analysis/</link><pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-pandas-analysis/</guid><description>&lt;h2 id="独立开发者为什么要学数据分析"&gt;独立开发者为什么要学数据分析？&lt;/h2&gt;
+&lt;p&gt;说个真事。&lt;/p&gt;
+&lt;p&gt;去年我做了一个 Chrome 插件，付费用户大概 2000 人。有一天我想分析&amp;quot;哪些功能的用户用得最多，哪些功能从来没人碰&amp;quot;——于是打开 Google Analytics，点来点去，导出 CSV，再拖进 Excel，做透视表，画图……前后搞了将近两小时。得出的结论是：三个功能占了 90% 的使用量，另外五个功能根本没人用。&lt;/p&gt;
+&lt;p&gt;那个结论确实有价值——它让我砍掉了没人用的功能，把精力集中到核心上。可问题是：&lt;strong&gt;我花了两个小时做了一件可以用 10 行 Python 代码自动完成的事&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;之后我写了个脚本，每周自动跑一次，产出同样的分析报告。从那以后，我再也没手动拖过 Excel。&lt;/p&gt;
+&lt;p&gt;这就是 Pandas 的力量。它不是你想象中的&amp;quot;数据科学家专用工具&amp;quot;——对独立开发者来说，它是&lt;strong&gt;决策加速器&lt;/strong&gt;。用户行为、营收趋势、竞品数据、SEO 关键词效果……这些事每次手动分析都是在浪费时间，而它们恰好是 Pandas 最擅长干的。&lt;/p&gt;
+&lt;h2 id="数据分析自动化流程"&gt;数据分析自动化流程&lt;/h2&gt;
+&lt;p&gt;&lt;img src="https://zhouyang.dev/images/pandas-analysis-flow.png" alt="数据分析自动化流程"&gt;&lt;/p&gt;
+&lt;p&gt;整个流程就六步。这篇文章我会用两个实战案例跑通这个流程。一个是你自己的业务数据（CSV 文件），一个是你在上篇文章里通过 API 拉回来的外部数据。看完你会有一个通用的分析模板，以后替换数据源即可复用。&lt;/p&gt;
+&lt;h2 id="环境准备"&gt;环境准备&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install pandas matplotlib numpy openpyxl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;openpyxl&lt;/code&gt; 用于读写 Excel，&lt;code&gt;matplotlib&lt;/code&gt; 用于画图。装完就可以开工。&lt;/p&gt;
+&lt;h2 id="实战一用户行为数据分析"&gt;实战一：用户行为数据分析&lt;/h2&gt;
+&lt;p&gt;假设你是独立开发者，有一个小产品。你记录了用户的行为日志，CSV 格式，字段包括：&lt;code&gt;user_id&lt;/code&gt;（用户ID）、&lt;code&gt;event&lt;/code&gt;（行为类型）、&lt;code&gt;date&lt;/code&gt;（日期）、&lt;code&gt;duration_sec&lt;/code&gt;（耗时秒数）。&lt;/p&gt;
+&lt;p&gt;真实数据长这样：&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;user_id&lt;/th&gt;
+					&lt;th&gt;event&lt;/th&gt;
+					&lt;th&gt;date&lt;/th&gt;
+					&lt;th&gt;duration_sec&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;u001&lt;/td&gt;
+					&lt;td&gt;page_view&lt;/td&gt;
+					&lt;td&gt;2026-06-18&lt;/td&gt;
+					&lt;td&gt;0&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;u001&lt;/td&gt;
+					&lt;td&gt;feature_click&lt;/td&gt;
+					&lt;td&gt;2026-06-18&lt;/td&gt;
+					&lt;td&gt;45&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;u001&lt;/td&gt;
+					&lt;td&gt;export&lt;/td&gt;
+					&lt;td&gt;2026-06-18&lt;/td&gt;
+					&lt;td&gt;120&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;u002&lt;/td&gt;
+					&lt;td&gt;page_view&lt;/td&gt;
+					&lt;td&gt;2026-06-19&lt;/td&gt;
+					&lt;td&gt;0&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;u002&lt;/td&gt;
+					&lt;td&gt;page_view&lt;/td&gt;
+					&lt;td&gt;2026-06-19&lt;/td&gt;
+					&lt;td&gt;0&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&amp;hellip;&lt;/td&gt;
+					&lt;td&gt;&amp;hellip;&lt;/td&gt;
+					&lt;td&gt;&amp;hellip;&lt;/td&gt;
+					&lt;td&gt;&amp;hellip;&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="第一步加载数据"&gt;第一步：加载数据&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; pandas &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; pd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;df &lt;span style="color:#f92672"&gt;=&lt;/span&gt; pd&lt;span style="color:#f92672"&gt;.&lt;/span&gt;read_csv(&lt;span style="color:#e6db74"&gt;&amp;#34;user_events.csv&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(df&lt;span style="color:#f92672"&gt;.&lt;/span&gt;head())
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(&lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;总行数：&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;len(df)&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;，用户数：&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;df[&lt;span style="color:#e6db74"&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;]&lt;span style="color:#f92672"&gt;.&lt;/span&gt;nunique()&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;read_csv()&lt;/code&gt; 是最常用的入口。Pandas 支持 CSV、Excel、JSON、SQL、Parquet 等二十多种格式，几乎覆盖了你遇到的所有数据源。&lt;/p&gt;</description></item><item><title>Python 自动化实战：API 自动化——调用50+免费API</title><link>https://zhouyang.dev/posts/python-api-automation/</link><pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/python-api-automation/</guid><description>&lt;h2 id="为什么你应该优先用-api-而不是爬虫"&gt;为什么你应该优先用 API 而不是爬虫？&lt;/h2&gt;
 &lt;p&gt;上篇文章讲了 Web Scraping，结尾我留了一句话：&lt;strong&gt;如果网站有公开 API，优先用 API 而不是爬页面&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这不是敷衍。我做独立开发这几年，在 API 和爬虫之间来回横跳过太多次，教训深刻。&lt;/p&gt;
 &lt;p&gt;说一个真实例子：2024 年我写了个币圈信息聚合器，一开始爬了三个交易所的页面。每个页面结构不一样，写解析逻辑就花了两天。上线两周后，其中一家改了 CSS class 名，数据全挂了。连夜修兼容，刚修好，另一家加了 Cloudflare 盾。那一刻我真的想砸键盘。&lt;/p&gt;

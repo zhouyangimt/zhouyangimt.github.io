@@ -1,26 +1,237 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>从零到一：2026年独立开发者如何构建第一个SaaS产品 | zhouyang — The 25th Frame</title><meta name=description content="选方向、搭MVP、定价、获客——独立开发者做SaaS的完整框架。"><link rel=stylesheet href="/css/style.css?v=202606280116"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
-<a href=/posts/>Tech</a>
-<a href=/cuisine/>Chinese Cuisine</a>
-<a href=/tea/>🍵 Tea</a>
-<a href=/baijiu/>🥃 Baijiu</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<span class=rss-links><span class=rss-label>RSS</span>
-<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>从零到一：2026年独立开发者如何构建第一个SaaS产品</h1><div class=meta><time>2026-06-15</time>
-<span class=tags><span class=tag>独立开发</span><span class=tag>副业</span></span></div></header><div class=content><h2 id=独立开发saas还能赚钱吗>独立开发SaaS还能赚钱吗？</h2><p>能。但不是「我有一个改变世界的想法，融500万美金」那种SaaS。</p><p>是这种：</p><blockquote><p>一个有明确痛点的小工具，月费$5-20，服务几千个用户，月入$5000-20000。</p></blockquote><p>这叫<strong>Micro-SaaS</strong>或<strong>独立开发者SaaS</strong>。本文讲的就是这个。</p><h2 id=第一步找到对的点子>第一步：找到对的点子</h2><h3 id=方向错了后面全白费>方向错了，后面全白费</h3><p>好点子的标准：</p><ol><li><strong>解决真问题</strong>：用户愿意付钱解决</li><li><strong>市场够小</strong>：大公司看不上</li><li><strong>你能做</strong>：技术栈在你能力范围内</li><li><strong>可触达</strong>：你找得到目标用户</li></ol><h3 id=怎么找点子>怎么找点子？</h3><p><strong>方法一：从自己的痛点出发</strong>
-你最近因为什么东西不爽？有没有「要是有个工具能……就好了」的时刻？</p><p><strong>方法二：看现有产品的差评</strong>
-去G2、Product Hunt、Reddit看竞品的差评。用户抱怨什么，就是你的机会。</p><p><strong>方法三：挖缝隙市场</strong>
-大平台的API生态里有很多机会：</p><ul><li>Slack App、Notion集成、Figma插件</li><li>Chrome扩展、VS Code插件</li><li>Shopify App、WordPress插件</li></ul><h3 id=一些方向参考>一些方向参考</h3><table><thead><tr><th>方向</th><th>例子</th><th>难度</th></tr></thead><tbody><tr><td>PDF工具</td><td>合并、压缩、转换</td><td>低</td></tr><tr><td>API封装</td><td>数据接口转卖</td><td>中</td></tr><tr><td>自动化</td><td>定时任务、监控</td><td>中</td></tr><tr><td>数据分析</td><td>报表生成</td><td>中高</td></tr><tr><td>AI工具</td><td>文案、图片生成</td><td>中</td></tr></tbody></table><h2 id=第二步验证想法>第二步：验证想法</h2><p><strong>不要一开始就写代码。</strong> 先验证：</p><ol><li>做一个Landing Page（Carrd/Notion都行），描述你的产品</li><li>放一个「抢先体验」邮箱收集按钮</li><li>去目标用户聚集的地方发帖</li><li>看有多少人留邮箱</li></ol><p><strong>50个人留邮箱 = 可以做。500个 = 赶紧做。</strong></p><h2 id=第三步搭mvp>第三步：搭MVP</h2><p>MVP（最小可行产品）只有一个目标：<strong>验证用户愿意付钱</strong>。</p><p><strong>MVP该有的</strong>：</p><ul><li>核心功能（只做一件事）</li><li>支付（接Stripe/LemonSqueezy）</li><li>基础登录（Supabase Auth）</li></ul><p><strong>MVP不该有的</strong>：</p><ul><li>精美的UI（能用就行）</li><li>管理后台（手动改数据库）</li><li>多语言</li><li>复杂的数据分析</li><li>移动App（先做Web）</li></ul><p><strong>时间预算：2周内上线。</strong></p><h2 id=第四步定价>第四步：定价</h2><p>独立开发者SaaS的定价区间：<strong>$5-29/月</strong>。</p><p>策略：</p><ul><li>从低价开始（$5-9），快速获取用户</li><li>有50个付费用户后再提价</li><li>提供年付折扣（8折）</li><li>永远有免费试用期（7-14天）</li></ul><p><strong>关键认知</strong>：定价$5和定价$19，获客难度差别不大，但收入差4倍。定你应得的价。</p><h2 id=第五步获客>第五步：获客</h2><h3 id=冷启动渠道>冷启动渠道</h3><ol><li><strong>Product Hunt上线</strong>：选周二到周四，提前联系Hunter</li><li><strong>Reddit/Hacker News</strong>：在相关社区分享（不要硬广，要讲你解决什么问题）</li><li><strong>Twitter/X</strong>：持续分享开发过程（Build in Public）</li><li><strong>SEO</strong>：写教程类内容，让你的产品出现在搜索结果里</li><li><strong>直接私信</strong>：在Twitter/领英上私信潜在用户</li></ol><h3 id=获客公式>获客公式</h3><pre tabindex=0><code>新用户 = 看到你的人 × 转化率
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>从零到一：2026年独立开发者如何构建第一个SaaS产品 | zhouyang — The 25th Frame</title>
+  <meta name="description" content="选方向、搭MVP、定价、获客——独立开发者做SaaS的完整框架。">
+  <link rel="stylesheet" href="/css/style.css?v=202606282243">
+  
+
+
+  
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">zhouyang — The 25th Frame</a>
+      <div class="nav-links">
+        
+        <a href="/">Home</a>
+        
+        <a href="/posts/">Tech</a>
+        
+        <a href="/cuisine/">Chinese Cuisine</a>
+        
+        <a href="/tea/">🍵 Tea</a>
+        
+        <a href="/baijiu/">🥃 Baijiu</a>
+        
+        <a href="/about/">About</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    
+<article class="single-post">
+  <header>
+    <h1>从零到一：2026年独立开发者如何构建第一个SaaS产品</h1>
+    <div class="meta">
+      <time>2026-06-15</time>
+      
+      <span class="tags">
+        <span class="tag">独立开发</span><span class="tag">副业</span>
+      </span>
+      
+    </div>
+  </header>
+  <div class="content">
+    <h2 id="独立开发saas还能赚钱吗">独立开发SaaS还能赚钱吗？</h2>
+<p>能。但不是「我有一个改变世界的想法，融500万美金」那种SaaS。</p>
+<p>是这种：</p>
+<blockquote>
+<p>一个有明确痛点的小工具，月费$5-20，服务几千个用户，月入$5000-20000。</p>
+</blockquote>
+<p>这叫<strong>Micro-SaaS</strong>或<strong>独立开发者SaaS</strong>。本文讲的就是这个。</p>
+<h2 id="第一步找到对的点子">第一步：找到对的点子</h2>
+<h3 id="方向错了后面全白费">方向错了，后面全白费</h3>
+<p>好点子的标准：</p>
+<ol>
+<li><strong>解决真问题</strong>：用户愿意付钱解决</li>
+<li><strong>市场够小</strong>：大公司看不上</li>
+<li><strong>你能做</strong>：技术栈在你能力范围内</li>
+<li><strong>可触达</strong>：你找得到目标用户</li>
+</ol>
+<h3 id="怎么找点子">怎么找点子？</h3>
+<p><strong>方法一：从自己的痛点出发</strong>
+你最近因为什么东西不爽？有没有「要是有个工具能……就好了」的时刻？</p>
+<p><strong>方法二：看现有产品的差评</strong>
+去G2、Product Hunt、Reddit看竞品的差评。用户抱怨什么，就是你的机会。</p>
+<p><strong>方法三：挖缝隙市场</strong>
+大平台的API生态里有很多机会：</p>
+<ul>
+<li>Slack App、Notion集成、Figma插件</li>
+<li>Chrome扩展、VS Code插件</li>
+<li>Shopify App、WordPress插件</li>
+</ul>
+<h3 id="一些方向参考">一些方向参考</h3>
+<table>
+	<thead>
+			<tr>
+					<th>方向</th>
+					<th>例子</th>
+					<th>难度</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>PDF工具</td>
+					<td>合并、压缩、转换</td>
+					<td>低</td>
+			</tr>
+			<tr>
+					<td>API封装</td>
+					<td>数据接口转卖</td>
+					<td>中</td>
+			</tr>
+			<tr>
+					<td>自动化</td>
+					<td>定时任务、监控</td>
+					<td>中</td>
+			</tr>
+			<tr>
+					<td>数据分析</td>
+					<td>报表生成</td>
+					<td>中高</td>
+			</tr>
+			<tr>
+					<td>AI工具</td>
+					<td>文案、图片生成</td>
+					<td>中</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="第二步验证想法">第二步：验证想法</h2>
+<p><strong>不要一开始就写代码。</strong> 先验证：</p>
+<ol>
+<li>做一个Landing Page（Carrd/Notion都行），描述你的产品</li>
+<li>放一个「抢先体验」邮箱收集按钮</li>
+<li>去目标用户聚集的地方发帖</li>
+<li>看有多少人留邮箱</li>
+</ol>
+<p><strong>50个人留邮箱 = 可以做。500个 = 赶紧做。</strong></p>
+<h2 id="第三步搭mvp">第三步：搭MVP</h2>
+<p>MVP（最小可行产品）只有一个目标：<strong>验证用户愿意付钱</strong>。</p>
+<p><strong>MVP该有的</strong>：</p>
+<ul>
+<li>核心功能（只做一件事）</li>
+<li>支付（接Stripe/LemonSqueezy）</li>
+<li>基础登录（Supabase Auth）</li>
+</ul>
+<p><strong>MVP不该有的</strong>：</p>
+<ul>
+<li>精美的UI（能用就行）</li>
+<li>管理后台（手动改数据库）</li>
+<li>多语言</li>
+<li>复杂的数据分析</li>
+<li>移动App（先做Web）</li>
+</ul>
+<p><strong>时间预算：2周内上线。</strong></p>
+<h2 id="第四步定价">第四步：定价</h2>
+<p>独立开发者SaaS的定价区间：<strong>$5-29/月</strong>。</p>
+<p>策略：</p>
+<ul>
+<li>从低价开始（$5-9），快速获取用户</li>
+<li>有50个付费用户后再提价</li>
+<li>提供年付折扣（8折）</li>
+<li>永远有免费试用期（7-14天）</li>
+</ul>
+<p><strong>关键认知</strong>：定价$5和定价$19，获客难度差别不大，但收入差4倍。定你应得的价。</p>
+<h2 id="第五步获客">第五步：获客</h2>
+<h3 id="冷启动渠道">冷启动渠道</h3>
+<ol>
+<li><strong>Product Hunt上线</strong>：选周二到周四，提前联系Hunter</li>
+<li><strong>Reddit/Hacker News</strong>：在相关社区分享（不要硬广，要讲你解决什么问题）</li>
+<li><strong>Twitter/X</strong>：持续分享开发过程（Build in Public）</li>
+<li><strong>SEO</strong>：写教程类内容，让你的产品出现在搜索结果里</li>
+<li><strong>直接私信</strong>：在Twitter/领英上私信潜在用户</li>
+</ol>
+<h3 id="获客公式">获客公式</h3>
+<pre tabindex="0"><code>新用户 = 看到你的人 × 转化率
 
 你的工作：
 - 让更多人看到（渠道）
 - 提高转化率（Landing Page优化）
-</code></pre><h2 id=第六步留住用户>第六步：留住用户</h2><p>SaaS的核心不是「新增」而是「留存」。</p><p><strong>提升留存的方法</strong>：</p><ul><li>用户注册后发欢迎邮件</li><li>第3天提醒试用期还有4天</li><li>第6天提醒试用期明天结束</li><li>第7天问为什么没付费</li><li>付费后发Onboarding引导</li></ul><h2 id=真实案例参考>真实案例参考</h2><p><strong>PDF Squeezer</strong>：一个PDF压缩工具</p><ul><li>定价：$9/月</li><li>用户：~2000付费用户</li><li>月收入：~$18000</li><li>一个人开发和维护</li></ul><p><strong>Cronitor</strong>：定时任务监控</p><ul><li>定价：$24起</li><li>从一个简单的cron监控起家</li><li>现在年收入$1M+</li></ul><h2 id=最后一张图>最后一张图</h2><pre tabindex=0><code>第1-2周：找方向 + 验证
+</code></pre><h2 id="第六步留住用户">第六步：留住用户</h2>
+<p>SaaS的核心不是「新增」而是「留存」。</p>
+<p><strong>提升留存的方法</strong>：</p>
+<ul>
+<li>用户注册后发欢迎邮件</li>
+<li>第3天提醒试用期还有4天</li>
+<li>第6天提醒试用期明天结束</li>
+<li>第7天问为什么没付费</li>
+<li>付费后发Onboarding引导</li>
+</ul>
+<h2 id="真实案例参考">真实案例参考</h2>
+<p><strong>PDF Squeezer</strong>：一个PDF压缩工具</p>
+<ul>
+<li>定价：$9/月</li>
+<li>用户：~2000付费用户</li>
+<li>月收入：~$18000</li>
+<li>一个人开发和维护</li>
+</ul>
+<p><strong>Cronitor</strong>：定时任务监控</p>
+<ul>
+<li>定价：$24起</li>
+<li>从一个简单的cron监控起家</li>
+<li>现在年收入$1M+</li>
+</ul>
+<h2 id="最后一张图">最后一张图</h2>
+<pre tabindex="0"><code>第1-2周：找方向 + 验证
 第3-4周：写MVP
 第5周：上线 + 推广
 第6-8周：收集反馈 + 迭代
 第3个月：稳固100个付费用户
 第6个月：MRR $2000+
-</code></pre><p><strong>关键是第一步：现在开始，两周后上线。</strong></p></div></article><nav class=post-nav><a href=/posts/seo-basics-for-blog/ class=prev>← SEO入门：让搜索引擎找到你的技术博客（写给程序员）</a>
-<a href=/posts/hermes-agent-guide/ class=next>Hermes Agent 入门指南：你的24小时AI助手 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>
+</code></pre><p><strong>关键是第一步：现在开始，两周后上线。</strong></p>
+
+  </div>
+</article>
+
+<nav class="post-nav">
+  
+  <a href="/posts/seo-basics-for-blog/" class="prev">← SEO入门：让搜索引擎找到你的技术博客（写给程序员）</a>
+  
+  
+  <a href="/posts/hermes-agent-guide/" class="next">Hermes Agent 入门指南：你的24小时AI助手 →</a>
+  
+</nav>
+
+<section class="comments">
+  <h2>💬 Comments</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="zhouyangimt/zhouyangimt.github.io"
+          issue-term="pathname"
+          label="comment"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
+  </footer>
+</body>
+</html>

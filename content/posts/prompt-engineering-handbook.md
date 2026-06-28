@@ -246,4 +246,5 @@ Prompt Engineering 不是什么玄学，而是**系统化的需求表达**。核
 > - [Claude vs Cursor vs Copilot 横评](/posts/claude-code-vs-cursor-vs-copilot/)
 > - [零代码用AI搭建网站](/posts/ai-build-website-zero/)
 > - 👉 Prompt Engineering 实战手册（本文）
-> - 下一篇：[AI Debugging：让AI帮你修bug](/posts/ai-debugging-guide/)
+> - [AI Debugging：让AI帮你修bug](/posts/ai-debugging-guide/)
+> - 系列完结 ✅

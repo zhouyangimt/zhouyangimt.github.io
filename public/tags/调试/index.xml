@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>调试 on zhouyang — The 25th Frame</title>
+		<link>https://zhouyang.dev/tags/%E8%B0%83%E8%AF%95/</link>
+		<description>Recent content in 调试 on zhouyang — The 25th Frame</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyang.dev/tags/%E8%B0%83%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>AI编程工具链：AI Debugging — 让AI帮你修bug</title>
+				<link>https://zhouyang.dev/posts/ai-debugging-guide/</link>
+				<pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/ai-debugging-guide/</guid>
+				<description>&lt;h2 id=&#34;调试是ai最被低估的能力&#34;&gt;调试是AI最被低估的能力&lt;/h2&gt;&#xA;&lt;p&gt;大多数人用AI写代码，但很少人用它&lt;strong&gt;修bug&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;一个反直觉的事实：AI调试往往比AI写代码&lt;strong&gt;更靠谱&lt;/strong&gt;。原因很简单——&#xA;写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：&lt;strong&gt;拿到报错之后，怎么用AI最快地找到根因并修复。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/ai-debugging-flow.png&#34; alt=&#34;AI 调试工作流&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;ai擅长修什么bug&#34;&gt;AI擅长修什么bug&lt;/h2&gt;&#xA;&lt;p&gt;不是所有bug都适合丢给AI。先分清地盘：&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;AI表现&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;语法/类型错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Traceback 直接给结论&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;空指针/AttributeError&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;AI一眼看出哪里可能为 None&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;依赖版本冲突&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;只要告诉它版本号&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;API调用参数错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;训练数据里有大量文档&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;并发/竞态条件&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要好的上下文&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;业务逻辑错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要你解释「什么是对」&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;性能瓶颈/内存泄漏&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要 profiling 数据配合&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;框架特有行为&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;取决于框架的文档覆盖率&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;一句话总结：&lt;strong&gt;AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;标准流程三步法&#34;&gt;标准流程：三步法&lt;/h2&gt;&#xA;&lt;p&gt;我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第一步给上下文别只贴报错&#34;&gt;第一步：给上下文，别只贴报错&lt;/h3&gt;&#xA;&lt;p&gt;错误示范——90%的人这么做：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;❌ 用户：我代码报错了，帮我看看&#xA;❌ 用户：（贴了半行报错信息）&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;AI只能瞎猜。&lt;/p&gt;&#xA;&lt;p&gt;正确做法：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;✅  我用 FastAPI 写了一个接口，报错如下：&#xA;✅  （完整 Traceback）&#xA;✅&#xA;✅  相关代码：&#xA;✅  （贴出报错涉及的那个函数或文件片段，50-100行）&#xA;✅&#xA;✅  环境：&#xA;✅  - Python 3.11&#xA;✅  - FastAPI 0.115&#xA;✅  - Pydantic v2&#xA;✅  - 数据库是 PostgreSQL，用 SQLAlchemy 2.0 async&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;关键信息清单：&lt;/strong&gt; 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

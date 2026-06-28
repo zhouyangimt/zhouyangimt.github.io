@@ -23,13 +23,12 @@
 - [x] 数据分析自动化：Pandas 实战
 - [x] 定时任务 & 监控脚本
 
-## 系列 3：AI 编程工具链（3-4篇）
-已有 3 篇相关，补齐为系列：
+## 系列 3：AI 编程工具链 ✅ 已完成（5/5）
 - [x] AI编程助手完全指南（已有）
 - [x] Claude vs Cursor vs Copilot 横评（已有）
 - [x] 零代码用AI搭建网站（已有）
 - [x] Prompt Engineering 实战手册
-- [ ] AI Debugging：让AI帮你修bug
+- [x] AI Debugging：让AI帮你修bug
 
 ## 系列 4：独立开发者全栈生存指南（5-6篇）
 - [x] 技术栈选择指南（已有）

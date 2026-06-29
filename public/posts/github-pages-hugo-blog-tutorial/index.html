@@ -1,187 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Pages &#43; Hugo 搭建免费博客完整教程（2026版） | zhouyang — The 25th Frame</title>
-  <meta name="description" content="从零开始用Hugo和GitHub Pages搭建免费、高速的个人博客，含自定义域名配置。">
-  <link rel="stylesheet" href="/css/style.css?v=202606290934">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>GitHub Pages &#43; Hugo 搭建免费博客完整教程（2026版）</h1>
-    <div class="meta">
-      <time>2026-06-04</time>
-      
-      <span class="tags">
-        <span class="tag">独立开发</span><span class="tag">工具教程</span><span class="tag">Hugo</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <h2 id="为什么选-hugo--github-pages">为什么选 Hugo + GitHub Pages？</h2>
-<ul>
-<li><strong>完全免费</strong>：GitHub Pages 免费托管，无流量限制</li>
-<li><strong>极速</strong>：Hugo 是Go写的，构建速度毫秒级</li>
-<li><strong>Markdown 写作</strong>：用你熟悉的格式写文章</li>
-<li><strong>版本控制</strong>：所有文章都在 Git 里，永远不丢</li>
-</ul>
-<h2 id="第一步安装-hugo">第一步：安装 Hugo</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># macOS</span>
-</span></span><span style="display:flex;"><span>brew install hugo
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Linux</span>
-</span></span><span style="display:flex;"><span>sudo snap install hugo
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Windows</span>
-</span></span><span style="display:flex;"><span>choco install hugo-extended
-</span></span></code></pre></div><h2 id="第二步创建站点">第二步：创建站点</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site my-blog
-</span></span><span style="display:flex;"><span>cd my-blog
-</span></span><span style="display:flex;"><span>git init
-</span></span></code></pre></div><h2 id="第三步选主题">第三步：选主题</h2>
-<p>推荐几个轻量中文友好的主题：</p>
-<ul>
-<li><strong>PaperMod</strong>：简洁、功能全</li>
-<li><strong>Stack</strong>：卡片式、颜值高</li>
-<li><strong>LoveIt</strong>：中文社区最流行的主题</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;theme = &#39;PaperMod&#39;&#34;</span> &gt;&gt; hugo.toml
-</span></span></code></pre></div><h2 id="第四步写第一篇文章">第四步：写第一篇文章</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/my-first-post.md
-</span></span></code></pre></div><p>用 Markdown 写内容，Front Matter 里设置标题、日期、标签：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span><span style="color:#f92672">title</span>: <span style="color:#e6db74">&#34;我的第一篇文章&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">date</span>: <span style="color:#e6db74">2026-06-04</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">tags</span>: [<span style="color:#e6db74">&#34;入门&#34;</span>]
-</span></span><span style="display:flex;"><span>---
-</span></span></code></pre></div><h2 id="第五步本地预览">第五步：本地预览</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D
-</span></span></code></pre></div><p>浏览器打开 <code>http://localhost:1313</code>，边写边看效果。</p>
-<h2 id="第六步部署到-github-pages">第六步：部署到 GitHub Pages</h2>
-<ol>
-<li>在 GitHub 创建仓库：<code>你的用户名.github.io</code></li>
-<li>在仓库 Settings → Pages 里，Source 选 <strong>GitHub Actions</strong></li>
-<li>创建 <code>.github/workflows/hugo.yml</code>：</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Hugo</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>: [<span style="color:#ae81ff">main]</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build-deploy</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-hugo@v2</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">hugo --minify</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-gh-pages@v3</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">github_token</span>: <span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">publish_dir</span>: <span style="color:#ae81ff">./public</span>
-</span></span></code></pre></div><ol start="4">
-<li><code>git push</code>，GitHub Actions 自动构建部署。</li>
-</ol>
-<h2 id="第七步绑定自定义域名">第七步：绑定自定义域名</h2>
-<ol>
-<li>在域名 DNS 里加一条 CNAME 记录指向 <code>你的用户名.github.io</code></li>
-<li>在 <code>static/</code> 目录下创建 <code>CNAME</code> 文件，写入你的域名</li>
-<li>GitHub Pages Settings 里填入自定义域名</li>
-</ol>
-<h2 id="总结">总结</h2>
-<table>
-	<thead>
-			<tr>
-					<th>项目</th>
-					<th>成本</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>托管</td>
-					<td>$0</td>
-			</tr>
-			<tr>
-					<td>域名（可选）</td>
-					<td>~$10/年</td>
-			</tr>
-			<tr>
-					<td>主题</td>
-					<td>免费</td>
-			</tr>
-			<tr>
-					<td>维护</td>
-					<td>写 Markdown 即可</td>
-			</tr>
-	</tbody>
-</table>
-<p>一个完全免费、速度飞起的个人博客，就这么简单。</p>
-
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/ai-coding-assistant-guide-2026/" class="prev">← 2026年AI编程助手完全指南：选型、配置与最佳实践</a>
-  
-  
-  <a href="/posts/python-automation-daily-tasks/" class="next">用Python自动化你的10个日常重复工作（附完整代码） →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-</body>
-</html>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>GitHub Pages + Hugo 搭建免费博客完整教程（2026版） | zhouyang — The 25th Frame</title><meta name=description content="从零开始用Hugo和GitHub Pages搭建免费、高速的个人博客，含自定义域名配置。"><link rel=stylesheet href="/css/style.css?v=202606290135"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>GitHub Pages + Hugo 搭建免费博客完整教程（2026版）</h1><div class=meta><time>2026-06-04</time>
+<span class=tags><span class=tag>独立开发</span><span class=tag>工具教程</span><span class=tag>Hugo</span></span></div></header><div class=content><h2 id=为什么选-hugo--github-pages>为什么选 Hugo + GitHub Pages？</h2><ul><li><strong>完全免费</strong>：GitHub Pages 免费托管，无流量限制</li><li><strong>极速</strong>：Hugo 是Go写的，构建速度毫秒级</li><li><strong>Markdown 写作</strong>：用你熟悉的格式写文章</li><li><strong>版本控制</strong>：所有文章都在 Git 里，永远不丢</li></ul><h2 id=第一步安装-hugo>第一步：安装 Hugo</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># macOS</span>
+</span></span><span style=display:flex><span>brew install hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Linux</span>
+</span></span><span style=display:flex><span>sudo snap install hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Windows</span>
+</span></span><span style=display:flex><span>choco install hugo-extended
+</span></span></code></pre></div><h2 id=第二步创建站点>第二步：创建站点</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hugo new site my-blog
+</span></span><span style=display:flex><span>cd my-blog
+</span></span><span style=display:flex><span>git init
+</span></span></code></pre></div><h2 id=第三步选主题>第三步：选主题</h2><p>推荐几个轻量中文友好的主题：</p><ul><li><strong>PaperMod</strong>：简洁、功能全</li><li><strong>Stack</strong>：卡片式、颜值高</li><li><strong>LoveIt</strong>：中文社区最流行的主题</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;theme = &#39;PaperMod&#39;&#34;</span> &gt;&gt; hugo.toml
+</span></span></code></pre></div><h2 id=第四步写第一篇文章>第四步：写第一篇文章</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hugo new posts/my-first-post.md
+</span></span></code></pre></div><p>用 Markdown 写内容，Front Matter 里设置标题、日期、标签：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>title</span>: <span style=color:#e6db74>&#34;我的第一篇文章&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>date</span>: <span style=color:#e6db74>2026-06-04</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>tags</span>: [<span style=color:#e6db74>&#34;入门&#34;</span>]
+</span></span><span style=display:flex><span>---
+</span></span></code></pre></div><h2 id=第五步本地预览>第五步：本地预览</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hugo server -D
+</span></span></code></pre></div><p>浏览器打开 <code>http://localhost:1313</code>，边写边看效果。</p><h2 id=第六步部署到-github-pages>第六步：部署到 GitHub Pages</h2><ol><li>在 GitHub 创建仓库：<code>你的用户名.github.io</code></li><li>在仓库 Settings → Pages 里，Source 选 <strong>GitHub Actions</strong></li><li>创建 <code>.github/workflows/hugo.yml</code>：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>name</span>: <span style=color:#ae81ff>Deploy Hugo</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>on</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>push</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>branches</span>: [<span style=color:#ae81ff>main]</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>jobs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>build-deploy</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>steps</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v4</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-hugo@v2</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>run</span>: <span style=color:#ae81ff>hugo --minify</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-gh-pages@v3</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>with</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>github_token</span>: <span style=color:#ae81ff>${{ secrets.GITHUB_TOKEN }}</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>publish_dir</span>: <span style=color:#ae81ff>./public</span>
+</span></span></code></pre></div><ol start=4><li><code>git push</code>，GitHub Actions 自动构建部署。</li></ol><h2 id=第七步绑定自定义域名>第七步：绑定自定义域名</h2><ol><li>在域名 DNS 里加一条 CNAME 记录指向 <code>你的用户名.github.io</code></li><li>在 <code>static/</code> 目录下创建 <code>CNAME</code> 文件，写入你的域名</li><li>GitHub Pages Settings 里填入自定义域名</li></ol><h2 id=总结>总结</h2><table><thead><tr><th>项目</th><th>成本</th></tr></thead><tbody><tr><td>托管</td><td>$0</td></tr><tr><td>域名（可选）</td><td>~$10/年</td></tr><tr><td>主题</td><td>免费</td></tr><tr><td>维护</td><td>写 Markdown 即可</td></tr></tbody></table><p>一个完全免费、速度飞起的个人博客，就这么简单。</p></div></article><nav class=post-nav><a href=/posts/ai-coding-assistant-guide-2026/ class=prev>← 2026年AI编程助手完全指南：选型、配置与最佳实践</a>
+<a href=/posts/python-automation-daily-tasks/ class=next>用Python自动化你的10个日常重复工作（附完整代码） →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>

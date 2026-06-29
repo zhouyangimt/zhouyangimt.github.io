@@ -33,6 +33,8 @@ A good plate of hóngshāo ròu is quiet. It doesn't sizzle. It doesn't crackle.
 
 Su Dongpo, the 11th-century poet and statesman, wrote about cooking pork: *"Let the fire be slow, let the water be enough, and when it's done, it will be beautiful."* Exiled to Huangzhou and broke, he discovered that the cheapest cut, pork belly, became transcendent if you just let it cook long enough. His version, Dongpo Rou, is the ancestor of every red-braised pork belly in China today.
 
+I wrote about Dongpo Rou separately — it's the square-cut, straw-tied cousin of hóngshāo ròu. Same DNA, different branch. If you're wondering whether they're the same dish: they're close, they overlap in spirit, but they're not interchangeable. [Dongpo Rou: The Pork Belly That Launched a Thousand Poems](/cuisine/dongpo-rou/) breaks down exactly how they differ — spoiler: it's in the cut, the tie, and the patience.
+
 ## The Enemies of Hong Shao Rou
 
 Bad hóngshāo ròu is everywhere. Here's what to look for.

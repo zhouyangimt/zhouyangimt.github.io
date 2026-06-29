@@ -53,7 +53,7 @@ The Japanese version — *mābō dōfu* — is sweeter and milder, a 1950s adapt
 
 And the vegetarian version — minced shiitake mushrooms instead of beef — is not Mapo Tofu. It's Mapo-Style Tofu. The distinction matters the same way "vegetarian bacon" matters. Call it what it is and we're fine.
 
-![Mapo Tofu served over steamed white rice — where the magic happens](/images/mapo-tofu-4.jpg)
+![Mapo Tofu served over steamed white rice — where the magic happens](/images/mapo-tofu-4.jpg?v=2)
 
 ## How to Eat It
 

@@ -60,7 +60,7 @@ Westerners often hear "red-braised pork" and assume Dongpo Rou and Hong Shao Rou
 | **Origin**   | Su Dongpo's exile kitchen, Hangzhou — a poet's experiment that became a classic | Every Chinese grandmother's stove — no single inventor, infinite variations |
 | **Soul**     | Refinement. One piece of pork belly, given three hours of undivided attention | Generosity. A pot of pork, sticky and dark, meant to be shared over rice |
 
-The simplest test: pick it up with chopsticks. If it trembles and threatens to collapse, it's Dongpo Rou. If it holds its shape with a confident bounce, it's Hong Shao Rou. Both are worth your time. Only one was invented by a poet who was also arguably the greatest calligrapher of the Song dynasty. That's a high bar for a pork dish.
+The simplest test: pick it up with chopsticks. If it trembles and threatens to collapse, it's Dongpo Rou. If it holds its shape with a confident bounce, it's [Hong Shao Rou](/cuisine/hong-shao-rou/). Both are worth your time. Only one was invented by a poet who was also arguably the greatest calligrapher of the Song dynasty. That's a high bar for a pork dish.
 
 ![Dongpo Rou served with steamed mantou buns — the classic pairing](/images/dongpo-rou-3.jpg?v=2)
 

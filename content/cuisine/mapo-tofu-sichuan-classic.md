@@ -31,7 +31,7 @@ And the meat isn't just protein — it's a flavor delivery system. Every granule
 
 In 1862, a woman named Chen ran a roadside stall near Wanfu Bridge in Chengdu. Smallpox had scarred her face — customers called her *Chén Māpó* (陈麻婆): "Pockmarked Old Woman Chen." Her tofu-and-beef stew cost nothing and filled laborers for a day. They started calling the dish *Má Pó's tofu*. The name stuck. Her restaurant still runs in Chengdu today, same recipe, 160 years later.
 
-![Mapo Tofu — the rich crimson sauce coating each cube of tofu](/images/mapo-tofu-3.jpg)
+![Mapo Tofu — the rich crimson sauce coating each cube of tofu](/images/mapo-tofu-3.jpg?v=2)
 
 ## The Four Non-Negotiables
 

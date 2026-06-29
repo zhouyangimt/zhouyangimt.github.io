@@ -1,157 +1,447 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets | zhouyang — The 25th Frame</title><meta name=description content="深入拆解 Hermes Agent 的配置系统：20+ providers 怎么选、模型怎么搭、toolsets 怎么配出最强组合。"><link rel=stylesheet href="/css/style.css?v=202606290610"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
-<a href=/posts/>Tech</a>
-<a href=/cuisine/>Chinese Cuisine</a>
-<a href=/tea/>🍵 Tea</a>
-<a href=/baijiu/>🥃 Baijiu</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<span class=rss-links><span class=rss-label>RSS</span>
-<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</h1><div class=meta><time>2026-06-19</time>
-<span class=tags><span class=tag>AI</span><span class=tag>Hermes</span><span class=tag>工具教程</span><span class=tag>自动化</span></span></div></header><div class=content><p>这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去<a href=/posts/hermes-agent-guide/>入门指南</a>把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。</p><p>上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。</p><p>Hermes 的核心优势之一是<strong>不绑定任何模型厂商</strong>。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。</p><p>今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。</p><p><img src=/images/hermes-architecture.png alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"></p><h2 id=配置文件在哪>配置文件在哪</h2><p>Hermes 的配置分布在两个文件：</p><pre tabindex=0><code>~/.hermes/config.yaml   # 主配置：模型、工具集、人格、安全策略等
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets | zhouyang — The 25th Frame</title>
+  <meta name="description" content="深入拆解 Hermes Agent 的配置系统：20&#43; providers 怎么选、模型怎么搭、toolsets 怎么配出最强组合。">
+  <link rel="stylesheet" href="/css/style.css?v=202606291411">
+  
+
+
+  
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">zhouyang — The 25th Frame</a>
+      <div class="nav-links">
+        
+        <a href="/">Home</a>
+        
+        <a href="/posts/">Tech</a>
+        
+        <a href="/cuisine/">Chinese Cuisine</a>
+        
+        <a href="/tea/">🍵 Tea</a>
+        
+        <a href="/baijiu/">🥃 Baijiu</a>
+        
+        <a href="/about/">About</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    
+<article class="single-post">
+  <header>
+    <h1>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</h1>
+    <div class="meta">
+      <time>2026-06-19</time>
+      
+      <span class="tags">
+        <span class="tag">AI</span><span class="tag">Hermes</span><span class="tag">工具教程</span><span class="tag">自动化</span>
+      </span>
+      
+    </div>
+  </header>
+  <div class="content">
+    <p>这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去<a href="/posts/hermes-agent-guide/">入门指南</a>把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。</p>
+<p>上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。</p>
+<p>Hermes 的核心优势之一是<strong>不绑定任何模型厂商</strong>。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。</p>
+<p>今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。</p>
+<p><img src="/images/hermes-architecture.png" alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"></p>
+<h2 id="配置文件在哪">配置文件在哪</h2>
+<p>Hermes 的配置分布在两个文件：</p>
+<pre tabindex="0"><code>~/.hermes/config.yaml   # 主配置：模型、工具集、人格、安全策略等
 ~/.hermes/.env          # 密钥（API Key、Token），单独存放防止泄露
-</code></pre><p>直接编辑也行，但 Hermes 提供了更安全的方式：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 查看当前配置</span>
-</span></span><span style=display:flex><span>hermes config
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 用编辑器打开 config.yaml</span>
-</span></span><span style=display:flex><span>hermes config edit
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 逐项设置（推荐，不会搞乱缩进）</span>
-</span></span><span style=display:flex><span>hermes config set model.default <span style=color:#e6db74>&#34;anthropic/claude-sonnet-4&#34;</span>
-</span></span><span style=display:flex><span>hermes config set agent.max_turns <span style=color:#ae81ff>90</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 管理密钥（更安全，会做本地加密）</span>
-</span></span><span style=display:flex><span>hermes auth
-</span></span></code></pre></div><p>先说最重要的 providers。</p><h2 id=providers20-模型提供商怎么选>Providers：20+ 模型提供商怎么选</h2><p>Hermes 支持的 providers 可以分三类：</p><p><strong>第一类：聚合平台（性价比首选）</strong></p><table><thead><tr><th>Provider</th><th>特点</th><th>适合场景</th></tr></thead><tbody><tr><td><strong>OpenRouter</strong></td><td>聚合 200+ 模型，按用量计费</td><td>日常主力，模型随便试</td></tr><tr><td><strong>Nous Portal</strong></td><td>Hermes 官方配套，OAuth 登录</td><td>想省事的默认选择</td></tr><tr><td><strong>Hugging Face</strong></td><td>开源模型托管，免费额度</td><td>跑开源模型、研究调试</td></tr></tbody></table><p><strong>第二类：厂商直连（性能最优）</strong></p><table><thead><tr><th>Provider</th><th>招牌模型</th><th>适合场景</th></tr></thead><tbody><tr><td><strong>Anthropic</strong></td><td>Claude Sonnet 4 / Opus 4</td><td>复杂推理、长文分析、架构设计</td></tr><tr><td><strong>OpenAI</strong></td><td>GPT-5 / o4-mini / Codex</td><td>编码、工具调用、多模态</td></tr><tr><td><strong>Google Gemini</strong></td><td>Gemini 3 Pro / Flash</td><td>超长上下文（1M token）、免费额度大</td></tr><tr><td><strong>DeepSeek</strong></td><td>DeepSeek V4 Pro / Flash</td><td>性价比极高，编码和推理均衡</td></tr><tr><td><strong>xAI / Grok</strong></td><td>Grok 4</td><td>实时信息、创意任务</td></tr></tbody></table><p><strong>第三类：国内厂商</strong></p><table><thead><tr><th>Provider</th><th>特点</th></tr></thead><tbody><tr><td><strong>通义千问 / DashScope</strong></td><td>阿里系，API 稳定，中文能力强</td></tr><tr><td><strong>Kimi / Moonshot</strong></td><td>月之暗面，超长上下文</td></tr><tr><td><strong>GLM / Z.AI</strong></td><td>智谱，开源生态好</td></tr><tr><td><strong>MiniMax</strong></td><td>性价比不错</td></tr></tbody></table><p>怎么配？两个方法：</p><p><strong>方法一：交互式配置</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 进入交互式模型选择器，上下箭头选</span>
-</span></span><span style=display:flex><span>hermes model
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 或者走完整配置向导</span>
-</span></span><span style=display:flex><span>hermes setup
-</span></span></code></pre></div><p><strong>方法二：命令行直设（适合脚本/切换）</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 切到 Claude Sonnet</span>
-</span></span><span style=display:flex><span>hermes config set model.default <span style=color:#e6db74>&#34;anthropic/claude-sonnet-4&#34;</span>
-</span></span><span style=display:flex><span>hermes config set model.provider anthropic
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 切到 Gemini Flash（便宜、快）</span>
-</span></span><span style=display:flex><span>hermes config set model.default <span style=color:#e6db74>&#34;gemini-3-flash&#34;</span>
-</span></span><span style=display:flex><span>hermes config set model.provider google
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 用 OpenRouter 中转（一次配好，后面随便换模型名）</span>
-</span></span><span style=display:flex><span>hermes config set model.provider openrouter
-</span></span><span style=display:flex><span>hermes config set model.default <span style=color:#e6db74>&#34;anthropic/claude-sonnet-4&#34;</span>
-</span></span></code></pre></div><p>API Key 怎么设：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 直接写 .env 文件（推荐，跟 config 分离）</span>
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;OPENROUTER_API_KEY=sk-or-v1-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;ANTHROPIC_API_KEY=sk-ant-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;DEEPSEEK_API_KEY=sk-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 或者用 auth 命令（会做本地加密存储）</span>
-</span></span><span style=display:flex><span>hermes auth add openrouter
-</span></span><span style=display:flex><span>hermes auth add deepseek
-</span></span></code></pre></div><h3 id=credential-pools多-key-轮转>Credential Pools：多 Key 轮转</h3><p>如果你一个 provider 有多个 API Key（比如多个 OpenRouter 账号，或者团队共享额度），Hermes 支持 credential pool——自动轮转 Key，一个限额了用下一个：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 多次执行 auth add，同一个 provider 会累积成池</span>
-</span></span><span style=display:flex><span>hermes auth add openrouter   <span style=color:#75715e># 第一个 Key</span>
-</span></span><span style=display:flex><span>hermes auth add openrouter   <span style=color:#75715e># 第二个 Key</span>
-</span></span><span style=display:flex><span>hermes auth add openrouter   <span style=color:#75715e># 第三个 Key</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 查看池子</span>
-</span></span><span style=display:flex><span>hermes auth list openrouter
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Key 0 超限被压了？手动重置</span>
-</span></span><span style=display:flex><span>hermes auth reset openrouter
-</span></span></code></pre></div><p>这个机制对重度用户特别实用——不用担心写着写着突然撞限额。</p><h2 id=模型选择不是越贵越好>模型选择：不是越贵越好</h2><p>选模型的核心原则：<strong>用最便宜的模型能搞定的活，不浪费贵的模型</strong>。</p><p>Hermes 切换模型的成本几乎为零——一行命令就切了。所以最佳实践是<strong>根据任务类型挑模型</strong>：</p><h3 id=实际场景三模型分工>实际场景：三模型分工</h3><p>我在日常开发中用了三个模型配比：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 1. 日常主力 — DeepSeek V4 Pro</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    性价比最高，编码、问答、文档全包了</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    每天 80% 的交互用它</span>
-</span></span><span style=display:flex><span>hermes config set model.default <span style=color:#e6db74>&#34;deepseek-v4-pro&#34;</span>
-</span></span><span style=display:flex><span>hermes config set model.provider deepseek
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 2. 重度推理 — Claude Sonnet 4</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    架构设计、大规模重构、复杂 Debug</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    context 200K，理解力强</span>
-</span></span><span style=display:flex><span>hermes chat -m <span style=color:#e6db74>&#34;anthropic/claude-sonnet-4&#34;</span> --provider anthropic
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 3. 快扫任务 — Gemini 3 Flash</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    读日志、格式转换、批量小任务</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#    免费额度大，响应快</span>
-</span></span><span style=display:flex><span>hermes chat -m <span style=color:#e6db74>&#34;gemini-3-flash&#34;</span> --provider google
-</span></span></code></pre></div><p><strong>省钱的实操</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 比如我要让 AI 读 50 个日志文件找错误</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 这种活用 Gemini Flash（谷歌免费额度多），别用 Claude</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 但架构重构、写核心逻辑，用 Claude 或 GPT-5</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 因为少返工一次就值回差价</span>
-</span></span></code></pre></div><h3 id=delegation主模型--子代理模型>Delegation：主模型 + 子代理模型</h3><p>Hermes 支持 delegation——主模型把子任务分派给另一个模型：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># ~/.hermes/config.yaml</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>delegation</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>model</span>: <span style=color:#e6db74>&#34;gemini-3-flash&#34;</span>      <span style=color:#75715e># 子代理用便宜模型</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>provider</span>: <span style=color:#ae81ff>google</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>max_iterations</span>: <span style=color:#ae81ff>50</span>           <span style=color:#75715e># 子代理最多跑 50 轮</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>reasoning_effort</span>: <span style=color:#ae81ff>low       </span> <span style=color:#75715e># 子代理少推理，快速执行</span>
-</span></span></code></pre></div><p>这样主模型（比如 Claude）负责思考决策，子代理（Gemini Flash）负责机械执行——搜索、读文件、跑命令。既能保证质量，又省不少钱。</p><h3 id=实际配置参考>实际配置参考</h3><p>这是我 ~/.hermes/config.yaml 里 model 部分的简化版：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>model</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>default</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>provider</span>: <span style=color:#ae81ff>deepseek</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>base_url</span>: <span style=color:#ae81ff>https://api.deepseek.com/v1</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>api_mode</span>: <span style=color:#ae81ff>chat_completions</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 用环境变量放 Key，不写死在 config 里</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># ~/.hermes/.env:</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#   DEEPSEEK_API_KEY=sk-xxxx</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#   ANTHROPIC_API_KEY=sk-ant-xxxx</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#   GOOGLE_API_KEY=AIza-xxxx</span>
-</span></span></code></pre></div><p>这样就配出一个最常见的方案：日常用 DeepSeek，关键时刻指定 <code>--provider</code> 切到别的模型。</p><h2 id=toolsets给你的-ai-装上瑞士军刀>Toolsets：给你的 AI 装上瑞士军刀</h2><p>models 管「谁在想」，toolsets 管「能做什么」。</p><p>Hermes 有 30+ 个 toolsets，默认启用的核心 set 包含 terminal、文件操作、web 搜索、代码执行等基本能力。你还可以按需加减。</p><h3 id=常用-toolsets-速查>常用 toolsets 速查</h3><table><thead><tr><th>Toolset</th><th>能力</th><th>建议</th></tr></thead><tbody><tr><td><code>terminal</code></td><td>执行 shell 命令、管理进程</td><td><strong>必开</strong></td></tr><tr><td><code>file</code></td><td>读写文件、搜索、打补丁</td><td><strong>必开</strong></td></tr><tr><td><code>web</code></td><td>网页搜索 + 内容提取</td><td><strong>必开</strong></td></tr><tr><td><code>code_execution</code></td><td>沙箱 Python 执行</td><td>写代码时开</td></tr><tr><td><code>vision</code></td><td>图片分析</td><td>看图场景开</td></tr><tr><td><code>browser</code></td><td>浏览器自动化</td><td>爬取动态页面时开</td></tr><tr><td><code>memory</code></td><td>跨会话长期记忆</td><td>重度用户开</td></tr><tr><td><code>delegation</code></td><td>子代理任务分发</td><td>复杂任务开</td></tr><tr><td><code>cronjob</code></td><td>定时任务管理</td><td>自动化场景开</td></tr><tr><td><code>session_search</code></td><td>搜索历史对话</td><td>项目多了开</td></tr><tr><td><code>safe</code></td><td>受限最低权限</td><td>给别人用时开</td></tr></tbody></table><h3 id=怎么管-toolsets>怎么管 toolsets</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 交互式开关（有 TUI 菜单，最方便）</span>
-</span></span><span style=display:flex><span>hermes tools
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 查看所有 toolsets 及状态</span>
-</span></span><span style=display:flex><span>hermes tools list
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 命令行直接开关</span>
-</span></span><span style=display:flex><span>hermes tools enable browser     <span style=color:#75715e># 开浏览器自动化</span>
-</span></span><span style=display:flex><span>hermes tools enable delegation  <span style=color:#75715e># 开子代理</span>
-</span></span><span style=display:flex><span>hermes tools disable vision     <span style=color:#75715e># 关图片分析（省 token）</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 启动时指定 toolsets</span>
-</span></span><span style=display:flex><span>hermes chat -t <span style=color:#e6db74>&#34;terminal,file,web,browser&#34;</span>
-</span></span></code></pre></div><p>注意：toolset 变更要 <code>/reset</code>（新会话）才生效，设计如此——为了不破坏已缓存的 prompt。</p><h3 id=三个实战组合>三个实战组合</h3><p><strong>组合一：轻量日常（省钱、快）</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes tools enable terminal
-</span></span><span style=display:flex><span>hermes tools enable file
-</span></span><span style=display:flex><span>hermes tools enable web
-</span></span><span style=display:flex><span>hermes tools disable vision
-</span></span><span style=display:flex><span>hermes tools disable browser
-</span></span><span style=display:flex><span>hermes tools disable code_execution
-</span></span></code></pre></div><p>写写文档、搜搜资料、管管文件够用了，token 消耗最少。</p><p><strong>组合二：全栈开发</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes tools enable terminal
-</span></span><span style=display:flex><span>hermes tools enable file
-</span></span><span style=display:flex><span>hermes tools enable web
-</span></span><span style=display:flex><span>hermes tools enable code_execution   <span style=color:#75715e># 跑 Python 验证逻辑</span>
-</span></span><span style=display:flex><span>hermes tools enable delegation       <span style=color:#75715e># 大任务拆小任务</span>
-</span></span><span style=display:flex><span>hermes tools enable memory           <span style=color:#75715e># 记住项目上下文</span>
-</span></span></code></pre></div><p>写项目时用这套，Hermes 能读写代码、跑测试、查文档、拆任务——基本覆盖开发全流程。</p><p><strong>组合三：自动化值班</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes tools enable terminal
-</span></span><span style=display:flex><span>hermes tools enable file
-</span></span><span style=display:flex><span>hermes tools enable web
-</span></span><span style=display:flex><span>hermes tools enable cronjob          <span style=color:#75715e># 定时触发</span>
-</span></span><span style=display:flex><span>hermes tools enable session_search   <span style=color:#75715e># 回溯之前干了啥</span>
-</span></span></code></pre></div><p>设好 cron 任务后，Hermes 到点自己拉数据、写报告、发飞书——一套全自动。</p><h3 id=mcp-扩展无限工具>MCP 扩展：无限工具</h3><p>如果你觉得内置 toolsets 不够，Hermes 还支持 MCP 协议——接入外部工具服务器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># ~/.hermes/config.yaml</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>mcp_servers</span>:
-</span></span><span style=display:flex><span>  <span style=color:#75715e># 接 GitHub：让 Hermes 直接管理 Issue/PR</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>github</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>command</span>: <span style=color:#e6db74>&#34;npx&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>args</span>: [<span style=color:#e6db74>&#34;-y&#34;</span>, <span style=color:#e6db74>&#34;@modelcontextprotocol/server-github&#34;</span>]
-</span></span><span style=display:flex><span>    <span style=color:#f92672>env</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>GITHUB_PERSONAL_ACCESS_TOKEN</span>: <span style=color:#e6db74>&#34;ghp_xxx&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e># 接文件系统（指定目录范围）</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>filesystem</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>command</span>: <span style=color:#e6db74>&#34;npx&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>args</span>: [<span style=color:#e6db74>&#34;-y&#34;</span>, <span style=color:#e6db74>&#34;@modelcontextprotocol/server-filesystem&#34;</span>, <span style=color:#e6db74>&#34;/home/ubuntu/projects&#34;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e># 接远程 API</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>company_api</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>url</span>: <span style=color:#e6db74>&#34;https://mcp.mycompany.com/mcp&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>headers</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>Authorization</span>: <span style=color:#e6db74>&#34;Bearer sk-xxx&#34;</span>
-</span></span></code></pre></div><p>接上之后，Hermes 的工具列表会自动多出 <code>mcp_github_create_issue</code>、<code>mcp_filesystem_read_file</code> 这些新工具，用法跟内置的一样。这个我们后面会单独写一篇展开讲。</p><h2 id=安全配置别忽略>安全配置：别忽略</h2><p>配置里还有几个跟安全相关的选项，顺手设了：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 密钥脱敏（默认开，别关）</span>
-</span></span><span style=display:flex><span>hermes config set security.redact_secrets true
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 命令审批模式</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># manual: 危险命令弹出确认（默认）</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># smart:  让子模型判断风险级别，低风险自动过（推荐）</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># off:    跳过所有确认（等同 --yolo，不推荐）</span>
-</span></span><span style=display:flex><span>hermes config set approvals.mode smart
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 给没用过的人用？切到 safe toolset</span>
-</span></span><span style=display:flex><span>hermes tools enable safe   <span style=color:#75715e># 只开放最低风险工具</span>
-</span></span></code></pre></div><h2 id=动手试试>动手试试</h2><p>看到这你应该已经有一个不一样的 Hermes 了。别光看，试试这几步：</p><ol><li><code>hermes model</code> 切换到 DeepSeek，跑两个任务感受下</li><li><code>hermes tools</code> 打开/关掉几个 toolset，看看 <code>/reset</code> 后工具列表变化</li><li>试一下 delegation：把 config 里设好子代理模型，然后扔一个「帮我研究 X 主题」的任务</li></ol><p><strong>下一篇预告</strong>：Skills 系统。这是 Hermes 最特别的功能——学会的东西<strong>保存下来</strong>，下次自动加载。相当于你给 Hermes 写 SOP，越用越顺手。我们下一篇拆解怎么写一个好用的 Skill。</p></div></article><nav class=post-nav><a href=/posts/hermes-agent-skills/ class=prev>← Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</a>
-<a href=/posts/hermes-agent-cron/ class=next>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>
+</code></pre><p>直接编辑也行，但 Hermes 提供了更安全的方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查看当前配置</span>
+</span></span><span style="display:flex;"><span>hermes config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用编辑器打开 config.yaml</span>
+</span></span><span style="display:flex;"><span>hermes config edit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 逐项设置（推荐，不会搞乱缩进）</span>
+</span></span><span style="display:flex;"><span>hermes config set model.default <span style="color:#e6db74">&#34;anthropic/claude-sonnet-4&#34;</span>
+</span></span><span style="display:flex;"><span>hermes config set agent.max_turns <span style="color:#ae81ff">90</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 管理密钥（更安全，会做本地加密）</span>
+</span></span><span style="display:flex;"><span>hermes auth
+</span></span></code></pre></div><p>先说最重要的 providers。</p>
+<h2 id="providers20-模型提供商怎么选">Providers：20+ 模型提供商怎么选</h2>
+<p>Hermes 支持的 providers 可以分三类：</p>
+<p><strong>第一类：聚合平台（性价比首选）</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Provider</th>
+					<th>特点</th>
+					<th>适合场景</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>OpenRouter</strong></td>
+					<td>聚合 200+ 模型，按用量计费</td>
+					<td>日常主力，模型随便试</td>
+			</tr>
+			<tr>
+					<td><strong>Nous Portal</strong></td>
+					<td>Hermes 官方配套，OAuth 登录</td>
+					<td>想省事的默认选择</td>
+			</tr>
+			<tr>
+					<td><strong>Hugging Face</strong></td>
+					<td>开源模型托管，免费额度</td>
+					<td>跑开源模型、研究调试</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>第二类：厂商直连（性能最优）</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Provider</th>
+					<th>招牌模型</th>
+					<th>适合场景</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Anthropic</strong></td>
+					<td>Claude Sonnet 4 / Opus 4</td>
+					<td>复杂推理、长文分析、架构设计</td>
+			</tr>
+			<tr>
+					<td><strong>OpenAI</strong></td>
+					<td>GPT-5 / o4-mini / Codex</td>
+					<td>编码、工具调用、多模态</td>
+			</tr>
+			<tr>
+					<td><strong>Google Gemini</strong></td>
+					<td>Gemini 3 Pro / Flash</td>
+					<td>超长上下文（1M token）、免费额度大</td>
+			</tr>
+			<tr>
+					<td><strong>DeepSeek</strong></td>
+					<td>DeepSeek V4 Pro / Flash</td>
+					<td>性价比极高，编码和推理均衡</td>
+			</tr>
+			<tr>
+					<td><strong>xAI / Grok</strong></td>
+					<td>Grok 4</td>
+					<td>实时信息、创意任务</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>第三类：国内厂商</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Provider</th>
+					<th>特点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>通义千问 / DashScope</strong></td>
+					<td>阿里系，API 稳定，中文能力强</td>
+			</tr>
+			<tr>
+					<td><strong>Kimi / Moonshot</strong></td>
+					<td>月之暗面，超长上下文</td>
+			</tr>
+			<tr>
+					<td><strong>GLM / Z.AI</strong></td>
+					<td>智谱，开源生态好</td>
+			</tr>
+			<tr>
+					<td><strong>MiniMax</strong></td>
+					<td>性价比不错</td>
+			</tr>
+	</tbody>
+</table>
+<p>怎么配？两个方法：</p>
+<p><strong>方法一：交互式配置</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 进入交互式模型选择器，上下箭头选</span>
+</span></span><span style="display:flex;"><span>hermes model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或者走完整配置向导</span>
+</span></span><span style="display:flex;"><span>hermes setup
+</span></span></code></pre></div><p><strong>方法二：命令行直设（适合脚本/切换）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 切到 Claude Sonnet</span>
+</span></span><span style="display:flex;"><span>hermes config set model.default <span style="color:#e6db74">&#34;anthropic/claude-sonnet-4&#34;</span>
+</span></span><span style="display:flex;"><span>hermes config set model.provider anthropic
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 切到 Gemini Flash（便宜、快）</span>
+</span></span><span style="display:flex;"><span>hermes config set model.default <span style="color:#e6db74">&#34;gemini-3-flash&#34;</span>
+</span></span><span style="display:flex;"><span>hermes config set model.provider google
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用 OpenRouter 中转（一次配好，后面随便换模型名）</span>
+</span></span><span style="display:flex;"><span>hermes config set model.provider openrouter
+</span></span><span style="display:flex;"><span>hermes config set model.default <span style="color:#e6db74">&#34;anthropic/claude-sonnet-4&#34;</span>
+</span></span></code></pre></div><p>API Key 怎么设：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 直接写 .env 文件（推荐，跟 config 分离）</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;OPENROUTER_API_KEY=sk-or-v1-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;ANTHROPIC_API_KEY=sk-ant-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;DEEPSEEK_API_KEY=sk-xxxx&#34;</span> &gt;&gt; ~/.hermes/.env
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或者用 auth 命令（会做本地加密存储）</span>
+</span></span><span style="display:flex;"><span>hermes auth add openrouter
+</span></span><span style="display:flex;"><span>hermes auth add deepseek
+</span></span></code></pre></div><h3 id="credential-pools多-key-轮转">Credential Pools：多 Key 轮转</h3>
+<p>如果你一个 provider 有多个 API Key（比如多个 OpenRouter 账号，或者团队共享额度），Hermes 支持 credential pool——自动轮转 Key，一个限额了用下一个：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 多次执行 auth add，同一个 provider 会累积成池</span>
+</span></span><span style="display:flex;"><span>hermes auth add openrouter   <span style="color:#75715e"># 第一个 Key</span>
+</span></span><span style="display:flex;"><span>hermes auth add openrouter   <span style="color:#75715e"># 第二个 Key</span>
+</span></span><span style="display:flex;"><span>hermes auth add openrouter   <span style="color:#75715e"># 第三个 Key</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看池子</span>
+</span></span><span style="display:flex;"><span>hermes auth list openrouter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Key 0 超限被压了？手动重置</span>
+</span></span><span style="display:flex;"><span>hermes auth reset openrouter
+</span></span></code></pre></div><p>这个机制对重度用户特别实用——不用担心写着写着突然撞限额。</p>
+<h2 id="模型选择不是越贵越好">模型选择：不是越贵越好</h2>
+<p>选模型的核心原则：<strong>用最便宜的模型能搞定的活，不浪费贵的模型</strong>。</p>
+<p>Hermes 切换模型的成本几乎为零——一行命令就切了。所以最佳实践是<strong>根据任务类型挑模型</strong>：</p>
+<h3 id="实际场景三模型分工">实际场景：三模型分工</h3>
+<p>我在日常开发中用了三个模型配比：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. 日常主力 — DeepSeek V4 Pro</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    性价比最高，编码、问答、文档全包了</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    每天 80% 的交互用它</span>
+</span></span><span style="display:flex;"><span>hermes config set model.default <span style="color:#e6db74">&#34;deepseek-v4-pro&#34;</span>
+</span></span><span style="display:flex;"><span>hermes config set model.provider deepseek
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 重度推理 — Claude Sonnet 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    架构设计、大规模重构、复杂 Debug</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    context 200K，理解力强</span>
+</span></span><span style="display:flex;"><span>hermes chat -m <span style="color:#e6db74">&#34;anthropic/claude-sonnet-4&#34;</span> --provider anthropic
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 快扫任务 — Gemini 3 Flash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    读日志、格式转换、批量小任务</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    免费额度大，响应快</span>
+</span></span><span style="display:flex;"><span>hermes chat -m <span style="color:#e6db74">&#34;gemini-3-flash&#34;</span> --provider google
+</span></span></code></pre></div><p><strong>省钱的实操</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 比如我要让 AI 读 50 个日志文件找错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 这种活用 Gemini Flash（谷歌免费额度多），别用 Claude</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 但架构重构、写核心逻辑，用 Claude 或 GPT-5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 因为少返工一次就值回差价</span>
+</span></span></code></pre></div><h3 id="delegation主模型--子代理模型">Delegation：主模型 + 子代理模型</h3>
+<p>Hermes 支持 delegation——主模型把子任务分派给另一个模型：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># ~/.hermes/config.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">delegation</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">model</span>: <span style="color:#e6db74">&#34;gemini-3-flash&#34;</span>      <span style="color:#75715e"># 子代理用便宜模型</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">provider</span>: <span style="color:#ae81ff">google</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">max_iterations</span>: <span style="color:#ae81ff">50</span>           <span style="color:#75715e"># 子代理最多跑 50 轮</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">reasoning_effort</span>: <span style="color:#ae81ff">low       </span> <span style="color:#75715e"># 子代理少推理，快速执行</span>
+</span></span></code></pre></div><p>这样主模型（比如 Claude）负责思考决策，子代理（Gemini Flash）负责机械执行——搜索、读文件、跑命令。既能保证质量，又省不少钱。</p>
+<h3 id="实际配置参考">实际配置参考</h3>
+<p>这是我 ~/.hermes/config.yaml 里 model 部分的简化版：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">model</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">default</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">provider</span>: <span style="color:#ae81ff">deepseek</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">base_url</span>: <span style="color:#ae81ff">https://api.deepseek.com/v1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">api_mode</span>: <span style="color:#ae81ff">chat_completions</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用环境变量放 Key，不写死在 config 里</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ~/.hermes/.env:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   DEEPSEEK_API_KEY=sk-xxxx</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   ANTHROPIC_API_KEY=sk-ant-xxxx</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   GOOGLE_API_KEY=AIza-xxxx</span>
+</span></span></code></pre></div><p>这样就配出一个最常见的方案：日常用 DeepSeek，关键时刻指定 <code>--provider</code> 切到别的模型。</p>
+<h2 id="toolsets给你的-ai-装上瑞士军刀">Toolsets：给你的 AI 装上瑞士军刀</h2>
+<p>models 管「谁在想」，toolsets 管「能做什么」。</p>
+<p>Hermes 有 30+ 个 toolsets，默认启用的核心 set 包含 terminal、文件操作、web 搜索、代码执行等基本能力。你还可以按需加减。</p>
+<h3 id="常用-toolsets-速查">常用 toolsets 速查</h3>
+<table>
+	<thead>
+			<tr>
+					<th>Toolset</th>
+					<th>能力</th>
+					<th>建议</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>terminal</code></td>
+					<td>执行 shell 命令、管理进程</td>
+					<td><strong>必开</strong></td>
+			</tr>
+			<tr>
+					<td><code>file</code></td>
+					<td>读写文件、搜索、打补丁</td>
+					<td><strong>必开</strong></td>
+			</tr>
+			<tr>
+					<td><code>web</code></td>
+					<td>网页搜索 + 内容提取</td>
+					<td><strong>必开</strong></td>
+			</tr>
+			<tr>
+					<td><code>code_execution</code></td>
+					<td>沙箱 Python 执行</td>
+					<td>写代码时开</td>
+			</tr>
+			<tr>
+					<td><code>vision</code></td>
+					<td>图片分析</td>
+					<td>看图场景开</td>
+			</tr>
+			<tr>
+					<td><code>browser</code></td>
+					<td>浏览器自动化</td>
+					<td>爬取动态页面时开</td>
+			</tr>
+			<tr>
+					<td><code>memory</code></td>
+					<td>跨会话长期记忆</td>
+					<td>重度用户开</td>
+			</tr>
+			<tr>
+					<td><code>delegation</code></td>
+					<td>子代理任务分发</td>
+					<td>复杂任务开</td>
+			</tr>
+			<tr>
+					<td><code>cronjob</code></td>
+					<td>定时任务管理</td>
+					<td>自动化场景开</td>
+			</tr>
+			<tr>
+					<td><code>session_search</code></td>
+					<td>搜索历史对话</td>
+					<td>项目多了开</td>
+			</tr>
+			<tr>
+					<td><code>safe</code></td>
+					<td>受限最低权限</td>
+					<td>给别人用时开</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="怎么管-toolsets">怎么管 toolsets</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 交互式开关（有 TUI 菜单，最方便）</span>
+</span></span><span style="display:flex;"><span>hermes tools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看所有 toolsets 及状态</span>
+</span></span><span style="display:flex;"><span>hermes tools list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 命令行直接开关</span>
+</span></span><span style="display:flex;"><span>hermes tools enable browser     <span style="color:#75715e"># 开浏览器自动化</span>
+</span></span><span style="display:flex;"><span>hermes tools enable delegation  <span style="color:#75715e"># 开子代理</span>
+</span></span><span style="display:flex;"><span>hermes tools disable vision     <span style="color:#75715e"># 关图片分析（省 token）</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启动时指定 toolsets</span>
+</span></span><span style="display:flex;"><span>hermes chat -t <span style="color:#e6db74">&#34;terminal,file,web,browser&#34;</span>
+</span></span></code></pre></div><p>注意：toolset 变更要 <code>/reset</code>（新会话）才生效，设计如此——为了不破坏已缓存的 prompt。</p>
+<h3 id="三个实战组合">三个实战组合</h3>
+<p><strong>组合一：轻量日常（省钱、快）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes tools enable terminal
+</span></span><span style="display:flex;"><span>hermes tools enable file
+</span></span><span style="display:flex;"><span>hermes tools enable web
+</span></span><span style="display:flex;"><span>hermes tools disable vision
+</span></span><span style="display:flex;"><span>hermes tools disable browser
+</span></span><span style="display:flex;"><span>hermes tools disable code_execution
+</span></span></code></pre></div><p>写写文档、搜搜资料、管管文件够用了，token 消耗最少。</p>
+<p><strong>组合二：全栈开发</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes tools enable terminal
+</span></span><span style="display:flex;"><span>hermes tools enable file
+</span></span><span style="display:flex;"><span>hermes tools enable web
+</span></span><span style="display:flex;"><span>hermes tools enable code_execution   <span style="color:#75715e"># 跑 Python 验证逻辑</span>
+</span></span><span style="display:flex;"><span>hermes tools enable delegation       <span style="color:#75715e"># 大任务拆小任务</span>
+</span></span><span style="display:flex;"><span>hermes tools enable memory           <span style="color:#75715e"># 记住项目上下文</span>
+</span></span></code></pre></div><p>写项目时用这套，Hermes 能读写代码、跑测试、查文档、拆任务——基本覆盖开发全流程。</p>
+<p><strong>组合三：自动化值班</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes tools enable terminal
+</span></span><span style="display:flex;"><span>hermes tools enable file
+</span></span><span style="display:flex;"><span>hermes tools enable web
+</span></span><span style="display:flex;"><span>hermes tools enable cronjob          <span style="color:#75715e"># 定时触发</span>
+</span></span><span style="display:flex;"><span>hermes tools enable session_search   <span style="color:#75715e"># 回溯之前干了啥</span>
+</span></span></code></pre></div><p>设好 cron 任务后，Hermes 到点自己拉数据、写报告、发飞书——一套全自动。</p>
+<h3 id="mcp-扩展无限工具">MCP 扩展：无限工具</h3>
+<p>如果你觉得内置 toolsets 不够，Hermes 还支持 MCP 协议——接入外部工具服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># ~/.hermes/config.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">mcp_servers</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 接 GitHub：让 Hermes 直接管理 Issue/PR</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">github</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>: <span style="color:#e6db74">&#34;npx&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;-y&#34;</span>, <span style="color:#e6db74">&#34;@modelcontextprotocol/server-github&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">GITHUB_PERSONAL_ACCESS_TOKEN</span>: <span style="color:#e6db74">&#34;ghp_xxx&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 接文件系统（指定目录范围）</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">filesystem</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>: <span style="color:#e6db74">&#34;npx&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>: [<span style="color:#e6db74">&#34;-y&#34;</span>, <span style="color:#e6db74">&#34;@modelcontextprotocol/server-filesystem&#34;</span>, <span style="color:#e6db74">&#34;/home/ubuntu/projects&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 接远程 API</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">company_api</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;https://mcp.mycompany.com/mcp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">headers</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">Authorization</span>: <span style="color:#e6db74">&#34;Bearer sk-xxx&#34;</span>
+</span></span></code></pre></div><p>接上之后，Hermes 的工具列表会自动多出 <code>mcp_github_create_issue</code>、<code>mcp_filesystem_read_file</code> 这些新工具，用法跟内置的一样。这个我们后面会单独写一篇展开讲。</p>
+<h2 id="安全配置别忽略">安全配置：别忽略</h2>
+<p>配置里还有几个跟安全相关的选项，顺手设了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 密钥脱敏（默认开，别关）</span>
+</span></span><span style="display:flex;"><span>hermes config set security.redact_secrets true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 命令审批模式</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># manual: 危险命令弹出确认（默认）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># smart:  让子模型判断风险级别，低风险自动过（推荐）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># off:    跳过所有确认（等同 --yolo，不推荐）</span>
+</span></span><span style="display:flex;"><span>hermes config set approvals.mode smart
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 给没用过的人用？切到 safe toolset</span>
+</span></span><span style="display:flex;"><span>hermes tools enable safe   <span style="color:#75715e"># 只开放最低风险工具</span>
+</span></span></code></pre></div><h2 id="动手试试">动手试试</h2>
+<p>看到这你应该已经有一个不一样的 Hermes 了。别光看，试试这几步：</p>
+<ol>
+<li><code>hermes model</code> 切换到 DeepSeek，跑两个任务感受下</li>
+<li><code>hermes tools</code> 打开/关掉几个 toolset，看看 <code>/reset</code> 后工具列表变化</li>
+<li>试一下 delegation：把 config 里设好子代理模型，然后扔一个「帮我研究 X 主题」的任务</li>
+</ol>
+<p><strong>下一篇预告</strong>：Skills 系统。这是 Hermes 最特别的功能——学会的东西<strong>保存下来</strong>，下次自动加载。相当于你给 Hermes 写 SOP，越用越顺手。我们下一篇拆解怎么写一个好用的 Skill。</p>
+
+  </div>
+</article>
+
+<nav class="post-nav">
+  
+  <a href="/posts/hermes-agent-skills/" class="prev">← Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</a>
+  
+  
+  <a href="/posts/hermes-agent-cron/" class="next">Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班 →</a>
+  
+</nav>
+
+<section class="comments">
+  <h2>💬 Comments</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="zhouyangimt/zhouyangimt.github.io"
+          issue-term="pathname"
+          label="comment"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
+  </footer>
+</body>
+</html>

@@ -4,10 +4,10 @@ date: 2026-06-28
 description: "Wide rice noodles, seared beef, and the furious breath of a jet-engine wok — this is the dish that separates cooks from chefs in every *cha chaan teng* from Guangzhou to Kowloon."
 tags: ["cantonese", "beef", "noodles", "stir-fry", "street-food"]
 slug: "gan-chao-niu-he"
-images: ["/images/gan-chao-niu-he-1.jpg?v=2", "/images/gan-chao-niu-he-2.jpg?v=2", "/images/gan-chao-niu-he-3.jpg?v=2", "/images/gan-chao-niu-he-4.jpg?v=2"]
+images: ["/images/gan-chao-niu-he-1.jpg?v=3", "/images/gan-chao-niu-he-2.jpg?v=3", "/images/gan-chao-niu-he-3.jpg?v=3", "/images/gan-chao-niu-he-4.jpg?v=3"]
 ---
 
-![Gan Chao Niu He — wide rice noodles with seared beef, scallions, and bean sprouts on a dark plate](/images/gan-chao-niu-he-1.jpg?v=2)
+![Gan Chao Niu He — wide rice noodles with seared beef, scallions, and bean sprouts on a dark plate](/images/gan-chao-niu-he-1.jpg?v=3)
 
 It's 11:47pm in Mong Kok and the *cha chaan teng* is still running at full volume. The cook — a man who has not spoken a complete sentence since 2003 — pulls a jet of flame across the wok and the whole restaurant smells like a controlled burn. You ordered Gan Chao Niu He (干炒牛河, *gān chǎo niú hé*) five minutes ago. You will receive it in approximately forty-five seconds.
 
@@ -15,7 +15,7 @@ The dish lands on your table still hissing. Wide rice noodles — *hé fěn* (�
 
 This is not a noodle dish. This is a certificate of competence. In Cantonese kitchens, Gan Chao Niu He is the dish they give to an applicant who claims to be a chef. If the noodles clump, you're a cook. If the beef leaks, you're a cook. If the plate has a puddle of oil at the bottom, you're a cook and you should probably leave.
 
-![Gan Chao Niu He close-up — glistening rice noodles with visible char marks and tender beef slices](/images/gan-chao-niu-he-2.jpg?v=2)
+![Gan Chao Niu He close-up — glistening rice noodles with visible char marks and tender beef slices](/images/gan-chao-niu-he-2.jpg?v=3)
 
 ## The Architecture of a Bite
 
@@ -27,7 +27,7 @@ The sauce is almost invisible. Light soy, dark soy, a pinch of sugar, white pepp
 
 The first bite is smoke. The second is beef. The third is the moment you understand why this dish exists.
 
-![Gan Chao Niu He in a wok — the chef's toss captured mid-motion with steam and flame](/images/gan-chao-niu-he-3.jpg?v=2)
+![Gan Chao Niu He in a wok — the chef's toss captured mid-motion with steam and flame](/images/gan-chao-niu-he-3.jpg?v=3)
 
 ## The Dish That Hires and Fires
 
@@ -45,7 +45,7 @@ The third enemy is **overcrowded wok**. Some restaurants throw in onions, carrot
 
 Real Gan Chao Niu He has: fresh *hé fěn* rice noodles, beef flank sliced thin against the grain, bean sprouts, scallions, light soy, dark soy, sugar, white pepper, and a wok hot enough to scar the air above it. Seven ingredients. One chance.
 
-![Gan Chao Niu He on a white plate — finished dish with chopsticks ready](/images/gan-chao-niu-he-4.jpg?v=2)
+![Gan Chao Niu He on a white plate — finished dish with chopsticks ready](/images/gan-chao-niu-he-4.jpg?v=3)
 
 ## How to Eat It
 

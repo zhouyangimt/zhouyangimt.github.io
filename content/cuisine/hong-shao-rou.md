@@ -15,7 +15,7 @@ Red braised pork belly is not a dish you order. It's a dish you inherit. Every C
 
 That's the thing about hóngshāo ròu. It isn't complicated. Pork belly. Soy sauce. Sugar. Wine. Time. What makes it work isn't an exotic ingredient or a secret technique. It's patience. Two hours minimum, three if you want the fat to surrender completely.
 
-![Close-up — hóngshāo ròu in a dark clay pot, sauce glossy, star anise visible](/images/hong-shao-rou-2.jpg?v=2)
+![Close-up — hóngshāo ròu in a dark clay pot, sauce glossy, star anise visible](/images/hong-shao-rou-2.jpg?v=3)
 
 ## The Architecture of a Bite
 
@@ -27,7 +27,7 @@ A lesser braise tastes one-note: sweet soy. A good one hits you in waves. First 
 
 A good plate of hóngshāo ròu is quiet. It doesn't sizzle. It doesn't crackle. It just sits there, glossy and dark, and dares you not to eat three pieces.
 
-![Hóngshāo ròu in a white bowl, ready to serve, chopsticks poised](/images/hong-shao-rou-3.jpg?v=2)
+![Hóngshāo ròu in a white bowl, ready to serve, chopsticks poised](/images/hong-shao-rou-3.jpg?v=3)
 
 ## The Poet and the Pork
 

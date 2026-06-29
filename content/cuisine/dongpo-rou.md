@@ -4,10 +4,10 @@ date: 2026-06-20
 description: "Pork belly braised for three hours in Shaoxing wine until the fat trembles, the lean dissolves, and the skin goes dark as old lacquer — this is what happens when a Song dynasty genius gets bored in exile."
 tags: ["hangzhou", "pork", "braised", "classic", "zhejiang"]
 6|slug: "dongpo-rou"
-images: ["/images/dongpo-rou-1.jpg"]
+images: ["/images/dongpo-rou-1.jpg", "/images/dongpo-rou-2.jpg", "/images/dongpo-rou-3.jpg"]
 ---
 
-![Dongpo Rou — four glistening cubes of pork belly in dark braising sauce, skin lacquered mahogany](/images/dongpo-rou-1.jpg)
+![Dongpo Rou — four glistening cubes of pork belly in dark braising sauce, skin lacquered mahogany](/images/dongpo-rou-1.jpg?v=2)
 
 The clay pot lid lifts and the smell hits you like a wall: Shaoxing wine reduced to syrup, caramelized sugar gone dark as old wood, star anise and cinnamon whispering underneath, and the deep primal funk of pork fat that's been cooking since before lunch. The cubes sit in their dark lake — four perfect squares of belly, skin the color of polished oxblood, fat layers gleaming white, lean meat gone mahogany. They tremble. Not metaphorically. The gelatin has set the meat into a state halfway between solid and liquid, and the slightest nudge sends a shiver through the entire cube.
 
@@ -29,7 +29,7 @@ The sauce at the bottom is the reward. Reduced to a sticky glaze, it's part pork
 
 I spent thirteen years waiting for code to compile at Microsoft, Google, and NVIDIA. Dongpo Rou takes longer. It's worth more.
 
-![Dongpo Rou close-up — the trembling layers of skin, fat, and lean meat, sauce pooling beneath](/images/dongpo-rou-2.jpg)
+![Dongpo Rou close-up — the trembling layers of skin, fat, and lean meat, sauce pooling beneath](/images/dongpo-rou-2.jpg?v=2)
 
 ## The Poet Who Cooked
 
@@ -62,7 +62,7 @@ Westerners often hear "red-braised pork" and assume Dongpo Rou and Hong Shao Rou
 
 The simplest test: pick it up with chopsticks. If it trembles and threatens to collapse, it's Dongpo Rou. If it holds its shape with a confident bounce, it's Hong Shao Rou. Both are worth your time. Only one was invented by a poet who was also arguably the greatest calligrapher of the Song dynasty. That's a high bar for a pork dish.
 
-![Dongpo Rou served with steamed mantou buns — the classic pairing](/images/dongpo-rou-3.jpg)
+![Dongpo Rou served with steamed mantou buns — the classic pairing](/images/dongpo-rou-3.jpg?v=2)
 
 ## How to Eat It
 

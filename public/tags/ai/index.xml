@@ -1,564 +1,94 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/ai/</link><description>Recent content in AI on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>AI编程工具链：AI Debugging — 让AI帮你修bug</title><link>https://zhouyang.dev/posts/ai-debugging-guide/</link><pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/ai-debugging-guide/</guid><description>&lt;h2 id="调试是ai最被低估的能力"&gt;调试是AI最被低估的能力&lt;/h2&gt;
-&lt;p&gt;大多数人用AI写代码，但很少人用它&lt;strong&gt;修bug&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;一个反直觉的事实：AI调试往往比AI写代码&lt;strong&gt;更靠谱&lt;/strong&gt;。原因很简单——
-写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。&lt;/p&gt;
-&lt;p&gt;这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：&lt;strong&gt;拿到报错之后，怎么用AI最快地找到根因并修复。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/ai-debugging-flow.png" alt="AI 调试工作流"&gt;&lt;/p&gt;
-&lt;h2 id="ai擅长修什么bug"&gt;AI擅长修什么bug&lt;/h2&gt;
-&lt;p&gt;不是所有bug都适合丢给AI。先分清地盘：&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;类型&lt;/th&gt;
-					&lt;th&gt;AI表现&lt;/th&gt;
-					&lt;th&gt;说明&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;语法/类型错误&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;Traceback 直接给结论&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;空指针/AttributeError&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;AI一眼看出哪里可能为 None&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;依赖版本冲突&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;只要告诉它版本号&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;API调用参数错误&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;训练数据里有大量文档&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;并发/竞态条件&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;需要好的上下文&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;业务逻辑错误&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;需要你解释「什么是对」&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;性能瓶颈/内存泄漏&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;需要 profiling 数据配合&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;框架特有行为&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;取决于框架的文档覆盖率&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;一句话总结：&lt;strong&gt;AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id="标准流程三步法"&gt;标准流程：三步法&lt;/h2&gt;
-&lt;p&gt;我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。&lt;/p&gt;
-&lt;h3 id="第一步给上下文别只贴报错"&gt;第一步：给上下文，别只贴报错&lt;/h3&gt;
-&lt;p&gt;错误示范——90%的人这么做：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;❌ 用户：我代码报错了，帮我看看
-❌ 用户：（贴了半行报错信息）
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;AI只能瞎猜。&lt;/p&gt;
-&lt;p&gt;正确做法：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;✅ 我用 FastAPI 写了一个接口，报错如下：
-✅ （完整 Traceback）
-✅
-✅ 相关代码：
-✅ （贴出报错涉及的那个函数或文件片段，50-100行）
-✅
-✅ 环境：
-✅ - Python 3.11
-✅ - FastAPI 0.115
-✅ - Pydantic v2
-✅ - 数据库是 PostgreSQL，用 SQLAlchemy 2.0 async
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;关键信息清单：&lt;/strong&gt; 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。&lt;/p&gt;</description></item><item><title>AI编程工具链：Prompt Engineering 实战手册</title><link>https://zhouyang.dev/posts/prompt-engineering-handbook/</link><pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/prompt-engineering-handbook/</guid><description>&lt;h2 id="你的prompt决定了ai的上限"&gt;你的Prompt，决定了AI的上限&lt;/h2&gt;
-&lt;p&gt;很多人的认知还停留在「我直接告诉AI要干嘛就行了」。但实际情况是——&lt;strong&gt;同样的模型，不同质量的prompt，产出的代码质量差距可以有10倍以上。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;一个真实的例子：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;❌ 「帮我写一个爬虫」
-✅ 「用 Python 写一个爬虫，抓取 &lt;a href="https://example.com/news"&gt;https://example.com/news&lt;/a&gt; 的新闻标题和链接，用 requests + BeautifulSoup，输出为 JSON 文件，需要处理异常（超时、404），加上请求间隔（3秒）避免被封。」&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;第一个人得到的是几十行能跑但脆弱的代码。第二个人得到的是可以直接部署的生产级脚本。&lt;/p&gt;
-&lt;p&gt;这就是Prompt Engineering的威力：&lt;strong&gt;把模糊的需求变成精确的指令。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/prompt-engineering-workflow.png" alt="Prompt Engineering 工作流"&gt;&lt;/p&gt;
-&lt;h2 id="核心框架四步法"&gt;核心框架：四步法&lt;/h2&gt;
-&lt;p&gt;我用了两年AI编程工具，总结出这套「四步法」。它能适配90%的编码场景。&lt;/p&gt;
-&lt;h3 id="第一步角色设定role"&gt;第一步：角色设定（Role）&lt;/h3&gt;
-&lt;p&gt;告诉AI「你是谁」和「AI是谁」，建立上下文边界。&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;你是一名有10年经验的Python后端工程师，擅长编写高可读性、
-可维护的代码。你的代码风格遵循 PEP 8，并且你会主动添加
-类型注解和 docstring。
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;为什么有效？&lt;/strong&gt; AI模型的训练数据中，特定角色的输出质量远高于通用输出。「Senior Engineer」这个角色对应的训练样本本身就是高质量的。&lt;/p&gt;
-&lt;h3 id="第二步任务拆解task-decomposition"&gt;第二步：任务拆解（Task Decomposition）&lt;/h3&gt;
-&lt;p&gt;大任务拆成小任务，逐个击破。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;❌ 「用React写一个电商网站」
-✅ 「请分步骤完成以下任务：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;创建商品列表组件，支持分页&lt;/li&gt;
-&lt;li&gt;实现购物车状态管理（zustand）&lt;/li&gt;
-&lt;li&gt;添加搜索栏（防抖500ms）&lt;/li&gt;
-&lt;li&gt;集成支付Mock接口
-每完成一步，先让我确认再继续。」&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;一个prompt只做一件事。&lt;/strong&gt; AI在单次对话中的注意力是有限的——任务越多，每个任务的质量就越低。&lt;/p&gt;
-&lt;h3 id="第三步约束与范例constraints--examples"&gt;第三步：约束与范例（Constraints &amp;amp; Examples）&lt;/h3&gt;
-&lt;p&gt;这可能是最被低估的一步。&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;要求：
-- 使用 Python 3.11+
-- 依赖：requests, pydantic v2
-- 所有函数必须有类型注解
-- 错误处理覆盖网络异常、解析异常、数据校验异常
-
-参考风格：
-```python
-def fetch_data(url: str, timeout: int = 10) -&amp;gt; dict[str, Any]:
- &amp;#34;&amp;#34;&amp;#34;Fetch JSON data from URL with error handling.&amp;#34;&amp;#34;&amp;#34;
- try:
- resp = requests.get(url, timeout=timeout)
- resp.raise_for_status()
- return resp.json()
- except requests.RequestException as e:
- raise DataFetchError(f&amp;#34;Failed to fetch {url}: {e}&amp;#34;)
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;
-**给AI看一段你满意的代码，比花500字描述风格要求更有效。**
-
-### 第四步：产出规格（Output Spec）
-
-明确告诉AI「输出成什么样」。
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;请输出以下文件结构：
-src/
-├── fetcher.py # 数据抓取模块
-├── parser.py # 数据解析模块
-├── models.py # Pydantic 模型
-└── main.py # 入口，命令行参数支持&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</title><link>https://zhouyang.dev/posts/hermes-agent-workflow/</link><pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-workflow/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第六篇，也是最后一篇。前五篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;和&lt;a href="https://zhouyang.dev/posts/hermes-agent-gateway/"&gt;多平台集成&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;前五篇把 Hermes 的每个组件都拆开讲透了。但这就像你学会了发动机、变速箱、悬挂系统各自怎么工作——你还是不知道&lt;strong&gt;怎么把车造出来&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这篇就是把零件拼成整车的过程。我们从头搭建一个完整可用的 AI 工作流：&lt;strong&gt;每日 AI 资讯摘要&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id="为什么选这个场景"&gt;为什么选这个场景&lt;/h2&gt;
-&lt;p&gt;不是随便挑的。这个场景恰好需要用到 Hermes 全部核心能力：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Skills&lt;/strong&gt;：定义摘要格式、信息源、筛选标准&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cron&lt;/strong&gt;：每天早上 8 点自动触发&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;多模型切换&lt;/strong&gt;：搜索用便宜模型，摘要用强模型&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Gateway&lt;/strong&gt;：结果推送到 Telegram 和飞书&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;而且这个场景&lt;strong&gt;真的有用&lt;/strong&gt;。我跑了三周，每天早上一杯咖啡的时间就能看完 AI 圈 24 小时内最重要的事，不用自己刷 Twitter、HN、Reddit、ArXiv。省下来的时间比我写这套东西花的时间多得多。&lt;/p&gt;
-&lt;h2 id="整体架构"&gt;整体架构&lt;/h2&gt;
-&lt;p&gt;先看全貌，知道每个组件在什么位置：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-workflow-architecture.png" alt="Hermes 工作流架构图"&gt;&lt;/p&gt;
-&lt;p&gt;六个环节，环环相扣。下面逐个搭建。&lt;/p&gt;
-&lt;h2 id="第一步创建-ai-digest-skill"&gt;第一步：创建 AI Digest Skill&lt;/h2&gt;
-&lt;p&gt;Skill 是整个工作流的灵魂。它定义了 Hermes 要怎么搜、怎么筛、怎么写。&lt;/p&gt;
-&lt;p&gt;在 &lt;code&gt;~/.hermes/skills/&lt;/code&gt; 下创建 &lt;code&gt;ai-daily-digest.md&lt;/code&gt;：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-markdown" data-lang="markdown"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# AI Daily Digest
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;生成每日 AI 领域重要资讯摘要。按固定格式输出中文摘要，
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;每条包含标题、一句话要点、原文链接。
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 信息源（按优先级）
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; Hacker News (news.ycombinator.com) — AI/ML 相关热帖
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;2.&lt;/span&gt; Reddit r/MachineLearning — 当日热门讨论
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;3.&lt;/span&gt; GitHub Trending — AI 相关仓库
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;4.&lt;/span&gt; ArXiv — cs.AI / cs.CL 当天新论文（选 3 篇最有价值的）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 筛选标准
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 只收录 24 小时内的内容
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 优先选择有实质讨论的（HN 评论 &amp;gt; 50，Reddit 点赞 &amp;gt; 100）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 论文只选有代码开源或方法有突破性的
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 略过纯营销文、币圈、NFT 相关内容
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 输出格式
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\`\`\`
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📡 AI 每日速递 — 2026年X月X日
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;🔥 头条
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; 【标题】
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 要点：一句话总结
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 🔗 链接
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📋 必读
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（3-5 条精选，格式同上）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;📄 论文速览
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（1-3 篇，包含论文标题 + 核心贡献一句话）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;🛠 工具 &amp;amp; 开源
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;（1-3 个值得关注的仓库）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;\`\`\`
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 执行流程
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;1.&lt;/span&gt; 依次访问 4 个信息源，使用 web_search 工具搜索
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;2.&lt;/span&gt; 按筛选标准过滤，保留 8-15 条候选
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;3.&lt;/span&gt; 按重要程度排序，选出头条 1 条 + 必读 3-5 条
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;4.&lt;/span&gt; 搜索论文和工具仓库
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;5.&lt;/span&gt; 按输出格式生成完整摘要
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;6.&lt;/span&gt; 保存到 ~/digests/YYYY-MM-DD.md
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;7.&lt;/span&gt; 将摘要文本返回（Gateway 会负责推送到各平台）
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 质量要求
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 每条要点必须是自己读过内容后总结的，禁止直接翻译标题
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 中文流畅自然，避免机翻腔
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;-&lt;/span&gt; 如果当天没有够格的内容，宁可少写不要凑数
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 Skill 大约 300 行。因为 Hermes 采用渐进式加载，平时只占 ~100 token 的名字和简介，只有每天 8 点真正跑的时候才展开全部内容。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title><link>https://zhouyang.dev/posts/hermes-agent-gateway/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-gateway/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;和 &lt;a href="https://zhouyang.dev/posts/hermes-agent-cron/"&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：&lt;strong&gt;多平台集成&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id="为什么需要多平台"&gt;为什么需要多平台&lt;/h2&gt;
-&lt;p&gt;先说说真实场景。我自己是这样用的：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;飞书&lt;/strong&gt;：工作相关。代码审查结果、服务器告警、每日 AI 资讯，这些跟团队有关的东西走飞书群聊。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Telegram&lt;/strong&gt;：个人助理。博客部署通知、RSS 摘要、临时让 AI 搜个东西，走 Telegram Bot——轻量、手机通知即时。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Discord&lt;/strong&gt;：社区互动。偶尔在 Discord 群里接一些朋友的问题，让 Hermes 帮忙回。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;三个平台，三种场景，一个 Hermes 实例。不是三个实例，不是一个平台配一次——&lt;strong&gt;一个实例接入所有平台，按规则智能分发&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id="gateway-架构"&gt;Gateway 架构&lt;/h2&gt;
-&lt;p&gt;先搞清楚 Hermes Gateway 是怎么工作的：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-gateway-architecture.png" alt="Hermes Gateway 多平台架构图"&gt;&lt;/p&gt;
-&lt;p&gt;Gateway 是一个独立的进程，它做的事很简单：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;接收消息&lt;/strong&gt;：监听各平台的 webhook 或长连接&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;标准化&lt;/strong&gt;：把飞书的富文本、Telegram 的 Markdown、Discord 的 Embed 统一转成内部格式&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;路由判断&lt;/strong&gt;：看这条消息来自哪、内容是什么、发消息的人是谁，决定交给哪个 Agent 处理&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;返回结果&lt;/strong&gt;：把 Agent 的回复转回对应平台的格式，发回去&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;关键设计：&lt;strong&gt;Gateway 和 Agent 是解耦的&lt;/strong&gt;。Gateway 挂了不影响 Agent 推理，Agent 推理慢不影响 Gateway 收消息。两者通过内部 API 通信。&lt;/p&gt;
-&lt;h2 id="接入飞书"&gt;接入飞书&lt;/h2&gt;
-&lt;p&gt;飞书的接入相对复杂，因为涉及应用创建和权限审批。但好处是飞书的富文本能力最强，卡片消息、按钮交互都能搞。&lt;/p&gt;
-&lt;h3 id="step-1创建飞书应用"&gt;Step 1：创建飞书应用&lt;/h3&gt;
-&lt;p&gt;先去 &lt;a href="https://open.feishu.cn"&gt;飞书开放平台&lt;/a&gt; 创建一个企业自建应用：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</title><link>https://zhouyang.dev/posts/hermes-agent-cron/</link><pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-cron/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;、&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;和 &lt;a href="https://zhouyang.dev/posts/hermes-agent-skills/"&gt;Skills 系统&lt;/a&gt;。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。&lt;/p&gt;
-&lt;p&gt;前几篇聊的都是「你跟 Hermes 对话时它能干什么」。但有个场景一直没展开：&lt;strong&gt;你不在电脑前的时候，Hermes 能不能自己干活？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;答案是能。而且不需要你写 cron 脚本、配 systemd timer、搭 CI pipeline。你只需要用自然语言告诉 Hermes「每天这个时候帮我做这件事」，它到点就自己跑。&lt;/p&gt;
-&lt;h2 id="为什么不用传统-cron"&gt;为什么不用传统 cron&lt;/h2&gt;
-&lt;p&gt;传统 cron 能干的事有限：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 传统 cron：能跑脚本、发 curl、写文件——但没法「思考」&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;8&lt;/span&gt; * * * /usr/bin/python3 /opt/scripts/daily_report.py
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;9&lt;/span&gt; * * * curl -X POST -d &lt;span style="color:#e6db74"&gt;&amp;#39;{}&amp;#39;&lt;/span&gt; https://api.example.com/daily
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;问题是：你写的脚本逻辑是固定的。数据源变了？格式换了？中间步骤出错了？脚本只会在那儿 crash，不会自己想办法绕过去。&lt;/p&gt;
-&lt;p&gt;Hermes Cron 不一样。你给的不是一段固定脚本，而是一个&lt;strong&gt;任务描述&lt;/strong&gt;。Agent 在执行时会：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;先理解任务意图&lt;/li&gt;
-&lt;li&gt;根据当前情况决定用什么工具&lt;/li&gt;
-&lt;li&gt;出错时自动调整策略&lt;/li&gt;
-&lt;li&gt;完成后把结果推送到你指定的地方&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;换句话说：传统 cron 跑的是代码，Hermes Cron 跑的是&lt;strong&gt;判断力&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-cron-workflow.png" alt="Hermes Cron 定时任务工作流：从定义到执行到通知的完整链路"&gt;&lt;/p&gt;
-&lt;h2 id="创建第一个-cron-任务"&gt;创建第一个 cron 任务&lt;/h2&gt;
-&lt;p&gt;Hermes 的 cron 管理有两种方式：CLI 命令和配置文件。&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title><link>https://zhouyang.dev/posts/hermes-agent-config/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-config/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;
-&lt;p&gt;上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。&lt;/p&gt;
-&lt;p&gt;Hermes 的核心优势之一是&lt;strong&gt;不绑定任何模型厂商&lt;/strong&gt;。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。&lt;/p&gt;
-&lt;p&gt;今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hermes-architecture.png" alt="Hermes Agent 整体架构：用户层 → 消息路由 → 模型层"&gt;&lt;/p&gt;
-&lt;h2 id="配置文件在哪"&gt;配置文件在哪&lt;/h2&gt;
-&lt;p&gt;Hermes 的配置分布在两个文件：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;~/.hermes/config.yaml # 主配置：模型、工具集、人格、安全策略等
-~/.hermes/.env # 密钥（API Key、Token），单独存放防止泄露
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接编辑也行，但 Hermes 提供了更安全的方式：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 查看当前配置&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 用编辑器打开 config.yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config edit
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 逐项设置（推荐，不会搞乱缩进）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config set model.default &lt;span style="color:#e6db74"&gt;&amp;#34;anthropic/claude-sonnet-4&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes config set agent.max_turns &lt;span style="color:#ae81ff"&gt;90&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 管理密钥（更安全，会做本地加密）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes auth
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先说最重要的 providers。&lt;/p&gt;
-&lt;h2 id="providers20-模型提供商怎么选"&gt;Providers：20+ 模型提供商怎么选&lt;/h2&gt;
-&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;</description></item><item><title>Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</title><link>https://zhouyang.dev/posts/hermes-agent-skills/</link><pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-skills/</guid><description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第三篇。前两篇分别是&lt;a href="https://zhouyang.dev/posts/hermes-agent-guide/"&gt;入门指南&lt;/a&gt;和&lt;a href="https://zhouyang.dev/posts/hermes-agent-config/"&gt;配置详解&lt;/a&gt;——建议先看完那两篇再回来看这篇，因为本文默认你已经有跑起来的 Hermes 了。&lt;/p&gt;
-&lt;p&gt;前两篇聊了安装和配置。但有一个问题我一直没回答：&lt;strong&gt;你教会 Hermes 的东西，下次还能用吗？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;大部分 AI 助手是金鱼——每次对话结束就清零了。你费劲调好的工作流，下次得从头教。但 Hermes 的设计思路不一样：它有一个 Skills 系统，让你把「怎么干活」写成标准化文档，下次自动加载。&lt;/p&gt;
-&lt;p&gt;换句话说，Skills 就是 Hermes 的 SOP。&lt;/p&gt;
-&lt;h2 id="skills-是什么"&gt;Skills 是什么&lt;/h2&gt;
-&lt;p&gt;简单说：&lt;strong&gt;一个 Skill 就是一个 Markdown 文件&lt;/strong&gt;，放在 &lt;code&gt;~/.hermes/skills/&lt;/code&gt; 下面，里面写清楚「什么场景下用」「怎么一步步做」「常见的坑在哪」。Hermes 每次回答之前，会自动扫一遍 Skill 列表，遇到匹配的场景就把对应 Skill 的内容注入到上下文中。&lt;/p&gt;
-&lt;p&gt;三个关键特性：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;渐进式加载&lt;/strong&gt;（progressive disclosure）。Hermes 不会一股脑把所有 Skill 全塞进 prompt。先只加载名字和简介（约 3K token），只有真正轮到用时才展开完整内容。这解决了「技能越多速度越慢」的问题。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Agent 可以自己创建 Skill&lt;/strong&gt;。做完一个复杂任务后，如果 Hermes 觉得「这个工作流值得保存」，它自己会产生一个 Skill。你有审批权。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Skill Hub&lt;/strong&gt;。内置 + 社区共享，几十个现成 Skill 可以直接装。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="看一眼-skill-长什么样"&gt;看一眼 Skill 长什么样&lt;/h2&gt;
-&lt;p&gt;随便看两个实际例子。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;系统级 Skill：《systematic-debugging》&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这个 Skill 定义了四阶段调试法——根因分析→模式比对→假设验证→实施修复。核心就一条铁律：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加载这个 Skill 后，Hermes 遇到 bug 不会上来就改代码，而是先读错误信息、尝试复现、查 git diff 找最近改动、追踪数据流找到源头。然后才动手。&lt;/p&gt;</description></item><item><title>Hermes Agent 入门指南：你的24小时AI助手</title><link>https://zhouyang.dev/posts/hermes-agent-guide/</link><pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/hermes-agent-guide/</guid><description>&lt;h2 id="什么是-hermes-agent"&gt;什么是 Hermes Agent？&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://github.com/NousResearch/hermes-agent"&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;
-&lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;完全开源&lt;/strong&gt;，不绑定任何厂商&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;支持 20+ 模型提供商&lt;/strong&gt;，OpenRouter、Anthropic、DeepSeek、OpenAI 随便切&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;持久化记忆&lt;/strong&gt;——它会记住你是谁、你的偏好、你的项目&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;技能系统&lt;/strong&gt;——学会一个新技能就保存下来，越用越聪明&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="安装"&gt;安装&lt;/h2&gt;
-&lt;p&gt;一行命令搞定：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="快速上手"&gt;快速上手&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 进入交互模式&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 一句话提问&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes chat -q &lt;span style="color:#e6db74"&gt;&amp;#34;帮我写一个 Python 爬虫&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 切换模型&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes model
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="接入飞书"&gt;接入飞书&lt;/h2&gt;
-&lt;p&gt;Hermes 原生支持飞书，配置好后你就能在飞书里和它聊天：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway setup &lt;span style="color:#75715e"&gt;# 选择 Feishu&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes gateway run &lt;span style="color:#75715e"&gt;# 启动网关&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="定时任务"&gt;定时任务&lt;/h2&gt;
-&lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hermes cron create &lt;span style="color:#e6db74"&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 每天早上8点&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
-&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description></item><item><title>2026年AI编程助手完全指南：选型、配置与最佳实践</title><link>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</link><pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</guid><description>&lt;h2 id="2026年ai编程助手的格局"&gt;2026年AI编程助手的格局&lt;/h2&gt;
-&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2026年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;
-&lt;h2 id="第一类终端cli型"&gt;第一类：终端/CLI型&lt;/h2&gt;
-&lt;p&gt;这类工具运行在终端里，直接操作代码库。&lt;/p&gt;
-&lt;h3 id="claude-code"&gt;Claude Code&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Anthropic&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：200K上下文、理解力强、擅长架构级别的工作&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：API计费，Max计划$200/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="codex-openai"&gt;Codex (OpenAI)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：OpenAI&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：轻量级、速度快、和GPT-4深度集成&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费额度 + API计费&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="hermes-agent"&gt;Hermes Agent&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Nous Research（开源）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：完全开源、支持20+模型提供商、持久化记忆、技能系统&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费（自带API Key）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="第二类ide集成型"&gt;第二类：IDE集成型&lt;/h2&gt;
-&lt;h3 id="cursor"&gt;Cursor&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：VS Code Fork&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Tab预测补全、内联编辑&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $20/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="windsurf"&gt;Windsurf&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：独立IDE&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Cascade多文件编辑、自动上下文&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $15/月&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="github-copilot"&gt;GitHub Copilot&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：IDE插件&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：覆盖面最广、Agent模式&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：$10/月（个人）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="第三类在线web型"&gt;第三类：在线/Web型&lt;/h2&gt;
-&lt;h3 id="boltnew--v0dev"&gt;Bolt.new / v0.dev&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：一句话生成全栈应用&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;适合&lt;/strong&gt;：快速原型、前端组件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="本地-vs-云端怎么选"&gt;本地 vs 云端：怎么选？&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;因素&lt;/th&gt;
-					&lt;th&gt;本地终端型&lt;/th&gt;
-					&lt;th&gt;IDE集成型&lt;/th&gt;
-					&lt;th&gt;Web型&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;代码库理解&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;编码速度&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;架构/重构&lt;/td&gt;
-					&lt;td&gt;⭐⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐⭐&lt;/td&gt;
-					&lt;td&gt;⭐&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;上手难度&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-					&lt;td&gt;低&lt;/td&gt;
-					&lt;td&gt;极低&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;隐私&lt;/td&gt;
-					&lt;td&gt;好&lt;/td&gt;
-					&lt;td&gt;中&lt;/td&gt;
-					&lt;td&gt;差&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="我的工作流供参考"&gt;我的工作流（供参考）&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;日常编码&lt;/strong&gt;：Cursor（Tab补全太香了）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;大型重构&lt;/strong&gt;：Claude Code（理解力天花板）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;自动化任务/定时任务&lt;/strong&gt;：Hermes Agent（开源 + cron）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;快速原型&lt;/strong&gt;：Bolt.new（最快从零到有）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="最后建议"&gt;最后建议&lt;/h2&gt;
-&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description></item><item><title>零代码基础？用AI从零搭建一个个人网站（2026实战）</title><link>https://zhouyang.dev/posts/ai-build-website-zero/</link><pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/ai-build-website-zero/</guid><description>&lt;h2 id="你不需要学编程来做网站了"&gt;你不需要学编程来做网站了&lt;/h2&gt;
-&lt;p&gt;2026年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这篇文章带你从零到一，用AI搭建一个能访问、能赚钱的个人网站。&lt;/p&gt;
-&lt;h2 id="第一步买域名10分钟"&gt;第一步：买域名（10分钟）&lt;/h2&gt;
-&lt;p&gt;推荐 &lt;a href="https://www.namesilo.com"&gt;NameSilo&lt;/a&gt; 或 &lt;a href="https://porkbun.com"&gt;Porkbun&lt;/a&gt;，便宜且支持支付宝。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;.com&lt;/code&gt; 域名 ~$10/年&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.xyz&lt;/code&gt; 域名 ~$1/年（预算党首选）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;选个简短好记的名字，比如 &lt;code&gt;yourname.com&lt;/code&gt; 或你的项目名。&lt;/p&gt;
-&lt;h2 id="第二步选工具决定前先看这里"&gt;第二步：选工具（决定前先看这里）&lt;/h2&gt;
-&lt;p&gt;2026年有三个主流路线：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;AI + 静态博客（Hugo）&lt;/strong&gt;：免费、极快、SEO友好。适合博客/内容站。本文用这个。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AI + Framer/Webflow&lt;/strong&gt;：拖拽式建站，设计精美。适合作品集/落地页。月费$10+。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AI + Bolt/v0&lt;/strong&gt;：一句话生成全栈应用。适合小工具/原型。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="第三步让ai帮你写网站"&gt;第三步：让AI帮你写网站&lt;/h2&gt;
-&lt;p&gt;打开你的AI助手（Claude、ChatGPT、或者 Hermes Agent），输入：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;「帮我用 Hugo 搭建一个个人博客，主题简洁，支持暗色模式，有首页、文章列表、关于页面。文章内容围绕 AI工具教程、独立开发。」&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;AI会帮你生成所有文件：配置文件、模板、示例文章。&lt;/p&gt;
-&lt;h2 id="第四步部署到-github-pages免费"&gt;第四步：部署到 GitHub Pages（免费）&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 创建 GitHub 仓库：yourname.github.io&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 然后把AI生成的代码推上去&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git init
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add .
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit -m &lt;span style="color:#e6db74"&gt;&amp;#34;first commit&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git remote add origin git@github.com:yourname/yourname.github.io.git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git push -u origin main
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;GitHub Pages 自动构建和部署，几分钟后你的网站就上线了。&lt;/p&gt;
-&lt;h2 id="第五步变现准备"&gt;第五步：变现准备&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;申请 Google AdSense（挂广告）&lt;/li&gt;
-&lt;li&gt;加 Google Analytics（看流量）&lt;/li&gt;
-&lt;li&gt;提交到 Google Search Console（让搜索引擎收录）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="总结"&gt;总结&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;步骤&lt;/th&gt;
-					&lt;th&gt;耗时&lt;/th&gt;
-					&lt;th&gt;花费&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;买域名&lt;/td&gt;
-					&lt;td&gt;10分钟&lt;/td&gt;
-					&lt;td&gt;~$10/年&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;AI写代码&lt;/td&gt;
-					&lt;td&gt;1小时&lt;/td&gt;
-					&lt;td&gt;免费&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;部署&lt;/td&gt;
-					&lt;td&gt;10分钟&lt;/td&gt;
-					&lt;td&gt;免费&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;上线&lt;/td&gt;
-					&lt;td&gt;实时&lt;/td&gt;
-					&lt;td&gt;-&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;**总花费：$10 + 一个下午。**值不值？你自己判断。&lt;/p&gt;</description></item><item><title>Claude Code vs Cursor vs GitHub Copilot：2026年AI编程助手深度横评</title><link>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</link><pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</guid><description>&lt;h2 id="为什么需要ai编程助手"&gt;为什么需要AI编程助手？&lt;/h2&gt;
-&lt;p&gt;2026年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;
-&lt;p&gt;这篇文章聚焦三大主流选手，帮你做出明智选择。&lt;/p&gt;
-&lt;h2 id="claude-code"&gt;Claude Code&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Anthropic出品，终端里的AI程序员。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Claude Code 是一个命令行工具，你在终端里用自然语言描述需求，它直接读代码、写代码、跑测试。它的核心优势是 &lt;strong&gt;深度理解大型代码库&lt;/strong&gt;——200K上下文窗口，能一口气吃掉整个项目。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：后端开发、重构、代码审查&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：按API用量计费，Max计划$200/月含大量额度&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：代码质量高、擅长复杂逻辑、理解项目架构&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：纯命令行，没有IDE集成；Max计划贵&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="cursor"&gt;Cursor&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;基于VS Code的AI-first编辑器。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Cursor 本质上是 VS Code + 深度AI集成。它的杀手功能是 &lt;strong&gt;Tab补全&lt;/strong&gt;和&lt;strong&gt;Inline编辑&lt;/strong&gt;——AI预测你下一步要写什么，一键接受。体验非常流畅。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：全栈开发、前端、日常编码&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版可用，Pro版$20/月&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：体验丝滑、VS Code生态兼容、速度快&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：大项目重构不如Claude Code深；重度使用需Pro&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="github-copilot"&gt;GitHub Copilot&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;微软出品，最老牌的AI编程助手。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2026年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：日常编码、多IDE用户、团队协作&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：个人$10/月，含Copilot Chat&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：覆盖面最广、企业友好、Chat功能好用&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：代码建议有时「幻觉」；Agent模式还不够成熟&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="我的推荐"&gt;我的推荐&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;你的情况&lt;/th&gt;
-					&lt;th&gt;推荐&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;独立开发者/个人项目&lt;/td&gt;
-					&lt;td&gt;Cursor（性价比最高）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;大型项目/后端重构&lt;/td&gt;
-					&lt;td&gt;Claude Code（理解力最强）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;多IDE/团队协作&lt;/td&gt;
-					&lt;td&gt;GitHub Copilot（生态最好）&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;不想花钱&lt;/td&gt;
-					&lt;td&gt;Cursor免费版 + 开源自补全插件&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="最后"&gt;最后&lt;/h2&gt;
-&lt;p&gt;没有「最好」的工具，只有「最适合」的工具。建议三个都试用一周，感受一下哪个更契合你的工作流。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;利益声明：本文为独立评测，无任何商业合作。&lt;/p&gt;
-&lt;/blockquote&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>AI on zhouyang — The 25th Frame</title>
+		<link>https://zhouyang.dev/tags/ai/</link>
+		<description>Recent content in AI on zhouyang — The 25th Frame</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://zhouyang.dev/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>AI编程工具链：AI Debugging — 让AI帮你修bug</title>
+				<link>https://zhouyang.dev/posts/ai-debugging-guide/</link>
+				<pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/ai-debugging-guide/</guid>
+				<description>&lt;h2 id=&#34;调试是ai最被低估的能力&#34;&gt;调试是AI最被低估的能力&lt;/h2&gt;&#xA;&lt;p&gt;大多数人用AI写代码，但很少人用它&lt;strong&gt;修bug&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;一个反直觉的事实：AI调试往往比AI写代码&lt;strong&gt;更靠谱&lt;/strong&gt;。原因很简单——&#xA;写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：&lt;strong&gt;拿到报错之后，怎么用AI最快地找到根因并修复。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/ai-debugging-flow.png&#34; alt=&#34;AI 调试工作流&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;ai擅长修什么bug&#34;&gt;AI擅长修什么bug&lt;/h2&gt;&#xA;&lt;p&gt;不是所有bug都适合丢给AI。先分清地盘：&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;AI表现&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;说明&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;语法/类型错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Traceback 直接给结论&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;空指针/AttributeError&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;AI一眼看出哪里可能为 None&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;依赖版本冲突&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;只要告诉它版本号&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;API调用参数错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;训练数据里有大量文档&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;并发/竞态条件&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要好的上下文&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;业务逻辑错误&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要你解释「什么是对」&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;性能瓶颈/内存泄漏&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;需要 profiling 数据配合&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;框架特有行为&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;取决于框架的文档覆盖率&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;一句话总结：&lt;strong&gt;AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;标准流程三步法&#34;&gt;标准流程：三步法&lt;/h2&gt;&#xA;&lt;p&gt;我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第一步给上下文别只贴报错&#34;&gt;第一步：给上下文，别只贴报错&lt;/h3&gt;&#xA;&lt;p&gt;错误示范——90%的人这么做：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;❌ 用户：我代码报错了，帮我看看&#xA;❌ 用户：（贴了半行报错信息）&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;AI只能瞎猜。&lt;/p&gt;&#xA;&lt;p&gt;正确做法：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;✅  我用 FastAPI 写了一个接口，报错如下：&#xA;✅  （完整 Traceback）&#xA;✅&#xA;✅  相关代码：&#xA;✅  （贴出报错涉及的那个函数或文件片段，50-100行）&#xA;✅&#xA;✅  环境：&#xA;✅  - Python 3.11&#xA;✅  - FastAPI 0.115&#xA;✅  - Pydantic v2&#xA;✅  - 数据库是 PostgreSQL，用 SQLAlchemy 2.0 async&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;关键信息清单：&lt;/strong&gt; 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>AI编程工具链：Prompt Engineering 实战手册</title>
+				<link>https://zhouyang.dev/posts/prompt-engineering-handbook/</link>
+				<pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/prompt-engineering-handbook/</guid>
+				<description>&lt;h2 id=&#34;你的prompt决定了ai的上限&#34;&gt;你的Prompt，决定了AI的上限&lt;/h2&gt;&#xA;&lt;p&gt;很多人的认知还停留在「我直接告诉AI要干嘛就行了」。但实际情况是——&lt;strong&gt;同样的模型，不同质量的prompt，产出的代码质量差距可以有10倍以上。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;一个真实的例子：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;❌ 「帮我写一个爬虫」&#xA;✅ 「用 Python 写一个爬虫，抓取 &lt;a href=&#34;https://example.com/news&#34;&gt;https://example.com/news&lt;/a&gt; 的新闻标题和链接，用 requests + BeautifulSoup，输出为 JSON 文件，需要处理异常（超时、404），加上请求间隔（3秒）避免被封。」&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;第一个人得到的是几十行能跑但脆弱的代码。第二个人得到的是可以直接部署的生产级脚本。&lt;/p&gt;&#xA;&lt;p&gt;这就是Prompt Engineering的威力：&lt;strong&gt;把模糊的需求变成精确的指令。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/prompt-engineering-workflow.png&#34; alt=&#34;Prompt Engineering 工作流&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;核心框架四步法&#34;&gt;核心框架：四步法&lt;/h2&gt;&#xA;&lt;p&gt;我用了两年AI编程工具，总结出这套「四步法」。它能适配90%的编码场景。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第一步角色设定role&#34;&gt;第一步：角色设定（Role）&lt;/h3&gt;&#xA;&lt;p&gt;告诉AI「你是谁」和「AI是谁」，建立上下文边界。&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;你是一名有10年经验的Python后端工程师，擅长编写高可读性、&#xA;可维护的代码。你的代码风格遵循 PEP 8，并且你会主动添加&#xA;类型注解和 docstring。&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;为什么有效？&lt;/strong&gt; AI模型的训练数据中，特定角色的输出质量远高于通用输出。「Senior Engineer」这个角色对应的训练样本本身就是高质量的。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第二步任务拆解task-decomposition&#34;&gt;第二步：任务拆解（Task Decomposition）&lt;/h3&gt;&#xA;&lt;p&gt;大任务拆成小任务，逐个击破。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;❌ 「用React写一个电商网站」&#xA;✅ 「请分步骤完成以下任务：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;创建商品列表组件，支持分页&lt;/li&gt;&#xA;&lt;li&gt;实现购物车状态管理（zustand）&lt;/li&gt;&#xA;&lt;li&gt;添加搜索栏（防抖500ms）&lt;/li&gt;&#xA;&lt;li&gt;集成支付Mock接口&#xA;每完成一步，先让我确认再继续。」&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;一个prompt只做一件事。&lt;/strong&gt; AI在单次对话中的注意力是有限的——任务越多，每个任务的质量就越低。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第三步约束与范例constraints--examples&#34;&gt;第三步：约束与范例（Constraints &amp;amp; Examples）&lt;/h3&gt;&#xA;&lt;p&gt;这可能是最被低估的一步。&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;要求：&#xA;- 使用 Python 3.11+&#xA;- 依赖：requests, pydantic v2&#xA;- 所有函数必须有类型注解&#xA;- 错误处理覆盖网络异常、解析异常、数据校验异常&#xA;&#xA;参考风格：&#xA;```python&#xA;def fetch_data(url: str, timeout: int = 10) -&amp;gt; dict[str, Any]:&#xA;    &amp;#34;&amp;#34;&amp;#34;Fetch JSON data from URL with error handling.&amp;#34;&amp;#34;&amp;#34;&#xA;    try:&#xA;        resp = requests.get(url, timeout=timeout)&#xA;        resp.raise_for_status()&#xA;        return resp.json()&#xA;    except requests.RequestException as e:&#xA;        raise DataFetchError(f&amp;#34;Failed to fetch {url}: {e}&amp;#34;)&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&#xA;**给AI看一段你满意的代码，比花500字描述风格要求更有效。**&#xA;&#xA;### 第四步：产出规格（Output Spec）&#xA;&#xA;明确告诉AI「输出成什么样」。&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;请输出以下文件结构：&#xA;src/&#xA;├── fetcher.py    # 数据抓取模块&#xA;├── parser.py     # 数据解析模块&#xA;├── models.py     # Pydantic 模型&#xA;└── main.py       # 入口，命令行参数支持&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-workflow/</link>
+				<pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-workflow/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第六篇，也是最后一篇。前五篇分别是&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-config/&#34;&gt;配置详解&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-skills/&#34;&gt;Skills 系统&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-cron/&#34;&gt;Cron 定时任务&lt;/a&gt;和&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-gateway/&#34;&gt;多平台集成&lt;/a&gt;。&lt;/p&gt;&#xA;&lt;p&gt;前五篇把 Hermes 的每个组件都拆开讲透了。但这就像你学会了发动机、变速箱、悬挂系统各自怎么工作——你还是不知道&lt;strong&gt;怎么把车造出来&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;这篇就是把零件拼成整车的过程。我们从头搭建一个完整可用的 AI 工作流：&lt;strong&gt;每日 AI 资讯摘要&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;h2 id=&#34;为什么选这个场景&#34;&gt;为什么选这个场景&lt;/h2&gt;&#xA;&lt;p&gt;不是随便挑的。这个场景恰好需要用到 Hermes 全部核心能力：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Skills&lt;/strong&gt;：定义摘要格式、信息源、筛选标准&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Cron&lt;/strong&gt;：每天早上 8 点自动触发&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;多模型切换&lt;/strong&gt;：搜索用便宜模型，摘要用强模型&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Gateway&lt;/strong&gt;：结果推送到 Telegram 和飞书&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;而且这个场景&lt;strong&gt;真的有用&lt;/strong&gt;。我跑了三周，每天早上一杯咖啡的时间就能看完 AI 圈 24 小时内最重要的事，不用自己刷 Twitter、HN、Reddit、ArXiv。省下来的时间比我写这套东西花的时间多得多。&lt;/p&gt;&#xA;&lt;h2 id=&#34;整体架构&#34;&gt;整体架构&lt;/h2&gt;&#xA;&lt;p&gt;先看全貌，知道每个组件在什么位置：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/hermes-workflow-architecture.png&#34; alt=&#34;Hermes 工作流架构图&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;六个环节，环环相扣。下面逐个搭建。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一步创建-ai-digest-skill&#34;&gt;第一步：创建 AI Digest Skill&lt;/h2&gt;&#xA;&lt;p&gt;Skill 是整个工作流的灵魂。它定义了 Hermes 要怎么搜、怎么筛、怎么写。&lt;/p&gt;&#xA;&lt;p&gt;在 &lt;code&gt;~/.hermes/skills/&lt;/code&gt; 下创建 &lt;code&gt;ai-daily-digest.md&lt;/code&gt;：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# AI Daily Digest&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;生成每日 AI 领域重要资讯摘要。按固定格式输出中文摘要，&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;每条包含标题、一句话要点、原文链接。&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 信息源（按优先级）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;1.&lt;/span&gt; Hacker News (news.ycombinator.com) — AI/ML 相关热帖&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;2.&lt;/span&gt; Reddit r/MachineLearning — 当日热门讨论&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;3.&lt;/span&gt; GitHub Trending — AI 相关仓库&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;4.&lt;/span&gt; ArXiv — cs.AI / cs.CL 当天新论文（选 3 篇最有价值的）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 筛选标准&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 只收录 24 小时内的内容&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 优先选择有实质讨论的（HN 评论 &amp;gt; 50，Reddit 点赞 &amp;gt; 100）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 论文只选有代码开源或方法有突破性的&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 略过纯营销文、币圈、NFT 相关内容&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 输出格式&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;\`\`\`&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;📡 AI 每日速递 — 2026年X月X日&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;🔥 头条&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;1.&lt;/span&gt; 【标题】&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   要点：一句话总结&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   🔗 链接&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;📋 必读&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;（3-5 条精选，格式同上）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;📄 论文速览&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;（1-3 篇，包含论文标题 + 核心贡献一句话）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;🛠 工具 &amp;amp; 开源&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;━━━━━━━━━━━━━━━━━━&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;（1-3 个值得关注的仓库）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;\`\`\`&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 执行流程&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;1.&lt;/span&gt; 依次访问 4 个信息源，使用 web_search 工具搜索&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;2.&lt;/span&gt; 按筛选标准过滤，保留 8-15 条候选&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;3.&lt;/span&gt; 按重要程度排序，选出头条 1 条 + 必读 3-5 条&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;4.&lt;/span&gt; 搜索论文和工具仓库&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;5.&lt;/span&gt; 按输出格式生成完整摘要&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;6.&lt;/span&gt; 保存到 ~/digests/YYYY-MM-DD.md&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;7.&lt;/span&gt; 将摘要文本返回（Gateway 会负责推送到各平台）&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## 质量要求&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 每条要点必须是自己读过内容后总结的，禁止直接翻译标题&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 中文流畅自然，避免机翻腔&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; 如果当天没有够格的内容，宁可少写不要凑数&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 Skill 大约 300 行。因为 Hermes 采用渐进式加载，平时只占 ~100 token 的名字和简介，只有每天 8 点真正跑的时候才展开全部内容。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-gateway/</link>
+				<pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-gateway/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-config/&#34;&gt;配置详解&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-skills/&#34;&gt;Skills 系统&lt;/a&gt;和 &lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-cron/&#34;&gt;Cron 定时任务&lt;/a&gt;。&lt;/p&gt;&#xA;&lt;p&gt;上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：&lt;strong&gt;多平台集成&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;h2 id=&#34;为什么需要多平台&#34;&gt;为什么需要多平台&lt;/h2&gt;&#xA;&lt;p&gt;先说说真实场景。我自己是这样用的：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;飞书&lt;/strong&gt;：工作相关。代码审查结果、服务器告警、每日 AI 资讯，这些跟团队有关的东西走飞书群聊。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Telegram&lt;/strong&gt;：个人助理。博客部署通知、RSS 摘要、临时让 AI 搜个东西，走 Telegram Bot——轻量、手机通知即时。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Discord&lt;/strong&gt;：社区互动。偶尔在 Discord 群里接一些朋友的问题，让 Hermes 帮忙回。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;三个平台，三种场景，一个 Hermes 实例。不是三个实例，不是一个平台配一次——&lt;strong&gt;一个实例接入所有平台，按规则智能分发&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;h2 id=&#34;gateway-架构&#34;&gt;Gateway 架构&lt;/h2&gt;&#xA;&lt;p&gt;先搞清楚 Hermes Gateway 是怎么工作的：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/hermes-gateway-architecture.png&#34; alt=&#34;Hermes Gateway 多平台架构图&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Gateway 是一个独立的进程，它做的事很简单：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;接收消息&lt;/strong&gt;：监听各平台的 webhook 或长连接&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;标准化&lt;/strong&gt;：把飞书的富文本、Telegram 的 Markdown、Discord 的 Embed 统一转成内部格式&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;路由判断&lt;/strong&gt;：看这条消息来自哪、内容是什么、发消息的人是谁，决定交给哪个 Agent 处理&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;返回结果&lt;/strong&gt;：把 Agent 的回复转回对应平台的格式，发回去&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;关键设计：&lt;strong&gt;Gateway 和 Agent 是解耦的&lt;/strong&gt;。Gateway 挂了不影响 Agent 推理，Agent 推理慢不影响 Gateway 收消息。两者通过内部 API 通信。&lt;/p&gt;&#xA;&lt;h2 id=&#34;接入飞书&#34;&gt;接入飞书&lt;/h2&gt;&#xA;&lt;p&gt;飞书的接入相对复杂，因为涉及应用创建和权限审批。但好处是飞书的富文本能力最强，卡片消息、按钮交互都能搞。&lt;/p&gt;&#xA;&lt;h3 id=&#34;step-1创建飞书应用&#34;&gt;Step 1：创建飞书应用&lt;/h3&gt;&#xA;&lt;p&gt;先去 &lt;a href=&#34;https://open.feishu.cn&#34;&gt;飞书开放平台&lt;/a&gt; 创建一个企业自建应用：&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-cron/</link>
+				<pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-cron/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第四篇。前三篇分别是&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;、&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-config/&#34;&gt;配置详解&lt;/a&gt;和 &lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-skills/&#34;&gt;Skills 系统&lt;/a&gt;。如果你还没看过，建议先过一遍——本文会大量用到 Skills 和 toolsets 的概念。&lt;/p&gt;&#xA;&lt;p&gt;前几篇聊的都是「你跟 Hermes 对话时它能干什么」。但有个场景一直没展开：&lt;strong&gt;你不在电脑前的时候，Hermes 能不能自己干活？&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;答案是能。而且不需要你写 cron 脚本、配 systemd timer、搭 CI pipeline。你只需要用自然语言告诉 Hermes「每天这个时候帮我做这件事」，它到点就自己跑。&lt;/p&gt;&#xA;&lt;h2 id=&#34;为什么不用传统-cron&#34;&gt;为什么不用传统 cron&lt;/h2&gt;&#xA;&lt;p&gt;传统 cron 能干的事有限：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 传统 cron：能跑脚本、发 curl、写文件——但没法「思考」&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt; * * * /usr/bin/python3 /opt/scripts/daily_report.py&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt; * * * curl -X POST -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{}&amp;#39;&lt;/span&gt; https://api.example.com/daily&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;问题是：你写的脚本逻辑是固定的。数据源变了？格式换了？中间步骤出错了？脚本只会在那儿 crash，不会自己想办法绕过去。&lt;/p&gt;&#xA;&lt;p&gt;Hermes Cron 不一样。你给的不是一段固定脚本，而是一个&lt;strong&gt;任务描述&lt;/strong&gt;。Agent 在执行时会：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;先理解任务意图&lt;/li&gt;&#xA;&lt;li&gt;根据当前情况决定用什么工具&lt;/li&gt;&#xA;&lt;li&gt;出错时自动调整策略&lt;/li&gt;&#xA;&lt;li&gt;完成后把结果推送到你指定的地方&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;换句话说：传统 cron 跑的是代码，Hermes Cron 跑的是&lt;strong&gt;判断力&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/hermes-cron-workflow.png&#34; alt=&#34;Hermes Cron 定时任务工作流：从定义到执行到通知的完整链路&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;创建第一个-cron-任务&#34;&gt;创建第一个 cron 任务&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 的 cron 管理有两种方式：CLI 命令和配置文件。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 深度指南 02：配置详解 — 模型选择、providers 与 toolsets</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-config/</link>
+				<pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-config/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第二篇。如果你还没看过第一篇，先去&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;把 Hermes 装上跑起来，本文默认你已经有了一个能用的 Hermes 实例。&lt;/p&gt;&#xA;&lt;p&gt;上一篇我们讲了安装和基础用法——一行 curl 装好，进交互模式聊两句就上手了。但这只是 Hermes 的「默认皮肤」。真正让它变成你得力助手的，是配置系统。&lt;/p&gt;&#xA;&lt;p&gt;Hermes 的核心优势之一是&lt;strong&gt;不绑定任何模型厂商&lt;/strong&gt;。OpenRouter、Anthropic、DeepSeek、OpenAI、Google Gemini……20+ 提供商随便换，而且可以混搭——干活用一个模型，复查用另一个模型，甚至一个任务里跑一半切模型。&lt;/p&gt;&#xA;&lt;p&gt;今天咱们把 providers、模型选择、toolsets 三个核心配置项拆开讲透。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/hermes-architecture.png&#34; alt=&#34;Hermes Agent 整体架构：用户层 → 消息路由 → 模型层&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;配置文件在哪&#34;&gt;配置文件在哪&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 的配置分布在两个文件：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/.hermes/config.yaml   # 主配置：模型、工具集、人格、安全策略等&#xA;~/.hermes/.env          # 密钥（API Key、Token），单独存放防止泄露&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接编辑也行，但 Hermes 提供了更安全的方式：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 查看当前配置&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 用编辑器打开 config.yaml&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config edit&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 逐项设置（推荐，不会搞乱缩进）&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config set model.default &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;anthropic/claude-sonnet-4&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes config set agent.max_turns &lt;span style=&#34;color:#ae81ff&#34;&gt;90&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 管理密钥（更安全，会做本地加密）&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes auth&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;先说最重要的 providers。&lt;/p&gt;&#xA;&lt;h2 id=&#34;providers20-模型提供商怎么选&#34;&gt;Providers：20+ 模型提供商怎么选&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 支持的 providers 可以分三类：&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 深度指南 03：Skills 系统 — 打造可复用能力</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-skills/</link>
+				<pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-skills/</guid>
+				<description>&lt;p&gt;这是 Hermes Agent 深度指南系列的第三篇。前两篇分别是&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-guide/&#34;&gt;入门指南&lt;/a&gt;和&lt;a href=&#34;https://zhouyang.dev/posts/hermes-agent-config/&#34;&gt;配置详解&lt;/a&gt;——建议先看完那两篇再回来看这篇，因为本文默认你已经有跑起来的 Hermes 了。&lt;/p&gt;&#xA;&lt;p&gt;前两篇聊了安装和配置。但有一个问题我一直没回答：&lt;strong&gt;你教会 Hermes 的东西，下次还能用吗？&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;大部分 AI 助手是金鱼——每次对话结束就清零了。你费劲调好的工作流，下次得从头教。但 Hermes 的设计思路不一样：它有一个 Skills 系统，让你把「怎么干活」写成标准化文档，下次自动加载。&lt;/p&gt;&#xA;&lt;p&gt;换句话说，Skills 就是 Hermes 的 SOP。&lt;/p&gt;&#xA;&lt;h2 id=&#34;skills-是什么&#34;&gt;Skills 是什么&lt;/h2&gt;&#xA;&lt;p&gt;简单说：&lt;strong&gt;一个 Skill 就是一个 Markdown 文件&lt;/strong&gt;，放在 &lt;code&gt;~/.hermes/skills/&lt;/code&gt; 下面，里面写清楚「什么场景下用」「怎么一步步做」「常见的坑在哪」。Hermes 每次回答之前，会自动扫一遍 Skill 列表，遇到匹配的场景就把对应 Skill 的内容注入到上下文中。&lt;/p&gt;&#xA;&lt;p&gt;三个关键特性：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;渐进式加载&lt;/strong&gt;（progressive disclosure）。Hermes 不会一股脑把所有 Skill 全塞进 prompt。先只加载名字和简介（约 3K token），只有真正轮到用时才展开完整内容。这解决了「技能越多速度越慢」的问题。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Agent 可以自己创建 Skill&lt;/strong&gt;。做完一个复杂任务后，如果 Hermes 觉得「这个工作流值得保存」，它自己会产生一个 Skill。你有审批权。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Skill Hub&lt;/strong&gt;。内置 + 社区共享，几十个现成 Skill 可以直接装。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;看一眼-skill-长什么样&#34;&gt;看一眼 Skill 长什么样&lt;/h2&gt;&#xA;&lt;p&gt;随便看两个实际例子。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;系统级 Skill：《systematic-debugging》&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;这个 Skill 定义了四阶段调试法——根因分析→模式比对→假设验证→实施修复。核心就一条铁律：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加载这个 Skill 后，Hermes 遇到 bug 不会上来就改代码，而是先读错误信息、尝试复现、查 git diff 找最近改动、追踪数据流找到源头。然后才动手。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Hermes Agent 入门指南：你的24小时AI助手</title>
+				<link>https://zhouyang.dev/posts/hermes-agent-guide/</link>
+				<pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/hermes-agent-guide/</guid>
+				<description>&lt;h2 id=&#34;什么是-hermes-agent&#34;&gt;什么是 Hermes Agent？&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/NousResearch/hermes-agent&#34;&gt;Hermes Agent&lt;/a&gt; 是 Nous Research 开源的 AI 代理框架。它能跑在终端、飞书、Telegram、Discord 等十几个平台上，调用各种工具帮你干活——写代码、搜资料、管理文件、定时任务，甚至帮你赚点小钱。&lt;/p&gt;&#xA;&lt;p&gt;和 Claude Code、Codex 相比，Hermes 有几个独特优势：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;完全开源&lt;/strong&gt;，不绑定任何厂商&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;支持 20+ 模型提供商&lt;/strong&gt;，OpenRouter、Anthropic、DeepSeek、OpenAI 随便切&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;持久化记忆&lt;/strong&gt;——它会记住你是谁、你的偏好、你的项目&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;技能系统&lt;/strong&gt;——学会一个新技能就保存下来，越用越聪明&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;&#xA;&lt;p&gt;一行命令搞定：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;快速上手&#34;&gt;快速上手&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 进入交互模式&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 一句话提问&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes chat -q &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;帮我写一个 Python 爬虫&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 切换模型&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes model&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;接入飞书&#34;&gt;接入飞书&lt;/h2&gt;&#xA;&lt;p&gt;Hermes 原生支持飞书，配置好后你就能在飞书里和它聊天：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes gateway setup    &lt;span style=&#34;color:#75715e&#34;&gt;# 选择 Feishu&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes gateway run      &lt;span style=&#34;color:#75715e&#34;&gt;# 启动网关&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;定时任务&#34;&gt;定时任务&lt;/h2&gt;&#xA;&lt;p&gt;让 Hermes 定期帮你干活——比如每天早上抓取最新 AI 资讯：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hermes cron create &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0 8 * * *&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# 每天早上8点&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;&#xA;&lt;p&gt;Hermes Agent 是开发者提升效率的利器。开源、免费、多平台，值得一试。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>2026年AI编程助手完全指南：选型、配置与最佳实践</title>
+				<link>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</link>
+				<pubDate>Wed, 03 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/ai-coding-assistant-guide-2026/</guid>
+				<description>&lt;h2 id=&#34;2026年ai编程助手的格局&#34;&gt;2026年AI编程助手的格局&lt;/h2&gt;&#xA;&lt;p&gt;AI编程工具从2023年的「新鲜玩意」到2026年的「基础设施」，经历了爆发式增长。现在市面上的工具可以分为三类。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一类终端cli型&#34;&gt;第一类：终端/CLI型&lt;/h2&gt;&#xA;&lt;p&gt;这类工具运行在终端里，直接操作代码库。&lt;/p&gt;&#xA;&lt;h3 id=&#34;claude-code&#34;&gt;Claude Code&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Anthropic&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：200K上下文、理解力强、擅长架构级别的工作&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：API计费，Max计划$200/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;codex-openai&#34;&gt;Codex (OpenAI)&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：OpenAI&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：轻量级、速度快、和GPT-4深度集成&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费额度 + API计费&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;hermes-agent&#34;&gt;Hermes Agent&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;厂商&lt;/strong&gt;：Nous Research（开源）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：完全开源、支持20+模型提供商、持久化记忆、技能系统&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费（自带API Key）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第二类ide集成型&#34;&gt;第二类：IDE集成型&lt;/h2&gt;&#xA;&lt;h3 id=&#34;cursor&#34;&gt;Cursor&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：VS Code Fork&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Tab预测补全、内联编辑&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $20/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;windsurf&#34;&gt;Windsurf&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：独立IDE&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：Cascade多文件编辑、自动上下文&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版 + Pro $15/月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;github-copilot&#34;&gt;GitHub Copilot&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;模式&lt;/strong&gt;：IDE插件&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;杀手功能&lt;/strong&gt;：覆盖面最广、Agent模式&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：$10/月（个人）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;第三类在线web型&#34;&gt;第三类：在线/Web型&lt;/h2&gt;&#xA;&lt;h3 id=&#34;boltnew--v0dev&#34;&gt;Bolt.new / v0.dev&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：一句话生成全栈应用&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;适合&lt;/strong&gt;：快速原型、前端组件&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;本地-vs-云端怎么选&#34;&gt;本地 vs 云端：怎么选？&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;因素&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;本地终端型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;IDE集成型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Web型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;代码库理解&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;编码速度&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;架构/重构&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;⭐&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;上手难度&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;极低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;隐私&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;好&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;差&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;我的工作流供参考&#34;&gt;我的工作流（供参考）&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;日常编码&lt;/strong&gt;：Cursor（Tab补全太香了）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;大型重构&lt;/strong&gt;：Claude Code（理解力天花板）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;自动化任务/定时任务&lt;/strong&gt;：Hermes Agent（开源 + cron）&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;快速原型&lt;/strong&gt;：Bolt.new（最快从零到有）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;最后建议&#34;&gt;最后建议&lt;/h2&gt;&#xA;&lt;p&gt;不要只用一个工具。组合使用，各取所长。我的成本：Cursor Pro $20 + Claude API ~$30 = 每月$50，换来的是生产力翻倍。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>零代码基础？用AI从零搭建一个个人网站（2026实战）</title>
+				<link>https://zhouyang.dev/posts/ai-build-website-zero/</link>
+				<pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/ai-build-website-zero/</guid>
+				<description>&lt;h2 id=&#34;你不需要学编程来做网站了&#34;&gt;你不需要学编程来做网站了&lt;/h2&gt;&#xA;&lt;p&gt;2026年，AI工具已经彻底改变了做网站的流程。你不需要会 HTML、CSS、JavaScript——你只需要&lt;strong&gt;清楚地描述你想要什么&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章带你从零到一，用AI搭建一个能访问、能赚钱的个人网站。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第一步买域名10分钟&#34;&gt;第一步：买域名（10分钟）&lt;/h2&gt;&#xA;&lt;p&gt;推荐 &lt;a href=&#34;https://www.namesilo.com&#34;&gt;NameSilo&lt;/a&gt; 或 &lt;a href=&#34;https://porkbun.com&#34;&gt;Porkbun&lt;/a&gt;，便宜且支持支付宝。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;.com&lt;/code&gt; 域名 ~$10/年&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;.xyz&lt;/code&gt; 域名 ~$1/年（预算党首选）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;选个简短好记的名字，比如 &lt;code&gt;yourname.com&lt;/code&gt; 或你的项目名。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第二步选工具决定前先看这里&#34;&gt;第二步：选工具（决定前先看这里）&lt;/h2&gt;&#xA;&lt;p&gt;2026年有三个主流路线：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;AI + 静态博客（Hugo）&lt;/strong&gt;：免费、极快、SEO友好。适合博客/内容站。本文用这个。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;AI + Framer/Webflow&lt;/strong&gt;：拖拽式建站，设计精美。适合作品集/落地页。月费$10+。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;AI + Bolt/v0&lt;/strong&gt;：一句话生成全栈应用。适合小工具/原型。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;第三步让ai帮你写网站&#34;&gt;第三步：让AI帮你写网站&lt;/h2&gt;&#xA;&lt;p&gt;打开你的AI助手（Claude、ChatGPT、或者 Hermes Agent），输入：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;「帮我用 Hugo 搭建一个个人博客，主题简洁，支持暗色模式，有首页、文章列表、关于页面。文章内容围绕 AI工具教程、独立开发。」&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;AI会帮你生成所有文件：配置文件、模板、示例文章。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第四步部署到-github-pages免费&#34;&gt;第四步：部署到 GitHub Pages（免费）&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 创建 GitHub 仓库：yourname.github.io&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 然后把AI生成的代码推上去&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git add .&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;first commit&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git remote add origin git@github.com:yourname/yourname.github.io.git&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git push -u origin main&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;GitHub Pages 自动构建和部署，几分钟后你的网站就上线了。&lt;/p&gt;&#xA;&lt;h2 id=&#34;第五步变现准备&#34;&gt;第五步：变现准备&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;申请 Google AdSense（挂广告）&lt;/li&gt;&#xA;&lt;li&gt;加 Google Analytics（看流量）&lt;/li&gt;&#xA;&lt;li&gt;提交到 Google Search Console（让搜索引擎收录）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;步骤&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;耗时&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;花费&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;买域名&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;10分钟&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;~$10/年&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;AI写代码&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1小时&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;免费&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;部署&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;10分钟&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;免费&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;上线&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;实时&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;-&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;**总花费：$10 + 一个下午。**值不值？你自己判断。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Claude Code vs Cursor vs GitHub Copilot：2026年AI编程助手深度横评</title>
+				<link>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</link>
+				<pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://zhouyang.dev/posts/claude-code-vs-cursor-vs-copilot/</guid>
+				<description>&lt;h2 id=&#34;为什么需要ai编程助手&#34;&gt;为什么需要AI编程助手？&lt;/h2&gt;&#xA;&lt;p&gt;2026年，AI编程助手已经从「新鲜玩意」变成了「必备工具」。但市面上的选择太多——Claude Code、Cursor、GitHub Copilot、Codex、Windsurf……选哪个？&lt;/p&gt;&#xA;&lt;p&gt;这篇文章聚焦三大主流选手，帮你做出明智选择。&lt;/p&gt;&#xA;&lt;h2 id=&#34;claude-code&#34;&gt;Claude Code&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Anthropic出品，终端里的AI程序员。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Claude Code 是一个命令行工具，你在终端里用自然语言描述需求，它直接读代码、写代码、跑测试。它的核心优势是 &lt;strong&gt;深度理解大型代码库&lt;/strong&gt;——200K上下文窗口，能一口气吃掉整个项目。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：后端开发、重构、代码审查&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：按API用量计费，Max计划$200/月含大量额度&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：代码质量高、擅长复杂逻辑、理解项目架构&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：纯命令行，没有IDE集成；Max计划贵&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;cursor&#34;&gt;Cursor&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;基于VS Code的AI-first编辑器。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Cursor 本质上是 VS Code + 深度AI集成。它的杀手功能是 &lt;strong&gt;Tab补全&lt;/strong&gt;和&lt;strong&gt;Inline编辑&lt;/strong&gt;——AI预测你下一步要写什么，一键接受。体验非常流畅。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：全栈开发、前端、日常编码&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：免费版可用，Pro版$20/月&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：体验丝滑、VS Code生态兼容、速度快&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：大项目重构不如Claude Code深；重度使用需Pro&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;github-copilot&#34;&gt;GitHub Copilot&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;微软出品，最老牌的AI编程助手。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Copilot 的优势是 &lt;strong&gt;无缝集成&lt;/strong&gt;——VS Code、JetBrains、Neovim全支持。2026年新增了Agent模式，能自主执行多步操作。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：日常编码、多IDE用户、团队协作&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;价格&lt;/strong&gt;：个人$10/月，含Copilot Chat&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;亮点&lt;/strong&gt;：覆盖面最广、企业友好、Chat功能好用&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;槽点&lt;/strong&gt;：代码建议有时「幻觉」；Agent模式还不够成熟&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;我的推荐&#34;&gt;我的推荐&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;你的情况&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;推荐&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;独立开发者/个人项目&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cursor（性价比最高）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;大型项目/后端重构&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Claude Code（理解力最强）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;多IDE/团队协作&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;GitHub Copilot（生态最好）&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;不想花钱&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cursor免费版 + 开源自补全插件&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;最后&#34;&gt;最后&lt;/h2&gt;&#xA;&lt;p&gt;没有「最好」的工具，只有「最适合」的工具。建议三个都试用一周，感受一下哪个更契合你的工作流。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;利益声明：本文为独立评测，无任何商业合作。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+			</item>
+	</channel>
+</rss>

@@ -4,10 +4,10 @@ date: 2026-06-20
 description: "Lacquered skin cracking under a cleaver, tender meat wrapped in whisper-thin pancakes — Peking Duck isn't just a meal, it's six centuries of Beijing culinary obsession on a plate."
 tags: ["beijing", "duck", "roast", "classic", "imperial"]
 6|slug: "peking-duck"
-images: ["/images/peking-duck-1.jpg"]
+images: ["/images/peking-duck-1.jpg?v=2"]
 ---
 
-![Peking Duck — glossy mahogany skin, carved tableside](/images/peking-duck-1.jpg)
+![Peking Duck — glossy mahogany skin, carved tableside](/images/peking-duck-1.jpg?v=2)
 
 The cart rolls up to your table and the room quiets. On it: a whole duck, skin the color of polished mahogany, glistening under restaurant lights like lacquer on a Ming vase. The chef doesn't pause. *Thwack thwack thwack* — the cleaver falls in a staccato rhythm, skin from flesh in neat rectangles, meat into thin pinkish petals. The aroma reaches you before the first piece touches the plate: malt sugar caramelized into amber glass, five-spice humming underneath, fruitwood smoke weaving through roasted fat. You inhale and your stomach answers.
 
@@ -27,7 +27,7 @@ This takes days. Workers pump air between skin and fat to separate them. The bir
 
 Beijing's duck tradition splits between Quanjude (全聚德, 1864), famous for 108 perfect slices from a hung oven, and Bianyifang (便宜坊, 1416), which does a closed-oven roast that separates skin and meat into two courses. Both chase the same thing: skin that shatters.
 
-![Peking Duck wrapped in thin pancakes — the essential assembly](/images/peking-duck-2.jpg)
+![Peking Duck wrapped in thin pancakes — the essential assembly](/images/peking-duck-2.jpg?v=2)
 
 ## How to Build the Bite
 
@@ -42,7 +42,7 @@ Now build. Lay the pancake on your palm. Smear sauce across the center — a thu
 
 Your first wrap will be clumsy. The pancake will tear, the sauce will squirt, a cucumber will escape. This is normal. The second wrap is where the religion starts.
 
-![Whole Peking Duck — presentation before the cleaver falls](/images/peking-duck-3.jpg)
+![Whole Peking Duck — presentation before the cleaver falls](/images/peking-duck-3.jpg?v=2)
 
 ## The Bones Get a Second Life
 
@@ -56,7 +56,7 @@ Here are the tells. The skin is flabby and pale, Band-Aid-colored. The meat tast
 
 If the skin doesn't shatter when you bite it, send it back. If the pancakes aren't translucent, send it back. If the duck wasn't carved in front of you — the skin loses its crackle within minutes of leaving the carcass — you're not eating Peking Duck. You're eating a lie.
 
-![Peking Duck — the crisp skin up close](/images/peking-duck-4.jpg)
+![Peking Duck — the crisp skin up close](/images/peking-duck-4.jpg?v=2)
 
 ## The Thing You Chase
 

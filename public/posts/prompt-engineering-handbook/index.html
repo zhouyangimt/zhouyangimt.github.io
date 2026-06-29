@@ -1,96 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI编程工具链：Prompt Engineering 实战手册 | zhouyang — The 25th Frame</title>
-  <meta name="description" content="别再「帮我写个程序」了。系统化Prompt Engineering的方法论、模板和实战案例，让你的AI输出质量翻倍。">
-  <link rel="stylesheet" href="/css/style.css?v=202606291218">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>AI编程工具链：Prompt Engineering 实战手册</h1>
-    <div class="meta">
-      <time>2026-06-27</time>
-      
-      <span class="tags">
-        <span class="tag">AI</span><span class="tag">编程</span><span class="tag">工具教程</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <h2 id="你的prompt决定了ai的上限">你的Prompt，决定了AI的上限</h2>
-<p>很多人的认知还停留在「我直接告诉AI要干嘛就行了」。但实际情况是——<strong>同样的模型，不同质量的prompt，产出的代码质量差距可以有10倍以上。</strong></p>
-<p>一个真实的例子：</p>
-<blockquote>
-<p>❌ 「帮我写一个爬虫」
-✅ 「用 Python 写一个爬虫，抓取 <a href="https://example.com/news">https://example.com/news</a> 的新闻标题和链接，用 requests + BeautifulSoup，输出为 JSON 文件，需要处理异常（超时、404），加上请求间隔（3秒）避免被封。」</p>
-</blockquote>
-<p>第一个人得到的是几十行能跑但脆弱的代码。第二个人得到的是可以直接部署的生产级脚本。</p>
-<p>这就是Prompt Engineering的威力：<strong>把模糊的需求变成精确的指令。</strong></p>
-<p><img src="/images/prompt-engineering-workflow.png" alt="Prompt Engineering 工作流"></p>
-<h2 id="核心框架四步法">核心框架：四步法</h2>
-<p>我用了两年AI编程工具，总结出这套「四步法」。它能适配90%的编码场景。</p>
-<h3 id="第一步角色设定role">第一步：角色设定（Role）</h3>
-<p>告诉AI「你是谁」和「AI是谁」，建立上下文边界。</p>
-<pre tabindex="0"><code>你是一名有10年经验的Python后端工程师，擅长编写高可读性、
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI编程工具链：Prompt Engineering 实战手册 | zhouyang — The 25th Frame</title><meta name=description content="别再「帮我写个程序」了。系统化Prompt Engineering的方法论、模板和实战案例，让你的AI输出质量翻倍。"><link rel=stylesheet href="/css/style.css?v=202606290418"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：Prompt Engineering 实战手册</h1><div class=meta><time>2026-06-27</time>
+<span class=tags><span class=tag>AI</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=你的prompt决定了ai的上限>你的Prompt，决定了AI的上限</h2><p>很多人的认知还停留在「我直接告诉AI要干嘛就行了」。但实际情况是——<strong>同样的模型，不同质量的prompt，产出的代码质量差距可以有10倍以上。</strong></p><p>一个真实的例子：</p><blockquote><p>❌ 「帮我写一个爬虫」
+✅ 「用 Python 写一个爬虫，抓取 <a href=https://example.com/news>https://example.com/news</a> 的新闻标题和链接，用 requests + BeautifulSoup，输出为 JSON 文件，需要处理异常（超时、404），加上请求间隔（3秒）避免被封。」</p></blockquote><p>第一个人得到的是几十行能跑但脆弱的代码。第二个人得到的是可以直接部署的生产级脚本。</p><p>这就是Prompt Engineering的威力：<strong>把模糊的需求变成精确的指令。</strong></p><p><img src=/images/prompt-engineering-workflow.png alt="Prompt Engineering 工作流"></p><h2 id=核心框架四步法>核心框架：四步法</h2><p>我用了两年AI编程工具，总结出这套「四步法」。它能适配90%的编码场景。</p><h3 id=第一步角色设定role>第一步：角色设定（Role）</h3><p>告诉AI「你是谁」和「AI是谁」，建立上下文边界。</p><pre tabindex=0><code>你是一名有10年经验的Python后端工程师，擅长编写高可读性、
 可维护的代码。你的代码风格遵循 PEP 8，并且你会主动添加
 类型注解和 docstring。
-</code></pre><p><strong>为什么有效？</strong> AI模型的训练数据中，特定角色的输出质量远高于通用输出。「Senior Engineer」这个角色对应的训练样本本身就是高质量的。</p>
-<h3 id="第二步任务拆解task-decomposition">第二步：任务拆解（Task Decomposition）</h3>
-<p>大任务拆成小任务，逐个击破。</p>
-<blockquote>
-<p>❌ 「用React写一个电商网站」
-✅ 「请分步骤完成以下任务：</p>
-<ol>
-<li>创建商品列表组件，支持分页</li>
-<li>实现购物车状态管理（zustand）</li>
-<li>添加搜索栏（防抖500ms）</li>
-<li>集成支付Mock接口
-每完成一步，先让我确认再继续。」</li>
-</ol>
-</blockquote>
-<p><strong>一个prompt只做一件事。</strong> AI在单次对话中的注意力是有限的——任务越多，每个任务的质量就越低。</p>
-<h3 id="第三步约束与范例constraints--examples">第三步：约束与范例（Constraints &amp; Examples）</h3>
-<p>这可能是最被低估的一步。</p>
-<pre tabindex="0"><code>要求：
+</code></pre><p><strong>为什么有效？</strong> AI模型的训练数据中，特定角色的输出质量远高于通用输出。「Senior Engineer」这个角色对应的训练样本本身就是高质量的。</p><h3 id=第二步任务拆解task-decomposition>第二步：任务拆解（Task Decomposition）</h3><p>大任务拆成小任务，逐个击破。</p><blockquote><p>❌ 「用React写一个电商网站」
+✅ 「请分步骤完成以下任务：</p><ol><li>创建商品列表组件，支持分页</li><li>实现购物车状态管理（zustand）</li><li>添加搜索栏（防抖500ms）</li><li>集成支付Mock接口
+每完成一步，先让我确认再继续。」</li></ol></blockquote><p><strong>一个prompt只做一件事。</strong> AI在单次对话中的注意力是有限的——任务越多，每个任务的质量就越低。</p><h3 id=第三步约束与范例constraints--examples>第三步：约束与范例（Constraints & Examples）</h3><p>这可能是最被低估的一步。</p><pre tabindex=0><code>要求：
 - 使用 Python 3.11+
 - 依赖：requests, pydantic v2
 - 所有函数必须有类型注解
@@ -106,7 +30,7 @@ def fetch_data(url: str, timeout: int = 10) -&gt; dict[str, Any]:
         return resp.json()
     except requests.RequestException as e:
         raise DataFetchError(f&#34;Failed to fetch {url}: {e}&#34;)
-</code></pre><pre tabindex="0"><code>
+</code></pre><pre tabindex=0><code>
 **给AI看一段你满意的代码，比花500字描述风格要求更有效。**
 
 ### 第四步：产出规格（Output Spec）
@@ -114,20 +38,17 @@ def fetch_data(url: str, timeout: int = 10) -&gt; dict[str, Any]:
 明确告诉AI「输出成什么样」。
 </code></pre><p>请输出以下文件结构：
 src/
-├── fetcher.py    # 数据抓取模块
-├── parser.py     # 数据解析模块
-├── models.py     # Pydantic 模型
-└── main.py       # 入口，命令行参数支持</p>
-<p>每个文件的完整代码，加上注释。</p>
-<pre tabindex="0"><code>
+├── fetcher.py # 数据抓取模块
+├── parser.py # 数据解析模块
+├── models.py # Pydantic 模型
+└── main.py # 入口，命令行参数支持</p><p>每个文件的完整代码，加上注释。</p><pre tabindex=0><code>
 ## 进阶技巧
 
 ### 1. Chain of Thought（思维链）
 
 让AI「说出思考过程」再写代码，能显著提升复杂逻辑的准确率。
 </code></pre><p>请先分析这个需求涉及哪些模块和数据结构，
-列出你的设计思路，然后再写代码。</p>
-<pre tabindex="0"><code>
+列出你的设计思路，然后再写代码。</p><pre tabindex=0><code>
 这在你用 Claude Code 或 Hermes Agent 做架构设计时特别有效——它会先输出设计文档，你可以review后再让它实现。
 
 ### 2. Few-Shot（少样本提示）
@@ -135,97 +56,30 @@ src/
 给2-3个「输入→期望输出」的例子。
 </code></pre><p>示例1:
 输入: &ldquo;用户名字为空的错误&rdquo;
-输出: UserNameEmptyError(msg=&ldquo;用户名不能为空&rdquo;, code=&ldquo;E001&rdquo;)</p>
-<p>示例2:
+输出: UserNameEmptyError(msg=&ldquo;用户名不能为空&rdquo;, code=&ldquo;E001&rdquo;)</p><p>示例2:
 输入: &ldquo;API超时30秒&rdquo;
-输出: APITimeoutError(msg=&ldquo;API请求超时&rdquo;, code=&ldquo;E002&rdquo;, timeout=30)</p>
-<p>请按相同格式，为以下场景生成自定义异常类：</p>
-<ul>
-<li>数据库连接失败</li>
-<li>文件格式不支持</li>
-<li>权限不足</li>
-</ul>
-<pre tabindex="0"><code>
+输出: APITimeoutError(msg=&ldquo;API请求超时&rdquo;, code=&ldquo;E002&rdquo;, timeout=30)</p><p>请按相同格式，为以下场景生成自定义异常类：</p><ul><li>数据库连接失败</li><li>文件格式不支持</li><li>权限不足</li></ul><pre tabindex=0><code>
 ### 3. Self-Refinement（自我修正）
 
 让AI自己检查和改进输出。
-</code></pre><p>写完代码后，请做以下检查：</p>
-<ol>
-<li>是否有未处理的异常路径？</li>
-<li>是否有硬编码的魔法数字？</li>
-<li>日志是否足够诊断问题？</li>
-<li>并发场景下是否存在竞态条件？</li>
-</ol>
-<p>针对发现的问题，输出改进版代码。</p>
-<pre tabindex="0"><code>
+</code></pre><p>写完代码后，请做以下检查：</p><ol><li>是否有未处理的异常路径？</li><li>是否有硬编码的魔法数字？</li><li>日志是否足够诊断问题？</li><li>并发场景下是否存在竞态条件？</li></ol><p>针对发现的问题，输出改进版代码。</p><pre tabindex=0><code>
 ### 4. 对抗性测试
 
 让AI「攻击」自己写的代码。
 </code></pre><p>请假设你是一个恶意用户，尝试找出上面代码的安全漏洞。
 重点关注：SQL注入、XSS、路径遍历、未授权访问。
-列出所有发现的问题和修复方案。</p>
-<pre tabindex="0"><code>
+列出所有发现的问题和修复方案。</p><pre tabindex=0><code>
 ## 场景实战
 
 ### 场景一：重构遗留代码
 </code></pre><p>你是一名高级重构工程师。以下是一段遗留的Python代码。
-请完成：</p>
-<ol>
-<li>分析代码结构，指出存在哪些设计问题</li>
-<li>将全局变量重构为配置类</li>
-<li>将重复逻辑抽取为工具函数</li>
-<li>添加类型注解和单元测试框架</li>
-<li>输出重构后的完整代码</li>
-</ol>
-<p>约束：</p>
-<ul>
-<li>保持外部接口不变（向后兼容）</li>
-<li>不引入新依赖</li>
-<li>每个函数不超过30行</li>
-</ul>
-<p>[粘贴代码]</p>
-<pre tabindex="0"><code>
+请完成：</p><ol><li>分析代码结构，指出存在哪些设计问题</li><li>将全局变量重构为配置类</li><li>将重复逻辑抽取为工具函数</li><li>添加类型注解和单元测试框架</li><li>输出重构后的完整代码</li></ol><p>约束：</p><ul><li>保持外部接口不变（向后兼容）</li><li>不引入新依赖</li><li>每个函数不超过30行</li></ul><p>[粘贴代码]</p><pre tabindex=0><code>
 ### 场景二：Code Review
 </code></pre><p>请以Tech Lead的身份审查以下Pull Request。
-评审维度：</p>
-<ul>
-<li>逻辑正确性</li>
-<li>性能瓶颈</li>
-<li>安全风险</li>
-<li>可维护性</li>
-</ul>
-<p>输出格式：</p>
-<h3 id="严重问题必须修复">严重问题（必须修复）</h3>
-<h3 id="建议改进建议修复">建议改进（建议修复）</h3>
-<h3 id="优秀实践值得推广">优秀实践（值得推广）</h3>
-<p>[粘贴diff]</p>
-<pre tabindex="0"><code>
+评审维度：</p><ul><li>逻辑正确性</li><li>性能瓶颈</li><li>安全风险</li><li>可维护性</li></ul><p>输出格式：</p><h3 id=严重问题必须修复>严重问题（必须修复）</h3><h3 id=建议改进建议修复>建议改进（建议修复）</h3><h3 id=优秀实践值得推广>优秀实践（值得推广）</h3><p>[粘贴diff]</p><pre tabindex=0><code>
 ### 场景三：从零搭建项目
 </code></pre><p>我需要创建一个 FastAPI 项目，功能是「用户书签管理」。
-请帮我搭建项目骨架，包括：</p>
-<p>功能需求：</p>
-<ul>
-<li>用户注册/登录（JWT）</li>
-<li>CRUD 书签（URL + 标题 + 标签）</li>
-<li>搜索书签（按标题/标签）</li>
-</ul>
-<p>技术栈：</p>
-<ul>
-<li>FastAPI + SQLAlchemy 2.0 (async)</li>
-<li>PostgreSQL</li>
-<li>Alembic 迁移</li>
-<li>Pydantic v2</li>
-<li>pytest</li>
-</ul>
-<p>输出：</p>
-<ol>
-<li>项目目录结构</li>
-<li>所有文件的代码</li>
-<li>docker-compose.yml（含PostgreSQL）</li>
-<li>README.md</li>
-</ol>
-<p>先输出架构设计，我确认后再写代码。</p>
-<pre tabindex="0"><code>
+请帮我搭建项目骨架，包括：</p><p>功能需求：</p><ul><li>用户注册/登录（JWT）</li><li>CRUD 书签（URL + 标题 + 标签）</li><li>搜索书签（按标题/标签）</li></ul><p>技术栈：</p><ul><li>FastAPI + SQLAlchemy 2.0 (async)</li><li>PostgreSQL</li><li>Alembic 迁移</li><li>Pydantic v2</li><li>pytest</li></ul><p>输出：</p><ol><li>项目目录结构</li><li>所有文件的代码</li><li>docker-compose.yml（含PostgreSQL）</li><li>README.md</li></ol><p>先输出架构设计，我确认后再写代码。</p><pre tabindex=0><code>
 ## 常见误区
 
 | 误区 | 正确做法 |
@@ -261,34 +115,5 @@ Prompt Engineering 不是什么玄学，而是**系统化的需求表达**。核
 &gt; - 👉 Prompt Engineering 实战手册（本文）
 &gt; - [AI Debugging：让AI帮你修bug](/posts/ai-debugging-guide/)
 &gt; - 系列完结 ✅
-</code></pre>
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/python-cron-monitoring/" class="prev">← Python 自动化实战：定时任务 &amp; 监控脚本</a>
-  
-  
-  <a href="/posts/ai-debugging-guide/" class="next">AI编程工具链：AI Debugging — 让AI帮你修bug →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-</body>
-</html>
+</code></pre></div></article><nav class=post-nav><a href=/posts/python-cron-monitoring/ class=prev>← Python 自动化实战：定时任务 & 监控脚本</a>
+<a href=/posts/ai-debugging-guide/ class=next>AI编程工具链：AI Debugging — 让AI帮你修bug →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>

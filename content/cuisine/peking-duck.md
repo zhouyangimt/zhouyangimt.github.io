@@ -42,7 +42,7 @@ Now build. Lay the pancake on your palm. Smear sauce across the center — a thu
 
 Your first wrap will be clumsy. The pancake will tear, the sauce will squirt, a cucumber will escape. This is normal. The second wrap is where the religion starts.
 
-![Whole Peking Duck — presentation before the cleaver falls](/images/peking-duck-3.jpg?v=2)
+![Peking Duck — the crisp skin up close](/images/peking-duck-4.jpg?v=3)
 
 ## The Bones Get a Second Life
 
@@ -56,7 +56,7 @@ Here are the tells. The skin is flabby and pale, Band-Aid-colored. The meat tast
 
 If the skin doesn't shatter when you bite it, send it back. If the pancakes aren't translucent, send it back. If the duck wasn't carved in front of you — the skin loses its crackle within minutes of leaving the carcass — you're not eating Peking Duck. You're eating a lie.
 
-![Peking Duck — the crisp skin up close](/images/peking-duck-4.jpg?v=2)
+![Whole Peking Duck — presentation before the cleaver falls](/images/peking-duck-3.jpg?v=3)
 
 ## The Thing You Chase
 

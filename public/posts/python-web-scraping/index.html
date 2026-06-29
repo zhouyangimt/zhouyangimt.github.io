@@ -1,322 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python 自动化实战：Web Scraping 入门到实战 | zhouyang — The 25th Frame</title>
-  <meta name="description" content="从零学会用 Python 抓取网页数据——招聘信息、价格监控、竞品分析，独立开发者必备技能。">
-  <link rel="stylesheet" href="/css/style.css?v=202606291317">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>Python 自动化实战：Web Scraping 入门到实战</h1>
-    <div class="meta">
-      <time>2026-06-23</time>
-      
-      <span class="tags">
-        <span class="tag">Python</span><span class="tag">爬虫</span><span class="tag">自动化</span><span class="tag">独立开发</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <h2 id="为什么独立开发者要学爬虫">为什么独立开发者要学爬虫？</h2>
-<p>我做过的产品里，有好几个的起点都是爬虫。</p>
-<p>比如我写过一个宠物领养信息聚合站——爬了 4 个领养平台的公开信息，去重、分类、加上地理位置搜索。上线第一周零推广，纯靠搜索引擎自然流量每天 200+ 访客。因为用户确实有这个需求，而之前没人把这些信息汇总起来。</p>
-<p>还写过一个二手相机价格监控器，每天爬几个主流交易平台的特定型号价格，低于设定阈值就推通知。我自己用它在闲鱼上淘到一台 9 成新的 Sony A7M3，比市场价便宜 2000 块。</p>
-<p>爬虫不是&quot;非法抓数据&quot;——它是独立开发者的信息杠杆。你不需要爬用户隐私、不需要绕过付费墙、不需要做任何灰色地带的事。互联网上有大量<strong>合法公开的数据</strong>散落各处，没人把它们结构化、没人把它们串联起来。这就是你的机会。</p>
-<p>今天这篇文章从零开始讲 Python Web Scraping，附带两个实战案例。</p>
-<h2 id="核心流程">核心流程</h2>
-<p><img src="/images/web-scraping-flow.png" alt="爬虫工作流程"></p>
-<p>整个爬虫就四个环节：发请求 → 解析 → 提取 → 存储。任何一个爬虫项目都是这个流程的变体。</p>
-<h2 id="第一件事装库">第一件事：装库</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install requests beautifulsoup4 lxml
-</span></span></code></pre></div><ul>
-<li><code>requests</code>：发 HTTP 请求，带回网页 HTML</li>
-<li><code>beautifulsoup4</code>：把 HTML 解析成可查询的树结构</li>
-<li><code>lxml</code>：更快的解析器，soup 的底层引擎</li>
-</ul>
-<h2 id="实战一爬-github-trending">实战一：爬 GitHub Trending</h2>
-<p>第一个案例，爬 GitHub Trending 页面，拿到当天的热门仓库名、描述、Stars 数。这个页面不需要登录，反爬宽松，适合练手。</p>
-<h3 id="第一步看页面结构">第一步：看页面结构</h3>
-<p>先打开 <a href="https://github.com/trending">https://github.com/trending</a> ，按 F12 打开开发者工具，找到仓库列表的 HTML 结构。你会看到每个仓库是一个 <code>&lt;article&gt;</code> 标签，里面包含标题链接、描述、Stars 数等信息。</p>
-<h3 id="第二步写代码">第二步：写代码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> bs4 <span style="color:#f92672">import</span> BeautifulSoup
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://github.com/trending&#34;</span>
-</span></span><span style="display:flex;"><span>headers <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers)
-</span></span><span style="display:flex;"><span>soup <span style="color:#f92672">=</span> BeautifulSoup(resp<span style="color:#f92672">.</span>text, <span style="color:#e6db74">&#34;lxml&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>repos <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> article <span style="color:#f92672">in</span> soup<span style="color:#f92672">.</span>find_all(<span style="color:#e6db74">&#34;article&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Box-row&#34;</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 仓库名</span>
-</span></span><span style="display:flex;"><span>    h2 <span style="color:#f92672">=</span> article<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;h2&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;h3&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> h2:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>    repo_name <span style="color:#f92672">=</span> h2<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 描述</span>
-</span></span><span style="display:flex;"><span>    desc_tag <span style="color:#f92672">=</span> article<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;p&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-9&#34;</span>)
-</span></span><span style="display:flex;"><span>    description <span style="color:#f92672">=</span> desc_tag<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> desc_tag <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Stars</span>
-</span></span><span style="display:flex;"><span>    stars_tag <span style="color:#f92672">=</span> article<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;span&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;d-inline-block float-sm-right&#34;</span>)
-</span></span><span style="display:flex;"><span>    stars <span style="color:#f92672">=</span> stars_tag<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#66d9ef">if</span> stars_tag <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;0&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    repos<span style="color:#f92672">.</span>append({
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;name&#34;</span>: repo_name,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;description&#34;</span>: description,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;stars&#34;</span>: stars,
-</span></span><span style="display:flex;"><span>    })
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 存 CSV</span>
-</span></span><span style="display:flex;"><span>filename <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;github_trending_</span><span style="color:#e6db74">{</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">.csv&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(filename, <span style="color:#e6db74">&#34;w&#34;</span>, newline<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>    writer <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>DictWriter(f, fieldnames<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;name&#34;</span>, <span style="color:#e6db74">&#34;description&#34;</span>, <span style="color:#e6db74">&#34;stars&#34;</span>])
-</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span>writeheader()
-</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span>writerows(repos)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;抓到 </span><span style="color:#e6db74">{</span>len(repos)<span style="color:#e6db74">}</span><span style="color:#e6db74"> 个仓库，已保存到 </span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span></code></pre></div><h3 id="关键点">关键点</h3>
-<p><strong>User-Agent 必须设</strong>。GitHub 会检查这个头，不带 UA 直接返回 403。这在爬虫里是基本操作——几乎所有正经网站都会检查 UA。</p>
-<p><strong>CSS 选择器靠观察</strong>。<code>article.Box-row</code>、<code>h2.h3</code> 这些类名不是猜出来的，是打开 DevTools 看到的。写爬虫之前花 5 分钟看页面结构，比写代码重要。</p>
-<p><strong>存 CSV 而不是 print</strong>。你把数据打印到终端，下次还想用就得重新爬。存成 CSV，后面分析、画图、做产品都用得上。</p>
-<h2 id="实战二价格监控器">实战二：价格监控器</h2>
-<p>上一个案例是「一次性抓取」。但很多场景需要<strong>持续监控变化</strong>——价格、库存、更新。下面写一个简单的价格监控器。</p>
-<p>场景：监控一个产品页面的价格，价格变化时推送通知。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> bs4 <span style="color:#f92672">import</span> BeautifulSoup
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> smtplib
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://example.com/product-page&#34;</span>
-</span></span><span style="display:flex;"><span>CHECK_INTERVAL <span style="color:#f92672">=</span> <span style="color:#ae81ff">3600</span>  <span style="color:#75715e"># 每小时检查一次</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_price</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;从页面提取价格，返回 float&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0&#34;</span>}
-</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(URL, headers<span style="color:#f92672">=</span>headers, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>    soup <span style="color:#f92672">=</span> BeautifulSoup(resp<span style="color:#f92672">.</span>text, <span style="color:#e6db74">&#34;lxml&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 假设价格在 class=&#34;price&#34; 的 span 里</span>
-</span></span><span style="display:flex;"><span>    price_tag <span style="color:#f92672">=</span> soup<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;span&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> price_tag:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># &#34;¥ 1,299.00&#34; → 1299.0</span>
-</span></span><span style="display:flex;"><span>    price_text <span style="color:#f92672">=</span> price_tag<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>    price_text <span style="color:#f92672">=</span> price_text<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;¥&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> float(price_text)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_alert</span>(old_price, new_price):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;价格变化时发邮件通知&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    msg <span style="color:#f92672">=</span> MIMEText(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格变动: ¥</span><span style="color:#e6db74">{</span>old_price<span style="color:#e6db74">}</span><span style="color:#e6db74"> → ¥</span><span style="color:#e6db74">{</span>new_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>    msg[<span style="color:#e6db74">&#34;Subject&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格提醒 - </span><span style="color:#e6db74">{</span>URL<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>    msg[<span style="color:#e6db74">&#34;From&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your@email.com&#34;</span>
-</span></span><span style="display:flex;"><span>    msg[<span style="color:#e6db74">&#34;To&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your@email.com&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> smtplib<span style="color:#f92672">.</span>SMTP_SSL(<span style="color:#e6db74">&#34;smtp.qq.com&#34;</span>, <span style="color:#ae81ff">465</span>) <span style="color:#66d9ef">as</span> s:
-</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">.</span>login(<span style="color:#e6db74">&#34;your@email.com&#34;</span>, <span style="color:#e6db74">&#34;授权码&#34;</span>)
-</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">.</span>send_message(msg)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 主循环</span>
-</span></span><span style="display:flex;"><span>last_price <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>        current_price <span style="color:#f92672">=</span> get_price()
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> current_price <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;提取价格失败，等待下次检查&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> last_price <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span> <span style="color:#f92672">and</span> current_price <span style="color:#f92672">!=</span> last_price:
-</span></span><span style="display:flex;"><span>            send_alert(last_price, current_price)
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格变化: ¥</span><span style="color:#e6db74">{</span>last_price<span style="color:#e6db74">}</span><span style="color:#e6db74"> → ¥</span><span style="color:#e6db74">{</span>current_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格未变: ¥</span><span style="color:#e6db74">{</span>current_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        last_price <span style="color:#f92672">=</span> current_price
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;检查出错: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(CHECK_INTERVAL)
-</span></span></code></pre></div><p>这个脚本的逻辑很清楚：拿当前价格 → 和上次价格比较 → 有变化就通知 → 等一小时再来。你可以扔到服务器上用 <code>nohup</code> 跑，或者配上 cron 定时触发。</p>
-<h2 id="常见障碍与解法">常见障碍与解法</h2>
-<p>爬虫写着写着就会踩坑。我总结几个高频问题和解决方案：</p>
-<h3 id="1-403-forbidden--反爬拦截">1. 403 Forbidden / 反爬拦截</h3>
-<p><strong>原因</strong>：网站检测到你没有浏览器特征（UA、Cookie、Referer）。</p>
-<p><strong>解法</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>headers <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#e6db74">&#34;AppleWebKit/537.36 (KHTML, like Gecko) &#34;</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#e6db74">&#34;Chrome/120.0.0.0 Safari/537.36&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;text/html,application/xhtml+xml&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Accept-Language&#34;</span>: <span style="color:#e6db74">&#34;zh-CN,zh;q=0.9,en;q=0.8&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Referer&#34;</span>: <span style="color:#e6db74">&#34;https://www.google.com/&#34;</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>session <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
-</span></span><span style="display:flex;"><span>session<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>update(headers)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 先访问首页拿 Cookie，再访问目标页</span>
-</span></span><span style="display:flex;"><span>session<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;https://example.com&#34;</span>)
-</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;https://example.com/target-page&#34;</span>)
-</span></span></code></pre></div><p>关键技巧：<strong>先访问首页</strong>。很多网站的 Cookie 是在首页种的，带着 Cookie 再请求目标页就不会被拦。</p>
-<h3 id="2-页面内容是-js-渲染的">2. 页面内容是 JS 渲染的</h3>
-<p><strong>症状</strong>：<code>requests.get()</code> 拿到的 HTML 里没有数据，但在浏览器里能看到。</p>
-<p><strong>判断方法</strong>：<code>print(resp.text[:500])</code> 看看 HTML 里有没有你要的数据。如果只有空壳和 <code>&lt;script&gt;</code> 标签，那就是 JS 渲染的问题。</p>
-<p><strong>解法</strong>：用 Playwright 或 Selenium 模拟浏览器：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> playwright.sync_api <span style="color:#f92672">import</span> sync_playwright
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> sync_playwright() <span style="color:#66d9ef">as</span> p:
-</span></span><span style="display:flex;"><span>    browser <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>chromium<span style="color:#f92672">.</span>launch(headless<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>    page <span style="color:#f92672">=</span> browser<span style="color:#f92672">.</span>new_page()
-</span></span><span style="display:flex;"><span>    page<span style="color:#f92672">.</span>goto(<span style="color:#e6db74">&#34;https://spa-website.com&#34;</span>)
-</span></span><span style="display:flex;"><span>    page<span style="color:#f92672">.</span>wait_for_selector(<span style="color:#e6db74">&#34;.data-loaded&#34;</span>)  <span style="color:#75715e"># 等数据加载完</span>
-</span></span><span style="display:flex;"><span>    html <span style="color:#f92672">=</span> page<span style="color:#f92672">.</span>content()
-</span></span><span style="display:flex;"><span>    soup <span style="color:#f92672">=</span> BeautifulSoup(html, <span style="color:#e6db74">&#34;lxml&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 后续解析正常进行</span>
-</span></span></code></pre></div><p>Playwright 比 Selenium 快，API 更现代。代价是比纯 requests 慢很多——一个页面 2-5 秒 vs 0.2 秒。</p>
-<h3 id="3-请求太频繁被限流">3. 请求太频繁被限流</h3>
-<p><strong>解法</strong>：加延迟 + 随机抖动。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>time<span style="color:#f92672">.</span>sleep(random<span style="color:#f92672">.</span>uniform(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>))  <span style="color:#75715e"># 随机等 2-5 秒</span>
-</span></span></code></pre></div><p>不要用固定间隔。<code>time.sleep(3)</code> 是明显的机器人特征，<code>random.uniform(2, 5)</code> 更像人类。</p>
-<h3 id="4-数据存哪">4. 数据存哪？</h3>
-<p>三个选择，从简单到复杂：</p>
-<table>
-	<thead>
-			<tr>
-					<th>方案</th>
-					<th>适用场景</th>
-					<th>容量</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>JSON 文件</td>
-					<td>少量数据、快速原型</td>
-					<td>&lt; 1万条</td>
-			</tr>
-			<tr>
-					<td>CSV 文件</td>
-					<td>表格数据、Excel 分析</td>
-					<td>&lt; 10万条</td>
-			</tr>
-			<tr>
-					<td>SQLite</td>
-					<td>需要查询过滤、持续采集</td>
-					<td>&gt; 10万条</td>
-			</tr>
-	</tbody>
-</table>
-<p>SQLite 是 Python 标准库自带的，一行配置都不用写：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sqlite3
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>conn <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#34;scraped_data.db&#34;</span>)
-</span></span><span style="display:flex;"><span>conn<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    CREATE TABLE IF NOT EXISTS prices (
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        id INTEGER PRIMARY KEY AUTOINCREMENT,
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        url TEXT,
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        price REAL,
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        checked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    )
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
-</span></span><span style="display:flex;"><span>conn<span style="color:#f92672">.</span>execute(
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;INSERT INTO prices (url, price) VALUES (?, ?)&#34;</span>,
-</span></span><span style="display:flex;"><span>    (URL, current_price)
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>conn<span style="color:#f92672">.</span>commit()
-</span></span></code></pre></div><p>我自己的数据项目超过一周的采集基本都切到 SQLite，不用操心 MySQL/PostgreSQL 的配置和维护。</p>
-<h2 id="爬虫的边界">爬虫的边界</h2>
-<p>写到最后必须聊这件事。我做爬虫有一条底线：<strong>只爬公开数据，不绕过付费墙，不碰用户隐私</strong>。</p>
-<p>具体来说：</p>
-<ul>
-<li>✅ 爬取公开的列表页、产品页、文章页</li>
-<li>✅ 用于信息聚合、个人分析、价格监控</li>
-<li>❌ 绕过登录才能看到的内容</li>
-<li>❌ 大量爬取并原样转载（版权问题）</li>
-<li>❌ 把爬取的用户数据用于商业用途</li>
-</ul>
-<p>访问 <code>网站.com/robots.txt</code> 看看网站的爬虫规则。遵守 <code>Disallow</code> 指令，设置合理的请求间隔。做一个有礼貌的爬虫。</p>
-<p>另外，如果网站有公开 API，<strong>优先用 API 而不是爬页面</strong>。API 更稳定、解析更轻松、不会因为页面改版而挂掉。很多网站（GitHub、Reddit、各种开放数据平台）都有免费 API。爬虫是最后手段，不是第一选择。</p>
-<h2 id="从这里开始">从这里开始</h2>
-<p>这两个案例——GitHub Trending 和价格监控——覆盖了爬虫 80% 的场景。剩下的是你具体要爬什么、解析什么、怎么存的问题。</p>
-<p>建议今天就动手：找一个你经常手动查看的网页（产品页、列表页、排行榜），写 30 行代码让它自动抓下来。第一个脚本可能丑、可能慢、可能只跑一次就挂了——没关系，跑起来就是胜利。</p>
-<p>下一篇我会继续这个系列，讲 <strong>API 自动化</strong>——如何调用 50+ 免费 API 来增强你的产品。很多数据其实不需要爬，直接调 API 更干净。</p>
-<hr>
-<p><strong>系列导航</strong>：<a href="/posts/python-automation-daily-tasks/">01 日常任务自动化</a> | <strong>02 Web Scraping 实战</strong> | <a href="/posts/python-api-automation/">03 API 自动化</a></p>
-<p><em>Python 自动化实战系列，下一篇：API 自动化——把你产品接上 50+ 免费数据源。</em></p>
-
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/hermes-agent-workflow/" class="prev">← Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</a>
-  
-  
-  <a href="/posts/python-api-automation/" class="next">Python 自动化实战：API 自动化——调用50&#43;免费API →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-</body>
-</html>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Python 自动化实战：Web Scraping 入门到实战 | zhouyang — The 25th Frame</title><meta name=description content="从零学会用 Python 抓取网页数据——招聘信息、价格监控、竞品分析，独立开发者必备技能。"><link rel=stylesheet href="/css/style.css?v=202606290518"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Python 自动化实战：Web Scraping 入门到实战</h1><div class=meta><time>2026-06-23</time>
+<span class=tags><span class=tag>Python</span><span class=tag>爬虫</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><h2 id=为什么独立开发者要学爬虫>为什么独立开发者要学爬虫？</h2><p>我做过的产品里，有好几个的起点都是爬虫。</p><p>比如我写过一个宠物领养信息聚合站——爬了 4 个领养平台的公开信息，去重、分类、加上地理位置搜索。上线第一周零推广，纯靠搜索引擎自然流量每天 200+ 访客。因为用户确实有这个需求，而之前没人把这些信息汇总起来。</p><p>还写过一个二手相机价格监控器，每天爬几个主流交易平台的特定型号价格，低于设定阈值就推通知。我自己用它在闲鱼上淘到一台 9 成新的 Sony A7M3，比市场价便宜 2000 块。</p><p>爬虫不是"非法抓数据"——它是独立开发者的信息杠杆。你不需要爬用户隐私、不需要绕过付费墙、不需要做任何灰色地带的事。互联网上有大量<strong>合法公开的数据</strong>散落各处，没人把它们结构化、没人把它们串联起来。这就是你的机会。</p><p>今天这篇文章从零开始讲 Python Web Scraping，附带两个实战案例。</p><h2 id=核心流程>核心流程</h2><p><img src=/images/web-scraping-flow.png alt=爬虫工作流程></p><p>整个爬虫就四个环节：发请求 → 解析 → 提取 → 存储。任何一个爬虫项目都是这个流程的变体。</p><h2 id=第一件事装库>第一件事：装库</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install requests beautifulsoup4 lxml
+</span></span></code></pre></div><ul><li><code>requests</code>：发 HTTP 请求，带回网页 HTML</li><li><code>beautifulsoup4</code>：把 HTML 解析成可查询的树结构</li><li><code>lxml</code>：更快的解析器，soup 的底层引擎</li></ul><h2 id=实战一爬-github-trending>实战一：爬 GitHub Trending</h2><p>第一个案例，爬 GitHub Trending 页面，拿到当天的热门仓库名、描述、Stars 数。这个页面不需要登录，反爬宽松，适合练手。</p><h3 id=第一步看页面结构>第一步：看页面结构</h3><p>先打开 <a href=https://github.com/trending>https://github.com/trending</a> ，按 F12 打开开发者工具，找到仓库列表的 HTML 结构。你会看到每个仓库是一个 <code>&lt;article></code> 标签，里面包含标题链接、描述、Stars 数等信息。</p><h3 id=第二步写代码>第二步：写代码</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> bs4 <span style=color:#f92672>import</span> BeautifulSoup
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> csv
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://github.com/trending&#34;</span>
+</span></span><span style=display:flex><span>headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;User-Agent&#34;</span>: <span style=color:#e6db74>&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, headers<span style=color:#f92672>=</span>headers)
+</span></span><span style=display:flex><span>soup <span style=color:#f92672>=</span> BeautifulSoup(resp<span style=color:#f92672>.</span>text, <span style=color:#e6db74>&#34;lxml&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>repos <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> article <span style=color:#f92672>in</span> soup<span style=color:#f92672>.</span>find_all(<span style=color:#e6db74>&#34;article&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Box-row&#34;</span>):
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 仓库名</span>
+</span></span><span style=display:flex><span>    h2 <span style=color:#f92672>=</span> article<span style=color:#f92672>.</span>find(<span style=color:#e6db74>&#34;h2&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;h3&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> h2:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>    repo_name <span style=color:#f92672>=</span> h2<span style=color:#f92672>.</span>get_text(strip<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34; &#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 描述</span>
+</span></span><span style=display:flex><span>    desc_tag <span style=color:#f92672>=</span> article<span style=color:#f92672>.</span>find(<span style=color:#e6db74>&#34;p&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;col-9&#34;</span>)
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> desc_tag<span style=color:#f92672>.</span>get_text(strip<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>) <span style=color:#66d9ef>if</span> desc_tag <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Stars</span>
+</span></span><span style=display:flex><span>    stars_tag <span style=color:#f92672>=</span> article<span style=color:#f92672>.</span>find(<span style=color:#e6db74>&#34;span&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;d-inline-block float-sm-right&#34;</span>)
+</span></span><span style=display:flex><span>    stars <span style=color:#f92672>=</span> stars_tag<span style=color:#f92672>.</span>get_text(strip<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>) <span style=color:#66d9ef>if</span> stars_tag <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#34;0&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    repos<span style=color:#f92672>.</span>append({
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;name&#34;</span>: repo_name,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;description&#34;</span>: description,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;stars&#34;</span>: stars,
+</span></span><span style=display:flex><span>    })
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 存 CSV</span>
+</span></span><span style=display:flex><span>filename <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;github_trending_</span><span style=color:#e6db74>{</span>datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y%m</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>.csv&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>with</span> open(filename, <span style=color:#e6db74>&#34;w&#34;</span>, newline<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>, encoding<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;utf-8&#34;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>    writer <span style=color:#f92672>=</span> csv<span style=color:#f92672>.</span>DictWriter(f, fieldnames<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;name&#34;</span>, <span style=color:#e6db74>&#34;description&#34;</span>, <span style=color:#e6db74>&#34;stars&#34;</span>])
+</span></span><span style=display:flex><span>    writer<span style=color:#f92672>.</span>writeheader()
+</span></span><span style=display:flex><span>    writer<span style=color:#f92672>.</span>writerows(repos)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;抓到 </span><span style=color:#e6db74>{</span>len(repos)<span style=color:#e6db74>}</span><span style=color:#e6db74> 个仓库，已保存到 </span><span style=color:#e6db74>{</span>filename<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span></code></pre></div><h3 id=关键点>关键点</h3><p><strong>User-Agent 必须设</strong>。GitHub 会检查这个头，不带 UA 直接返回 403。这在爬虫里是基本操作——几乎所有正经网站都会检查 UA。</p><p><strong>CSS 选择器靠观察</strong>。<code>article.Box-row</code>、<code>h2.h3</code> 这些类名不是猜出来的，是打开 DevTools 看到的。写爬虫之前花 5 分钟看页面结构，比写代码重要。</p><p><strong>存 CSV 而不是 print</strong>。你把数据打印到终端，下次还想用就得重新爬。存成 CSV，后面分析、画图、做产品都用得上。</p><h2 id=实战二价格监控器>实战二：价格监控器</h2><p>上一个案例是「一次性抓取」。但很多场景需要<strong>持续监控变化</strong>——价格、库存、更新。下面写一个简单的价格监控器。</p><p>场景：监控一个产品页面的价格，价格变化时推送通知。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> bs4 <span style=color:#f92672>import</span> BeautifulSoup
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> hashlib
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> smtplib
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> email.mime.text <span style=color:#f92672>import</span> MIMEText
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>URL <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://example.com/product-page&#34;</span>
+</span></span><span style=display:flex><span>CHECK_INTERVAL <span style=color:#f92672>=</span> <span style=color:#ae81ff>3600</span>  <span style=color:#75715e># 每小时检查一次</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_price</span>():
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;从页面提取价格，返回 float&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;User-Agent&#34;</span>: <span style=color:#e6db74>&#34;Mozilla/5.0&#34;</span>}
+</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(URL, headers<span style=color:#f92672>=</span>headers, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>    soup <span style=color:#f92672>=</span> BeautifulSoup(resp<span style=color:#f92672>.</span>text, <span style=color:#e6db74>&#34;lxml&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 假设价格在 class=&#34;price&#34; 的 span 里</span>
+</span></span><span style=display:flex><span>    price_tag <span style=color:#f92672>=</span> soup<span style=color:#f92672>.</span>find(<span style=color:#e6db74>&#34;span&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;price&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> price_tag:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># &#34;¥ 1,299.00&#34; → 1299.0</span>
+</span></span><span style=display:flex><span>    price_text <span style=color:#f92672>=</span> price_tag<span style=color:#f92672>.</span>get_text(strip<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>    price_text <span style=color:#f92672>=</span> price_text<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;¥&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;,&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34; &#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> float(price_text)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>send_alert</span>(old_price, new_price):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;价格变化时发邮件通知&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    msg <span style=color:#f92672>=</span> MIMEText(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格变动: ¥</span><span style=color:#e6db74>{</span>old_price<span style=color:#e6db74>}</span><span style=color:#e6db74> → ¥</span><span style=color:#e6db74>{</span>new_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    msg[<span style=color:#e6db74>&#34;Subject&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格提醒 - </span><span style=color:#e6db74>{</span>URL<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>    msg[<span style=color:#e6db74>&#34;From&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;your@email.com&#34;</span>
+</span></span><span style=display:flex><span>    msg[<span style=color:#e6db74>&#34;To&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;your@email.com&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> smtplib<span style=color:#f92672>.</span>SMTP_SSL(<span style=color:#e6db74>&#34;smtp.qq.com&#34;</span>, <span style=color:#ae81ff>465</span>) <span style=color:#66d9ef>as</span> s:
+</span></span><span style=display:flex><span>        s<span style=color:#f92672>.</span>login(<span style=color:#e6db74>&#34;your@email.com&#34;</span>, <span style=color:#e6db74>&#34;授权码&#34;</span>)
+</span></span><span style=display:flex><span>        s<span style=color:#f92672>.</span>send_message(msg)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 主循环</span>
+</span></span><span style=display:flex><span>last_price <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        current_price <span style=color:#f92672>=</span> get_price()
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> current_price <span style=color:#f92672>is</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>&#34;提取价格失败，等待下次检查&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> last_price <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span> <span style=color:#f92672>and</span> current_price <span style=color:#f92672>!=</span> last_price:
+</span></span><span style=display:flex><span>            send_alert(last_price, current_price)
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格变化: ¥</span><span style=color:#e6db74>{</span>last_price<span style=color:#e6db74>}</span><span style=color:#e6db74> → ¥</span><span style=color:#e6db74>{</span>current_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格未变: ¥</span><span style=color:#e6db74>{</span>current_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        last_price <span style=color:#f92672>=</span> current_price
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;检查出错: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    time<span style=color:#f92672>.</span>sleep(CHECK_INTERVAL)
+</span></span></code></pre></div><p>这个脚本的逻辑很清楚：拿当前价格 → 和上次价格比较 → 有变化就通知 → 等一小时再来。你可以扔到服务器上用 <code>nohup</code> 跑，或者配上 cron 定时触发。</p><h2 id=常见障碍与解法>常见障碍与解法</h2><p>爬虫写着写着就会踩坑。我总结几个高频问题和解决方案：</p><h3 id=1-403-forbidden--反爬拦截>1. 403 Forbidden / 反爬拦截</h3><p><strong>原因</strong>：网站检测到你没有浏览器特征（UA、Cookie、Referer）。</p><p><strong>解法</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;User-Agent&#34;</span>: <span style=color:#e6db74>&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
+</span></span><span style=display:flex><span>                  <span style=color:#e6db74>&#34;AppleWebKit/537.36 (KHTML, like Gecko) &#34;</span>
+</span></span><span style=display:flex><span>                  <span style=color:#e6db74>&#34;Chrome/120.0.0.0 Safari/537.36&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Accept&#34;</span>: <span style=color:#e6db74>&#34;text/html,application/xhtml+xml&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Accept-Language&#34;</span>: <span style=color:#e6db74>&#34;zh-CN,zh;q=0.9,en;q=0.8&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Referer&#34;</span>: <span style=color:#e6db74>&#34;https://www.google.com/&#34;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>session <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>Session()
+</span></span><span style=display:flex><span>session<span style=color:#f92672>.</span>headers<span style=color:#f92672>.</span>update(headers)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 先访问首页拿 Cookie，再访问目标页</span>
+</span></span><span style=display:flex><span>session<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;https://example.com&#34;</span>)
+</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> session<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;https://example.com/target-page&#34;</span>)
+</span></span></code></pre></div><p>关键技巧：<strong>先访问首页</strong>。很多网站的 Cookie 是在首页种的，带着 Cookie 再请求目标页就不会被拦。</p><h3 id=2-页面内容是-js-渲染的>2. 页面内容是 JS 渲染的</h3><p><strong>症状</strong>：<code>requests.get()</code> 拿到的 HTML 里没有数据，但在浏览器里能看到。</p><p><strong>判断方法</strong>：<code>print(resp.text[:500])</code> 看看 HTML 里有没有你要的数据。如果只有空壳和 <code>&lt;script></code> 标签，那就是 JS 渲染的问题。</p><p><strong>解法</strong>：用 Playwright 或 Selenium 模拟浏览器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> playwright.sync_api <span style=color:#f92672>import</span> sync_playwright
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>with</span> sync_playwright() <span style=color:#66d9ef>as</span> p:
+</span></span><span style=display:flex><span>    browser <span style=color:#f92672>=</span> p<span style=color:#f92672>.</span>chromium<span style=color:#f92672>.</span>launch(headless<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>    page <span style=color:#f92672>=</span> browser<span style=color:#f92672>.</span>new_page()
+</span></span><span style=display:flex><span>    page<span style=color:#f92672>.</span>goto(<span style=color:#e6db74>&#34;https://spa-website.com&#34;</span>)
+</span></span><span style=display:flex><span>    page<span style=color:#f92672>.</span>wait_for_selector(<span style=color:#e6db74>&#34;.data-loaded&#34;</span>)  <span style=color:#75715e># 等数据加载完</span>
+</span></span><span style=display:flex><span>    html <span style=color:#f92672>=</span> page<span style=color:#f92672>.</span>content()
+</span></span><span style=display:flex><span>    soup <span style=color:#f92672>=</span> BeautifulSoup(html, <span style=color:#e6db74>&#34;lxml&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 后续解析正常进行</span>
+</span></span></code></pre></div><p>Playwright 比 Selenium 快，API 更现代。代价是比纯 requests 慢很多——一个页面 2-5 秒 vs 0.2 秒。</p><h3 id=3-请求太频繁被限流>3. 请求太频繁被限流</h3><p><strong>解法</strong>：加延迟 + 随机抖动。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>time<span style=color:#f92672>.</span>sleep(random<span style=color:#f92672>.</span>uniform(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>5</span>))  <span style=color:#75715e># 随机等 2-5 秒</span>
+</span></span></code></pre></div><p>不要用固定间隔。<code>time.sleep(3)</code> 是明显的机器人特征，<code>random.uniform(2, 5)</code> 更像人类。</p><h3 id=4-数据存哪>4. 数据存哪？</h3><p>三个选择，从简单到复杂：</p><table><thead><tr><th>方案</th><th>适用场景</th><th>容量</th></tr></thead><tbody><tr><td>JSON 文件</td><td>少量数据、快速原型</td><td>&lt; 1万条</td></tr><tr><td>CSV 文件</td><td>表格数据、Excel 分析</td><td>&lt; 10万条</td></tr><tr><td>SQLite</td><td>需要查询过滤、持续采集</td><td>> 10万条</td></tr></tbody></table><p>SQLite 是 Python 标准库自带的，一行配置都不用写：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> sqlite3
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>conn <span style=color:#f92672>=</span> sqlite3<span style=color:#f92672>.</span>connect(<span style=color:#e6db74>&#34;scraped_data.db&#34;</span>)
+</span></span><span style=display:flex><span>conn<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    CREATE TABLE IF NOT EXISTS prices (
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        id INTEGER PRIMARY KEY AUTOINCREMENT,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        url TEXT,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        price REAL,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        checked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    )
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>)
+</span></span><span style=display:flex><span>conn<span style=color:#f92672>.</span>execute(
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;INSERT INTO prices (url, price) VALUES (?, ?)&#34;</span>,
+</span></span><span style=display:flex><span>    (URL, current_price)
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>conn<span style=color:#f92672>.</span>commit()
+</span></span></code></pre></div><p>我自己的数据项目超过一周的采集基本都切到 SQLite，不用操心 MySQL/PostgreSQL 的配置和维护。</p><h2 id=爬虫的边界>爬虫的边界</h2><p>写到最后必须聊这件事。我做爬虫有一条底线：<strong>只爬公开数据，不绕过付费墙，不碰用户隐私</strong>。</p><p>具体来说：</p><ul><li>✅ 爬取公开的列表页、产品页、文章页</li><li>✅ 用于信息聚合、个人分析、价格监控</li><li>❌ 绕过登录才能看到的内容</li><li>❌ 大量爬取并原样转载（版权问题）</li><li>❌ 把爬取的用户数据用于商业用途</li></ul><p>访问 <code>网站.com/robots.txt</code> 看看网站的爬虫规则。遵守 <code>Disallow</code> 指令，设置合理的请求间隔。做一个有礼貌的爬虫。</p><p>另外，如果网站有公开 API，<strong>优先用 API 而不是爬页面</strong>。API 更稳定、解析更轻松、不会因为页面改版而挂掉。很多网站（GitHub、Reddit、各种开放数据平台）都有免费 API。爬虫是最后手段，不是第一选择。</p><h2 id=从这里开始>从这里开始</h2><p>这两个案例——GitHub Trending 和价格监控——覆盖了爬虫 80% 的场景。剩下的是你具体要爬什么、解析什么、怎么存的问题。</p><p>建议今天就动手：找一个你经常手动查看的网页（产品页、列表页、排行榜），写 30 行代码让它自动抓下来。第一个脚本可能丑、可能慢、可能只跑一次就挂了——没关系，跑起来就是胜利。</p><p>下一篇我会继续这个系列，讲 <strong>API 自动化</strong>——如何调用 50+ 免费 API 来增强你的产品。很多数据其实不需要爬，直接调 API 更干净。</p><hr><p><strong>系列导航</strong>：<a href=/posts/python-automation-daily-tasks/>01 日常任务自动化</a> | <strong>02 Web Scraping 实战</strong> | <a href=/posts/python-api-automation/>03 API 自动化</a></p><p><em>Python 自动化实战系列，下一篇：API 自动化——把你产品接上 50+ 免费数据源。</em></p></div></article><nav class=post-nav><a href=/posts/hermes-agent-workflow/ class=prev>← Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流</a>
+<a href=/posts/python-api-automation/ class=next>Python 自动化实战：API 自动化——调用50+免费API →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>

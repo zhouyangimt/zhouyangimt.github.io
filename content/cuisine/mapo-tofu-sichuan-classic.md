@@ -65,4 +65,4 @@ Fifteen minutes from wok to table. One of the fastest serious dishes in Chinese 
 
 ---
 
-*Ready for more? Read about [Kung Pao Chicken](/cuisine/kung-pao-chicken/) — another Sichuan classic with a diplomat's name and an electric bite.*
+*Want to cook this? Here's our step-by-step [Mapo Tofu recipe](/cuisine/mapo-tofu-recipe/).*

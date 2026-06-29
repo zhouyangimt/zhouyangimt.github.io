@@ -71,4 +71,4 @@ The first time I ate this dish properly was 2014 — I was 23, two years into my
 
 ---
 
-*Like this? Try our [Mapo Tofu](/cuisine/mapo-tofu-sichuan-classic/) for the dish that shares this one's辣椒花椒 DNA. Or our [Dan Dan Noodles](/cuisine/dan-dan-noodles/) for another Chengdu street icon.*
+*Want to cook this? Here's our step-by-step [Sichuan Boiled Fish recipe](/cuisine/sichuan-boiled-fish-recipe/).*

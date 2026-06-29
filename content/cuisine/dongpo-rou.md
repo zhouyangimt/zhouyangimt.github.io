@@ -76,4 +76,4 @@ Between bites, drink hot tea. Tieguanyin oolong cuts through the fat better than
 
 ---
 
-*Next in the Hangzhou series: West Lake Vinegar Fish, a dish so delicate it's served on a bed of lotus leaves. Coming soon.*
+*Want to cook this? Here's our step-by-step [Dongpo Pork recipe](/cuisine/dongpo-rou-recipe/).*

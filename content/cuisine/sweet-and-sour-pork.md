@@ -67,4 +67,4 @@ That last piece, sitting in the final spoonful of sauce, is the best one. The ba
 
 ---
 
-*Try our [Char Siu feature](/cuisine/char-siu/) for another Cantonese classic. Or our [Kung Pao Chicken](/cuisine/kung-pao-chicken/) for a different kind of heat.*
+*Want to cook this? Here's our step-by-step [Sweet and Sour Pork recipe](/cuisine/sweet-and-sour-pork-recipe/).*

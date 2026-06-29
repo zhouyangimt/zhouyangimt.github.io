@@ -1,333 +1,847 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Python 自动化实战：API 自动化——调用50+免费API | zhouyang — The 25th Frame</title><meta name=description content="不用爬虫也能拿到海量数据——天气、汇率、新闻、AI大模型、图片搜索，50+免费API让你的产品能力翻倍。"><link rel=stylesheet href="/css/style.css?v=202606290135"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
-<a href=/posts/>Tech</a>
-<a href=/cuisine/>Chinese Cuisine</a>
-<a href=/tea/>🍵 Tea</a>
-<a href=/baijiu/>🥃 Baijiu</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<span class=rss-links><span class=rss-label>RSS</span>
-<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Python 自动化实战：API 自动化——调用50+免费API</h1><div class=meta><time>2026-06-24</time>
-<span class=tags><span class=tag>Python</span><span class=tag>API</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><h2 id=为什么你应该优先用-api-而不是爬虫>为什么你应该优先用 API 而不是爬虫？</h2><p>上篇文章讲了 Web Scraping，结尾我留了一句话：<strong>如果网站有公开 API，优先用 API 而不是爬页面</strong>。</p><p>这不是敷衍。我做独立开发这几年，在 API 和爬虫之间来回横跳过太多次，教训深刻。</p><p>说一个真实例子：2024 年我写了个币圈信息聚合器，一开始爬了三个交易所的页面。每个页面结构不一样，写解析逻辑就花了两天。上线两周后，其中一家改了 CSS class 名，数据全挂了。连夜修兼容，刚修好，另一家加了 Cloudflare 盾。那一刻我真的想砸键盘。</p><p>后来发现这些交易所都有公开 API，免费，还带文档。切过去只花了半天，之后再也没挂过。</p><p>API 和爬虫的核心区别：</p><table><thead><tr><th></th><th>API</th><th>爬虫</th></tr></thead><tbody><tr><td>稳定性</td><td>契约保证，极少变动</td><td>随时会挂</td></tr><tr><td>数据结构</td><td>直接返回 JSON</td><td>需要自己解析 HTML</td></tr><tr><td>反爬风险</td><td>无</td><td>有</td></tr><tr><td>速度</td><td>快（几十ms）</td><td>慢（几百ms以上）</td></tr><tr><td>上手门槛</td><td>需要读文档</td><td>需要懂 HTML/CSS 选择器</td></tr></tbody></table><p>这篇文章教你用 Python 调动 50+ 免费 API，附带完整代码。更重要的是，教你建立一套<strong>通用的 API 调用框架</strong>——以后碰到任何新 API，10 分钟内就能接上。</p><h2 id=api-调用的通用流程>API 调用的通用流程</h2><p><img src=/images/api-automation-flow.png alt="API 调用流程图"></p><p>不管什么 API，核心就是上面这个流程。新手最容易卡在第三步"读文档"直接跳过——拿到 API key 就开始瞎试。我吃过这个亏，所以多说一句：<strong>花 5 分钟读文档比调试 2 小时划算一万倍</strong>。</p><h2 id=基础篇requests-三板斧>基础篇：requests 三板斧</h2><p>Python 调 API 的核心库就一个——<code>requests</code>。不需要装第三方 SDK，标准 HTTP 库足够覆盖 95% 的场景。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install requests
-</span></span></code></pre></div><p>三个最常用的模式：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 1. GET 请求（拿数据）</span>
-</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https://api.example.com/data&#34;</span>,
-</span></span><span style=display:flex><span>    headers<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Authorization&#34;</span>: <span style=color:#e6db74>&#34;Bearer YOUR_API_KEY&#34;</span>},
-</span></span><span style=display:flex><span>    params<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;page&#34;</span>: <span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#34;limit&#34;</span>: <span style=color:#ae81ff>20</span>}  <span style=color:#75715e># 查询参数</span>
-</span></span><span style=display:flex><span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 2. POST 请求（提交数据）</span>
-</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https://api.example.com/create&#34;</span>,
-</span></span><span style=display:flex><span>    headers<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Authorization&#34;</span>: <span style=color:#e6db74>&#34;Bearer YOUR_API_KEY&#34;</span>},
-</span></span><span style=display:flex><span>    json<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;test&#34;</span>, <span style=color:#e6db74>&#34;value&#34;</span>: <span style=color:#ae81ff>42</span>}  <span style=color:#75715e># JSON body</span>
-</span></span><span style=display:flex><span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 3. 解析响应</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> resp<span style=color:#f92672>.</span>status_code <span style=color:#f92672>==</span> <span style=color:#ae81ff>200</span>:
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()  <span style=color:#75715e># 直接拿到 dict</span>
-</span></span><span style=display:flex><span>    print(data[<span style=color:#e6db74>&#34;results&#34;</span>])
-</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;请求失败: </span><span style=color:#e6db74>{</span>resp<span style=color:#f92672>.</span>status_code<span style=color:#e6db74>}</span><span style=color:#e6db74> - </span><span style=color:#e6db74>{</span>resp<span style=color:#f92672>.</span>text<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span></code></pre></div><p>就这三板斧。GET 拿数据，POST 发数据，<code>resp.json()</code> 解析。剩下全是业务逻辑。</p><h2 id=实战一天气-api无需注册零门槛>实战一：天气 API（无需注册，零门槛）</h2><p><a href=https://open-meteo.com/>Open-Meteo</a> 是我最喜欢的免费 API——不需要注册、不需要 API Key、不限调用次数。独立开发者做天气类小工具的首选。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_weather</span>(lat, lon):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;获取指定坐标的7天天气预报&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.open-meteo.com/v1/forecast&#34;</span>
-</span></span><span style=display:flex><span>    params <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;latitude&#34;</span>: lat,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;longitude&#34;</span>: lon,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;daily&#34;</span>: [<span style=color:#e6db74>&#34;temperature_2m_max&#34;</span>, <span style=color:#e6db74>&#34;temperature_2m_min&#34;</span>,
-</span></span><span style=display:flex><span>                   <span style=color:#e6db74>&#34;precipitation_sum&#34;</span>, <span style=color:#e6db74>&#34;weathercode&#34;</span>],
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;timezone&#34;</span>: <span style=color:#e6db74>&#34;Asia/Shanghai&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;forecast_days&#34;</span>: <span style=color:#ae81ff>7</span>
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, params<span style=color:#f92672>=</span>params)
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📍 坐标 (</span><span style=color:#e6db74>{</span>lat<span style=color:#e6db74>}</span><span style=color:#e6db74>, </span><span style=color:#e6db74>{</span>lon<span style=color:#e6db74>}</span><span style=color:#e6db74>) 未来7天预报：&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> i, date <span style=color:#f92672>in</span> enumerate(data[<span style=color:#e6db74>&#34;daily&#34;</span>][<span style=color:#e6db74>&#34;time&#34;</span>]):
-</span></span><span style=display:flex><span>        high <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;daily&#34;</span>][<span style=color:#e6db74>&#34;temperature_2m_max&#34;</span>][i]
-</span></span><span style=display:flex><span>        low <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;daily&#34;</span>][<span style=color:#e6db74>&#34;temperature_2m_min&#34;</span>][i]
-</span></span><span style=display:flex><span>        rain <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;daily&#34;</span>][<span style=color:#e6db74>&#34;precipitation_sum&#34;</span>][i]
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  </span><span style=color:#e6db74>{</span>date<span style=color:#e6db74>}</span><span style=color:#e6db74> | </span><span style=color:#e6db74>{</span>low<span style=color:#e6db74>}</span><span style=color:#e6db74>°C ~ </span><span style=color:#e6db74>{</span>high<span style=color:#e6db74>}</span><span style=color:#e6db74>°C | 降水 </span><span style=color:#e6db74>{</span>rain<span style=color:#e6db74>}</span><span style=color:#e6db74>mm&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 上海坐标</span>
-</span></span><span style=display:flex><span>get_weather(<span style=color:#ae81ff>31.23</span>, <span style=color:#ae81ff>121.47</span>)
-</span></span></code></pre></div><p>输出：</p><pre tabindex=0><code>📍 坐标 (31.23, 121.47) 未来7天预报：
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python 自动化实战：API 自动化——调用50&#43;免费API | zhouyang — The 25th Frame</title>
+  <meta name="description" content="不用爬虫也能拿到海量数据——天气、汇率、新闻、AI大模型、图片搜索，50&#43;免费API让你的产品能力翻倍。">
+  <link rel="stylesheet" href="/css/style.css?v=202606291218">
+  
+
+
+  
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">zhouyang — The 25th Frame</a>
+      <div class="nav-links">
+        
+        <a href="/">Home</a>
+        
+        <a href="/posts/">Tech</a>
+        
+        <a href="/cuisine/">Chinese Cuisine</a>
+        
+        <a href="/tea/">🍵 Tea</a>
+        
+        <a href="/baijiu/">🥃 Baijiu</a>
+        
+        <a href="/about/">About</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    
+<article class="single-post">
+  <header>
+    <h1>Python 自动化实战：API 自动化——调用50&#43;免费API</h1>
+    <div class="meta">
+      <time>2026-06-24</time>
+      
+      <span class="tags">
+        <span class="tag">Python</span><span class="tag">API</span><span class="tag">自动化</span><span class="tag">独立开发</span>
+      </span>
+      
+    </div>
+  </header>
+  <div class="content">
+    <h2 id="为什么你应该优先用-api-而不是爬虫">为什么你应该优先用 API 而不是爬虫？</h2>
+<p>上篇文章讲了 Web Scraping，结尾我留了一句话：<strong>如果网站有公开 API，优先用 API 而不是爬页面</strong>。</p>
+<p>这不是敷衍。我做独立开发这几年，在 API 和爬虫之间来回横跳过太多次，教训深刻。</p>
+<p>说一个真实例子：2024 年我写了个币圈信息聚合器，一开始爬了三个交易所的页面。每个页面结构不一样，写解析逻辑就花了两天。上线两周后，其中一家改了 CSS class 名，数据全挂了。连夜修兼容，刚修好，另一家加了 Cloudflare 盾。那一刻我真的想砸键盘。</p>
+<p>后来发现这些交易所都有公开 API，免费，还带文档。切过去只花了半天，之后再也没挂过。</p>
+<p>API 和爬虫的核心区别：</p>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>API</th>
+					<th>爬虫</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>稳定性</td>
+					<td>契约保证，极少变动</td>
+					<td>随时会挂</td>
+			</tr>
+			<tr>
+					<td>数据结构</td>
+					<td>直接返回 JSON</td>
+					<td>需要自己解析 HTML</td>
+			</tr>
+			<tr>
+					<td>反爬风险</td>
+					<td>无</td>
+					<td>有</td>
+			</tr>
+			<tr>
+					<td>速度</td>
+					<td>快（几十ms）</td>
+					<td>慢（几百ms以上）</td>
+			</tr>
+			<tr>
+					<td>上手门槛</td>
+					<td>需要读文档</td>
+					<td>需要懂 HTML/CSS 选择器</td>
+			</tr>
+	</tbody>
+</table>
+<p>这篇文章教你用 Python 调动 50+ 免费 API，附带完整代码。更重要的是，教你建立一套<strong>通用的 API 调用框架</strong>——以后碰到任何新 API，10 分钟内就能接上。</p>
+<h2 id="api-调用的通用流程">API 调用的通用流程</h2>
+<p><img src="/images/api-automation-flow.png" alt="API 调用流程图"></p>
+<p>不管什么 API，核心就是上面这个流程。新手最容易卡在第三步&quot;读文档&quot;直接跳过——拿到 API key 就开始瞎试。我吃过这个亏，所以多说一句：<strong>花 5 分钟读文档比调试 2 小时划算一万倍</strong>。</p>
+<h2 id="基础篇requests-三板斧">基础篇：requests 三板斧</h2>
+<p>Python 调 API 的核心库就一个——<code>requests</code>。不需要装第三方 SDK，标准 HTTP 库足够覆盖 95% 的场景。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install requests
+</span></span></code></pre></div><p>三个最常用的模式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. GET 请求（拿数据）</span>
+</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https://api.example.com/data&#34;</span>,
+</span></span><span style="display:flex;"><span>    headers<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">&#34;Bearer YOUR_API_KEY&#34;</span>},
+</span></span><span style="display:flex;"><span>    params<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;page&#34;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;limit&#34;</span>: <span style="color:#ae81ff">20</span>}  <span style="color:#75715e"># 查询参数</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. POST 请求（提交数据）</span>
+</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https://api.example.com/create&#34;</span>,
+</span></span><span style="display:flex;"><span>    headers<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">&#34;Bearer YOUR_API_KEY&#34;</span>},
+</span></span><span style="display:flex;"><span>    json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;test&#34;</span>, <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#ae81ff">42</span>}  <span style="color:#75715e"># JSON body</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 解析响应</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()  <span style="color:#75715e"># 直接拿到 dict</span>
+</span></span><span style="display:flex;"><span>    print(data[<span style="color:#e6db74">&#34;results&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;请求失败: </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>就这三板斧。GET 拿数据，POST 发数据，<code>resp.json()</code> 解析。剩下全是业务逻辑。</p>
+<h2 id="实战一天气-api无需注册零门槛">实战一：天气 API（无需注册，零门槛）</h2>
+<p><a href="https://open-meteo.com/">Open-Meteo</a> 是我最喜欢的免费 API——不需要注册、不需要 API Key、不限调用次数。独立开发者做天气类小工具的首选。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_weather</span>(lat, lon):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;获取指定坐标的7天天气预报&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.open-meteo.com/v1/forecast&#34;</span>
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;latitude&#34;</span>: lat,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;longitude&#34;</span>: lon,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;daily&#34;</span>: [<span style="color:#e6db74">&#34;temperature_2m_max&#34;</span>, <span style="color:#e6db74">&#34;temperature_2m_min&#34;</span>,
+</span></span><span style="display:flex;"><span>                   <span style="color:#e6db74">&#34;precipitation_sum&#34;</span>, <span style="color:#e6db74">&#34;weathercode&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;timezone&#34;</span>: <span style="color:#e6db74">&#34;Asia/Shanghai&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;forecast_days&#34;</span>: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params<span style="color:#f92672">=</span>params)
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;📍 坐标 (</span><span style="color:#e6db74">{</span>lat<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>lon<span style="color:#e6db74">}</span><span style="color:#e6db74">) 未来7天预报：&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, date <span style="color:#f92672">in</span> enumerate(data[<span style="color:#e6db74">&#34;daily&#34;</span>][<span style="color:#e6db74">&#34;time&#34;</span>]):
+</span></span><span style="display:flex;"><span>        high <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;daily&#34;</span>][<span style="color:#e6db74">&#34;temperature_2m_max&#34;</span>][i]
+</span></span><span style="display:flex;"><span>        low <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;daily&#34;</span>][<span style="color:#e6db74">&#34;temperature_2m_min&#34;</span>][i]
+</span></span><span style="display:flex;"><span>        rain <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;daily&#34;</span>][<span style="color:#e6db74">&#34;precipitation_sum&#34;</span>][i]
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  </span><span style="color:#e6db74">{</span>date<span style="color:#e6db74">}</span><span style="color:#e6db74"> | </span><span style="color:#e6db74">{</span>low<span style="color:#e6db74">}</span><span style="color:#e6db74">°C ~ </span><span style="color:#e6db74">{</span>high<span style="color:#e6db74">}</span><span style="color:#e6db74">°C | 降水 </span><span style="color:#e6db74">{</span>rain<span style="color:#e6db74">}</span><span style="color:#e6db74">mm&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 上海坐标</span>
+</span></span><span style="display:flex;"><span>get_weather(<span style="color:#ae81ff">31.23</span>, <span style="color:#ae81ff">121.47</span>)
+</span></span></code></pre></div><p>输出：</p>
+<pre tabindex="0"><code>📍 坐标 (31.23, 121.47) 未来7天预报：
   2026-06-24 | 23°C ~ 31°C | 降水 0.0mm
   2026-06-25 | 24°C ~ 33°C | 降水 2.5mm
   ...
-</code></pre><p>这个 API 还支持历史天气、空气质量、海洋数据。URL 拼参数就行，不用看半天文档。</p><h2 id=实战二汇率-api同样是零门槛>实战二：汇率 API（同样是零门槛）</h2><p>做过多币种定价的产品，一定需要实时汇率。<a href=https://www.frankfurter.app/>Frankfurter</a> 基于欧洲央行数据，免费，无需注册。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>convert_currency</span>(amount, from_currency, to_currency):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;实时汇率转换&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.frankfurter.app/latest&#34;</span>
-</span></span><span style=display:flex><span>    params <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;amount&#34;</span>: amount,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;from&#34;</span>: from_currency,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;to&#34;</span>: to_currency
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, params<span style=color:#f92672>=</span>params)
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    rate <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;rates&#34;</span>][to_currency]
-</span></span><span style=display:flex><span>    result <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;rates&#34;</span>][to_currency]  <span style=color:#75715e># amount * rate 已在响应中</span>
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;💱 </span><span style=color:#e6db74>{</span>amount<span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>{</span>from_currency<span style=color:#e6db74>}</span><span style=color:#e6db74> = </span><span style=color:#e6db74>{</span>result<span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>{</span>to_currency<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   汇率: 1 </span><span style=color:#e6db74>{</span>from_currency<span style=color:#e6db74>}</span><span style=color:#e6db74> = </span><span style=color:#e6db74>{</span>rate<span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>{</span>to_currency<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 100 美元换人民币</span>
-</span></span><span style=display:flex><span>convert_currency(<span style=color:#ae81ff>100</span>, <span style=color:#e6db74>&#34;USD&#34;</span>, <span style=color:#e6db74>&#34;CNY&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 查看所有支持币种</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>list_currencies</span>():
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;https://api.frankfurter.app/currencies&#34;</span>)
-</span></span><span style=display:flex><span>    currencies <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;支持 </span><span style=color:#e6db74>{</span>len(currencies)<span style=color:#e6db74>}</span><span style=color:#e6db74> 种货币:&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> code, name <span style=color:#f92672>in</span> list(currencies<span style=color:#f92672>.</span>items())[:<span style=color:#ae81ff>10</span>]:
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  </span><span style=color:#e6db74>{</span>code<span style=color:#e6db74>}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{</span>name<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>list_currencies()
-</span></span></code></pre></div><p>这个 API 还支持历史汇率：<code>/2025-01-01?from=USD&amp;to=CNY</code> 能查到任意日期的汇率。做财务报表或价格分析的时候特别有用。</p><h2 id=实战三github-api开发者必备>实战三：GitHub API（开发者必备）</h2><p>GitHub REST API 免费，不登录每小时 60 次请求，登录后 5000 次。对个人项目完全够用。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_trending_repos</span>(language<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;python&#34;</span>, per_page<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;获取 GitHub 上某语言的热门仓库&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.github.com/search/repositories&#34;</span>
-</span></span><span style=display:flex><span>    params <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;q&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;language:</span><span style=color:#e6db74>{</span>language<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;sort&#34;</span>: <span style=color:#e6db74>&#34;stars&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;order&#34;</span>: <span style=color:#e6db74>&#34;desc&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;per_page&#34;</span>: per_page
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;Accept&#34;</span>: <span style=color:#e6db74>&#34;application/vnd.github.v3+json&#34;</span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, headers<span style=color:#f92672>=</span>headers, params<span style=color:#f92672>=</span>params)
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;🔥 </span><span style=color:#e6db74>{</span>language<span style=color:#e6db74>}</span><span style=color:#e6db74> 语言 Stars 最高的仓库：&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> repo <span style=color:#f92672>in</span> data[<span style=color:#e6db74>&#34;items&#34;</span>]:
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  ⭐ </span><span style=color:#e6db74>{</span>repo[<span style=color:#e6db74>&#39;stargazers_count&#39;</span>]<span style=color:#e6db74>:</span><span style=color:#e6db74>,</span><span style=color:#e6db74>}</span><span style=color:#e6db74> | </span><span style=color:#e6db74>{</span>repo[<span style=color:#e6db74>&#39;full_name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;     </span><span style=color:#e6db74>{</span>repo[<span style=color:#e6db74>&#39;description&#39;</span>][:<span style=color:#ae81ff>80</span>] <span style=color:#66d9ef>if</span> repo[<span style=color:#e6db74>&#39;description&#39;</span>] <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#39;无描述&#39;</span><span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;     </span><span style=color:#e6db74>{</span>repo[<span style=color:#e6db74>&#39;html_url&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>get_trending_repos(<span style=color:#e6db74>&#34;rust&#34;</span>, <span style=color:#ae81ff>5</span>)
-</span></span></code></pre></div><p>进阶：监控仓库动态。你关注的项目发了新 Release，自动通知你：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>check_latest_release</span>(owner, repo):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;检查仓库最新 Release&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;https://api.github.com/repos/</span><span style=color:#e6db74>{</span>owner<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>repo<span style=color:#e6db74>}</span><span style=color:#e6db74>/releases/latest&#34;</span>
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> resp<span style=color:#f92672>.</span>status_code <span style=color:#f92672>==</span> <span style=color:#ae81ff>200</span>:
-</span></span><span style=display:flex><span>        release <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📦 </span><span style=color:#e6db74>{</span>owner<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>repo<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   最新版本: </span><span style=color:#e6db74>{</span>release[<span style=color:#e6db74>&#39;tag_name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   发布时间: </span><span style=color:#e6db74>{</span>release[<span style=color:#e6db74>&#39;published_at&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   下载地址: </span><span style=color:#e6db74>{</span>release[<span style=color:#e6db74>&#39;html_url&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;该仓库没有 Release&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>check_latest_release(<span style=color:#e6db74>&#34;tauri-apps&#34;</span>, <span style=color:#e6db74>&#34;tauri&#34;</span>)
-</span></span></code></pre></div><p>这个例子可以配合上一篇的 cron 定时任务——每天跑一次，有新版就飞书/Telegram 通知你。</p><h2 id=实战四ai-大模型-api免费额度管够>实战四：AI 大模型 API（免费额度管够）</h2><p>现在做大模型 API 的厂商太多了，而且每家都有免费额度：</p><table><thead><tr><th>平台</th><th>免费额度</th><th>兼容格式</th></tr></thead><tbody><tr><td>Groq</td><td>多模型免费</td><td>OpenAI 兼容</td></tr><tr><td>DeepSeek</td><td>注册送 500 万 tokens</td><td>OpenAI 兼容</td></tr><tr><td>硅基流动</td><td>多模型免费额度</td><td>OpenAI 兼容</td></tr><tr><td>Google Gemini</td><td>免费 tier</td><td>自有格式</td></tr></tbody></table><p><strong>好消息</strong>：这些平台都兼容 OpenAI 的 API 格式，一套代码全搞定。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>call_llm</span>(api_key, base_url, model, prompt):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;通用大模型调用函数——兼容 OpenAI 格式的所有平台&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>base_url<span style=color:#e6db74>}</span><span style=color:#e6db74>/chat/completions&#34;</span>
-</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Authorization&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Bearer </span><span style=color:#e6db74>{</span>api_key<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Content-Type&#34;</span>: <span style=color:#e6db74>&#34;application/json&#34;</span>
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    payload <span style=color:#f92672>=</span> {
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;model&#34;</span>: model,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;messages&#34;</span>: [
-</span></span><span style=display:flex><span>            {<span style=color:#e6db74>&#34;role&#34;</span>: <span style=color:#e6db74>&#34;system&#34;</span>, <span style=color:#e6db74>&#34;content&#34;</span>: <span style=color:#e6db74>&#34;你是 Python 技术专家，回答简洁&#34;</span>},
-</span></span><span style=display:flex><span>            {<span style=color:#e6db74>&#34;role&#34;</span>: <span style=color:#e6db74>&#34;user&#34;</span>, <span style=color:#e6db74>&#34;content&#34;</span>: prompt}
-</span></span><span style=display:flex><span>        ],
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;temperature&#34;</span>: <span style=color:#ae81ff>0.7</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;max_tokens&#34;</span>: <span style=color:#ae81ff>500</span>
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(url, headers<span style=color:#f92672>=</span>headers, json<span style=color:#f92672>=</span>payload)
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> data[<span style=color:#e6db74>&#34;choices&#34;</span>][<span style=color:#ae81ff>0</span>][<span style=color:#e6db74>&#34;message&#34;</span>][<span style=color:#e6db74>&#34;content&#34;</span>]
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 示例：调用 DeepSeek（替换成你自己的 key）</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># result = call_llm(</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#     api_key=&#34;sk-your-deepseek-key&#34;,</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#     base_url=&#34;https://api.deepseek.com/v1&#34;,</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#     model=&#34;deepseek-chat&#34;,</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#     prompt=&#34;用 3 句话解释什么是装饰器&#34;</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># )</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># print(result)</span>
-</span></span></code></pre></div><p>做产品的时候，可以把 AI 能力嵌入到任何地方——自动总结、智能分类、内容生成、代码审查。因为有免费额度，前期验证成本基本为零。</p><h2 id=实战五unsplash-图片-api让你的产品好看>实战五：Unsplash 图片 API（让你的产品好看）</h2><p>独立开发者的产品最大的问题之一是"看着像 demo"。Unsplash 免费 API 可以提供高质量配图。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>search_photos</span>(query, per_page<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;搜索 Unsplash 高质量图片&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.unsplash.com/search/photos&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 注册 https://unsplash.com/developers 获取 Access Key</span>
-</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;Authorization&#34;</span>: <span style=color:#e6db74>&#34;Client-ID YOUR_ACCESS_KEY&#34;</span>}
-</span></span><span style=display:flex><span>    params <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;query&#34;</span>: query, <span style=color:#e6db74>&#34;per_page&#34;</span>: per_page}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, headers<span style=color:#f92672>=</span>headers, params<span style=color:#f92672>=</span>params)
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;🖼️ 搜索 &#39;</span><span style=color:#e6db74>{</span>query<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39; 的结果：&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> photo <span style=color:#f92672>in</span> data[<span style=color:#e6db74>&#34;results&#34;</span>]:
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  📷 </span><span style=color:#e6db74>{</span>photo[<span style=color:#e6db74>&#39;description&#39;</span>][:<span style=color:#ae81ff>60</span>] <span style=color:#66d9ef>if</span> photo[<span style=color:#e6db74>&#39;description&#39;</span>] <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#39;无描述&#39;</span><span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;     作者: </span><span style=color:#e6db74>{</span>photo[<span style=color:#e6db74>&#39;user&#39;</span>][<span style=color:#e6db74>&#39;name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;     原图: </span><span style=color:#e6db74>{</span>photo[<span style=color:#e6db74>&#39;urls&#39;</span>][<span style=color:#e6db74>&#39;regular&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;     缩略图: </span><span style=color:#e6db74>{</span>photo[<span style=color:#e6db74>&#39;urls&#39;</span>][<span style=color:#e6db74>&#39;thumb&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># search_photos(&#34;coding setup&#34;)</span>
-</span></span></code></pre></div><p>Unsplash 免费额度是每小时 50 次请求。对于博客配图、产品 Landing Page、文章封面这些场景绰绰有余。</p><h2 id=进阶打造通用-api-调用框架>进阶：打造通用 API 调用框架</h2><p>上面 5 个例子覆盖了常见模式。但真实项目中你需要同时调多个 API，每个 API 的错误处理、重试、超时配置都不一样。下面是我在生产环境用的通用框架：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> functools <span style=color:#f92672>import</span> wraps
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> typing <span style=color:#f92672>import</span> Callable
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>APIClient</span>:
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;通用 API 客户端——错误处理 + 重试 + 限流 + 超时&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>__init__</span>(self, base_url: str, headers: dict <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>,
-</span></span><span style=display:flex><span>                 timeout: int <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>, max_retries: int <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>):
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>base_url <span style=color:#f92672>=</span> base_url<span style=color:#f92672>.</span>rstrip(<span style=color:#e6db74>&#34;/&#34;</span>)
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>headers <span style=color:#f92672>=</span> headers <span style=color:#f92672>or</span> {}
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>timeout <span style=color:#f92672>=</span> timeout
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>max_retries <span style=color:#f92672>=</span> max_retries
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>session <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>Session()
-</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>session<span style=color:#f92672>.</span>headers<span style=color:#f92672>.</span>update(self<span style=color:#f92672>.</span>headers)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_request</span>(self, method: str, path: str, <span style=color:#f92672>**</span>kwargs):
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;核心请求方法——自动重试 + 指数退避&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>        url <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>base_url<span style=color:#e6db74>}{</span>path<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
-</span></span><span style=display:flex><span>        kwargs<span style=color:#f92672>.</span>setdefault(<span style=color:#e6db74>&#34;timeout&#34;</span>, self<span style=color:#f92672>.</span>timeout)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> attempt <span style=color:#f92672>in</span> range(self<span style=color:#f92672>.</span>max_retries):
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
-</span></span><span style=display:flex><span>                resp <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>session<span style=color:#f92672>.</span>request(method, url, <span style=color:#f92672>**</span>kwargs)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e># 限流：等到 Retry-After 再重试</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> resp<span style=color:#f92672>.</span>status_code <span style=color:#f92672>==</span> <span style=color:#ae81ff>429</span>:
-</span></span><span style=display:flex><span>                    wait <span style=color:#f92672>=</span> int(resp<span style=color:#f92672>.</span>headers<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;Retry-After&#34;</span>, <span style=color:#ae81ff>5</span>))
-</span></span><span style=display:flex><span>                    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ 限流，</span><span style=color:#e6db74>{</span>wait<span style=color:#e6db74>}</span><span style=color:#e6db74>s 后重试 (第 </span><span style=color:#e6db74>{</span>attempt<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>max_retries<span style=color:#e6db74>}</span><span style=color:#e6db74> 次)&#34;</span>)
-</span></span><span style=display:flex><span>                    time<span style=color:#f92672>.</span>sleep(wait)
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>continue</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e># 服务端错误：指数退避</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> resp<span style=color:#f92672>.</span>status_code <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>500</span>:
-</span></span><span style=display:flex><span>                    wait <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> attempt
-</span></span><span style=display:flex><span>                    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ 服务端错误 </span><span style=color:#e6db74>{</span>resp<span style=color:#f92672>.</span>status_code<span style=color:#e6db74>}</span><span style=color:#e6db74>，</span><span style=color:#e6db74>{</span>wait<span style=color:#e6db74>}</span><span style=color:#e6db74>s 后重试&#34;</span>)
-</span></span><span style=display:flex><span>                    time<span style=color:#f92672>.</span>sleep(wait)
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>continue</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                resp<span style=color:#f92672>.</span>raise_for_status()
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> resp<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> requests<span style=color:#f92672>.</span>exceptions<span style=color:#f92672>.</span>Timeout:
-</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⏱️ 请求超时 (第 </span><span style=color:#e6db74>{</span>attempt<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span><span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>max_retries<span style=color:#e6db74>}</span><span style=color:#e6db74> 次)&#34;</span>)
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> attempt <span style=color:#f92672>==</span> self<span style=color:#f92672>.</span>max_retries <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>:
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>raise</span>
-</span></span><span style=display:flex><span>                time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> attempt)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> requests<span style=color:#f92672>.</span>exceptions<span style=color:#f92672>.</span>RequestException <span style=color:#66d9ef>as</span> e:
-</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ 请求失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> attempt <span style=color:#f92672>==</span> self<span style=color:#f92672>.</span>max_retries <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>:
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>raise</span>
-</span></span><span style=display:flex><span>                time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> attempt)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>Exception</span>(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;超过最大重试次数 </span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>max_retries<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get</span>(self, path: str, <span style=color:#f92672>**</span>kwargs):
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_request(<span style=color:#e6db74>&#34;GET&#34;</span>, path, <span style=color:#f92672>**</span>kwargs)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>post</span>(self, path: str, <span style=color:#f92672>**</span>kwargs):
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_request(<span style=color:#e6db74>&#34;POST&#34;</span>, path, <span style=color:#f92672>**</span>kwargs)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 使用示例</span>
-</span></span><span style=display:flex><span>weather_client <span style=color:#f92672>=</span> APIClient(
-</span></span><span style=display:flex><span>    base_url<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://api.open-meteo.com/v1&#34;</span>,
-</span></span><span style=display:flex><span>    timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>
-</span></span><span style=display:flex><span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> weather_client<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;/forecast&#34;</span>, params<span style=color:#f92672>=</span>{
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;latitude&#34;</span>: <span style=color:#ae81ff>31.23</span>,
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;longitude&#34;</span>: <span style=color:#ae81ff>121.47</span>,
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;daily&#34;</span>: <span style=color:#e6db74>&#34;temperature_2m_max&#34;</span>,
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;forecast_days&#34;</span>: <span style=color:#ae81ff>3</span>
-</span></span><span style=display:flex><span>})
-</span></span><span style=display:flex><span>print(data[<span style=color:#e6db74>&#34;daily&#34;</span>])
-</span></span></code></pre></div><p>这个框架你复制到任何项目里就能用。核心思想：<strong>不要在每个 API 调用的地方重复写 try/except 和 retry 逻辑</strong>——抽象成一层，所有 API 共用。</p><p>重试策略是关键：</p><ul><li><strong>429 限流</strong>：等 <code>Retry-After</code> 头指定的时间，不要不管不顾地重试</li><li><strong>5xx 服务端错误</strong>：指数退避（1s → 2s → 4s）</li><li><strong>超时</strong>：同样指数退避，每次翻倍等待</li></ul><h2 id=50-免费-api-速查表>50+ 免费 API 速查表</h2><p>下面这个表是我用过的、确认能用的免费 API。按场景分类：</p><h3 id=天气--地理>天气 & 地理</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>Open-Meteo</td><td>无限</td><td>否</td><td>天气/历史/空气质量</td></tr><tr><td>OpenWeatherMap</td><td>1000次/天</td><td>是</td><td>当前天气 + 5天预报</td></tr><tr><td>WeatherAPI</td><td>100万次/月</td><td>是</td><td>天气 + 天文 + 时区</td></tr><tr><td>IP-API</td><td>45次/分钟</td><td>否</td><td>IP 转地理位置</td></tr><tr><td>Nominatim</td><td>1次/秒</td><td>否</td><td>地址 ↔ 坐标转换</td></tr></tbody></table><h3 id=金融--汇率>金融 & 汇率</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>Frankfurter</td><td>无限</td><td>否</td><td>汇率 + 历史</td></tr><tr><td>ExchangeRate-API</td><td>1500次/月</td><td>是</td><td>多币种</td></tr><tr><td>CoinGecko</td><td>30次/分钟</td><td>否</td><td>加密货币全数据</td></tr><tr><td>Alpha Vantage</td><td>25次/天</td><td>是</td><td>股票数据</td></tr></tbody></table><h3 id=开发--工具>开发 & 工具</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>GitHub REST API</td><td>60次/时（无登录）</td><td>否</td><td>仓库/Issues/搜索</td></tr><tr><td>GitLab API</td><td>无限</td><td>否</td><td>私有仓库也支持</td></tr><tr><td>JSONPlaceholder</td><td>无限</td><td>否</td><td>假数据，开发测试用</td></tr><tr><td>httpbin</td><td>无限</td><td>否</td><td>调试 HTTP 请求</td></tr></tbody></table><h3 id=ai--机器学习>AI & 机器学习</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>Groq</td><td>多模型免费</td><td>是</td><td>速度极快</td></tr><tr><td>DeepSeek</td><td>500万 tokens</td><td>是</td><td>性价比高</td></tr><tr><td>Google Gemini</td><td>免费 tier</td><td>是</td><td>多模态</td></tr><tr><td>HuggingFace</td><td>免费推理</td><td>是</td><td>海量开源模型</td></tr><tr><td>Remove.bg</td><td>50次/月</td><td>是</td><td>一键去背景</td></tr></tbody></table><h3 id=新闻--内容>新闻 & 内容</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>NewsAPI</td><td>100次/天</td><td>是</td><td>全球新闻聚合</td></tr><tr><td>HackerNews</td><td>无限</td><td>否</td><td>科技圈热门</td></tr><tr><td>Reddit JSON</td><td>无限</td><td>否</td><td>任何 subreddit 加 .json</td></tr><tr><td>Dev.to</td><td>无限</td><td>否</td><td>开发者文章</td></tr></tbody></table><h3 id=图片--媒体>图片 & 媒体</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>Unsplash</td><td>50次/时</td><td>是</td><td>高质量图库</td></tr><tr><td>Pexels</td><td>200次/时</td><td>是</td><td>图片 + 视频</td></tr><tr><td>Lorem Picsum</td><td>无限</td><td>否</td><td>随机占位图</td></tr><tr><td>Dog API</td><td>无限</td><td>否</td><td>随机狗图</td></tr></tbody></table><h3 id=文本--翻译>文本 & 翻译</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>LibreTranslate</td><td>无限（自部署）</td><td>否</td><td>开源翻译</td></tr><tr><td>Lingva</td><td>无限</td><td>否</td><td>Google 翻译代理</td></tr><tr><td>Quotes REST</td><td>无限</td><td>否</td><td>随机名言</td></tr></tbody></table><h3 id=其他实用>其他实用</h3><table><thead><tr><th>API</th><th>免费额度</th><th>需要 Key</th><th>亮点</th></tr></thead><tbody><tr><td>Public APIs</td><td>无限</td><td>否</td><td>API 目录本身也是个 API</td></tr><tr><td>TheCatAPI</td><td>无限</td><td>是</td><td>猫图 + 品种信息</td></tr><tr><td>Pokemon API</td><td>无限</td><td>否</td><td>宝可梦全数据</td></tr><tr><td>OpenAI API</td><td>$5 试用金</td><td>是</td><td>GPT 全家桶</td></tr></tbody></table><p>总量超过 50 个。其中带 &ldquo;无限&rdquo; 标记的可以直接上手，不需要注册。</p><h2 id=真实场景组合天气推送机器人>真实场景组合：天气推送机器人</h2><p>光看 API 列表没用，组合起来才有力量。我用 3 个免费 API 拼了一个天气预报推送：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> APIClient <span style=color:#f92672>import</span> APIClient  <span style=color:#75715e># 上面写的通用框架</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> json
-</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 1. 坐标转城市名（Nominatim）</span>
-</span></span><span style=display:flex><span>geo <span style=color:#f92672>=</span> APIClient(<span style=color:#e6db74>&#34;https://nominatim.openstreetmap.org&#34;</span>)
-</span></span><span style=display:flex><span>geo<span style=color:#f92672>.</span>session<span style=color:#f92672>.</span>headers[<span style=color:#e6db74>&#34;User-Agent&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;WeatherBot/1.0&#34;</span>  <span style=color:#75715e># Nominatim 要求</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 2. 天气数据（Open-Meteo）</span>
-</span></span><span style=display:flex><span>weather <span style=color:#f92672>=</span> APIClient(<span style=color:#e6db74>&#34;https://api.open-meteo.com/v1&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 3. 推送通知（假设你有一个 webhook）</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># notify = APIClient(&#34;https://your-webhook.com&#34;)</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>daily_weather_report</span>(lat, lon):
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;每日天气报告&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 获取城市名</span>
-</span></span><span style=display:flex><span>    location <span style=color:#f92672>=</span> geo<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;/reverse&#34;</span>, params<span style=color:#f92672>=</span>{
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;lat&#34;</span>: lat, <span style=color:#e6db74>&#34;lon&#34;</span>: lon, <span style=color:#e6db74>&#34;format&#34;</span>: <span style=color:#e6db74>&#34;json&#34;</span>
-</span></span><span style=display:flex><span>    })
-</span></span><span style=display:flex><span>    city <span style=color:#f92672>=</span> location<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;address&#34;</span>, {})<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;city&#34;</span>, <span style=color:#e6db74>&#34;未知城市&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 获取天气</span>
-</span></span><span style=display:flex><span>    data <span style=color:#f92672>=</span> weather<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;/forecast&#34;</span>, params<span style=color:#f92672>=</span>{
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;latitude&#34;</span>: lat, <span style=color:#e6db74>&#34;longitude&#34;</span>: lon,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;daily&#34;</span>: [<span style=color:#e6db74>&#34;temperature_2m_max&#34;</span>, <span style=color:#e6db74>&#34;temperature_2m_min&#34;</span>,
-</span></span><span style=display:flex><span>                   <span style=color:#e6db74>&#34;precipitation_sum&#34;</span>, <span style=color:#e6db74>&#34;weathercode&#34;</span>],
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;forecast_days&#34;</span>: <span style=color:#ae81ff>1</span>,
-</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;timezone&#34;</span>: <span style=color:#e6db74>&#34;Asia/Shanghai&#34;</span>
-</span></span><span style=display:flex><span>    })
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    today <span style=color:#f92672>=</span> data[<span style=color:#e6db74>&#34;daily&#34;</span>]
-</span></span><span style=display:flex><span>    report <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;&#34;&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>📅 </span><span style=color:#e6db74>{</span>today[<span style=color:#e6db74>&#39;time&#39;</span>][<span style=color:#ae81ff>0</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>{</span>city<span style=color:#e6db74>}</span><span style=color:#e6db74>天气预报
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>━━━━━━━━━━━━━━━━━━
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>🌡️ 温度: </span><span style=color:#e6db74>{</span>today[<span style=color:#e6db74>&#39;temperature_2m_min&#39;</span>][<span style=color:#ae81ff>0</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>°C ~ </span><span style=color:#e6db74>{</span>today[<span style=color:#e6db74>&#39;temperature_2m_max&#39;</span>][<span style=color:#ae81ff>0</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>°C
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>🌧️ 降水: </span><span style=color:#e6db74>{</span>today[<span style=color:#e6db74>&#39;precipitation_sum&#39;</span>][<span style=color:#ae81ff>0</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>mm
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>💡 </span><span style=color:#e6db74>{</span><span style=color:#e6db74>&#39;今天有雨，出门带伞&#39;</span> <span style=color:#66d9ef>if</span> today[<span style=color:#e6db74>&#39;precipitation_sum&#39;</span>][<span style=color:#ae81ff>0</span>] <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#39;天气不错&#39;</span><span style=color:#e6db74>}</span><span style=color:#e6db74>
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    print(report)
-</span></span><span style=display:flex><span>    <span style=color:#75715e># 推送到飞书/Telegram/邮件（具体代码见系列第 01 篇）</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> report
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>daily_weather_report(<span style=color:#ae81ff>31.23</span>, <span style=color:#ae81ff>121.47</span>)
-</span></span></code></pre></div><p>三个 API，零费用，每天早上跑一次。配合上一篇文章的 cron 示例，这就是一个完整产品。</p><h2 id=踩坑记录>踩坑记录</h2><p>写 API 调用这几年，有些坑重复踩：</p><p><strong>1. API Key 写死在代码里</strong></p><p>绝对不要。用环境变量：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
-</span></span><span style=display:flex><span>api_key <span style=color:#f92672>=</span> os<span style=color:#f92672>.</span>environ[<span style=color:#e6db74>&#34;OPENAI_API_KEY&#34;</span>]  <span style=color:#75715e># 正确</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># api_key = &#34;sk-xxxxxxxx&#34;  # 错误：一推 GitHub 就泄露</span>
-</span></span></code></pre></div><p><strong>2. 不检查 rate limit</strong></p><p>每个 API 都有额度。调用前查 <code>X-RateLimit-Remaining</code> 响应头：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url)
-</span></span><span style=display:flex><span>remaining <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>headers<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;X-RateLimit-Remaining&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> remaining <span style=color:#f92672>and</span> int(remaining) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>10</span>:
-</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;⚠️ 额度预警，暂停使用&#34;</span>)
-</span></span><span style=display:flex><span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>60</span>)
-</span></span></code></pre></div><p><strong>3. 同步调多个 API，一个超时全卡住</strong></p><p>用 <code>concurrent.futures</code> 并行请求：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> concurrent.futures <span style=color:#f92672>import</span> ThreadPoolExecutor
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>fetch_all</span>(urls):
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> ThreadPoolExecutor(max_workers<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>) <span style=color:#66d9ef>as</span> executor:
-</span></span><span style=display:flex><span>        results <span style=color:#f92672>=</span> list(executor<span style=color:#f92672>.</span>map(
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>lambda</span> u: requests<span style=color:#f92672>.</span>get(u, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>)<span style=color:#f92672>.</span>json(),
-</span></span><span style=display:flex><span>            urls
-</span></span><span style=display:flex><span>        ))
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> results
-</span></span></code></pre></div><p><strong>4. API 改版不知道</strong></p><p>定时跑一次测试脚本，监控响应结构变化。最简单的办法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> hashlib
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 记录响应 key 结构的哈希</span>
-</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;https://api.example.com/data&#34;</span>)<span style=color:#f92672>.</span>json()
-</span></span><span style=display:flex><span>structure_hash <span style=color:#f92672>=</span> hashlib<span style=color:#f92672>.</span>md5(
-</span></span><span style=display:flex><span>    str(sorted(resp<span style=color:#f92672>.</span>keys()))<span style=color:#f92672>.</span>encode()
-</span></span><span style=display:flex><span>)<span style=color:#f92672>.</span>hexdigest()
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 存到文件，下次对比，变了就告警</span>
-</span></span></code></pre></div><h2 id=从这里开始>从这里开始</h2><p>这篇文章和你上篇学的爬虫组合在一起，就是你作为独立开发者获取数据的全部武器：</p><ul><li><strong>有 API → 用本文的方法调</strong></li><li><strong>没 API 但页面是静态的 → 用上篇的 BeautifulSoup 爬</strong></li><li><strong>页面是 SPA/JS 渲染的 → 用 Playwright</strong></li></ul><p>建议今天就找 2-3 个感兴趣的 API，用上面 <code>APIClient</code> 框架接一下。10 行代码就能把一个免费数据源接到你的项目里。接得多了，你会发现很多产品想法根本不需要自己造数据——世界上已经有免费的 API 在等你用了。</p><hr><p><strong>系列导航</strong>：<a href=/posts/python-automation-daily-tasks/>01 日常任务自动化</a> | <a href=/posts/python-web-scraping/>02 Web Scraping 实战</a> | <strong>03 API 自动化</strong> | <a href=/posts/python-pandas-analysis/>04 数据分析自动化</a></p><p><em>Python 自动化实战系列，下一篇：数据分析自动化——Pandas 实战，把 API 拿回来的数据变成洞察。</em></p></div></article><nav class=post-nav><a href=/posts/python-web-scraping/ class=prev>← Python 自动化实战：Web Scraping 入门到实战</a>
-<a href=/posts/python-pandas-analysis/ class=next>Python 自动化实战：数据分析自动化——Pandas 实战 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer></body></html>
+</code></pre><p>这个 API 还支持历史天气、空气质量、海洋数据。URL 拼参数就行，不用看半天文档。</p>
+<h2 id="实战二汇率-api同样是零门槛">实战二：汇率 API（同样是零门槛）</h2>
+<p>做过多币种定价的产品，一定需要实时汇率。<a href="https://www.frankfurter.app/">Frankfurter</a> 基于欧洲央行数据，免费，无需注册。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_currency</span>(amount, from_currency, to_currency):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;实时汇率转换&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.frankfurter.app/latest&#34;</span>
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;amount&#34;</span>: amount,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;from&#34;</span>: from_currency,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;to&#34;</span>: to_currency
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params<span style="color:#f92672">=</span>params)
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    rate <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;rates&#34;</span>][to_currency]
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;rates&#34;</span>][to_currency]  <span style="color:#75715e"># amount * rate 已在响应中</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;💱 </span><span style="color:#e6db74">{</span>amount<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>from_currency<span style="color:#e6db74">}</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>to_currency<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;   汇率: 1 </span><span style="color:#e6db74">{</span>from_currency<span style="color:#e6db74">}</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">{</span>rate<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>to_currency<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 100 美元换人民币</span>
+</span></span><span style="display:flex;"><span>convert_currency(<span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;USD&#34;</span>, <span style="color:#e6db74">&#34;CNY&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看所有支持币种</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">list_currencies</span>():
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;https://api.frankfurter.app/currencies&#34;</span>)
+</span></span><span style="display:flex;"><span>    currencies <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;支持 </span><span style="color:#e6db74">{</span>len(currencies)<span style="color:#e6db74">}</span><span style="color:#e6db74"> 种货币:&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> code, name <span style="color:#f92672">in</span> list(currencies<span style="color:#f92672">.</span>items())[:<span style="color:#ae81ff">10</span>]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  </span><span style="color:#e6db74">{</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>list_currencies()
+</span></span></code></pre></div><p>这个 API 还支持历史汇率：<code>/2025-01-01?from=USD&amp;to=CNY</code> 能查到任意日期的汇率。做财务报表或价格分析的时候特别有用。</p>
+<h2 id="实战三github-api开发者必备">实战三：GitHub API（开发者必备）</h2>
+<p>GitHub REST API 免费，不登录每小时 60 次请求，登录后 5000 次。对个人项目完全够用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_trending_repos</span>(language<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span>, per_page<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;获取 GitHub 上某语言的热门仓库&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.github.com/search/repositories&#34;</span>
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;q&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;language:</span><span style="color:#e6db74">{</span>language<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;sort&#34;</span>: <span style="color:#e6db74">&#34;stars&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;order&#34;</span>: <span style="color:#e6db74">&#34;desc&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;per_page&#34;</span>: per_page
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Accept&#34;</span>: <span style="color:#e6db74">&#34;application/vnd.github.v3+json&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers, params<span style="color:#f92672">=</span>params)
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;🔥 </span><span style="color:#e6db74">{</span>language<span style="color:#e6db74">}</span><span style="color:#e6db74"> 语言 Stars 最高的仓库：&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> repo <span style="color:#f92672">in</span> data[<span style="color:#e6db74">&#34;items&#34;</span>]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  ⭐ </span><span style="color:#e6db74">{</span>repo[<span style="color:#e6db74">&#39;stargazers_count&#39;</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">,</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> | </span><span style="color:#e6db74">{</span>repo[<span style="color:#e6db74">&#39;full_name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;     </span><span style="color:#e6db74">{</span>repo[<span style="color:#e6db74">&#39;description&#39;</span>][:<span style="color:#ae81ff">80</span>] <span style="color:#66d9ef">if</span> repo[<span style="color:#e6db74">&#39;description&#39;</span>] <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;无描述&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;     </span><span style="color:#e6db74">{</span>repo[<span style="color:#e6db74">&#39;html_url&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>get_trending_repos(<span style="color:#e6db74">&#34;rust&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p>进阶：监控仓库动态。你关注的项目发了新 Release，自动通知你：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_latest_release</span>(owner, repo):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;检查仓库最新 Release&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.github.com/repos/</span><span style="color:#e6db74">{</span>owner<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>repo<span style="color:#e6db74">}</span><span style="color:#e6db74">/releases/latest&#34;</span>
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        release <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;📦 </span><span style="color:#e6db74">{</span>owner<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>repo<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;   最新版本: </span><span style="color:#e6db74">{</span>release[<span style="color:#e6db74">&#39;tag_name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;   发布时间: </span><span style="color:#e6db74">{</span>release[<span style="color:#e6db74">&#39;published_at&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;   下载地址: </span><span style="color:#e6db74">{</span>release[<span style="color:#e6db74">&#39;html_url&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;该仓库没有 Release&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check_latest_release(<span style="color:#e6db74">&#34;tauri-apps&#34;</span>, <span style="color:#e6db74">&#34;tauri&#34;</span>)
+</span></span></code></pre></div><p>这个例子可以配合上一篇的 cron 定时任务——每天跑一次，有新版就飞书/Telegram 通知你。</p>
+<h2 id="实战四ai-大模型-api免费额度管够">实战四：AI 大模型 API（免费额度管够）</h2>
+<p>现在做大模型 API 的厂商太多了，而且每家都有免费额度：</p>
+<table>
+	<thead>
+			<tr>
+					<th>平台</th>
+					<th>免费额度</th>
+					<th>兼容格式</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Groq</td>
+					<td>多模型免费</td>
+					<td>OpenAI 兼容</td>
+			</tr>
+			<tr>
+					<td>DeepSeek</td>
+					<td>注册送 500 万 tokens</td>
+					<td>OpenAI 兼容</td>
+			</tr>
+			<tr>
+					<td>硅基流动</td>
+					<td>多模型免费额度</td>
+					<td>OpenAI 兼容</td>
+			</tr>
+			<tr>
+					<td>Google Gemini</td>
+					<td>免费 tier</td>
+					<td>自有格式</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>好消息</strong>：这些平台都兼容 OpenAI 的 API 格式，一套代码全搞定。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">call_llm</span>(api_key, base_url, model, prompt):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;通用大模型调用函数——兼容 OpenAI 格式的所有平台&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>base_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/chat/completions&#34;</span>
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>api_key<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;model&#34;</span>: model,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;messages&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;system&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">&#34;你是 Python 技术专家，回答简洁&#34;</span>},
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;temperature&#34;</span>: <span style="color:#ae81ff">0.7</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;max_tokens&#34;</span>: <span style="color:#ae81ff">500</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, headers<span style="color:#f92672">=</span>headers, json<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> data[<span style="color:#e6db74">&#34;choices&#34;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;message&#34;</span>][<span style="color:#e6db74">&#34;content&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例：调用 DeepSeek（替换成你自己的 key）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># result = call_llm(</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     api_key=&#34;sk-your-deepseek-key&#34;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     base_url=&#34;https://api.deepseek.com/v1&#34;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     model=&#34;deepseek-chat&#34;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     prompt=&#34;用 3 句话解释什么是装饰器&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># )</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print(result)</span>
+</span></span></code></pre></div><p>做产品的时候，可以把 AI 能力嵌入到任何地方——自动总结、智能分类、内容生成、代码审查。因为有免费额度，前期验证成本基本为零。</p>
+<h2 id="实战五unsplash-图片-api让你的产品好看">实战五：Unsplash 图片 API（让你的产品好看）</h2>
+<p>独立开发者的产品最大的问题之一是&quot;看着像 demo&quot;。Unsplash 免费 API 可以提供高质量配图。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_photos</span>(query, per_page<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;搜索 Unsplash 高质量图片&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.unsplash.com/search/photos&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 注册 https://unsplash.com/developers 获取 Access Key</span>
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">&#34;Client-ID YOUR_ACCESS_KEY&#34;</span>}
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;query&#34;</span>: query, <span style="color:#e6db74">&#34;per_page&#34;</span>: per_page}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers, params<span style="color:#f92672">=</span>params)
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;🖼️ 搜索 &#39;</span><span style="color:#e6db74">{</span>query<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; 的结果：&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> photo <span style="color:#f92672">in</span> data[<span style="color:#e6db74">&#34;results&#34;</span>]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  📷 </span><span style="color:#e6db74">{</span>photo[<span style="color:#e6db74">&#39;description&#39;</span>][:<span style="color:#ae81ff">60</span>] <span style="color:#66d9ef">if</span> photo[<span style="color:#e6db74">&#39;description&#39;</span>] <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;无描述&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;     作者: </span><span style="color:#e6db74">{</span>photo[<span style="color:#e6db74">&#39;user&#39;</span>][<span style="color:#e6db74">&#39;name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;     原图: </span><span style="color:#e6db74">{</span>photo[<span style="color:#e6db74">&#39;urls&#39;</span>][<span style="color:#e6db74">&#39;regular&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;     缩略图: </span><span style="color:#e6db74">{</span>photo[<span style="color:#e6db74">&#39;urls&#39;</span>][<span style="color:#e6db74">&#39;thumb&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># search_photos(&#34;coding setup&#34;)</span>
+</span></span></code></pre></div><p>Unsplash 免费额度是每小时 50 次请求。对于博客配图、产品 Landing Page、文章封面这些场景绰绰有余。</p>
+<h2 id="进阶打造通用-api-调用框架">进阶：打造通用 API 调用框架</h2>
+<p>上面 5 个例子覆盖了常见模式。但真实项目中你需要同时调多个 API，每个 API 的错误处理、重试、超时配置都不一样。下面是我在生产环境用的通用框架：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> wraps
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">APIClient</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;通用 API 客户端——错误处理 + 重试 + 限流 + 超时&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, base_url: str, headers: dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>                 timeout: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>, max_retries: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>base_url <span style="color:#f92672">=</span> base_url<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>headers <span style="color:#f92672">=</span> headers <span style="color:#f92672">or</span> {}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>timeout <span style="color:#f92672">=</span> timeout
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>max_retries <span style="color:#f92672">=</span> max_retries
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>session <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>update(self<span style="color:#f92672">.</span>headers)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_request</span>(self, method: str, path: str, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;核心请求方法——自动重试 + 指数退避&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>base_url<span style="color:#e6db74">}{</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        kwargs<span style="color:#f92672">.</span>setdefault(<span style="color:#e6db74">&#34;timeout&#34;</span>, self<span style="color:#f92672">.</span>timeout)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> attempt <span style="color:#f92672">in</span> range(self<span style="color:#f92672">.</span>max_retries):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                resp <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>request(method, url, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 限流：等到 Retry-After 再重试</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">429</span>:
+</span></span><span style="display:flex;"><span>                    wait <span style="color:#f92672">=</span> int(resp<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Retry-After&#34;</span>, <span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>                    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;⚠️ 限流，</span><span style="color:#e6db74">{</span>wait<span style="color:#e6db74">}</span><span style="color:#e6db74">s 后重试 (第 </span><span style="color:#e6db74">{</span>attempt<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>max_retries<span style="color:#e6db74">}</span><span style="color:#e6db74"> 次)&#34;</span>)
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(wait)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 服务端错误：指数退避</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">500</span>:
+</span></span><span style="display:flex;"><span>                    wait <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">**</span> attempt
+</span></span><span style="display:flex;"><span>                    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;⚠️ 服务端错误 </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">，</span><span style="color:#e6db74">{</span>wait<span style="color:#e6db74">}</span><span style="color:#e6db74">s 后重试&#34;</span>)
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(wait)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                resp<span style="color:#f92672">.</span>raise_for_status()
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> resp<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> requests<span style="color:#f92672">.</span>exceptions<span style="color:#f92672">.</span>Timeout:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;⏱️ 请求超时 (第 </span><span style="color:#e6db74">{</span>attempt<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>max_retries<span style="color:#e6db74">}</span><span style="color:#e6db74"> 次)&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> attempt <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>max_retries <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">raise</span>
+</span></span><span style="display:flex;"><span>                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span> <span style="color:#f92672">**</span> attempt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> requests<span style="color:#f92672">.</span>exceptions<span style="color:#f92672">.</span>RequestException <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ 请求失败: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> attempt <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>max_retries <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">raise</span>
+</span></span><span style="display:flex;"><span>                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span> <span style="color:#f92672">**</span> attempt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;超过最大重试次数 </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>max_retries<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, path: str, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_request(<span style="color:#e6db74">&#34;GET&#34;</span>, path, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post</span>(self, path: str, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_request(<span style="color:#e6db74">&#34;POST&#34;</span>, path, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用示例</span>
+</span></span><span style="display:flex;"><span>weather_client <span style="color:#f92672">=</span> APIClient(
+</span></span><span style="display:flex;"><span>    base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://api.open-meteo.com/v1&#34;</span>,
+</span></span><span style="display:flex;"><span>    timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> weather_client<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;/forecast&#34;</span>, params<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;latitude&#34;</span>: <span style="color:#ae81ff">31.23</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;longitude&#34;</span>: <span style="color:#ae81ff">121.47</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;daily&#34;</span>: <span style="color:#e6db74">&#34;temperature_2m_max&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;forecast_days&#34;</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>print(data[<span style="color:#e6db74">&#34;daily&#34;</span>])
+</span></span></code></pre></div><p>这个框架你复制到任何项目里就能用。核心思想：<strong>不要在每个 API 调用的地方重复写 try/except 和 retry 逻辑</strong>——抽象成一层，所有 API 共用。</p>
+<p>重试策略是关键：</p>
+<ul>
+<li><strong>429 限流</strong>：等 <code>Retry-After</code> 头指定的时间，不要不管不顾地重试</li>
+<li><strong>5xx 服务端错误</strong>：指数退避（1s → 2s → 4s）</li>
+<li><strong>超时</strong>：同样指数退避，每次翻倍等待</li>
+</ul>
+<h2 id="50-免费-api-速查表">50+ 免费 API 速查表</h2>
+<p>下面这个表是我用过的、确认能用的免费 API。按场景分类：</p>
+<h3 id="天气--地理">天气 &amp; 地理</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Open-Meteo</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>天气/历史/空气质量</td>
+			</tr>
+			<tr>
+					<td>OpenWeatherMap</td>
+					<td>1000次/天</td>
+					<td>是</td>
+					<td>当前天气 + 5天预报</td>
+			</tr>
+			<tr>
+					<td>WeatherAPI</td>
+					<td>100万次/月</td>
+					<td>是</td>
+					<td>天气 + 天文 + 时区</td>
+			</tr>
+			<tr>
+					<td>IP-API</td>
+					<td>45次/分钟</td>
+					<td>否</td>
+					<td>IP 转地理位置</td>
+			</tr>
+			<tr>
+					<td>Nominatim</td>
+					<td>1次/秒</td>
+					<td>否</td>
+					<td>地址 ↔ 坐标转换</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="金融--汇率">金融 &amp; 汇率</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Frankfurter</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>汇率 + 历史</td>
+			</tr>
+			<tr>
+					<td>ExchangeRate-API</td>
+					<td>1500次/月</td>
+					<td>是</td>
+					<td>多币种</td>
+			</tr>
+			<tr>
+					<td>CoinGecko</td>
+					<td>30次/分钟</td>
+					<td>否</td>
+					<td>加密货币全数据</td>
+			</tr>
+			<tr>
+					<td>Alpha Vantage</td>
+					<td>25次/天</td>
+					<td>是</td>
+					<td>股票数据</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="开发--工具">开发 &amp; 工具</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>GitHub REST API</td>
+					<td>60次/时（无登录）</td>
+					<td>否</td>
+					<td>仓库/Issues/搜索</td>
+			</tr>
+			<tr>
+					<td>GitLab API</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>私有仓库也支持</td>
+			</tr>
+			<tr>
+					<td>JSONPlaceholder</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>假数据，开发测试用</td>
+			</tr>
+			<tr>
+					<td>httpbin</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>调试 HTTP 请求</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="ai--机器学习">AI &amp; 机器学习</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Groq</td>
+					<td>多模型免费</td>
+					<td>是</td>
+					<td>速度极快</td>
+			</tr>
+			<tr>
+					<td>DeepSeek</td>
+					<td>500万 tokens</td>
+					<td>是</td>
+					<td>性价比高</td>
+			</tr>
+			<tr>
+					<td>Google Gemini</td>
+					<td>免费 tier</td>
+					<td>是</td>
+					<td>多模态</td>
+			</tr>
+			<tr>
+					<td>HuggingFace</td>
+					<td>免费推理</td>
+					<td>是</td>
+					<td>海量开源模型</td>
+			</tr>
+			<tr>
+					<td>Remove.bg</td>
+					<td>50次/月</td>
+					<td>是</td>
+					<td>一键去背景</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="新闻--内容">新闻 &amp; 内容</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>NewsAPI</td>
+					<td>100次/天</td>
+					<td>是</td>
+					<td>全球新闻聚合</td>
+			</tr>
+			<tr>
+					<td>HackerNews</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>科技圈热门</td>
+			</tr>
+			<tr>
+					<td>Reddit JSON</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>任何 subreddit 加 .json</td>
+			</tr>
+			<tr>
+					<td>Dev.to</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>开发者文章</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="图片--媒体">图片 &amp; 媒体</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Unsplash</td>
+					<td>50次/时</td>
+					<td>是</td>
+					<td>高质量图库</td>
+			</tr>
+			<tr>
+					<td>Pexels</td>
+					<td>200次/时</td>
+					<td>是</td>
+					<td>图片 + 视频</td>
+			</tr>
+			<tr>
+					<td>Lorem Picsum</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>随机占位图</td>
+			</tr>
+			<tr>
+					<td>Dog API</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>随机狗图</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="文本--翻译">文本 &amp; 翻译</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>LibreTranslate</td>
+					<td>无限（自部署）</td>
+					<td>否</td>
+					<td>开源翻译</td>
+			</tr>
+			<tr>
+					<td>Lingva</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>Google 翻译代理</td>
+			</tr>
+			<tr>
+					<td>Quotes REST</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>随机名言</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="其他实用">其他实用</h3>
+<table>
+	<thead>
+			<tr>
+					<th>API</th>
+					<th>免费额度</th>
+					<th>需要 Key</th>
+					<th>亮点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Public APIs</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>API 目录本身也是个 API</td>
+			</tr>
+			<tr>
+					<td>TheCatAPI</td>
+					<td>无限</td>
+					<td>是</td>
+					<td>猫图 + 品种信息</td>
+			</tr>
+			<tr>
+					<td>Pokemon API</td>
+					<td>无限</td>
+					<td>否</td>
+					<td>宝可梦全数据</td>
+			</tr>
+			<tr>
+					<td>OpenAI API</td>
+					<td>$5 试用金</td>
+					<td>是</td>
+					<td>GPT 全家桶</td>
+			</tr>
+	</tbody>
+</table>
+<p>总量超过 50 个。其中带 &ldquo;无限&rdquo; 标记的可以直接上手，不需要注册。</p>
+<h2 id="真实场景组合天气推送机器人">真实场景组合：天气推送机器人</h2>
+<p>光看 API 列表没用，组合起来才有力量。我用 3 个免费 API 拼了一个天气预报推送：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> APIClient <span style="color:#f92672">import</span> APIClient  <span style="color:#75715e"># 上面写的通用框架</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. 坐标转城市名（Nominatim）</span>
+</span></span><span style="display:flex;"><span>geo <span style="color:#f92672">=</span> APIClient(<span style="color:#e6db74">&#34;https://nominatim.openstreetmap.org&#34;</span>)
+</span></span><span style="display:flex;"><span>geo<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;User-Agent&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;WeatherBot/1.0&#34;</span>  <span style="color:#75715e"># Nominatim 要求</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 天气数据（Open-Meteo）</span>
+</span></span><span style="display:flex;"><span>weather <span style="color:#f92672">=</span> APIClient(<span style="color:#e6db74">&#34;https://api.open-meteo.com/v1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 推送通知（假设你有一个 webhook）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># notify = APIClient(&#34;https://your-webhook.com&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">daily_weather_report</span>(lat, lon):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;每日天气报告&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 获取城市名</span>
+</span></span><span style="display:flex;"><span>    location <span style="color:#f92672">=</span> geo<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;/reverse&#34;</span>, params<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;lat&#34;</span>: lat, <span style="color:#e6db74">&#34;lon&#34;</span>: lon, <span style="color:#e6db74">&#34;format&#34;</span>: <span style="color:#e6db74">&#34;json&#34;</span>
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    city <span style="color:#f92672">=</span> location<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;address&#34;</span>, {})<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;city&#34;</span>, <span style="color:#e6db74">&#34;未知城市&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 获取天气</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> weather<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;/forecast&#34;</span>, params<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;latitude&#34;</span>: lat, <span style="color:#e6db74">&#34;longitude&#34;</span>: lon,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;daily&#34;</span>: [<span style="color:#e6db74">&#34;temperature_2m_max&#34;</span>, <span style="color:#e6db74">&#34;temperature_2m_min&#34;</span>,
+</span></span><span style="display:flex;"><span>                   <span style="color:#e6db74">&#34;precipitation_sum&#34;</span>, <span style="color:#e6db74">&#34;weathercode&#34;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;forecast_days&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;timezone&#34;</span>: <span style="color:#e6db74">&#34;Asia/Shanghai&#34;</span>
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    today <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;daily&#34;</span>]
+</span></span><span style="display:flex;"><span>    report <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">📅 </span><span style="color:#e6db74">{</span>today[<span style="color:#e6db74">&#39;time&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>city<span style="color:#e6db74">}</span><span style="color:#e6db74">天气预报
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">━━━━━━━━━━━━━━━━━━
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">🌡️ 温度: </span><span style="color:#e6db74">{</span>today[<span style="color:#e6db74">&#39;temperature_2m_min&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">°C ~ </span><span style="color:#e6db74">{</span>today[<span style="color:#e6db74">&#39;temperature_2m_max&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">°C
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">🌧️ 降水: </span><span style="color:#e6db74">{</span>today[<span style="color:#e6db74">&#39;precipitation_sum&#39;</span>][<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">mm
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">💡 </span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;今天有雨，出门带伞&#39;</span> <span style="color:#66d9ef">if</span> today[<span style="color:#e6db74">&#39;precipitation_sum&#39;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;天气不错&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(report)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 推送到飞书/Telegram/邮件（具体代码见系列第 01 篇）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> report
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>daily_weather_report(<span style="color:#ae81ff">31.23</span>, <span style="color:#ae81ff">121.47</span>)
+</span></span></code></pre></div><p>三个 API，零费用，每天早上跑一次。配合上一篇文章的 cron 示例，这就是一个完整产品。</p>
+<h2 id="踩坑记录">踩坑记录</h2>
+<p>写 API 调用这几年，有些坑重复踩：</p>
+<p><strong>1. API Key 写死在代码里</strong></p>
+<p>绝对不要。用环境变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>api_key <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;OPENAI_API_KEY&#34;</span>]  <span style="color:#75715e"># 正确</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># api_key = &#34;sk-xxxxxxxx&#34;  # 错误：一推 GitHub 就泄露</span>
+</span></span></code></pre></div><p><strong>2. 不检查 rate limit</strong></p>
+<p>每个 API 都有额度。调用前查 <code>X-RateLimit-Remaining</code> 响应头：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>remaining <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;X-RateLimit-Remaining&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> remaining <span style="color:#f92672">and</span> int(remaining) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;⚠️ 额度预警，暂停使用&#34;</span>)
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">60</span>)
+</span></span></code></pre></div><p><strong>3. 同步调多个 API，一个超时全卡住</strong></p>
+<p>用 <code>concurrent.futures</code> 并行请求：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> concurrent.futures <span style="color:#f92672">import</span> ThreadPoolExecutor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fetch_all</span>(urls):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> ThreadPoolExecutor(max_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">as</span> executor:
+</span></span><span style="display:flex;"><span>        results <span style="color:#f92672">=</span> list(executor<span style="color:#f92672">.</span>map(
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">lambda</span> u: requests<span style="color:#f92672">.</span>get(u, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>json(),
+</span></span><span style="display:flex;"><span>            urls
+</span></span><span style="display:flex;"><span>        ))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><p><strong>4. API 改版不知道</strong></p>
+<p>定时跑一次测试脚本，监控响应结构变化。最简单的办法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 记录响应 key 结构的哈希</span>
+</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;https://api.example.com/data&#34;</span>)<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>structure_hash <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>md5(
+</span></span><span style="display:flex;"><span>    str(sorted(resp<span style="color:#f92672">.</span>keys()))<span style="color:#f92672">.</span>encode()
+</span></span><span style="display:flex;"><span>)<span style="color:#f92672">.</span>hexdigest()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 存到文件，下次对比，变了就告警</span>
+</span></span></code></pre></div><h2 id="从这里开始">从这里开始</h2>
+<p>这篇文章和你上篇学的爬虫组合在一起，就是你作为独立开发者获取数据的全部武器：</p>
+<ul>
+<li><strong>有 API → 用本文的方法调</strong></li>
+<li><strong>没 API 但页面是静态的 → 用上篇的 BeautifulSoup 爬</strong></li>
+<li><strong>页面是 SPA/JS 渲染的 → 用 Playwright</strong></li>
+</ul>
+<p>建议今天就找 2-3 个感兴趣的 API，用上面 <code>APIClient</code> 框架接一下。10 行代码就能把一个免费数据源接到你的项目里。接得多了，你会发现很多产品想法根本不需要自己造数据——世界上已经有免费的 API 在等你用了。</p>
+<hr>
+<p><strong>系列导航</strong>：<a href="/posts/python-automation-daily-tasks/">01 日常任务自动化</a> | <a href="/posts/python-web-scraping/">02 Web Scraping 实战</a> | <strong>03 API 自动化</strong> | <a href="/posts/python-pandas-analysis/">04 数据分析自动化</a></p>
+<p><em>Python 自动化实战系列，下一篇：数据分析自动化——Pandas 实战，把 API 拿回来的数据变成洞察。</em></p>
+
+  </div>
+</article>
+
+<nav class="post-nav">
+  
+  <a href="/posts/python-web-scraping/" class="prev">← Python 自动化实战：Web Scraping 入门到实战</a>
+  
+  
+  <a href="/posts/python-pandas-analysis/" class="next">Python 自动化实战：数据分析自动化——Pandas 实战 →</a>
+  
+</nav>
+
+<section class="comments">
+  <h2>💬 Comments</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="zhouyangimt/zhouyangimt.github.io"
+          issue-term="pathname"
+          label="comment"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
+  </footer>
+</body>
+</html>

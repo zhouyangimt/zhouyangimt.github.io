@@ -4,10 +4,10 @@ date: 2026-06-19
 description: "Tender chicken cubes, crunchy peanuts, and dried chilies collide in a sweet-savory-spicy sauce that tingles with Sichuan peppercorns — this is the dish that taught the world what málà really means."
 tags: ["sichuan", "chicken", "spicy", "stir-fry", "classic"]
 6|slug: "kung-pao-chicken"
-images: ["/images/kung-pao-chicken-1.jpg"]
+images: ["/images/kung-pao-chicken-1.jpg", "/images/kung-pao-chicken-2.jpg", "/images/kung-pao-chicken-3.jpg", "/images/kung-pao-chicken-4.jpg"]
 ---
 
-![Kung Pao Chicken — glazed chicken cubes with dried chilies and peanuts](/images/kung-pao-chicken-1.jpg)
+![Kung Pao Chicken — glazed chicken cubes tossed with dried chilies, Sichuan peppercorns, and roasted peanuts in a dark wok](/images/kung-pao-chicken-1.jpg)
 
 The wok hits the gas burner and the whole kitchen snaps to attention.
 
@@ -15,7 +15,7 @@ You're twelve, standing in a Sichuan alleyway restaurant the size of a shipping 
 
 This is what Kung Pao Chicken (宫保鸡丁, *gōngbǎo jīdīng*) is supposed to feel like before you even taste it — a sensory ambush that starts with sound and smell and doesn't let go until you're scraping the last peanut from the bowl.
 
-![Kung Pao Chicken closeup with vibrant red chilies](/images/kung-pao-chicken-2.jpg)
+![Chopsticks lifting a glazed chicken cube from the wok — chili oil glistening, scallions still bright green](/images/kung-pao-chicken-2.jpg)
 
 ## The Architecture of a Bite
 
@@ -29,7 +29,7 @@ Not burn-you-alive heat. Something stranger. Your lips go electric, like someone
 
 The sound matters too. Peanuts crack under your molars. Scallions snap wetly. Chili segments shatter like brittle glass. A good plate of Kung Pao Chicken is loud.
 
-![Kung Pao Chicken served in a traditional bowl with rice](/images/kung-pao-chicken-3.jpg)
+![Kung Pao Chicken served in a ceramic bowl beside a mound of steamed rice — the perfect bite waiting to happen](/images/kung-pao-chicken-3.jpg)
 
 ## The Governor's Chicken
 
@@ -56,7 +56,7 @@ Real Kung Pao Chicken has exactly:
 - **Scallions**, just the white and pale-green parts, cut into thumb-length sections. They cook for maybe fifteen seconds.
 - **The sauce**: soy sauce, Chinkiang black vinegar (镇江香醋, *Zhènjiāng xiāngcù*), sugar, Shaoxing wine (绍兴酒, *Shàoxīng jiǔ*), sesame oil, cornstarch slurry. That's six ingredients. Seven if you count the water in the slurry. No hoisin. No oyster sauce. No ketchup. No nonsense.
 
-![Kung Pao Chicken with rice — the sauce pooling at the bottom](/images/kung-pao-chicken-4.jpg)
+![Top-down view of Kung Pao Chicken — the full pan, crimson chili sea with golden chicken nuggets and peanuts scattered like treasure](/images/kung-pao-chicken-4.jpg)
 
 ## The Guizhou Question
 
@@ -78,4 +78,4 @@ My father used to say the best meals are the ones where you're already planning 
 
 ---
 
-*Like this? Try our [Mapo Tofu feature](/cuisine/mapo-tofu-sichuan-classic/) for another Sichuan classic.*
+*Want to cook this? Here's our step-by-step [Kung Pao Chicken recipe](/cuisine/kung-pao-chicken-recipe/).*

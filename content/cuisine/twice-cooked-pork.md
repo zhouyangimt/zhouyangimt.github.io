@@ -65,4 +65,4 @@ She was right about all three.
 
 ---
 
-*Try our [Mapo Tofu feature](/cuisine/mapo-tofu-sichuan-classic/) for another Sichuan classic. Or our [Dongpo Rou](/cuisine/dongpo-rou/) — same province, different century.*
+*Want to cook this? Here's our step-by-step [Twice-Cooked Pork recipe](/cuisine/twice-cooked-pork-recipe/).*

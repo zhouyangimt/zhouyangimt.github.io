@@ -4,16 +4,16 @@ date: 2026-06-25
 description: "A small volcano of dried red chilies hiding crispy, cumin-dusted chicken nuggets — Chongqing's most honest dish smells like a dare and tastes like the best bad decision you'll make all week."
 tags: ["chongqing", "chicken", "spicy", "sichuan-cuisine", "classic"]
 slug: "laziji"
-images: ["/images/laziji-1.jpg", "/images/laziji-2.jpg", "/images/laziji-3.jpg"]
+images: ["/images/laziji-1.jpg?v=2", "/images/laziji-2.jpg?v=2", "/images/laziji-3.jpg?v=2"]
 ---
 
-![Laziji — a mountain of dried red chilies hiding crispy golden chicken nuggets in a dark wok](/images/laziji-1.jpg)
+![Laziji — a mountain of dried red chilies hiding crispy golden chicken nuggets in a dark wok](/images/laziji-1.jpg?v=2)
 
 The plate lands on your table and you laugh. You can't help it. It's a joke and a threat and an invitation all at once: a small mountain of dried red chilies, piled so high the chicken pieces underneath are just a conspiracy theory. The smell arrives separately, almost late: hot oil, toasted cumin, the back-of-throat prickle of Sichuan peppercorns volatilizing in the air above the wok. A few whole star anise are in there. Ginger slices the size of guitar picks. The oil still crackles.
 
 This is Laziji (辣子鸡, *là zǐ jī*), Chongqing-style spicy chicken. You are not being served chicken with chilies. You are being served chilies, and somewhere in that red avalanche there is chicken, and finding it is the entire game. I was twenty-four, three years into my first job at Microsoft, on a weekend trip to Chongqing with coworkers who all swore this particular restaurant on a hillside in Nanshan was worth the two-hour cab ride. They were right. It was.
 
-![Laziji — close-up of crispy chicken nuggets peeking through a dense layer of dried red chilies](/images/laziji-2.jpg)
+![Laziji — close-up of crispy chicken nuggets peeking through a dense layer of dried red chilies](/images/laziji-2.jpg?v=2)
 
 ## The Architecture of a Bite
 
@@ -39,7 +39,7 @@ The second enemy is **the thick batter**. Some kitchens coat the chicken in a he
 
 The third enemy is **pre-ground everything**. Cumin from a jar marked 2019. Chili flakes that smell like old textbooks. Sichuan peppercorn powder that lost its zing during the Obama administration. You need whole dried chilies. You need whole cumin seeds, toasted and crushed. You need Sichuan peppercorns that still feel like something when you hold them.
 
-![Laziji — over steamed rice, ready to eat, the ideal moment](/images/laziji-3.jpg)
+![Laziji — over steamed rice, ready to eat, the ideal moment](/images/laziji-3.jpg?v=2)
 
 ## How to Eat It
 

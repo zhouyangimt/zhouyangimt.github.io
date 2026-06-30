@@ -6,7 +6,7 @@ tags: ["cantonese", "pork", "bbq", "classic", "roast"]
 slug: "char-siu"
 ---
 
-![Char Siu — glossy Cantonese barbecued pork strips with signature red glaze and charred edges](/images/char-siu-1.jpg)
+![Char Siu — glossy Cantonese barbecued pork strips with signature red glaze and charred edges](/images/char-siu-1.jpg?v=1)
 
 You're walking down a side street in Hong Kong's Mong Kok district and something makes you stop. It's not a sound. It's a window — a shopfront with hooks hanging from a metal bar, and on those hooks, long strips of pork the color of a sunset seen through amber glass. The glaze catches the fluorescent light. The edges are singed black in spots, the way a marshmallow gets when you hold it just above the flame.
 
@@ -18,7 +18,7 @@ You order half a catty. You were not planning to buy pork today.
 
 This is Char Siu (叉烧, *chāshāo*). The name means "fork-roasted" — from the long two-pronged forks (*chā*, 叉) that suspend the meat over fire. The rest of the world calls it Chinese BBQ pork. Neither name prepares you for the reality.
 
-![Char Siu — closeup of sliced pork showing the signature red exterior and juicy interior](/images/char-siu-2.jpg)
+![Char Siu — closeup of sliced pork showing the signature red exterior and juicy interior](/images/char-siu-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -34,7 +34,7 @@ You chew. The meat resists just enough to remind you it's meat, not pâté. Then
 
 Good char siu makes you greedy. That's the test.
 
-![Char Siu — strips hanging in a traditional Cantonese BBQ shop window](/images/char-siu-3.jpg)
+![Char Siu — strips hanging in a traditional Cantonese BBQ shop window](/images/char-siu-3.jpg?v=1)
 
 ## Fire Worship
 

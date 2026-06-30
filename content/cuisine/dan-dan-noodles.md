@@ -6,7 +6,7 @@ tags: ["sichuan", "noodles", "spicy", "street-food", "classic"]
 slug: "dan-dan-noodles"
 ---
 
-![Dan Dan Noodles — a bowl of springy wheat noodles coated in sesame-chili sauce with minced pork and scallions](/images/dan-dan-noodles-1.jpg)
+![Dan Dan Noodles — a bowl of springy wheat noodles coated in sesame-chili sauce with minced pork and scallions](/images/dan-dan-noodles-1.jpg?v=1)
 
 It's 11pm in Chengdu and the alley is mostly dark except for one cart with a single bulb swinging from a wire. The cart has two cabinets — one holds a charcoal stove, the other stacks of blue-rimmed bowls. The man behind it scoops a spoonful of sesame paste into a bowl, then chili oil the color of brake lights, then a splash of black vinegar. The smell hits you ten feet out: roasted *huājiāo* sizzling in rendered pork fat, fermented *yácài* releasing its funky-sweet depth, garlic crushed rough and still raw.
 
@@ -14,7 +14,7 @@ By the time you sit down on a plastic stool the size of a dinner plate, the nood
 
 Mix everything from the bottom. Do it now, before the noodles drink the sauce dry. This is Dan Dan Noodles (担担面, *dàndàn miàn*). It costs about nine yuan. It will ruin every other noodle dish you eat this week.
 
-![Dan Dan Noodles — closeup of the glossy chili oil and sesame-coated noodles](/images/dan-dan-noodles-2.jpg)
+![Dan Dan Noodles — closeup of the glossy chili oil and sesame-coated noodles](/images/dan-dan-noodles-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -30,7 +30,7 @@ The pork hits next. Minced belly, fried dry in a wok until every granule is a cr
 
 A good bowl of Dan Dan Noodles doesn't have soup. It's a sauce delivery system. You mix from the bottom, you eat fast, you don't pause to check your phone.
 
-![Dan Dan Noodles — the bowl as served, pork and scallions scattered on top](/images/dan-dan-noodles-3.jpg)
+![Dan Dan Noodles — the bowl as served, pork and scallions scattered on top](/images/dan-dan-noodles-3.jpg?v=1)
 
 ## The Man Who Carried a Kitchen
 

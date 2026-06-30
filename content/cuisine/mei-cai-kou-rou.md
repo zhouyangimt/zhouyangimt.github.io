@@ -4,10 +4,10 @@ date: 2026-06-28
 description: "Melting slabs of pork belly draped over dark, funky preserved mustard greens — a Hakka grandmother's secret weapon that turns a humble bowl of rice into a hostage negotiation."
 tags: ["hakka", "cantonese", "pork", "braised", "classic"]
 slug: "mei-cai-kou-rou"
-images: ["/images/mei-cai-kou-rou-1.jpg", "/images/mei-cai-kou-rou-2.jpg", "/images/mei-cai-kou-rou-3.jpg", "/images/mei-cai-kou-rou-4.jpg"]
+images: ["/images/mei-cai-kou-rou-1.jpg?v=1", "/images/mei-cai-kou-rou-2.jpg?v=1", "/images/mei-cai-kou-rou-3.jpg?v=1", "/images/mei-cai-kou-rou-4.jpg?v=1"]
 ---
 
-![Mei Cai Kou Rou — steaming bowl of braised pork belly draped over dark preserved mustard greens](/images/mei-cai-kou-rou-1.jpg)
+![Mei Cai Kou Rou — steaming bowl of braised pork belly draped over dark preserved mustard greens](/images/mei-cai-kou-rou-1.jpg?v=1)
 
 The bowl arrives upside down. This is the first thing you need to know about Mei Cai Kou Rou (梅菜扣肉, *méi cài kòu ròu*): it shows up hiding. The waiter sets down a deep ceramic bowl that looks like a brown dome of nothing, pauses for dramatic effect — and flips it. The bowl lifts away. What's underneath is a perfect spiral of pork belly slices, skin-side up, glistening the color of old mahogany, resting on a bed of something so dark it almost reads as black.
 
@@ -15,7 +15,7 @@ The smell hits a full second before your brain registers what you're looking at.
 
 I was eight the first time I saw one flipped at a wedding banquet in Shanghai. The entire table of twelve adults stopped talking for five full seconds. My grandmother leaned over and whispered: "That's the dish that decides if the chef gets paid." She wasn't joking.
 
-![Mei Cai Kou Rou close-up — glossy pork belly with alternating layers of fat and lean meat](/images/mei-cai-kou-rou-2.jpg)
+![Mei Cai Kou Rou close-up — glossy pork belly with alternating layers of fat and lean meat](/images/mei-cai-kou-rou-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -27,7 +27,7 @@ The flavor doesn't build gradually. It arrives all at once: the sweet caramelize
 
 A good bowl of Mei Cai Kou Rou makes you forget side dishes exist. You'll eat it over plain rice and wonder why the rice suddenly tastes like the best thing you've ever eaten.
 
-![Mei Cai Kou Rou served in a traditional bowl with rice on the side](/images/mei-cai-kou-rou-3.jpg)
+![Mei Cai Kou Rou served in a traditional bowl with rice on the side](/images/mei-cai-kou-rou-3.jpg?v=1)
 
 ## The Hakka Grandmother's Gambit
 
@@ -47,7 +47,7 @@ The third enemy is **fake preserved greens**. Real *méi cài* (梅菜) takes we
 
 Real Mei Cai Kou Rou needs exactly: pork belly with the skin on (never loin, never shoulder), real aged *méi cài* from Huizhou, rock sugar, dark soy, Shaoxing wine, star anise, ginger, and three hours of steam. That's eight ingredients. Master them and you've inherited a Hakka grandmother's entire culinary philosophy.
 
-![Mei Cai Kou Rou over rice — the dark sauce seeping into the grains](/images/mei-cai-kou-rou-4.jpg)
+![Mei Cai Kou Rou over rice — the dark sauce seeping into the grains](/images/mei-cai-kou-rou-4.jpg?v=1)
 
 ## How to Eat It
 

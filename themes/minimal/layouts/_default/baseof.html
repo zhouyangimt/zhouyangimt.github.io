@@ -6,6 +6,7 @@
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <link rel="stylesheet" href="/css/style.css?v={{ now.Format "200601021504" }}">
+  <link rel="stylesheet" href="/css/search.css?v=1">
   {{ partial "recipe-schema.html" . }}
   {{ if .IsHome }}
   <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
@@ -33,6 +34,10 @@
         {{ range .Site.Menus.main }}
         <a href="{{ .URL }}">{{ .Name }}</a>
         {{ end }}
+        <span class="nav-search">
+          <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+          <div id="search-results" class="search-dropdown"></div>
+        </span>
         <span class="rss-links">
           <span class="rss-label">RSS</span>
           <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
@@ -47,5 +52,6 @@
   <footer>
     <p>© {{ now.Format "2006" }} {{ .Site.Params.author }} · Shanghai · Chasing the 25th frame</p>
   </footer>
+  <script src="/js/search.js?v=1"></script>
 </body>
 </html>

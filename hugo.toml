@@ -13,8 +13,15 @@ buildFuture = true
       unsafe = true
 
 # 禁用混合 RSS，使用分板块独立 RSS
+[outputFormats.SearchIndex]
+  name = 'SearchIndex'
+  mediaType = 'application/json'
+  baseName = 'search-index'
+  isPlainText = true
+  notAlternative = true
+
 [outputs]
-  home = ['HTML']
+  home = ['HTML', 'SearchIndex']
   section = ['HTML', 'RSS']
 
 [menu]

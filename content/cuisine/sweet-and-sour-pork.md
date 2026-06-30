@@ -4,10 +4,10 @@ date: 2026-06-23
 description: "Double-fried pork shoulder in a shattering batter shell, tossed through a white-vinegar glaze with pineapple and bell pepper — the dish that taught the world sweet-and-sour, then watched them ruin it."
 tags: ["cantonese", "pork", "sweet-sour", "classic", "fried"]
 slug: "sweet-and-sour-pork"
-images: ["/images/sweet-and-sour-pork-1.jpg", "/images/sweet-and-sour-pork-2.jpg", "/images/sweet-and-sour-pork-3.jpg"]
+images: ["/images/sweet-and-sour-pork-1.jpg?v=1", "/images/sweet-and-sour-pork-2.jpg?v=1", "/images/sweet-and-sour-pork-3.jpg?v=1"]
 ---
 
-![Sweet and Sour Pork — glossy glazed pork chunks with bell pepper and pineapple on a white plate in a Cantonese restaurant](/images/sweet-and-sour-pork-1.jpg)
+![Sweet and Sour Pork — glossy glazed pork chunks with bell pepper and pineapple on a white plate in a Cantonese restaurant](/images/sweet-and-sour-pork-1.jpg?v=1)
 
 The wok. The oil hits 190°C and the kitchen fills with a specific sound — a violent sizzle that collapses into a rolling crackle. You're in a restaurant on Huifu East Road in Guangzhou's Yuexiu district, and the smell coming off that wok is white vinegar and rock sugar caramelizing together, sharp and sweet and completely unavoidable. The chef works fast: pork out, drain, back in. Second fry, hotter. The batter turns from pale gold to deep amber. He tips in the sauce and everything roars. Bell pepper chunks, pineapple wedges, onion petals tumble through the orange-red gloss. Ten seconds from sauce to plate.
 
@@ -15,7 +15,7 @@ Then it's in front of you. Glazed cubes of pork catching the fluorescent light l
 
 This is Sweet and Sour Pork (咕噜肉, *gūlū ròu*) — the Cantonese dish the entire world thinks it knows. The dish that's been translated, betrayed, and re-betrayed more times than any other Chinese recipe. The dish you grew up eating was probably wrong.
 
-![Sweet and Sour Pork — close-up of a single battered piece showing the crispy shell, glossy sauce, and tender pork interior](/images/sweet-and-sour-pork-2.jpg)
+![Sweet and Sour Pork — close-up of a single battered piece showing the crispy shell, glossy sauce, and tender pork interior](/images/sweet-and-sour-pork-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -35,7 +35,7 @@ Bad sweet and sour pork is a children's menu item. Good sweet and sour pork is a
 
 The dish appeared in Guangzhou kitchens in the late 18th century. The story I heard growing up: a chef's wife was pregnant and craving — the specific craving was both sweet and sour, simultaneously, which in food terms is like wanting to be wet and dry at once. He fried pork chunks, tossed them in vinegar-sugar sauce, and she devoured it. Neighbors smelled it through the window. A year later it was on every restaurant street in the city. The name 咕噜 — *gūlū* — is the sound of someone gulping food down too fast to breathe. Or it's the sound of pork tumbling through a hot wok. Both are true. Move on.
 
-![Sweet and Sour Pork — the dish served over white rice with chopsticks reaching in, sauce glistening](/images/sweet-and-sour-pork-3.jpg)
+![Sweet and Sour Pork — the dish served over white rice with chopsticks reaching in, sauce glistening](/images/sweet-and-sour-pork-3.jpg?v=1)
 
 ## The Enemies of Sweet and Sour Pork
 

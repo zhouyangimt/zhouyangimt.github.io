@@ -11,9 +11,9 @@ tags:
 - recipe
 - classic
 - harbin
-|related: /cuisine/guo-bao-rou/
-|images: ["/images/guo-bao-rou-1.jpg"]
-|recipeCuisine: Dongbei
+related: /cuisine/guo-bao-rou/
+images: ["/images/guo-bao-rou-1.jpg"]
+recipeCuisine: Dongbei
 recipeCategory: Main Course
 prepTime: PT15M
 cookTime: PT15M

@@ -3,7 +3,7 @@ title: "Dongpo Rou: The Poet Who Braised Pork Better Than God"
 date: 2026-06-20
 description: "Pork belly braised for three hours in Shaoxing wine until the fat trembles, the lean dissolves, and the skin goes dark as old lacquer — this is what happens when a Song dynasty genius gets bored in exile."
 tags: ["hangzhou", "pork", "braised", "classic", "zhejiang"]
-6|slug: "dongpo-rou"
+slug: "dongpo-rou"
 images: ["/images/dongpo-rou-1.jpg", "/images/dongpo-rou-2.jpg", "/images/dongpo-rou-3.jpg"]
 ---
 

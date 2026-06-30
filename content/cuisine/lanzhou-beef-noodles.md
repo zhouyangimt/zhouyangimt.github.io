@@ -4,10 +4,10 @@ date: 2026-06-22
 description: "Hand-pulled yellow noodles swimming in bone-clear broth, crowned with paper-thin beef and a spoonful of chili oil that stains the surface like a sunset — this is the breakfast that wakes up northwest China."
 tags: ["gansu", "beef", "noodles", "halal", "classic", "street-food"]
 slug: "lanzhou-beef-noodles"
-images: ["/images/lanzhou-beef-noodles-1.jpg"]
+images: ["/images/lanzhou-beef-noodles-1.jpg?v=1"]
 ---
 
-![Lanzhou Beef Noodles — a steaming bowl of hand-pulled noodles in clear beef broth with chili oil, sliced radish, and cilantro](/images/lanzhou-beef-noodles-1.jpg)
+![Lanzhou Beef Noodles — a steaming bowl of hand-pulled noodles in clear beef broth with chili oil, sliced radish, and cilantro](/images/lanzhou-beef-noodles-1.jpg?v=1)
 
 It's 6:14 in the morning and Lanzhou is seven degrees Celsius. The high-desert cold cuts through whatever jacket you brought, and the sky is still the color of spent charcoal.
 
@@ -19,7 +19,7 @@ A taxi driver is already at the counter, hands still in his jacket pockets, chin
 
 This is Lanzhou Beef Noodles (兰州牛肉面, *Lánzhōu niúròu miàn*). It's not lunch. It's not dinner. It's the reason this city wakes up.
 
-![Lanzhou Beef Noodles close-up — hand-pulled noodles glistening with chili oil, sliced beef, and fresh herbs](/images/lanzhou-beef-noodles-2.jpg)
+![Lanzhou Beef Noodles close-up — hand-pulled noodles glistening with chili oil, sliced beef, and fresh herbs](/images/lanzhou-beef-noodles-2.jpg?v=1)
 
 ## The Five-Color Architecture
 
@@ -35,7 +35,7 @@ Then the beef. Sliced so thin it's translucent, poached separately and laid acro
 
 I spent thirteen years at Microsoft, Google, and NVIDIA. I've debugged kernel panics that made more sense than this broth. The ingredients are simple. The result is not.
 
-![Lanzhou Beef Noodles — a master pulling dough into thin strands in a traditional shop](/images/lanzhou-beef-noodles-3.jpg)
+![Lanzhou Beef Noodles — a master pulling dough into thin strands in a traditional shop](/images/lanzhou-beef-noodles-3.jpg?v=1)
 
 ## The Man Who Boiled Bones at 4am
 
@@ -60,7 +60,7 @@ Real Lanzhou Beef Noodles has:
 - **White radish** (白萝卜, *bái luóbo*), sliced thin and poached in the broth until translucent. Sweetens as it cooks. Counterbalances the chili.
 - **The five colors**, visible from across the shop — clear broth, white radish, red chili oil, green herbs, yellow noodles — or you send it back.
 
-![Lanzhou Beef Noodles — the bowl as served, chopsticks lifting a tangle of noodles through chili oil](/images/lanzhou-beef-noodles-4.jpg)
+![Lanzhou Beef Noodles — the bowl as served, chopsticks lifting a tangle of noodles through chili oil](/images/lanzhou-beef-noodles-4.jpg?v=1)
 
 ## How to Eat It
 

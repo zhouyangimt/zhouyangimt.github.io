@@ -4,10 +4,10 @@ date: 2026-06-24
 description: "Tender white fish slices submerged in a cauldron of chili oil and Sichuan peppercorns — the dish called 'water-boiled' that will burn your lips numb and make you order rice twice."
 tags: ["sichuan", "fish", "spicy", "mala", "classic"]
 slug: "sichuan-boiled-fish"
-images: ["/images/sichuan-boiled-fish-1.jpg", "/images/sichuan-boiled-fish-2.jpg", "/images/sichuan-boiled-fish-3.jpg"]
+images: ["/images/sichuan-boiled-fish-1.jpg?v=1", "/images/sichuan-boiled-fish-2.jpg?v=1", "/images/sichuan-boiled-fish-3.jpg?v=1", "/images/sichuan-boiled-fish-4.jpg?v=1"]
 ---
 
-![Sichuan Boiled Fish — a wide ceramic bowl of tender white fish fillets submerged in a sea of crimson chili oil, scattered with dried chilies and Sichuan peppercorns](/images/sichuan-boiled-fish-1.jpg)
+![Sichuan Boiled Fish — a wide ceramic bowl of tender white fish fillets submerged in a sea of crimson chili oil, scattered with dried chilies and Sichuan peppercorns](/images/sichuan-boiled-fish-1.jpg?v=1)
 
 You walk into a restaurant on Yulin West Road in Chengdu and the first thing that hits you isn't the noise or the heat. It's the smell — hot rapeseed oil hitting a mound of dried chilies and Sichuan peppercorns, releasing something between toasted nuts and an electrical fire. The sound arrives half a second later: a violent sizzle that makes every table in the room look up.
 
@@ -19,7 +19,7 @@ The name lied. There is nothing boiled about this.
 
 This is Sichuan Boiled Fish (水煮鱼, *shuǐ zhǔ yú*). The name means "water-boiled fish" — a translation so misleading it should be prosecuted. What you're eating is fish poached in seasoned stock, then drowned in a ladleful of chili oil brought to smoking point and poured over everything at the last second. The "water" is a memory. The "boil" is a technicality. What arrives at your table is a controlled detonation.
 
-![Sichuan Boiled Fish close-up — a single slice of white fish lifted from the red oil, translucent at the edges, flecked with ground peppercorns](/images/sichuan-boiled-fish-2.jpg)
+![Sichuan Boiled Fish close-up — a single slice of white fish lifted from the red oil, translucent at the edges, flecked with ground peppercorns](/images/sichuan-boiled-fish-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -35,7 +35,10 @@ Stage four: the first bite. Your chopsticks push through the oil slick. The fish
 
 A good bowl of Sichuan Boiled Fish should make you nervous and hungry at the same time.
 
-![Sichuan Boiled Fish — the bowl on a restaurant table with chopsticks reaching in, steam visible, rice bowl on the side](/images/sichuan-boiled-fish-3.jpg)
+![Sichuan Boiled Fish — the bowl on a restaurant table with chopsticks reaching in, steam visible, rice bowl on the side](/images/sichuan-boiled-fish-3.jpg?v=1)
+
+
+![Sichuan Boiled Fish — top-down view of the chili oil surface, dried chilies, Sichuan peppercorns, and bean sprouts visible beneath the red oil](/images/sichuan-boiled-fish-4.jpg?v=1)
 
 ## The Cook Who Named It Wrong
 

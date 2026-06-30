@@ -13,6 +13,7 @@ tags:
 - stir-fry
 - home-cooking
 slug: twice-cooked-pork-recipe
+images: ["/images/twice-cooked-pork-1.jpg?v=1"]
 related: /cuisine/twice-cooked-pork/
 recipeCuisine: Sichuan
 recipeCategory: Main Course
@@ -46,8 +47,10 @@ recipeInstructions:
 - Return pork. Add soy sauces and sugar. Toss on high heat 1 minute.
 - Add green garlic/leeks. Toss 30 seconds until just wilted. Serve immediately.
 ---
-> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 回锅肉的正宗做法。
 
+![Twice-Cooked Pork — thin slices of pork belly with the signature lantern-cup curl, glistening with doubanjiang and scattered with garlic sprouts](/images/twice-cooked-pork-1.jpg?v=1)
+
+> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 回锅肉的正宗做法。
 > _Read the story behind this dish: [Twice-Cooked Pork: The Sichuan Home Classic That Tests Every Cook](/cuisine/twice-cooked-pork/)_
 
 Twice-Cooked Pork (回锅肉, _huíguō ròu_) is the dish that separates cooks who understand heat from everyone else. The name is literal — meat that returns to the wok — and the two-stage cooking is the whole point. Boil first, fry second. If you skip the boil and throw raw pork belly straight into the wok, you've made a stir-fry. You have not made Twice-Cooked Pork. This recipe is the Sichuan way: pork belly transformed by patience and technique into slices that curl at the edges, their fat rendered translucent and buttery, coated in the deep fermented funk of Pixian doubanjiang.

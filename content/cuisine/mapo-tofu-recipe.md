@@ -11,6 +11,7 @@ tags:
 - recipe
 - classic
 slug: mapo-tofu-recipe
+images: ["/images/mapo-tofu-1.jpg?v=3"]
 recipeCuisine: Sichuan
 recipeCategory: Main Course
 prepTime: PT15M
@@ -48,8 +49,10 @@ recipeInstructions:
 - Sprinkle ground Sichuan peppercorn, garnish with scallion greens. Serve immediately
   over rice.
 ---
-> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 麻婆豆腐的正宗做法。
 
+![Mapo Tofu — silky tofu cubes in a fiery red pool of chili oil and doubanjiang, topped with freshly ground Sichuan peppercorns](/images/mapo-tofu-1.jpg?v=3)
+
+> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 麻婆豆腐的正宗做法。
 *This is the practical companion to [Mapo Tofu: The Pockmarked Granny's Revenge](/cuisine/mapo-tofu-sichuan-classic/) — read that first for the history, then come back here to cook.*
 
 Most Mapo Tofu outside Sichuan is a lie. It's firm tofu drowning in a brown slurry with a whisper of chili flake — edible, maybe, but not Mapo Tofu. The real thing is an event: silken tofu so soft it collapses on your tongue, a sauce stained deep red by fermented broad bean paste aged in clay jars, and a numbing electric tingle from freshly ground Sichuan peppercorns that rewrites your nervous system in real time.

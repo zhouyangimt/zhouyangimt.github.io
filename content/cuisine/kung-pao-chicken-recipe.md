@@ -2,6 +2,7 @@
 title: 'How to Cook Kung Pao Chicken: The Real Way'
 date: 2026-06-24
 slug: kung-pao-chicken-recipe
+images: ["/images/kung-pao-chicken-1.jpg"]
 description: A step-by-step guide to making authentic 宫保鸡丁 at home — no bell peppers,
   no ketchup, just the real Sichuan málà magic.
 tags:
@@ -44,8 +45,10 @@ recipeInstructions:
 - Return chicken. Pour sauce around edges of wok. Toss on high heat 30 seconds.
 - Add peanuts and scallion greens. Toss once. Serve immediately.
 ---
-> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 宫保鸡丁的正宗做法。
 
+![Kung Pao Chicken — glazed chicken cubes tossed with dried chilies, Sichuan peppercorns, and roasted peanuts in a dark wok](/images/kung-pao-chicken-1.jpg)
+
+> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 宫保鸡丁的正宗做法。
 > _Read the story behind this dish: [Kung Pao Chicken: The Stir-Fry That Made Sichuan Famous](/cuisine/kung-pao-chicken/)_
 
 If you've only ever eaten Kung Pao Chicken from a fluorescent-lit takeout box — the one with bell peppers, diced carrots, and a sauce that tastes vaguely of ketchup — forget everything you know. Real 宫保鸡丁 is an entirely different animal: a lightning-fast stir-fry where chicken, peanuts, chilies, and Sichuan peppercorns collide in a sweet-savory-numbing sauce that has nothing to hide behind. This recipe is the one that Sichuan grandmothers would recognize. It takes about 30 minutes start to finish, demands a hot wok and sharp knife, and will ruin takeout Kung Pao for you permanently.

@@ -11,7 +11,7 @@ tags:
 - classic
 - recipe
 slug: hong-shao-shi-zi-tou-recipe
-images: ["/images/hong-shao-shi-zi-tou-recipe-1.jpg", "/images/hong-shao-shi-zi-tou-recipe-2.jpg", "/images/hong-shao-shi-zi-tou-recipe-3.jpg"]
+images: ["/images/hong-shao-shi-zi-tou-1.jpg?v=1"]
 recipeCuisine: Jiangsu (Huaiyang)
 recipeCategory: Main Course
 prepTime: PT40M
@@ -79,6 +79,8 @@ recipeInstructions:
 related: /cuisine/hong-shao-shi-zi-tou/
 ---
 
+![Lion's Head Meatball — a massive glistening pork meatball in dark clay pot, napa cabbage wilting around it, steam curling upward](/images/hong-shao-shi-zi-tou-1.jpg?v=1)
+
 > **Editor's Note:** This is the step-by-step companion to [Lion's Head Meatballs — The Giant Pork Meatball That Collapses Under a Spoon](/cuisine/hong-shao-shi-zi-tou/). If you haven't read the story behind these glorious spheres of surrender, start there. Then come back here to make them. This guide assumes you've already been convinced that hand-chopping matters. If you haven't, reread the Enemies section of the narrative. We'll wait.
 
 Lion's head meatballs (红烧狮子头, *hóngshāo shīzi tóu*) are the opposite of every Western meatball you've ever made. They're not dense. They're not uniform. They don't bounce. The ideal texture is a pork cloud held together by faith and myosin — so tender you can split one with the edge of a soupspoon.
@@ -86,8 +88,6 @@ Lion's head meatballs (红烧狮子头, *hóngshāo shīzi tóu*) are the opposi
 Getting there takes three things: the right meat, the right knife work, and the right amount of patience. Screw up any one of them and you'll make something edible but wrong. A dense meatball in sauce is still dinner. But it's not lion's head.
 
 Here's how to do it right, drawn from years of watching Shanghai grandmothers and one very patient chef at a Yangzhou restaurant who let me stand in his kitchen for an afternoon.
-
-![Lion's head meatball ingredients — hand-chopped pork, water chestnuts, ginger, scallions, soy sauces, rock sugar on a wooden cutting board](/images/hong-shao-shi-zi-tou-recipe-1.jpg)
 
 ## Ingredients
 
@@ -178,8 +178,6 @@ The tops and bottoms only — you're not trying to brown the entire sphere. Tran
 
 *Why this matters:* The sear builds a thin crust that prevents the meatball from absorbing too much liquid too fast. Without it, the exterior dissolves before the interior sets, and you get a shapeless blob instead of a sphere. The crust also adds a layer of roasted flavor that makes the finished dish taste deeper.
 
-![Searing lion's head meatballs — golden brown crust forming in a clay pot](/images/hong-shao-shi-zi-tou-recipe-2.jpg)
-
 ### Phase 3: Build the Braising Liquid
 
 Pour off any excess oil from the pot — a thin film is fine. Add the dark soy, light soy, rock sugar, 3 tbsp Shaoxing wine, and 400ml water or stock. Drop in the ginger slices, star anise, and cinnamon stick. Stir to dissolve the sugar. Bring to a gentle boil, then reduce to a simmer.
@@ -207,8 +205,6 @@ Taste the braising liquid. The reduction may have concentrated the salt. If it n
 ### Phase 6: Serve
 
 Use a slotted spoon to lift each meatball onto a mound of steamed white rice in a wide, shallow bowl. Spoon 2-3 tablespoons of braising liquid over the top — let it pool around the rice. Place a leaf of the braised napa cabbage alongside the meatball. It is not garnish. It is the sweetest thing on the plate.
-
-![Finished lion's head meatball over rice — glossy sauce, braised cabbage, steam rising](/images/hong-shao-shi-zi-tou-recipe-3.jpg)
 
 ## Key Pitfalls
 

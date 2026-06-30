@@ -11,8 +11,9 @@ tags:
 - recipe
 - classic
 - harbin
-related: /cuisine/guo-bao-rou/
-recipeCuisine: Dongbei
+|related: /cuisine/guo-bao-rou/
+|images: ["/images/guo-bao-rou-1.jpg"]
+|recipeCuisine: Dongbei
 recipeCategory: Main Course
 prepTime: PT15M
 cookTime: PT15M
@@ -44,11 +45,11 @@ recipeInstructions:
 - Toss the double-fried pork in the sauce with ginger, carrot, garlic, and scallions. Serve immediately.
 ---
 
+![Guo Bao Rou — golden crispy double-fried pork slices glistening with translucent sweet-sour sauce, served on a simple white plate in a Dongbei restaurant](/images/guo-bao-rou-1.jpg)
+
 > **Editor's Note:** When we published [the story of Guo Bao Rou](/cuisine/guo-bao-rou/), several readers asked the same question: how do you actually get that shatter at home? The double-fry technique looks intimidating but it's really just two temperatures and a clock. Here's the step-by-step.
 
 If you've ever bitten into Guo Bao Rou that went *crack* — the kind where your table neighbors turned to look — you know the standard that matters. The shatter is everything. This recipe gives you that shatter, in a home kitchen, with a wok and a thermometer. It takes about thirty minutes. It will ruin takeout fried pork for you permanently.
-
-![Guo Bao Rou — cooking process: pork slices being lowered into hot oil, batter bubbling around the edges](/images/guo-bao-rou-recipe-1.jpg)
 
 ## The Science of the Shatter
 
@@ -121,8 +122,6 @@ Have everything next to your wok before you heat any oil: marinated pork → bat
 
 ## Step-by-Step: The Double Fry
 
-![Guo Bao Rou — second fry in progress, pork slices turning golden in bubbling oil, steam rising](/images/guo-bao-rou-recipe-2.jpg)
-
 ### Step 1: First Fry — Set the Shell (3–4 minutes per batch)
 
 Pour oil into your wok to a depth of about 5cm. Heat to 160°C. If you don't have a thermometer, test with a drop of batter — it should sink halfway, then rise to the surface and sizzle gently without browning. If it browns immediately, the oil is too hot. If it sinks and stays at the bottom, too cold.
@@ -156,8 +155,6 @@ The alternative (and my preferred) method: heat the sauce separately until it bu
 Move the pork to a serving plate. Scatter the aromatics on top if you pour-sauced. Bring to the table. Do not wait for side dishes. Do not wait for rice. Do not wait for the person who's still washing their hands.
 
 The crunch window is roughly three minutes. After that, the shell begins its inevitable decline from shatter to chew. Both are edible. Only one is Guo Bao Rou.
-
-![Guo Bao Rou — finished dish, golden slices with translucent glaze, ginger and carrot strips scattered on top, ready to eat](/images/guo-bao-rou-recipe-3.jpg)
 
 ## Key Pitfalls
 

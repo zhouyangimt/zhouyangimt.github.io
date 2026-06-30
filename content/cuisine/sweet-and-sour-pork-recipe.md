@@ -12,6 +12,7 @@ tags:
 - classic
 - fried
 slug: sweet-and-sour-pork-recipe
+images: ["/images/sweet-and-sour-pork-1.jpg?v=1"]
 recipeCuisine: Cantonese
 recipeCategory: Main Course
 prepTime: PT20M
@@ -46,6 +47,9 @@ recipeInstructions:
   and glossy.
 - Add fried pork, toss quickly to coat. Serve immediately while pork is still crisp.
 ---
+
+![Sweet and Sour Pork — glossy glazed pork chunks with bell pepper and pineapple on a white plate in a Cantonese restaurant](/images/sweet-and-sour-pork-1.jpg?v=1)
+
 > **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 糖醋里脊（咕噜肉）的正宗做法。
 
 *This is the practical companion to [Sweet and Sour Pork: The Cantonese Classic the World Keeps Getting Wrong](/cuisine/sweet-and-sour-pork/) — read that first for the history, then come back here to cook.*

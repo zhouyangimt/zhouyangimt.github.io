@@ -12,6 +12,7 @@ tags:
 - recipe
 - classic
 slug: sichuan-boiled-fish-recipe
+images: ["/images/sichuan-boiled-fish-1.jpg?v=1"]
 related: /cuisine/sichuan-boiled-fish/
 recipeCuisine: Sichuan
 recipeCategory: Main Course
@@ -50,8 +51,10 @@ recipeInstructions:
 - Heat remaining 2 tbsp oil until smoking. Carefully pour over the spices — it should
   sizzle violently. Serve immediately.
 ---
-> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 水煮鱼的正宗做法。
 
+![Sichuan Boiled Fish — a wide ceramic bowl of tender white fish fillets submerged in a sea of crimson chili oil, scattered with dried chilies and Sichuan peppercorns](/images/sichuan-boiled-fish-1.jpg?v=1)
+
+> **Editor's Note:** Since launching this column, we've heard one request more than any other: the stories are great, but how do we actually cook these? Today we're fixing that — six classic recipes, dropping at once. Here's how to make 水煮鱼的正宗做法。
 *This is the practical companion to [Sichuan Boiled Fish: The Dish Whose Name Lied to You](/cuisine/sichuan-boiled-fish/) — read that first for the story, then come back here to cook.*
 
 The name is a lie, and once you understand why, everything about cooking this dish makes sense. 水煮鱼 (*shuǐ zhǔ yú*) translates to "water-boiled fish," but what arrives at your table is fish poached in seasoned stock and then submerged in a lake of chili oil that's been brought to smoking point and poured over a mountain of dried chilies and Sichuan peppercorns at the last possible second. The water is a technicality. The boil is a memory. What you're making is a controlled detonation — and it's one of the fastest, most dramatic dishes in Sichuan cooking.

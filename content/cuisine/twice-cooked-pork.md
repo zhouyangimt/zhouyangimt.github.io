@@ -4,10 +4,10 @@ date: 2026-06-23
 description: "Pork belly boiled whole, sliced thin, then seared in its own rendered fat with fermented Pixian bean paste and garlic sprouts — the dish Sichuan grandmothers use to judge sons-in-law."
 tags: ["sichuan", "pork", "spicy", "home-cooking", "classic", "stir-fry"]
 slug: "twice-cooked-pork"
-images: ["/images/twice-cooked-pork-1.jpg"]
+images: ["/images/twice-cooked-pork-1.jpg?v=1", "/images/twice-cooked-pork-2.jpg?v=1", "/images/twice-cooked-pork-3.jpg?v=1"]
 ---
 
-![Twice-Cooked Pork — thin slices of pork belly with the signature lantern-cup curl, glistening with doubanjiang and scattered with garlic sprouts](/images/twice-cooked-pork-1.jpg)
+![Twice-Cooked Pork — thin slices of pork belly with the signature lantern-cup curl, glistening with doubanjiang and scattered with garlic sprouts](/images/twice-cooked-pork-1.jpg?v=1)
 
 The slab of pork belly hits the wok of cold water with a soft thud. Ginger slices, a knot of scallion, a splash of Shaoxing wine. Your grandmother brings it to a boil, drops the flame to a whisper. Forty minutes. The kitchen fills with the clean, porky scent of simmering fat and ginger — not the aggressive smell of a stir-fry, but something patient. She lifts the pork out with chopsticks, sets it on the cutting board. The skin is pale, the fat layer translucent, wobbling slightly as it cools. You reach for a piece. She slaps your hand away without looking.
 
@@ -15,7 +15,7 @@ Half an hour later, the same pork — now sliced into thin, uniform rectangles, 
 
 This is Twice-Cooked Pork (回锅肉, *huíguō ròu*). The name is literal: meat that returns to the wok. But the name undersells it. This is the dish Sichuan grandmothers use to test sons-in-law. The dish that separates cooks who understand heat from the ones who think stir-frying means tossing raw ingredients into a hot pan and hoping.
 
-![Twice-Cooked Pork — close-up showing the three-layer cross-section of skin, rendered fat, and lean meat with doubanjiang coating](/images/twice-cooked-pork-2.jpg)
+![Twice-Cooked Pork — close-up showing the three-layer cross-section of skin, rendered fat, and lean meat with doubanjiang coating](/images/twice-cooked-pork-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -31,7 +31,7 @@ Every bite is different. One mouthful is all pork and doubanjiang funk. The next
 
 A good twice-cooked pork is never the same dish twice. That's why the name fits: each time, you're chasing a version one degree different from the last.
 
-![Twice-Cooked Pork — served over steamed white rice with chili oil pooling at the bottom of the bowl](/images/twice-cooked-pork-3.jpg)
+![Twice-Cooked Pork — served over steamed white rice with chili oil pooling at the bottom of the bowl](/images/twice-cooked-pork-3.jpg?v=1)
 
 ## The Origin
 

@@ -4,16 +4,16 @@ date: 2026-06-27
 description: "No, there's no fish. Yes, the sauce can make anything taste like it belongs in Chengdu. A programmer's reckoning with the most misunderstood stir-fry in Chinese cooking."
 tags: ["sichuan", "pork", "savory-spicy-sour", "classic"]
 slug: "yu-xiang-rou-si"
-images: ["/images/yu-xiang-rou-si-1.jpg", "/images/yu-xiang-rou-si-2.jpg", "/images/yu-xiang-rou-si-3.jpg", "/images/yu-xiang-rou-si-4.jpg"]
+images: ["/images/yu-xiang-rou-si-1.jpg?v=1", "/images/yu-xiang-rou-si-2.jpg?v=1", "/images/yu-xiang-rou-si-3.jpg?v=1"]
 ---
 
-![Yu Xiang Rou Si — glistening shredded pork tangled with wood ear mushrooms under a deep amber sauce, the kind of dish that steam-fogs your glasses](/images/yu-xiang-rou-si-1.jpg)
+![Yu Xiang Rou Si — glistening shredded pork tangled with wood ear mushrooms under a deep amber sauce, the kind of dish that steam-fogs your glasses](/images/yu-xiang-rou-si-1.jpg?v=1)
 
 The wok makes a sound like tearing silk. It's the sound of shredded pork hitting oil at exactly the right temperature — hot enough to sear instantly, not so hot it smokes. A beat later the pickled chili paste goes in and the kitchen fills with something that smells like vinegar and caramel and fire all at once. You're standing in a Chengdu apartment the size of a New York walk-in closet. The cook — someone's grandmother, probably — moves faster than your eyes can track. Thirty seconds, start to finish. The plate lands on the table. The rice is already waiting.
 
 This is Yu Xiang Rou Si (鱼香肉丝, *yú xiāng ròu sī*). Fish-Fragrant Shredded Pork. A name that has confused every foreigner who's ever opened a Chinese menu. There is no fish in this dish. There never was. The "fish fragrance" refers to a specific sauce architecture — pickled chilies, ginger, garlic, scallion, sugar, vinegar, soy sauce — originally used for cooking freshwater fish in Sichuan. Someone figured out it tasted just as good on pork. That someone was a genius.
 
-![Close-up: strands of velvety pork coated in the signature yu xiang sauce — glossy, amber, studded with scarlet chili flecks and pale slivers of garlic](/images/yu-xiang-rou-si-2.jpg)
+![Close-up: strands of velvety pork coated in the signature yu xiang sauce — glossy, amber, studded with scarlet chili flecks and pale slivers of garlic](/images/yu-xiang-rou-si-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -21,7 +21,7 @@ I spent thirteen years debugging distributed systems. The best ones work because
 
 The sauce is the architecture. No starch-thickened goo. No ketchup. The body comes from the sugar dissolving into the vinegar and soy at high heat, reducing into something that coats each strand of pork without pooling on the plate. A good plate of Yu Xiang Rou Si doesn't leave a puddle. It leaves a shine.
 
-![Yu Xiang Rou Si served family-style on a worn wooden table, chopsticks reaching in — the rice bowl is already half empty](/images/yu-xiang-rou-si-3.jpg)
+![Yu Xiang Rou Si served family-style on a worn wooden table, chopsticks reaching in — the rice bowl is already half empty](/images/yu-xiang-rou-si-3.jpg?v=1)
 
 ## The Woman Who Never Smiled
 
@@ -40,8 +40,6 @@ The carrot-and-pepper version isn't "wrong" in the sense of being inedible. It's
 The Japanese version (*ebi chiri* for shrimp, using the same sauce base) is sweeter and milder. It's a valid remix. It's not Yu Xiang Rou Si.
 
 The "quick" version uses ketchup instead of pickled chili paste. This is a crime. Ketchup brings sugar and acid but none of the fermented depth that makes pickled chilies irreplaceable. You can taste the difference in the first half-second.
-
-![The final moment — glistening pork strands draped over a bowl of white rice, chopsticks paused mid-lift, steam curling upward](/images/yu-xiang-rou-si-4.jpg)
 
 ## How to Eat It
 

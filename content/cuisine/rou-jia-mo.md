@@ -4,16 +4,16 @@ date: 2026-06-28
 description: "Shredded pork braised in a centuries-old spice broth, crammed into a crisp, blistered flatbread that shatters on the first bite — this is the street food that built the Silk Road."
 tags: ["shaanxi", "pork", "street-food", "bread", "classic"]
 slug: "rou-jia-mo"
-images: ["/images/rou-jia-mo-1.jpg", "/images/rou-jia-mo-2.jpg", "/images/rou-jia-mo-3.jpg", "/images/rou-jia-mo-4.jpg"]
+images: ["/images/rou-jia-mo-1.jpg?v=2", "/images/rou-jia-mo-2.jpg?v=2", "/images/rou-jia-mo-3.jpg?v=2", "/images/rou-jia-mo-4.jpg?v=2"]
 ---
 
-![Rou Jia Mo — a stuffed flatbread with shredded braised pork spilling from the side on a street stall counter](/images/rou-jia-mo-1.jpg)
+![Rou Jia Mo — a stuffed flatbread with shredded braised pork spilling from the side on a street stall counter](/images/rou-jia-mo-1.jpg?v=2)
 
 The vendor pulls a flatbread from the clay oven with bare hands — bare hands, because calluses earned over forty years don't register 300 degrees anymore — and splits it with one motion. The bread cracks open along a seam you didn't know was there. Steam escapes in a puff that smells like toasted wheat and anise. Then he reaches into a pot that has been simmering since before you woke up this morning, pulls out a hunk of pork belly the color of deep amber, and chops it on a wooden block with the rhythm of someone who's done this a hundred thousand times. Chop chop pause. Chop chop splash — a spoonful of the braising liquid goes in. The chopped meat gets packed into the split bread. He wraps it in a square of wax paper and hands it to you. Total elapsed time: eighteen seconds.
 
 You're standing on a street corner in Xi'an, and you're holding a Rou Jia Mo (肉夹馍, *ròu jiā mó*) that costs eight yuan. It is, gram for gram, one of the best things you will ever eat.
 
-![Rou Jia Mo close-up — the crisp, blistered flatbread with tender shredded pork visible inside](/images/rou-jia-mo-2.jpg)
+![Rou Jia Mo close-up — the crisp, blistered flatbread with tender shredded pork visible inside](/images/rou-jia-mo-2.jpg?v=2)
 
 ## The Architecture of a Bite
 
@@ -25,7 +25,7 @@ Your teeth hit the pork. It's been braised for hours in *là zhī* (腊汁) — 
 
 A good Rou Jia Mo is crisp first, rich second, and warm all the way down.
 
-![Rou Jia Mo — wider shot showing the stuffed flatbread with meat and peppers](/images/rou-jia-mo-3.jpg)
+![Rou Jia Mo — wider shot showing the stuffed flatbread with meat and peppers](/images/rou-jia-mo-3.jpg?v=2)
 
 ## 2,000 Years of Meat in Bread
 
@@ -43,7 +43,7 @@ The third enemy is **the wrong pork cut**. Rou Jia Mo demands pork belly or pork
 
 Real Rou Jia Mo has: *báijí mó* flatbread baked in a clay oven, pork belly braised in aged *là zhī* master stock, and optionally cilantro and green chili. That's it. Five ingredients. Two thousand years.
 
-![Rou Jia Mo on a plate — the finished sandwich with a side of chili oil](/images/rou-jia-mo-4.jpg)
+![Rou Jia Mo on a plate — the finished sandwich with a side of chili oil](/images/rou-jia-mo-4.jpg?v=2)
 
 ## How to Eat It
 

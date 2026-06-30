@@ -7,7 +7,7 @@ slug: "mapo-tofu-sichuan-classic"
 images: ["/images/mapo-tofu-1.jpg"]
 ---
 
-![Mapo Tofu — silky tofu cubes in a fiery red pool of chili oil and doubanjiang](/images/mapo-tofu-1.jpg)
+![Mapo Tofu — silky tofu cubes in a fiery red pool of chili oil and doubanjiang](/images/mapo-tofu-1.jpg?v=3)
 
 The first time I ate real Mapo Tofu, I was nineteen years old, one year into my computer science degree at Fudan, and deeply suspicious of anything that made my face go numb. A Sichuan roommate dragged me to a hole-in-the-wall near Wujiaochang — the kind of place with plastic stools, grease-stained walls, and a line of taxi drivers out the door. "This is the test," he said. "If you can finish the bowl, you're allowed to date a Sichuan girl."
 
@@ -15,7 +15,7 @@ The bowl arrived hissing. Not metaphorically — the sauce was still bubbling ag
 
 I took a spoonful. The tofu collapsed on my tongue before I could chew. The sauce was so red it should have been a warning label, and the heat built like a recursive function — slow at first, then exponential. By the third spoonful my lips were buzzing, my forehead was wet, and my chopsticks were moving independent of my brain. I finished the bowl. I did not, for the record, ever date a Sichuan girl. But I have eaten Mapo Tofu at least once a month for the sixteen years since.
 
-![Mapo Tofu close-up — the trembling tofu, the crimson oil, the scallion confetti](/images/mapo-tofu-2.jpg)
+![Mapo Tofu close-up — the trembling tofu, the crimson oil, the scallion confetti](/images/mapo-tofu-2.jpg?v=3)
 
 ## What Real Mapo Tofu Does to You
 

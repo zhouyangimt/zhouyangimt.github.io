@@ -4,10 +4,10 @@ date: 2026-06-26
 description: "Caramelized pork belly collapsing into soy and star anise — the braise every Chinese grandmother guards like a family secret."
 tags: ["shanghai", "pork", "savory-sweet", "braised", "home-cooking"]
 slug: "hong-shao-rou"
-images: ["/images/hong-shao-rou-1.jpg", "/images/hong-shao-rou-2.jpg", "/images/hong-shao-rou-3.jpg"]
+images: ["/images/hong-shao-rou-1.jpg?v=3", "/images/hong-shao-rou-2.jpg?v=3", "/images/hong-shao-rou-3.jpg?v=3"]
 ---
 
-![Hong Shao Rou — glossy caramelized pork belly in a clay pot, steam rising](/images/hong-shao-rou-1.jpg)
+![Hong Shao Rou — glossy caramelized pork belly in a clay pot, steam rising](/images/hong-shao-rou-1.jpg?v=3)
 
 The smell hits you before the door opens. Soy sauce and caramelized sugar, star anise and ginger, pork fat rendering slow. You're six years old in your grandmother's Shanghai kitchen, and this smell means Sunday. It means a bowl of white rice waiting on the table. It means hóngshāo ròu (红烧肉).
 

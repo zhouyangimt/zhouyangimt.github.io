@@ -37,9 +37,6 @@ A good bowl of Sichuan Boiled Fish should make you nervous and hungry at the sam
 
 ![Sichuan Boiled Fish — the bowl on a restaurant table with chopsticks reaching in, steam visible, rice bowl on the side](/images/sichuan-boiled-fish-3.jpg?v=1)
 
-
-![Sichuan Boiled Fish — top-down view of the chili oil surface, dried chilies, Sichuan peppercorns, and bean sprouts visible beneath the red oil](/images/sichuan-boiled-fish-4.jpg?v=1)
-
 ## The Cook Who Named It Wrong
 
 The dish came out of Chongqing in the 1980s — not ancient, not imperial, just a few decades old. A restaurant cook, the story goes, had spent all day braising and frying and was tired. He threw fish into simmering water, scooped it out, piled on dried chilies, and poured hot oil over the top because it was fast and looked dramatic. Customers lost their minds. Within five years every Sichuan restaurant in the country had a version on the menu.
@@ -61,6 +58,8 @@ Real Sichuan Boiled Fish requires exactly:
 - **Dried èr jīng tiáo chilies** (二荆条) — the long, wrinkled ones from Sichuan, fruity rather than purely aggressive. Not Thai bird chilies. Not generic crushed red pepper.
 - **Sichuan peppercorns** (花椒) — freshly toasted and roughly ground. The pre-ground powder in a jar has been dead for months. You can taste the difference in the first ten seconds.
 - **The pour at the right temperature** — oil that shimmers, not smokes. You want the chilies to darken but not blacken. You want the peppercorns to release their numbing compound into the fat without burning into bitterness. This is the only thing that matters.
+
+![Sichuan Boiled Fish — top-down view of the chili oil surface, dried chilies, Sichuan peppercorns, and bean sprouts visible beneath the red oil](/images/sichuan-boiled-fish-4.jpg?v=1)
 
 ## How to Eat It
 

@@ -4,10 +4,10 @@ date: 2026-06-20
 description: "Eighteen pleats, translucent skin, and a spoonful of scalding pork broth sealed inside — Shanghai's greatest export is part dumpling, part magic trick."
 tags: ["shanghai", "pork", "dumpling", "steamed", "classic"]
 slug: "xiao-long-bao"
-images: ["/images/xiao-long-bao-1.jpg"]
+images: ["/images/xiao-long-bao-1.jpg?v=1", "/images/xiao-long-bao-2.jpg?v=1", "/images/xiao-long-bao-3.jpg?v=1"]
 ---
 
-![Xiao Long Bao in a bamboo steamer — translucent skins shimmering with broth sealed inside, steam rising](/images/xiao-long-bao-1.jpg)
+![Xiao Long Bao in a bamboo steamer — translucent skins shimmering with broth sealed inside, steam rising](/images/xiao-long-bao-1.jpg?v=1)
 
 The bamboo lid comes off and the steam rushes up in a thick white column. Through the fog, you see them: eight perfect dumplings, each wearing eighteen pleats twisted into a tiny crown at the top. The skins shimmer — so thin you can read the shadow of broth sloshing inside. Your server slides the dipping dish toward you: black Chinkiang vinegar, a confetti of julienned ginger floating on top. The scent is sharp, sweet-sharp, cutting clean through the pork-and-steam fog. You lift your chopsticks.
 
@@ -27,7 +27,7 @@ The filling arrives last: ground pork, minced with ginger and scallions, impossi
 
 The whole sequence takes about four seconds. You spend four seconds in another dimension and surface blinking, chopsticks already reaching for the next one.
 
-![Xiao Long Bao close-up — translucent skin revealing the soup inside, chopsticks lifting one dumpling by its pleated crown](/images/xiao-long-bao-2.jpg)
+![Xiao Long Bao close-up — translucent skin revealing the soup inside, chopsticks lifting one dumpling by its pleated crown](/images/xiao-long-bao-2.jpg?v=1)
 
 ## The Man Who Invented a Magic Trick
 
@@ -45,7 +45,7 @@ Bad XLB is everywhere, and it wears the name with no shame. Here's what you're f
 
 **The dipping sauce.** Black Chinkiang vinegar (镇江香醋, *Zhènjiāng xiāngcù*) and fresh julienned ginger. Nothing else. No soy sauce — it murders the soup's delicacy. No chili oil — that's for shengjianbao. No "dumpling sauce" from a squeeze bottle. If the restaurant brings you three sauce dishes, they don't understand what they're serving.
 
-![Xiao Long Bao being lifted from steamer — the proper moment, steam curling around the basket](/images/xiao-long-bao-3.jpg)
+![Xiao Long Bao being lifted from steamer — the proper moment, steam curling around the basket](/images/xiao-long-bao-3.jpg?v=1)
 
 ## How to Eat It Without Disaster
 

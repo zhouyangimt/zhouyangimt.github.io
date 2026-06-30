@@ -4,10 +4,10 @@ date: 2026-06-29
 description: "A fist-sized pork meatball so tender you split it with a soupspoon — silky, savory, steaming in a clay pot under wilted napa cabbage, the dish Chinese emperors demanded and Shanghai grandmothers perfected."
 tags: ["jiangsu", "pork", "braised", "savory", "huaiyang", "classic"]
 slug: "hong-shao-shi-zi-tou"
-images: ["/images/hong-shao-shi-zi-tou-1.jpg", "/images/hong-shao-shi-zi-tou-2.jpg", "/images/hong-shao-shi-zi-tou-3.jpg", "/images/hong-shao-shi-zi-tou-4.jpg"]
+images: ["/images/hong-shao-shi-zi-tou-1.jpg?v=1?v=1", "/images/hong-shao-shi-zi-tou-2.jpg?v=1?v=1", "/images/hong-shao-shi-zi-tou-3.jpg?v=1?v=1", "/images/hong-shao-shi-zi-tou-4.jpg?v=1?v=1"]
 ---
 
-![Lion's Head Meatball — a massive glistening pork meatball in dark clay pot, napa cabbage wilting around it, steam curling upward](/images/hong-shao-shi-zi-tou-1.jpg)
+![Lion's Head Meatball — a massive glistening pork meatball in dark clay pot, napa cabbage wilting around it, steam curling upward](/images/hong-shao-shi-zi-tou-1.jpg?v=1)
 
 The spoon sinks in and the meatball gives way without resistance. No knife. No sawing. Just the edge of a ceramic soupspoon pressing down and the whole thing — this fist-sized sphere of pork and fat and dissolved tendon — opens like a flower. That's the first thing you need to understand about hóngshāo shīzi tóu (红烧狮子头). It's a meatball that's forgotten how to be solid.
 
@@ -17,7 +17,7 @@ I didn't know how to eat it. I poked it with my chopsticks and the whole thing w
 
 That meatball ruined meatballs for me. For years afterward, every Italian meatball, every Swedish köttbulle, every dense rubbery thing served at office parties — they all felt like a betrayal. I didn't know how to explain what was missing until I was older. What was missing was the collapse.
 
-![Close-up — spoon breaking open a lion's head meatball, glistening interior, water chestnut flecks visible, sauce pooling](/images/hong-shao-shi-zi-tou-2.jpg)
+![Close-up — spoon breaking open a lion's head meatball, glistening interior, water chestnut flecks visible, sauce pooling](/images/hong-shao-shi-zi-tou-2.jpg?v=1)
 
 ## The Architecture of a Bite
 
@@ -31,7 +31,7 @@ The sauce is the quiet member of the band. Dark soy for color, light soy for sal
 
 A bad lion's head is a meatloaf in costume. A good one is a pork cloud.
 
-![Lion's head meatballs in a clay pot, napa cabbage wrapped around them, chopsticks reaching in](/images/hong-shao-shi-zi-tou-3.jpg)
+![Lion's head meatballs in a clay pot, napa cabbage wrapped around them, chopsticks reaching in](/images/hong-shao-shi-zi-tou-3.jpg?v=1)
 
 ## A Chef, an Emperor, a Name
 
@@ -55,7 +55,7 @@ The correct lion's head uses: 70% pork belly, 30% pork shoulder — hand-chopped
 
 The crab roe version (蟹粉狮子头, *xièfěn shīzi tóu*) is a different beast — premium, pale, steamed instead of braised, topped with orange crab roe that melts into the meat. It's the rich cousin who shows up at New Year's and makes everyone else's dish look like practice.
 
-![Lion's head meatball over white rice, dark sauce soaking in, chopsticks lifting a piece](/images/hong-shao-shi-zi-tou-4.jpg)
+![Lion's head meatball over white rice, dark sauce soaking in, chopsticks lifting a piece](/images/hong-shao-shi-zi-tou-4.jpg?v=1)
 
 ## How to Eat It
 

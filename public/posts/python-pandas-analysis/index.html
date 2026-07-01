@@ -1,347 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python 自动化实战：数据分析自动化——Pandas 实战 | zhouyang — The 25th Frame</title>
-  <meta name="description" content="不写SQL、不开Excel——用Pandas 10行代码完成你过去一上午的数据分析工作。独立开发者必学的数据自动化。">
-  <link rel="stylesheet" href="/css/style.css?v=202607011203">
-  <link rel="stylesheet" href="/css/search.css?v=1">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="nav-search">
-          <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
-          <div id="search-results" class="search-dropdown"></div>
-        </span>
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>Python 自动化实战：数据分析自动化——Pandas 实战</h1>
-    <div class="meta">
-      <time>2026-06-25</time>
-      
-      <span class="tags">
-        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">数据分析</span><span class="tag">自动化</span><span class="tag">独立开发</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <h2 id="独立开发者为什么要学数据分析">独立开发者为什么要学数据分析？</h2>
-<p>说个真事。</p>
-<p>去年我做了一个 Chrome 插件，付费用户大概 2000 人。有一天我想分析&quot;哪些功能的用户用得最多，哪些功能从来没人碰&quot;——于是打开 Google Analytics，点来点去，导出 CSV，再拖进 Excel，做透视表，画图……前后搞了将近两小时。得出的结论是：三个功能占了 90% 的使用量，另外五个功能根本没人用。</p>
-<p>那个结论确实有价值——它让我砍掉了没人用的功能，把精力集中到核心上。可问题是：<strong>我花了两个小时做了一件可以用 10 行 Python 代码自动完成的事</strong>。</p>
-<p>之后我写了个脚本，每周自动跑一次，产出同样的分析报告。从那以后，我再也没手动拖过 Excel。</p>
-<p>这就是 Pandas 的力量。它不是你想象中的&quot;数据科学家专用工具&quot;——对独立开发者来说，它是<strong>决策加速器</strong>。用户行为、营收趋势、竞品数据、SEO 关键词效果……这些事每次手动分析都是在浪费时间，而它们恰好是 Pandas 最擅长干的。</p>
-<h2 id="数据分析自动化流程">数据分析自动化流程</h2>
-<p><img src="/images/pandas-analysis-flow.png" alt="数据分析自动化流程"></p>
-<p>整个流程就六步。这篇文章我会用两个实战案例跑通这个流程。一个是你自己的业务数据（CSV 文件），一个是你在上篇文章里通过 API 拉回来的外部数据。看完你会有一个通用的分析模板，以后替换数据源即可复用。</p>
-<h2 id="环境准备">环境准备</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install pandas matplotlib numpy openpyxl
-</span></span></code></pre></div><p><code>openpyxl</code> 用于读写 Excel，<code>matplotlib</code> 用于画图。装完就可以开工。</p>
-<h2 id="实战一用户行为数据分析">实战一：用户行为数据分析</h2>
-<p>假设你是独立开发者，有一个小产品。你记录了用户的行为日志，CSV 格式，字段包括：<code>user_id</code>（用户ID）、<code>event</code>（行为类型）、<code>date</code>（日期）、<code>duration_sec</code>（耗时秒数）。</p>
-<p>真实数据长这样：</p>
-<table>
-	<thead>
-			<tr>
-					<th>user_id</th>
-					<th>event</th>
-					<th>date</th>
-					<th>duration_sec</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>u001</td>
-					<td>page_view</td>
-					<td>2026-06-18</td>
-					<td>0</td>
-			</tr>
-			<tr>
-					<td>u001</td>
-					<td>feature_click</td>
-					<td>2026-06-18</td>
-					<td>45</td>
-			</tr>
-			<tr>
-					<td>u001</td>
-					<td>export</td>
-					<td>2026-06-18</td>
-					<td>120</td>
-			</tr>
-			<tr>
-					<td>u002</td>
-					<td>page_view</td>
-					<td>2026-06-19</td>
-					<td>0</td>
-			</tr>
-			<tr>
-					<td>u002</td>
-					<td>page_view</td>
-					<td>2026-06-19</td>
-					<td>0</td>
-			</tr>
-			<tr>
-					<td>&hellip;</td>
-					<td>&hellip;</td>
-					<td>&hellip;</td>
-					<td>&hellip;</td>
-			</tr>
-	</tbody>
-</table>
-<h3 id="第一步加载数据">第一步：加载数据</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;user_events.csv&#34;</span>)
-</span></span><span style="display:flex;"><span>print(df<span style="color:#f92672">.</span>head())
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;总行数：</span><span style="color:#e6db74">{</span>len(df)<span style="color:#e6db74">}</span><span style="color:#e6db74">，用户数：</span><span style="color:#e6db74">{</span>df[<span style="color:#e6db74">&#39;user_id&#39;</span>]<span style="color:#f92672">.</span>nunique()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span></code></pre></div><p><code>read_csv()</code> 是最常用的入口。Pandas 支持 CSV、Excel、JSON、SQL、Parquet 等二十多种格式，几乎覆盖了你遇到的所有数据源。</p>
-<h3 id="第二步清洗数据">第二步：清洗数据</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 检查缺失值</span>
-</span></span><span style="display:flex;"><span>print(df<span style="color:#f92672">.</span>isnull()<span style="color:#f92672">.</span>sum())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检查重复</span>
-</span></span><span style="display:flex;"><span>duplicates <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>duplicated()<span style="color:#f92672">.</span>sum()
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;重复行：</span><span style="color:#e6db74">{</span>duplicates<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 转换日期类型</span>
-</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;date&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(df[<span style="color:#e6db74">&#39;date&#39;</span>])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 过滤异常值：duration 不应该超过一天的秒数</span>
-</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df[df[<span style="color:#e6db74">&#39;duration_sec&#39;</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">86400</span>]
-</span></span></code></pre></div><p>新手的常见错误是跳过清洗直接分析——然后发现聚合结果是 NaN，或者统计数量莫名其妙多了一倍（因为重复行没去）。这三行检查应该在每次分析前跑一遍。</p>
-<h3 id="第三步--第四步聚合分析">第三步 &amp; 第四步：聚合分析</h3>
-<p>真正干活的部分来了：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 每个事件的总触发次数</span>
-</span></span><span style="display:flex;"><span>event_counts <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;event&#39;</span>)<span style="color:#f92672">.</span>size()<span style="color:#f92672">.</span>sort_values(ascending<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>print(event_counts)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每日活跃用户数（DAU）</span>
-</span></span><span style="display:flex;"><span>dau <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;date&#39;</span>)[<span style="color:#e6db74">&#39;user_id&#39;</span>]<span style="color:#f92672">.</span>nunique()
-</span></span><span style="display:flex;"><span>print(dau<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每个事件的平均时长</span>
-</span></span><span style="display:flex;"><span>avg_duration <span style="color:#f92672">=</span> df[df[<span style="color:#e6db74">&#39;duration_sec&#39;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;event&#39;</span>)[<span style="color:#e6db74">&#39;duration_sec&#39;</span>]<span style="color:#f92672">.</span>mean()
-</span></span><span style="display:flex;"><span>print(avg_duration)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用户留存：至少访问过2天的用户占比</span>
-</span></span><span style="display:flex;"><span>user_active_days <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;user_id&#39;</span>)[<span style="color:#e6db74">&#39;date&#39;</span>]<span style="color:#f92672">.</span>nunique()
-</span></span><span style="display:flex;"><span>retention <span style="color:#f92672">=</span> (user_active_days <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>mean() <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;次日留存：</span><span style="color:#e6db74">{</span>retention<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%&#34;</span>)
-</span></span></code></pre></div><p><code>groupby</code> 是 Pandas 的灵魂。它本质上就是 Excel 的透视表，但不需要鼠标点点点——一行代码出来，直接拿去用。</p>
-<h3 id="第五步可视化">第五步：可视化</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 支持中文显示</span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.sans-serif&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;SimHei&#39;</span>, <span style="color:#e6db74">&#39;Noto Sans CJK SC&#39;</span>, <span style="color:#e6db74">&#39;Arial Unicode MS&#39;</span>]
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;axes.unicode_minus&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 左图：事件频次柱状图</span>
-</span></span><span style="display:flex;"><span>event_counts<span style="color:#f92672">.</span>plot(kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bar&#39;</span>, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#4A90D9&#39;</span>)
-</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;功能使用频次&#39;</span>)
-</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;触发次数&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 右图：DAU 趋势线</span>
-</span></span><span style="display:flex;"><span>dau<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;o&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#E85D3F&#39;</span>)
-</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;每日活跃用户&#39;</span>)
-</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;用户数&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#39;user_analysis.png&#39;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">150</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p>这里有个坑我要特别说：<strong>matplotlib 默认不支持中文</strong>，图里的中文标签会变成方框。上面 <code>plt.rcParams</code> 那两行是必加的，缺了它你折腾半小时都找不到原因。</p>
-<h3 id="第六步导出报告">第六步：导出报告</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 导出 Excel，一个事件一个 sheet</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> pd<span style="color:#f92672">.</span>ExcelWriter(<span style="color:#e6db74">&#39;user_report.xlsx&#39;</span>) <span style="color:#66d9ef">as</span> writer:
-</span></span><span style="display:flex;"><span>    event_counts<span style="color:#f92672">.</span>to_frame(<span style="color:#e6db74">&#39;count&#39;</span>)<span style="color:#f92672">.</span>to_excel(writer, sheet_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;事件统计&#39;</span>)
-</span></span><span style="display:flex;"><span>    dau<span style="color:#f92672">.</span>to_frame(<span style="color:#e6db74">&#39;dau&#39;</span>)<span style="color:#f92672">.</span>to_excel(writer, sheet_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;每日活跃&#39;</span>)
-</span></span><span style="display:flex;"><span>    avg_duration<span style="color:#f92672">.</span>to_frame(<span style="color:#e6db74">&#39;avg_seconds&#39;</span>)<span style="color:#f92672">.</span>to_excel(writer, sheet_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;平均耗时&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;报告已生成：user_report.xlsx&#34;</span>)
-</span></span></code></pre></div><p>整个过程不超过 30 行代码。下次要分析，换一个 CSV 文件名就跑。</p>
-<h2 id="实战二api-数据分析">实战二：API 数据分析</h2>
-<p>上篇文章我们教了你怎么用 API 拉数据。现在把拉回来的数据和 Pandas 接上。</p>
-<p>假设你调了一个加密货币价格 API，拉回来 30 天的历史数据：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 拉取最近 30 天的比特币价格（以 CoinGecko 免费 API 为例）</span>
-</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.coingecko.com/api/v3/coins/bitcoin/market_chart&#34;</span>
-</span></span><span style="display:flex;"><span>params <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;vs_currency&#34;</span>: <span style="color:#e6db74">&#34;usd&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;days&#34;</span>: <span style="color:#e6db74">&#34;30&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params<span style="color:#f92672">=</span>params)
-</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 数据在 data[&#39;prices&#39;] 里，格式是 [[timestamp, price], ...]</span>
-</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data[<span style="color:#e6db74">&#39;prices&#39;</span>], columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;timestamp&#39;</span>, <span style="color:#e6db74">&#39;price&#39;</span>])
-</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#39;date&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(df[<span style="color:#e6db74">&#39;timestamp&#39;</span>], unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ms&#39;</span>)
-</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>set_index(<span style="color:#e6db74">&#39;date&#39;</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 接下来直接上 Pandas 分析</span>
-</span></span><span style="display:flex;"><span>daily <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>resample(<span style="color:#e6db74">&#39;D&#39;</span>)<span style="color:#f92672">.</span>agg([<span style="color:#e6db74">&#39;first&#39;</span>, <span style="color:#e6db74">&#39;last&#39;</span>, <span style="color:#e6db74">&#39;max&#39;</span>, <span style="color:#e6db74">&#39;min&#39;</span>])
-</span></span><span style="display:flex;"><span>daily[<span style="color:#e6db74">&#39;change_pct&#39;</span>] <span style="color:#f92672">=</span> ((daily[<span style="color:#e6db74">&#39;last&#39;</span>] <span style="color:#f92672">-</span> daily[<span style="color:#e6db74">&#39;first&#39;</span>]) <span style="color:#f92672">/</span> daily[<span style="color:#e6db74">&#39;first&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>)<span style="color:#f92672">.</span>round(<span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(daily<span style="color:#f92672">.</span>tail(<span style="color:#ae81ff">7</span>))
-</span></span></code></pre></div><p>复盘一下：API 拉回来 JSON → Pandas 转成 DataFrame → <code>resample</code> 按天聚合 → 算出涨跌幅。过去你可能需要把数据贴到 Excel 里手动算公式，现在这 5 行代码搞定。</p>
-<p>再加一段波动率分析：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 计算 7 日滚动波动率</span>
-</span></span><span style="display:flex;"><span>daily[<span style="color:#e6db74">&#39;return&#39;</span>] <span style="color:#f92672">=</span> daily[<span style="color:#e6db74">&#39;last&#39;</span>]<span style="color:#f92672">.</span>pct_change()
-</span></span><span style="display:flex;"><span>daily[<span style="color:#e6db74">&#39;volatility_7d&#39;</span>] <span style="color:#f92672">=</span> daily[<span style="color:#e6db74">&#39;return&#39;</span>]<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">7</span>)<span style="color:#f92672">.</span>std() <span style="color:#f92672">*</span> (<span style="color:#ae81ff">252</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 标记涨跌超过 5% 的日期</span>
-</span></span><span style="display:flex;"><span>big_moves <span style="color:#f92672">=</span> daily[daily[<span style="color:#e6db74">&#39;change_pct&#39;</span>]<span style="color:#f92672">.</span>abs() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">5</span>]
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;近30天有 </span><span style="color:#e6db74">{</span>len(big_moves)<span style="color:#e6db74">}</span><span style="color:#e6db74"> 天涨跌幅超过5%：&#34;</span>)
-</span></span><span style="display:flex;"><span>print(big_moves[[<span style="color:#e6db74">&#39;change_pct&#39;</span>]])
-</span></span></code></pre></div><p><code>pct_change()</code> 和 <code>rolling()</code> 是 Pandas 里我最常用的两个金融分析函数。<code>pct_change()</code> 算逐日收益率，<code>rolling(7).std()</code> 算 7 天滑动标准差——再乘以 252 的平方根就换算成年化波动率（金融领域的标准做法）。</p>
-<h2 id="建一个你自己的分析模板">建一个你自己的分析模板</h2>
-<p>上面两个案例跑完，你会发现不管分析什么数据，代码结构是一样的。我建议你把通用部分抽成一个模板类，以后每次分析只需要改数据源和聚合逻辑：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataAnalyzer</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;通用数据分析模板&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self, source):
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>df <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>source <span style="color:#f92672">=</span> source
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load</span>(self, <span style="color:#f92672">**</span>kwargs):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;支持多种数据源&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>source<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#39;.csv&#39;</span>):
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(self<span style="color:#f92672">.</span>source, <span style="color:#f92672">**</span>kwargs)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>source<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#39;.xlsx&#39;</span>):
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_excel(self<span style="color:#f92672">.</span>source, <span style="color:#f92672">**</span>kwargs)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>source<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;http&#39;</span>):
-</span></span><span style="display:flex;"><span>            resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(self<span style="color:#f92672">.</span>source)
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(resp<span style="color:#f92672">.</span>json())
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>source<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;sqlite://&#39;</span>):
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">import</span> sqlite3
-</span></span><span style="display:flex;"><span>            conn <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(self<span style="color:#f92672">.</span>source<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;sqlite://&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>))
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_sql(kwargs<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;query&#39;</span>), conn)
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ 加载完成：</span><span style="color:#e6db74">{</span>len(self<span style="color:#f92672">.</span>df)<span style="color:#e6db74">}</span><span style="color:#e6db74"> 行&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clean</span>(self, date_columns<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, drop_duplicates<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> drop_duplicates:
-</span></span><span style="display:flex;"><span>            before <span style="color:#f92672">=</span> len(self<span style="color:#f92672">.</span>df)
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>drop_duplicates(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;去重：</span><span style="color:#e6db74">{</span>before<span style="color:#e6db74">}</span><span style="color:#e6db74"> → </span><span style="color:#e6db74">{</span>len(self<span style="color:#f92672">.</span>df)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> date_columns:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> col <span style="color:#f92672">in</span> date_columns:
-</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>df[col] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(self<span style="color:#f92672">.</span>df[col])
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 自动填补常见的空值</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> col <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;number&#39;</span>)<span style="color:#f92672">.</span>columns:
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>df[col]<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">summarize</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;快速概览&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;行数&#39;</span>: len(self<span style="color:#f92672">.</span>df),
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;列数&#39;</span>: len(self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>columns),
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;缺失值&#39;</span>: self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>isnull()<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>sum(),
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;数值列&#39;</span>: list(self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;number&#39;</span>)<span style="color:#f92672">.</span>columns),
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;分类列&#39;</span>: list(self<span style="color:#f92672">.</span>df<span style="color:#f92672">.</span>select_dtypes(include<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;object&#39;</span>)<span style="color:#f92672">.</span>columns),
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用示例</span>
-</span></span><span style="display:flex;"><span>analyzer <span style="color:#f92672">=</span> DataAnalyzer(<span style="color:#e6db74">&#34;user_events.csv&#34;</span>)
-</span></span><span style="display:flex;"><span>analyzer<span style="color:#f92672">.</span>load()<span style="color:#f92672">.</span>clean(date_columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;date&#39;</span>])
-</span></span><span style="display:flex;"><span>print(analyzer<span style="color:#f92672">.</span>summarize())
-</span></span></code></pre></div><p>这个模板类是一个起点，不是终点。随着你分析的项目越来越多，你会不断往里加方法——比如自动生成月度对比报告、自动发邮件告警异常值。它就是你自己的&quot;数据分析助手&quot;。</p>
-<h2 id="实际受益我靠这套流程省了多少时间">实际受益：我靠这套流程省了多少时间？</h2>
-<p>说几个我自己用 Pandas 自动化的真实场景：</p>
-<ol>
-<li>
-<p><strong>SEO 关键词监控</strong>：每周自动跑一次，对比本周和前一周的排名变化，找出上升和下降的关键词，发到 Telegram。以前每次手动导 Search Console 数据、做对比、写结论，要 40 分钟。现在 0 分钟。</p>
-</li>
-<li>
-<p><strong>用户留存分析</strong>：从数据库拉用户注册和活跃日志，自动算出 7/14/30 日留存，生成趋势图。以前每两周做一次要半小时，现在每周自动出图。</p>
-</li>
-<li>
-<p><strong>竞品价格监控</strong>：爬回来的竞品价格数据，Pandas 自动算均值、中位数、最低价，标出异常波动。这件事要是手动做根本不可能——数据量太大。</p>
-</li>
-</ol>
-<p>核心逻辑就一句话：<strong>数据只要进了 DataFrame，分析就是几行 groupby 的事</strong>。把这几行写成脚本，设成 cron 定时跑，你就再也不用碰 Excel 了。</p>
-<h2 id="从这里开始">从这里开始</h2>
-<p>这篇文章和前面三篇组成了完整的 Python 自动化链路：</p>
-<ul>
-<li><strong>文件 &amp; 系统操作</strong>（第 01 篇）：自动整理、批量处理</li>
-<li><strong>数据获取</strong>（第 02 篇 Web Scraping + 第 03 篇 API）：拿到数据</li>
-<li><strong>数据分析</strong>（本篇 Pandas）：把数据变成洞察</li>
-<li><strong>定时调度</strong>（下一篇）：让一切定期自动运行</li>
-</ul>
-<p>建议今天就用上面 <code>DataAnalyzer</code> 模板跑一次你自己的数据。哪怕是导出一份 CSV 的网站访问量，用 <code>groupby</code> 按天聚合然后画一条趋势线——从&quot;手动分析&quot;到&quot;自动化分析&quot;的跨越，就几步代码的事。</p>
-<hr>
-<p><strong>系列导航</strong>：<a href="/posts/python-automation-daily-tasks/">01 日常任务自动化</a> | <a href="/posts/python-web-scraping/">02 Web Scraping 实战</a> | <a href="/posts/python-api-automation/">03 API 自动化</a> | <strong>04 数据分析自动化</strong> | <a href="/posts/">05 定时任务 &amp; 监控（即将更新）</a></p>
-<p><em>Python 自动化实战系列，下一篇：定时任务 &amp; 监控脚本——把上面所有脚本串起来，让它们定期自动跑。</em></p>
-
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/python-api-automation/" class="prev">← Python 自动化实战：API 自动化——调用50&#43;免费API</a>
-  
-  
-  <a href="/posts/python-cron-monitoring/" class="next">Python 自动化实战：定时任务 &amp; 监控脚本 →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-  <script src="/js/search.js?v=1"></script>
-</body>
-</html>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Python 自动化实战：数据分析自动化——Pandas 实战 | zhouyang — The 25th Frame</title><meta name=description content="不写SQL、不开Excel——用Pandas 10行代码完成你过去一上午的数据分析工作。独立开发者必学的数据自动化。"><link rel=stylesheet href="/css/style.css?v=202607010403"><link rel=stylesheet href="/css/search.css?v=1"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Python 自动化实战：数据分析自动化——Pandas 实战</h1><div class=meta><time>2026-06-25</time>
+<span class=tags><span class=tag>Python</span><span class=tag>Pandas</span><span class=tag>数据分析</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><h2 id=独立开发者为什么要学数据分析>独立开发者为什么要学数据分析？</h2><p>说个真事。</p><p>去年我做了一个 Chrome 插件，付费用户大概 2000 人。有一天我想分析"哪些功能的用户用得最多，哪些功能从来没人碰"——于是打开 Google Analytics，点来点去，导出 CSV，再拖进 Excel，做透视表，画图……前后搞了将近两小时。得出的结论是：三个功能占了 90% 的使用量，另外五个功能根本没人用。</p><p>那个结论确实有价值——它让我砍掉了没人用的功能，把精力集中到核心上。可问题是：<strong>我花了两个小时做了一件可以用 10 行 Python 代码自动完成的事</strong>。</p><p>之后我写了个脚本，每周自动跑一次，产出同样的分析报告。从那以后，我再也没手动拖过 Excel。</p><p>这就是 Pandas 的力量。它不是你想象中的"数据科学家专用工具"——对独立开发者来说，它是<strong>决策加速器</strong>。用户行为、营收趋势、竞品数据、SEO 关键词效果……这些事每次手动分析都是在浪费时间，而它们恰好是 Pandas 最擅长干的。</p><h2 id=数据分析自动化流程>数据分析自动化流程</h2><p><img src=/images/pandas-analysis-flow.png alt=数据分析自动化流程></p><p>整个流程就六步。这篇文章我会用两个实战案例跑通这个流程。一个是你自己的业务数据（CSV 文件），一个是你在上篇文章里通过 API 拉回来的外部数据。看完你会有一个通用的分析模板，以后替换数据源即可复用。</p><h2 id=环境准备>环境准备</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install pandas matplotlib numpy openpyxl
+</span></span></code></pre></div><p><code>openpyxl</code> 用于读写 Excel，<code>matplotlib</code> 用于画图。装完就可以开工。</p><h2 id=实战一用户行为数据分析>实战一：用户行为数据分析</h2><p>假设你是独立开发者，有一个小产品。你记录了用户的行为日志，CSV 格式，字段包括：<code>user_id</code>（用户ID）、<code>event</code>（行为类型）、<code>date</code>（日期）、<code>duration_sec</code>（耗时秒数）。</p><p>真实数据长这样：</p><table><thead><tr><th>user_id</th><th>event</th><th>date</th><th>duration_sec</th></tr></thead><tbody><tr><td>u001</td><td>page_view</td><td>2026-06-18</td><td>0</td></tr><tr><td>u001</td><td>feature_click</td><td>2026-06-18</td><td>45</td></tr><tr><td>u001</td><td>export</td><td>2026-06-18</td><td>120</td></tr><tr><td>u002</td><td>page_view</td><td>2026-06-19</td><td>0</td></tr><tr><td>u002</td><td>page_view</td><td>2026-06-19</td><td>0</td></tr><tr><td>&mldr;</td><td>&mldr;</td><td>&mldr;</td><td>&mldr;</td></tr></tbody></table><h3 id=第一步加载数据>第一步：加载数据</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#34;user_events.csv&#34;</span>)
+</span></span><span style=display:flex><span>print(df<span style=color:#f92672>.</span>head())
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;总行数：</span><span style=color:#e6db74>{</span>len(df)<span style=color:#e6db74>}</span><span style=color:#e6db74>，用户数：</span><span style=color:#e6db74>{</span>df[<span style=color:#e6db74>&#39;user_id&#39;</span>]<span style=color:#f92672>.</span>nunique()<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span></code></pre></div><p><code>read_csv()</code> 是最常用的入口。Pandas 支持 CSV、Excel、JSON、SQL、Parquet 等二十多种格式，几乎覆盖了你遇到的所有数据源。</p><h3 id=第二步清洗数据>第二步：清洗数据</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 检查缺失值</span>
+</span></span><span style=display:flex><span>print(df<span style=color:#f92672>.</span>isnull()<span style=color:#f92672>.</span>sum())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 检查重复</span>
+</span></span><span style=display:flex><span>duplicates <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>duplicated()<span style=color:#f92672>.</span>sum()
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;重复行：</span><span style=color:#e6db74>{</span>duplicates<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 转换日期类型</span>
+</span></span><span style=display:flex><span>df[<span style=color:#e6db74>&#39;date&#39;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(df[<span style=color:#e6db74>&#39;date&#39;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 过滤异常值：duration 不应该超过一天的秒数</span>
+</span></span><span style=display:flex><span>df <span style=color:#f92672>=</span> df[df[<span style=color:#e6db74>&#39;duration_sec&#39;</span>] <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>86400</span>]
+</span></span></code></pre></div><p>新手的常见错误是跳过清洗直接分析——然后发现聚合结果是 NaN，或者统计数量莫名其妙多了一倍（因为重复行没去）。这三行检查应该在每次分析前跑一遍。</p><h3 id=第三步--第四步聚合分析>第三步 & 第四步：聚合分析</h3><p>真正干活的部分来了：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 每个事件的总触发次数</span>
+</span></span><span style=display:flex><span>event_counts <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;event&#39;</span>)<span style=color:#f92672>.</span>size()<span style=color:#f92672>.</span>sort_values(ascending<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span>print(event_counts)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每日活跃用户数（DAU）</span>
+</span></span><span style=display:flex><span>dau <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;date&#39;</span>)[<span style=color:#e6db74>&#39;user_id&#39;</span>]<span style=color:#f92672>.</span>nunique()
+</span></span><span style=display:flex><span>print(dau<span style=color:#f92672>.</span>head(<span style=color:#ae81ff>10</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每个事件的平均时长</span>
+</span></span><span style=display:flex><span>avg_duration <span style=color:#f92672>=</span> df[df[<span style=color:#e6db74>&#39;duration_sec&#39;</span>] <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;event&#39;</span>)[<span style=color:#e6db74>&#39;duration_sec&#39;</span>]<span style=color:#f92672>.</span>mean()
+</span></span><span style=display:flex><span>print(avg_duration)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 用户留存：至少访问过2天的用户占比</span>
+</span></span><span style=display:flex><span>user_active_days <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;user_id&#39;</span>)[<span style=color:#e6db74>&#39;date&#39;</span>]<span style=color:#f92672>.</span>nunique()
+</span></span><span style=display:flex><span>retention <span style=color:#f92672>=</span> (user_active_days <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>2</span>)<span style=color:#f92672>.</span>mean() <span style=color:#f92672>*</span> <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;次日留存：</span><span style=color:#e6db74>{</span>retention<span style=color:#e6db74>:</span><span style=color:#e6db74>.1f</span><span style=color:#e6db74>}</span><span style=color:#e6db74>%&#34;</span>)
+</span></span></code></pre></div><p><code>groupby</code> 是 Pandas 的灵魂。它本质上就是 Excel 的透视表，但不需要鼠标点点点——一行代码出来，直接拿去用。</p><h3 id=第五步可视化>第五步：可视化</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 支持中文显示</span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;font.sans-serif&#39;</span>] <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;SimHei&#39;</span>, <span style=color:#e6db74>&#39;Noto Sans CJK SC&#39;</span>, <span style=color:#e6db74>&#39;Arial Unicode MS&#39;</span>]
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;axes.unicode_minus&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fig, axes <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplots(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>14</span>, <span style=color:#ae81ff>5</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 左图：事件频次柱状图</span>
+</span></span><span style=display:flex><span>event_counts<span style=color:#f92672>.</span>plot(kind<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;bar&#39;</span>, ax<span style=color:#f92672>=</span>axes[<span style=color:#ae81ff>0</span>], color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;#4A90D9&#39;</span>)
+</span></span><span style=display:flex><span>axes[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>set_title(<span style=color:#e6db74>&#39;功能使用频次&#39;</span>)
+</span></span><span style=display:flex><span>axes[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>set_ylabel(<span style=color:#e6db74>&#39;触发次数&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 右图：DAU 趋势线</span>
+</span></span><span style=display:flex><span>dau<span style=color:#f92672>.</span>plot(ax<span style=color:#f92672>=</span>axes[<span style=color:#ae81ff>1</span>], marker<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;o&#39;</span>, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;#E85D3F&#39;</span>)
+</span></span><span style=display:flex><span>axes[<span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>set_title(<span style=color:#e6db74>&#39;每日活跃用户&#39;</span>)
+</span></span><span style=display:flex><span>axes[<span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>set_ylabel(<span style=color:#e6db74>&#39;用户数&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>tight_layout()
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>savefig(<span style=color:#e6db74>&#39;user_analysis.png&#39;</span>, dpi<span style=color:#f92672>=</span><span style=color:#ae81ff>150</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>show()
+</span></span></code></pre></div><p>这里有个坑我要特别说：<strong>matplotlib 默认不支持中文</strong>，图里的中文标签会变成方框。上面 <code>plt.rcParams</code> 那两行是必加的，缺了它你折腾半小时都找不到原因。</p><h3 id=第六步导出报告>第六步：导出报告</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 导出 Excel，一个事件一个 sheet</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>with</span> pd<span style=color:#f92672>.</span>ExcelWriter(<span style=color:#e6db74>&#39;user_report.xlsx&#39;</span>) <span style=color:#66d9ef>as</span> writer:
+</span></span><span style=display:flex><span>    event_counts<span style=color:#f92672>.</span>to_frame(<span style=color:#e6db74>&#39;count&#39;</span>)<span style=color:#f92672>.</span>to_excel(writer, sheet_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;事件统计&#39;</span>)
+</span></span><span style=display:flex><span>    dau<span style=color:#f92672>.</span>to_frame(<span style=color:#e6db74>&#39;dau&#39;</span>)<span style=color:#f92672>.</span>to_excel(writer, sheet_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;每日活跃&#39;</span>)
+</span></span><span style=display:flex><span>    avg_duration<span style=color:#f92672>.</span>to_frame(<span style=color:#e6db74>&#39;avg_seconds&#39;</span>)<span style=color:#f92672>.</span>to_excel(writer, sheet_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;平均耗时&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;报告已生成：user_report.xlsx&#34;</span>)
+</span></span></code></pre></div><p>整个过程不超过 30 行代码。下次要分析，换一个 CSV 文件名就跑。</p><h2 id=实战二api-数据分析>实战二：API 数据分析</h2><p>上篇文章我们教了你怎么用 API 拉数据。现在把拉回来的数据和 Pandas 接上。</p><p>假设你调了一个加密货币价格 API，拉回来 30 天的历史数据：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime, timedelta
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 拉取最近 30 天的比特币价格（以 CoinGecko 免费 API 为例）</span>
+</span></span><span style=display:flex><span>url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.coingecko.com/api/v3/coins/bitcoin/market_chart&#34;</span>
+</span></span><span style=display:flex><span>params <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;vs_currency&#34;</span>: <span style=color:#e6db74>&#34;usd&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;days&#34;</span>: <span style=color:#e6db74>&#34;30&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, params<span style=color:#f92672>=</span>params)
+</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> resp<span style=color:#f92672>.</span>json()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 数据在 data[&#39;prices&#39;] 里，格式是 [[timestamp, price], ...]</span>
+</span></span><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(data[<span style=color:#e6db74>&#39;prices&#39;</span>], columns<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;timestamp&#39;</span>, <span style=color:#e6db74>&#39;price&#39;</span>])
+</span></span><span style=display:flex><span>df[<span style=color:#e6db74>&#39;date&#39;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(df[<span style=color:#e6db74>&#39;timestamp&#39;</span>], unit<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;ms&#39;</span>)
+</span></span><span style=display:flex><span>df<span style=color:#f92672>.</span>set_index(<span style=color:#e6db74>&#39;date&#39;</span>, inplace<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 接下来直接上 Pandas 分析</span>
+</span></span><span style=display:flex><span>daily <span style=color:#f92672>=</span> df[<span style=color:#e6db74>&#39;price&#39;</span>]<span style=color:#f92672>.</span>resample(<span style=color:#e6db74>&#39;D&#39;</span>)<span style=color:#f92672>.</span>agg([<span style=color:#e6db74>&#39;first&#39;</span>, <span style=color:#e6db74>&#39;last&#39;</span>, <span style=color:#e6db74>&#39;max&#39;</span>, <span style=color:#e6db74>&#39;min&#39;</span>])
+</span></span><span style=display:flex><span>daily[<span style=color:#e6db74>&#39;change_pct&#39;</span>] <span style=color:#f92672>=</span> ((daily[<span style=color:#e6db74>&#39;last&#39;</span>] <span style=color:#f92672>-</span> daily[<span style=color:#e6db74>&#39;first&#39;</span>]) <span style=color:#f92672>/</span> daily[<span style=color:#e6db74>&#39;first&#39;</span>] <span style=color:#f92672>*</span> <span style=color:#ae81ff>100</span>)<span style=color:#f92672>.</span>round(<span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>print(daily<span style=color:#f92672>.</span>tail(<span style=color:#ae81ff>7</span>))
+</span></span></code></pre></div><p>复盘一下：API 拉回来 JSON → Pandas 转成 DataFrame → <code>resample</code> 按天聚合 → 算出涨跌幅。过去你可能需要把数据贴到 Excel 里手动算公式，现在这 5 行代码搞定。</p><p>再加一段波动率分析：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 计算 7 日滚动波动率</span>
+</span></span><span style=display:flex><span>daily[<span style=color:#e6db74>&#39;return&#39;</span>] <span style=color:#f92672>=</span> daily[<span style=color:#e6db74>&#39;last&#39;</span>]<span style=color:#f92672>.</span>pct_change()
+</span></span><span style=display:flex><span>daily[<span style=color:#e6db74>&#39;volatility_7d&#39;</span>] <span style=color:#f92672>=</span> daily[<span style=color:#e6db74>&#39;return&#39;</span>]<span style=color:#f92672>.</span>rolling(<span style=color:#ae81ff>7</span>)<span style=color:#f92672>.</span>std() <span style=color:#f92672>*</span> (<span style=color:#ae81ff>252</span> <span style=color:#f92672>**</span> <span style=color:#ae81ff>0.5</span>) <span style=color:#f92672>*</span> <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 标记涨跌超过 5% 的日期</span>
+</span></span><span style=display:flex><span>big_moves <span style=color:#f92672>=</span> daily[daily[<span style=color:#e6db74>&#39;change_pct&#39;</span>]<span style=color:#f92672>.</span>abs() <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>5</span>]
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;近30天有 </span><span style=color:#e6db74>{</span>len(big_moves)<span style=color:#e6db74>}</span><span style=color:#e6db74> 天涨跌幅超过5%：&#34;</span>)
+</span></span><span style=display:flex><span>print(big_moves[[<span style=color:#e6db74>&#39;change_pct&#39;</span>]])
+</span></span></code></pre></div><p><code>pct_change()</code> 和 <code>rolling()</code> 是 Pandas 里我最常用的两个金融分析函数。<code>pct_change()</code> 算逐日收益率，<code>rolling(7).std()</code> 算 7 天滑动标准差——再乘以 252 的平方根就换算成年化波动率（金融领域的标准做法）。</p><h2 id=建一个你自己的分析模板>建一个你自己的分析模板</h2><p>上面两个案例跑完，你会发现不管分析什么数据，代码结构是一样的。我建议你把通用部分抽成一个模板类，以后每次分析只需要改数据源和聚合逻辑：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DataAnalyzer</span>:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;通用数据分析模板&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>__init__</span>(self, source):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>df <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>source <span style=color:#f92672>=</span> source
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>load</span>(self, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;支持多种数据源&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>source<span style=color:#f92672>.</span>endswith(<span style=color:#e6db74>&#39;.csv&#39;</span>):
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(self<span style=color:#f92672>.</span>source, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> self<span style=color:#f92672>.</span>source<span style=color:#f92672>.</span>endswith(<span style=color:#e6db74>&#39;.xlsx&#39;</span>):
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_excel(self<span style=color:#f92672>.</span>source, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> self<span style=color:#f92672>.</span>source<span style=color:#f92672>.</span>startswith(<span style=color:#e6db74>&#39;http&#39;</span>):
+</span></span><span style=display:flex><span>            resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(self<span style=color:#f92672>.</span>source)
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(resp<span style=color:#f92672>.</span>json())
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> self<span style=color:#f92672>.</span>source<span style=color:#f92672>.</span>startswith(<span style=color:#e6db74>&#39;sqlite://&#39;</span>):
+</span></span><span style=display:flex><span>            <span style=color:#f92672>import</span> sqlite3
+</span></span><span style=display:flex><span>            conn <span style=color:#f92672>=</span> sqlite3<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>source<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#39;sqlite://&#39;</span>, <span style=color:#e6db74>&#39;&#39;</span>))
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_sql(kwargs<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;query&#39;</span>), conn)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ 加载完成：</span><span style=color:#e6db74>{</span>len(self<span style=color:#f92672>.</span>df)<span style=color:#e6db74>}</span><span style=color:#e6db74> 行&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>clean</span>(self, date_columns<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>, drop_duplicates<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> drop_duplicates:
+</span></span><span style=display:flex><span>            before <span style=color:#f92672>=</span> len(self<span style=color:#f92672>.</span>df)
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>drop_duplicates(inplace<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;去重：</span><span style=color:#e6db74>{</span>before<span style=color:#e6db74>}</span><span style=color:#e6db74> → </span><span style=color:#e6db74>{</span>len(self<span style=color:#f92672>.</span>df)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> date_columns:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> col <span style=color:#f92672>in</span> date_columns:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>df[col] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(self<span style=color:#f92672>.</span>df[col])
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 自动填补常见的空值</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> col <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>select_dtypes(include<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;number&#39;</span>)<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>df[col]<span style=color:#f92672>.</span>fillna(<span style=color:#ae81ff>0</span>, inplace<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>summarize</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;快速概览&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#39;行数&#39;</span>: len(self<span style=color:#f92672>.</span>df),
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#39;列数&#39;</span>: len(self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>columns),
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#39;缺失值&#39;</span>: self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>isnull()<span style=color:#f92672>.</span>sum()<span style=color:#f92672>.</span>sum(),
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#39;数值列&#39;</span>: list(self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>select_dtypes(include<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;number&#39;</span>)<span style=color:#f92672>.</span>columns),
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#39;分类列&#39;</span>: list(self<span style=color:#f92672>.</span>df<span style=color:#f92672>.</span>select_dtypes(include<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;object&#39;</span>)<span style=color:#f92672>.</span>columns),
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用示例</span>
+</span></span><span style=display:flex><span>analyzer <span style=color:#f92672>=</span> DataAnalyzer(<span style=color:#e6db74>&#34;user_events.csv&#34;</span>)
+</span></span><span style=display:flex><span>analyzer<span style=color:#f92672>.</span>load()<span style=color:#f92672>.</span>clean(date_columns<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;date&#39;</span>])
+</span></span><span style=display:flex><span>print(analyzer<span style=color:#f92672>.</span>summarize())
+</span></span></code></pre></div><p>这个模板类是一个起点，不是终点。随着你分析的项目越来越多，你会不断往里加方法——比如自动生成月度对比报告、自动发邮件告警异常值。它就是你自己的"数据分析助手"。</p><h2 id=实际受益我靠这套流程省了多少时间>实际受益：我靠这套流程省了多少时间？</h2><p>说几个我自己用 Pandas 自动化的真实场景：</p><ol><li><p><strong>SEO 关键词监控</strong>：每周自动跑一次，对比本周和前一周的排名变化，找出上升和下降的关键词，发到 Telegram。以前每次手动导 Search Console 数据、做对比、写结论，要 40 分钟。现在 0 分钟。</p></li><li><p><strong>用户留存分析</strong>：从数据库拉用户注册和活跃日志，自动算出 7/14/30 日留存，生成趋势图。以前每两周做一次要半小时，现在每周自动出图。</p></li><li><p><strong>竞品价格监控</strong>：爬回来的竞品价格数据，Pandas 自动算均值、中位数、最低价，标出异常波动。这件事要是手动做根本不可能——数据量太大。</p></li></ol><p>核心逻辑就一句话：<strong>数据只要进了 DataFrame，分析就是几行 groupby 的事</strong>。把这几行写成脚本，设成 cron 定时跑，你就再也不用碰 Excel 了。</p><h2 id=从这里开始>从这里开始</h2><p>这篇文章和前面三篇组成了完整的 Python 自动化链路：</p><ul><li><strong>文件 & 系统操作</strong>（第 01 篇）：自动整理、批量处理</li><li><strong>数据获取</strong>（第 02 篇 Web Scraping + 第 03 篇 API）：拿到数据</li><li><strong>数据分析</strong>（本篇 Pandas）：把数据变成洞察</li><li><strong>定时调度</strong>（下一篇）：让一切定期自动运行</li></ul><p>建议今天就用上面 <code>DataAnalyzer</code> 模板跑一次你自己的数据。哪怕是导出一份 CSV 的网站访问量，用 <code>groupby</code> 按天聚合然后画一条趋势线——从"手动分析"到"自动化分析"的跨越，就几步代码的事。</p><hr><p><strong>系列导航</strong>：<a href=/posts/python-automation-daily-tasks/>01 日常任务自动化</a> | <a href=/posts/python-web-scraping/>02 Web Scraping 实战</a> | <a href=/posts/python-api-automation/>03 API 自动化</a> | <strong>04 数据分析自动化</strong> | <a href=/posts/>05 定时任务 & 监控（即将更新）</a></p><p><em>Python 自动化实战系列，下一篇：定时任务 & 监控脚本——把上面所有脚本串起来，让它们定期自动跑。</em></p></div></article><nav class=post-nav><a href=/posts/python-api-automation/ class=prev>← Python 自动化实战：API 自动化——调用50+免费API</a>
+<a href=/posts/python-cron-monitoring/ class=next>Python 自动化实战：定时任务 & 监控脚本 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer><script src="/js/search.js?v=1"></script></body></html>

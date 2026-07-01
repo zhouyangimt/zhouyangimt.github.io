@@ -1,38 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Shanghai on zhouyang — The 25th Frame</title>
-		<link>https://zhouyang.dev/tags/shanghai/</link>
-		<description>Recent content in Shanghai on zhouyang — The 25th Frame</description>
-		<generator>Hugo</generator>
-		<language>en</language>
-		
-		
-		
-		
-			<lastBuildDate>Wed, 01 Jul 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://zhouyang.dev/tags/shanghai/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Scallion Oil Noodles — Shanghai&#39;s Midnight Alchemy</title>
-				<link>https://zhouyang.dev/cuisine/scallion-oil-noodles/</link>
-				<pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/scallion-oil-noodles/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/scallion-oil-noodles-1.jpg&#34; alt=&#34;Scallion Oil Noodles — a bowl of dark, glossy noodles dressed in scallion-infused oil, served on a wooden table&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2am. You&amp;rsquo;ve just gotten off a late conference call with the Redmond office — the kind where you spent forty minutes explaining the same architecture decision three different ways. Your brain is fried. Your stomach is empty. The only place still open is the noodle cart at the end of the lane, run by an old man who&amp;rsquo;s been there since before your apartment building existed.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Hong Shao Rou — The Pork Belly That Tastes Like Home</title>
-				<link>https://zhouyang.dev/cuisine/hong-shao-rou/</link>
-				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/hong-shao-rou/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/hong-shao-rou-1.jpg?v=3&#34; alt=&#34;Hong Shao Rou — glossy caramelized pork belly in a clay pot, steam rising&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;The smell hits you before the door opens. Soy sauce and caramelized sugar, star anise and ginger, pork fat rendering slow. You&amp;rsquo;re six years old in your grandmother&amp;rsquo;s Shanghai kitchen, and this smell means Sunday. It means a bowl of white rice waiting on the table. It means hóngshāo ròu (红烧肉).&lt;/p&gt;&#xA;&lt;p&gt;Red braised pork belly is not a dish you order. It&amp;rsquo;s a dish you inherit. Every Chinese family has a version, every version is the best version, and every version is slightly different. Mine had extra star anise and rock sugar that cracked under my grandmother&amp;rsquo;s cleaver like glass. The pork came from the wet market on Wanping Road. It had to be skin-on, three-layer — fat, lean, fat — or she wouldn&amp;rsquo;t buy it.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Xiao Long Bao: The Soup That Lives Inside a Dumpling</title>
-				<link>https://zhouyang.dev/cuisine/xiao-long-bao/</link>
-				<pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/xiao-long-bao/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/xiao-long-bao-1.jpg?v=1&#34; alt=&#34;Xiao Long Bao in a bamboo steamer — translucent skins shimmering with broth sealed inside, steam rising&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;The bamboo lid comes off and the steam rushes up in a thick white column. Through the fog, you see them: eight perfect dumplings, each wearing eighteen pleats twisted into a tiny crown at the top. The skins shimmer — so thin you can read the shadow of broth sloshing inside. Your server slides the dipping dish toward you: black Chinkiang vinegar, a confetti of julienned ginger floating on top. The scent is sharp, sweet-sharp, cutting clean through the pork-and-steam fog. You lift your chopsticks.&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shanghai on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/shanghai/</link><description>Recent content in Shanghai on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 01 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/shanghai/index.xml" rel="self" type="application/rss+xml"/><item><title>Scallion Oil Noodles — Shanghai's Midnight Alchemy</title><link>https://zhouyang.dev/cuisine/scallion-oil-noodles/</link><pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/scallion-oil-noodles/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/scallion-oil-noodles-1.jpg" alt="Scallion Oil Noodles — a bowl of dark, glossy noodles dressed in scallion-infused oil, served on a wooden table"&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s 2am. You&amp;rsquo;ve just gotten off a late conference call with the Redmond office — the kind where you spent forty minutes explaining the same architecture decision three different ways. Your brain is fried. Your stomach is empty. The only place still open is the noodle cart at the end of the lane, run by an old man who&amp;rsquo;s been there since before your apartment building existed.&lt;/p&gt;</description></item><item><title>Hong Shao Rou — The Pork Belly That Tastes Like Home</title><link>https://zhouyang.dev/cuisine/hong-shao-rou/</link><pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/hong-shao-rou/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/hong-shao-rou-1.jpg?v=3" alt="Hong Shao Rou — glossy caramelized pork belly in a clay pot, steam rising"&gt;&lt;/p&gt;
+&lt;p&gt;The smell hits you before the door opens. Soy sauce and caramelized sugar, star anise and ginger, pork fat rendering slow. You&amp;rsquo;re six years old in your grandmother&amp;rsquo;s Shanghai kitchen, and this smell means Sunday. It means a bowl of white rice waiting on the table. It means hóngshāo ròu (红烧肉).&lt;/p&gt;
+&lt;p&gt;Red braised pork belly is not a dish you order. It&amp;rsquo;s a dish you inherit. Every Chinese family has a version, every version is the best version, and every version is slightly different. Mine had extra star anise and rock sugar that cracked under my grandmother&amp;rsquo;s cleaver like glass. The pork came from the wet market on Wanping Road. It had to be skin-on, three-layer — fat, lean, fat — or she wouldn&amp;rsquo;t buy it.&lt;/p&gt;</description></item><item><title>Xiao Long Bao: The Soup That Lives Inside a Dumpling</title><link>https://zhouyang.dev/cuisine/xiao-long-bao/</link><pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/xiao-long-bao/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/xiao-long-bao-1.jpg?v=1" alt="Xiao Long Bao in a bamboo steamer — translucent skins shimmering with broth sealed inside, steam rising"&gt;&lt;/p&gt;
+&lt;p&gt;The bamboo lid comes off and the steam rushes up in a thick white column. Through the fog, you see them: eight perfect dumplings, each wearing eighteen pleats twisted into a tiny crown at the top. The skins shimmer — so thin you can read the shadow of broth sloshing inside. Your server slides the dipping dish toward you: black Chinkiang vinegar, a confetti of julienned ginger floating on top. The scent is sharp, sweet-sharp, cutting clean through the pork-and-steam fog. You lift your chopsticks.&lt;/p&gt;</description></item></channel></rss>

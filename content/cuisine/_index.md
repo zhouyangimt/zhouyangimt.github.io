@@ -12,6 +12,8 @@ Each dish comes with a story. Because in China, food isn't fuel — it's geograp
 
 Our goal is simple: to show you what these dishes actually taste like in their hometowns — the most authentic version, the way locals eat them.
 
+And here's the thing: there is no single "correct" recipe. Mapo tofu in Sichuan and mapo tofu in Guangxi are cousins, not clones — and that's the point. Chinese food isn't a checkbox. It's a living conversation between regions, cooks, and generations. If you love the version on your plate, it's the right one.
+
 *This is our roadmap as of today. As the blog grows, so will the collection. One hundred and nine is where we start — not where we finish.*
 
 </div>

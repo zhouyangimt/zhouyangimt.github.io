@@ -1,138 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord | zhouyang — The 25th Frame</title>
-  <meta name="description" content="一个 Hermes 实例同时接入飞书、Telegram、Discord，多平台消息智能路由，让 AI 助手真正无处不在。配置详解 &#43; 实战踩坑全记录。">
-  <link rel="stylesheet" href="/css/style.css?v=202607011336">
-  <link rel="stylesheet" href="/css/search.css?v=1">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="nav-search">
-          <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
-          <div id="search-results" class="search-dropdown"></div>
-        </span>
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</h1>
-    <div class="meta">
-      <time>2026-06-21</time>
-      
-      <span class="tags">
-        <span class="tag">AI</span><span class="tag">Hermes</span><span class="tag">工具教程</span><span class="tag">自动化</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <p>这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是<a href="/posts/hermes-agent-guide/">入门指南</a>、<a href="/posts/hermes-agent-config/">配置详解</a>、<a href="/posts/hermes-agent-skills/">Skills 系统</a>和 <a href="/posts/hermes-agent-cron/">Cron 定时任务</a>。</p>
-<p>上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：<strong>多平台集成</strong>。</p>
-<h2 id="为什么需要多平台">为什么需要多平台</h2>
-<p>先说说真实场景。我自己是这样用的：</p>
-<ul>
-<li><strong>飞书</strong>：工作相关。代码审查结果、服务器告警、每日 AI 资讯，这些跟团队有关的东西走飞书群聊。</li>
-<li><strong>Telegram</strong>：个人助理。博客部署通知、RSS 摘要、临时让 AI 搜个东西，走 Telegram Bot——轻量、手机通知即时。</li>
-<li><strong>Discord</strong>：社区互动。偶尔在 Discord 群里接一些朋友的问题，让 Hermes 帮忙回。</li>
-</ul>
-<p>三个平台，三种场景，一个 Hermes 实例。不是三个实例，不是一个平台配一次——<strong>一个实例接入所有平台，按规则智能分发</strong>。</p>
-<h2 id="gateway-架构">Gateway 架构</h2>
-<p>先搞清楚 Hermes Gateway 是怎么工作的：</p>
-<p><img src="/images/hermes-gateway-architecture.png" alt="Hermes Gateway 多平台架构图"></p>
-<p>Gateway 是一个独立的进程，它做的事很简单：</p>
-<ol>
-<li><strong>接收消息</strong>：监听各平台的 webhook 或长连接</li>
-<li><strong>标准化</strong>：把飞书的富文本、Telegram 的 Markdown、Discord 的 Embed 统一转成内部格式</li>
-<li><strong>路由判断</strong>：看这条消息来自哪、内容是什么、发消息的人是谁，决定交给哪个 Agent 处理</li>
-<li><strong>返回结果</strong>：把 Agent 的回复转回对应平台的格式，发回去</li>
-</ol>
-<p>关键设计：<strong>Gateway 和 Agent 是解耦的</strong>。Gateway 挂了不影响 Agent 推理，Agent 推理慢不影响 Gateway 收消息。两者通过内部 API 通信。</p>
-<h2 id="接入飞书">接入飞书</h2>
-<p>飞书的接入相对复杂，因为涉及应用创建和权限审批。但好处是飞书的富文本能力最强，卡片消息、按钮交互都能搞。</p>
-<h3 id="step-1创建飞书应用">Step 1：创建飞书应用</h3>
-<p>先去 <a href="https://open.feishu.cn">飞书开放平台</a> 创建一个企业自建应用：</p>
-<ol>
-<li>创建应用 → 选「企业自建应用」→ 随便起个名（比如「Hermes 助手」）</li>
-<li>添加能力：<strong>机器人</strong></li>
-<li>权限配置，至少勾选：
-<ul>
-<li><code>im:message</code> — 获取消息</li>
-<li><code>im:message:send_as_bot</code> — 发送消息</li>
-<li><code>im:chat</code> — 获取群聊信息（可选）</li>
-</ul>
-</li>
-<li>安全设置里配好 IP 白名单（你的服务器 IP）</li>
-<li>发布应用 → 让管理员审批通过</li>
-</ol>
-<h3 id="step-2在-hermes-里配置">Step 2：在 Hermes 里配置</h3>
-<p>拿到 App ID 和 App Secret 之后，用 CLI 配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes gateway setup
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 选 Feishu → 输入 App ID → 输入 App Secret → 输入 Verification Token</span>
-</span></span></code></pre></div><p>或者直接改配置文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># ~/.hermes/config.yaml</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">listen</span>: <span style="color:#e6db74">&#34;0.0.0.0:8080&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">feishu</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app_id</span>: <span style="color:#e6db74">&#34;cli_xxxxxxxxxxxx&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app_secret</span>: <span style="color:#ae81ff">${FEISHU_APP_SECRET}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">verification_token</span>: <span style="color:#ae81ff">${FEISHU_VERIFY_TOKEN}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">encrypt_key</span>: <span style="color:#ae81ff">${FEISHU_ENCRYPT_KEY} </span> <span style="color:#75715e"># 如果启用了加密</span>
-</span></span></code></pre></div><p>启动后，Hermes 会自己处理飞书的事件订阅 URL 验证——不用你手动配回调地址。</p>
-<h3 id="step-3启动并测试">Step 3：启动并测试</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes gateway run
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 输出：Gateway listening on :8080</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#       ✅ Feishu connected</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#       ✅ Telegram connected</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#       ⚠️  Discord not configured</span>
-</span></span></code></pre></div><p>然后在飞书里 @机器人 发一条消息「你好」，应该能看到回复。</p>
-<h3 id="飞书特有的能力">飞书特有的能力</h3>
-<p>飞书的富文本消息格式比文字强太多。你可以让 Hermes 发卡片消息：</p>
-<pre tabindex="0"><code>Hermes，把我的服务器巡检结果用飞书卡片发到运维群。
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord | zhouyang — The 25th Frame</title><meta name=description content="一个 Hermes 实例同时接入飞书、Telegram、Discord，多平台消息智能路由，让 AI 助手真正无处不在。配置详解 + 实战踩坑全记录。"><link rel=stylesheet href="/css/style.css?v=202607010536"><link rel=stylesheet href="/css/search.css?v=1"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Hermes Agent 深度指南 05：多平台集成——飞书/Telegram/Discord</h1><div class=meta><time>2026-06-21</time>
+<span class=tags><span class=tag>AI</span><span class=tag>Hermes</span><span class=tag>工具教程</span><span class=tag>自动化</span></span></div></header><div class=content><p>这是 Hermes Agent 深度指南系列的第五篇。前四篇分别是<a href=/posts/hermes-agent-guide/>入门指南</a>、<a href=/posts/hermes-agent-config/>配置详解</a>、<a href=/posts/hermes-agent-skills/>Skills 系统</a>和 <a href=/posts/hermes-agent-cron/>Cron 定时任务</a>。</p><p>上一篇文章讲了 Cron——Hermes 到点自动干活，但干完活的结果得让你收到。你不可能天天盯着终端看吧？你得在手机上、飞书上、Telegram 上收到消息。这就是今天要解决的问题：<strong>多平台集成</strong>。</p><h2 id=为什么需要多平台>为什么需要多平台</h2><p>先说说真实场景。我自己是这样用的：</p><ul><li><strong>飞书</strong>：工作相关。代码审查结果、服务器告警、每日 AI 资讯，这些跟团队有关的东西走飞书群聊。</li><li><strong>Telegram</strong>：个人助理。博客部署通知、RSS 摘要、临时让 AI 搜个东西，走 Telegram Bot——轻量、手机通知即时。</li><li><strong>Discord</strong>：社区互动。偶尔在 Discord 群里接一些朋友的问题，让 Hermes 帮忙回。</li></ul><p>三个平台，三种场景，一个 Hermes 实例。不是三个实例，不是一个平台配一次——<strong>一个实例接入所有平台，按规则智能分发</strong>。</p><h2 id=gateway-架构>Gateway 架构</h2><p>先搞清楚 Hermes Gateway 是怎么工作的：</p><p><img src=/images/hermes-gateway-architecture.png alt="Hermes Gateway 多平台架构图"></p><p>Gateway 是一个独立的进程，它做的事很简单：</p><ol><li><strong>接收消息</strong>：监听各平台的 webhook 或长连接</li><li><strong>标准化</strong>：把飞书的富文本、Telegram 的 Markdown、Discord 的 Embed 统一转成内部格式</li><li><strong>路由判断</strong>：看这条消息来自哪、内容是什么、发消息的人是谁，决定交给哪个 Agent 处理</li><li><strong>返回结果</strong>：把 Agent 的回复转回对应平台的格式，发回去</li></ol><p>关键设计：<strong>Gateway 和 Agent 是解耦的</strong>。Gateway 挂了不影响 Agent 推理，Agent 推理慢不影响 Gateway 收消息。两者通过内部 API 通信。</p><h2 id=接入飞书>接入飞书</h2><p>飞书的接入相对复杂，因为涉及应用创建和权限审批。但好处是飞书的富文本能力最强，卡片消息、按钮交互都能搞。</p><h3 id=step-1创建飞书应用>Step 1：创建飞书应用</h3><p>先去 <a href=https://open.feishu.cn>飞书开放平台</a> 创建一个企业自建应用：</p><ol><li>创建应用 → 选「企业自建应用」→ 随便起个名（比如「Hermes 助手」）</li><li>添加能力：<strong>机器人</strong></li><li>权限配置，至少勾选：<ul><li><code>im:message</code> — 获取消息</li><li><code>im:message:send_as_bot</code> — 发送消息</li><li><code>im:chat</code> — 获取群聊信息（可选）</li></ul></li><li>安全设置里配好 IP 白名单（你的服务器 IP）</li><li>发布应用 → 让管理员审批通过</li></ol><h3 id=step-2在-hermes-里配置>Step 2：在 Hermes 里配置</h3><p>拿到 App ID 和 App Secret 之后，用 CLI 配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes gateway setup
+</span></span><span style=display:flex><span><span style=color:#75715e># 选 Feishu → 输入 App ID → 输入 App Secret → 输入 Verification Token</span>
+</span></span></code></pre></div><p>或者直接改配置文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># ~/.hermes/config.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>listen</span>: <span style=color:#e6db74>&#34;0.0.0.0:8080&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>feishu</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app_id</span>: <span style=color:#e6db74>&#34;cli_xxxxxxxxxxxx&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app_secret</span>: <span style=color:#ae81ff>${FEISHU_APP_SECRET}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>verification_token</span>: <span style=color:#ae81ff>${FEISHU_VERIFY_TOKEN}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>encrypt_key</span>: <span style=color:#ae81ff>${FEISHU_ENCRYPT_KEY} </span> <span style=color:#75715e># 如果启用了加密</span>
+</span></span></code></pre></div><p>启动后，Hermes 会自己处理飞书的事件订阅 URL 验证——不用你手动配回调地址。</p><h3 id=step-3启动并测试>Step 3：启动并测试</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes gateway run
+</span></span><span style=display:flex><span><span style=color:#75715e># 输出：Gateway listening on :8080</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#       ✅ Feishu connected</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#       ✅ Telegram connected</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#       ⚠️  Discord not configured</span>
+</span></span></code></pre></div><p>然后在飞书里 @机器人 发一条消息「你好」，应该能看到回复。</p><h3 id=飞书特有的能力>飞书特有的能力</h3><p>飞书的富文本消息格式比文字强太多。你可以让 Hermes 发卡片消息：</p><pre tabindex=0><code>Hermes，把我的服务器巡检结果用飞书卡片发到运维群。
 卡片格式：
 - 标题：🖥️ 服务器巡检 | 2026-06-21 14:00
 - 内容用表格展示，异常项标红
 - 底部加一个「查看详情」按钮，链接到 Grafana
-</code></pre><p>Hermes 会自动调用飞书的卡片消息 API，效果是：</p>
-<pre tabindex="0"><code>┌─────────────────────────────────┐
+</code></pre><p>Hermes 会自动调用飞书的卡片消息 API，效果是：</p><pre tabindex=0><code>┌─────────────────────────────────┐
 │ 🖥️ 服务器巡检 | 2026-06-21 14:00 │
 │                                 │
 │ 服务器    CPU   内存   磁盘  状态 │
@@ -142,332 +42,199 @@
 │                                 │
 │       [查看 Grafana 详情]        │
 └─────────────────────────────────┘
-</code></pre><h2 id="接入-telegram">接入 Telegram</h2>
-<p>Telegram 的配置简单很多——BotFather 创建机器人，拿 Token，完事。</p>
-<h3 id="step-1创建-bot">Step 1：创建 Bot</h3>
-<p>在 Telegram 里搜索 <code>@BotFather</code>，对话：</p>
-<pre tabindex="0"><code>/newbot
+</code></pre><h2 id=接入-telegram>接入 Telegram</h2><p>Telegram 的配置简单很多——BotFather 创建机器人，拿 Token，完事。</p><h3 id=step-1创建-bot>Step 1：创建 Bot</h3><p>在 Telegram 里搜索 <code>@BotFather</code>，对话：</p><pre tabindex=0><code>/newbot
 → 输入 bot 名字：Hermes Assistant
 → 输入 bot 用户名：hermes_my_bot（必须以 bot 结尾）
 → 拿到 Token：1234567890:ABCdefGHIjklMNOpqrsTUVwxyz
-</code></pre><p>建议顺手设几个命令：</p>
-<pre tabindex="0"><code>/setcommands
+</code></pre><p>建议顺手设几个命令：</p><pre tabindex=0><code>/setcommands
 → 选你的 bot
 → 输入：
 start - 开始对话
 help - 查看帮助
 model - 切换模型
 status - 查看状态
-</code></pre><h3 id="step-2配置">Step 2：配置</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">telegram</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">token</span>: <span style="color:#ae81ff">${TELEGRAM_BOT_TOKEN}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 可选：限制只有这些用户能用</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">allowed_users</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">123456789</span>   <span style="color:#75715e"># 你的 Telegram user ID</span>
-</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">987654321</span>
-</span></span></code></pre></div><p>如果你想让 bot 加入群聊也能用，去 BotFather 里 <code>/setprivacy</code> 设为 Disabled。</p>
-<h3 id="step-3设置-webhook">Step 3：设置 Webhook</h3>
-<p>Telegram 支持两种模式：长轮询（polling）和 Webhook。Hermes 推荐 Webhook，你需要一个公网域名或 IP：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">telegram</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">webhook_url</span>: <span style="color:#e6db74">&#34;https://your-server.com/hermes/telegram&#34;</span>
-</span></span></code></pre></div><p>如果没有公网 IP，可以用 Cloudflare Tunnel 或 ngrok 临时穿透：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 用 ngrok 临时测试</span>
-</span></span><span style="display:flex;"><span>ngrok http <span style="color:#ae81ff">8080</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 拿到 https://xxxx.ngrok.io 后填到 webhook_url</span>
-</span></span></code></pre></div><p>Hermes 启动时会自动调用 Telegram API 注册 webhook，不用手动 curl。</p>
-<h3 id="telegram-特有的坑">Telegram 特有的坑</h3>
-<p><strong>坑 1：消息长度限制</strong>。Telegram 单条消息最多 4096 字符。Hermes 遇到长回复会自动分段，但如果你的回复是代码块，分段会截断代码块标记。解决办法：在任务描述里加一句「如果回复超过 3000 字符，优先精简而不是分段」。</p>
-<p><strong>坑 2：Markdown 解析</strong>。Telegram 的 Markdown 是阉割版——支持 <code>**粗体**</code>、<code>_斜体_</code>、<code>`代码`</code>，但不支持表格、标题。Hermes 会自动降级格式，但你写 prompt 的时候注意别让 Agent 输出表格。</p>
-<h2 id="接入-discord">接入 Discord</h2>
-<p>Discord 的配置介于飞书和 Telegram 之间：比 Telegram 复杂（OAuth2 那一套），比飞书简单（不用等审批）。</p>
-<h3 id="step-1创建应用">Step 1：创建应用</h3>
-<p>去 <a href="https://discord.com/developers/applications">Discord Developer Portal</a>：</p>
-<ol>
-<li>New Application → 起名</li>
-<li>左侧 Bot → Add Bot → Reset Token（复制下来）</li>
-<li>开启 Privileged Gateway Intents：
-<ul>
-<li>MESSAGE CONTENT INTENT（必须，否则收不到消息内容）</li>
-<li>SERVER MEMBERS INTENT（可选，识别用户）</li>
-</ul>
-</li>
-<li>OAuth2 → URL Generator：
-<ul>
-<li>勾选 <code>bot</code> + <code>applications.commands</code></li>
-<li>Bot Permissions：Send Messages, Read Messages, Read Message History, Use Slash Commands</li>
-<li>用生成的 URL 邀请 bot 进服务器</li>
-</ul>
-</li>
-</ol>
-<h3 id="step-2配置-1">Step 2：配置</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">discord</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">token</span>: <span style="color:#ae81ff">${DISCORD_BOT_TOKEN}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">application_id</span>: <span style="color:#e6db74">&#34;1234567890123456789&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 可选：监听特定频道</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">allowed_channels</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#e6db74">&#34;1234567890123456789&#34;</span>   <span style="color:#75715e"># #hermes-test</span>
-</span></span><span style="display:flex;"><span>        - <span style="color:#e6db74">&#34;9876543210987654321&#34;</span>   <span style="color:#75715e"># #dev-chat</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 可选：只回复 @mention 的消息</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">mention_only</span>: <span style="color:#66d9ef">false</span>
-</span></span></code></pre></div><p>Discord 走的是 WebSocket 长连接，不需要你提供 webhook URL。Hermes 启动后自动连接 Discord Gateway。</p>
-<h3 id="step-3slash-commands">Step 3：Slash Commands</h3>
-<p>Discord 支持 Slash Commands，配置完 Hermes 可以注册一批命令：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">discord</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">slash_commands</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">commands</span>:
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">ask</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;直接问 Hermes 一个问题&#34;</span>
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">summarize</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;总结最近的聊天内容&#34;</span>
-</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">translate</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;翻译消息&#34;</span>
-</span></span></code></pre></div><p>注册完后，在 Discord 里打 <code>/ask 怎么用 Python 写一个 WebSocket 客户端</code>，Hermes 就会回复。</p>
-<h3 id="discord-的小细节">Discord 的小细节</h3>
-<p>Discord 的 Embed 消息很炫，Hermes 也能发。在 prompt 里可以这样写：</p>
-<pre tabindex="0"><code>用 Discord Embed 格式回复，颜色用 #00ff00，标题加粗，字段用 inline 排列。
-</code></pre><p>但别滥用——Embed 在手机上显示效果一般，大段文字还是用普通消息。</p>
-<h2 id="多平台消息路由">多平台消息路由</h2>
-<p>三个平台接好了，但有个问题：Cron 任务跑完的结果该发到哪？你在 Telegram 上问的东西不该跑到飞书群里去。这就涉及到<strong>消息路由规则</strong>。</p>
-<p>Hermes Gateway 的路由逻辑：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">routing</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 规则从上到下匹配，命中即停止</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rules</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 规则 1：Cron 任务的输出，按任务配置的通知渠道发</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">cron</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">notify</span>: <span style="color:#e6db74">&#34;{{.task.notify.channel}}&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 规则 2：来自飞书运维群的消息，只路由到运维相关的 Skills</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">feishu</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">chat_id</span>: <span style="color:#e6db74">&#34;oc_xxxxxxxxxxxx&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">server-health, deployment]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">model</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 规则 3：来自 Discord 的消息，用便宜模型</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">discord</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">model</span>: <span style="color:#ae81ff">gemini-3-flash</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">provider</span>: <span style="color:#ae81ff">google</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 规则 4：Telegram 私聊，完整能力</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">telegram</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">chat_type</span>: <span style="color:#ae81ff">private</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">skills</span>: [<span style="color:#75715e">*]</span>          <span style="color:#75715e"># 所有 Skills 都可用</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">toolsets</span>: [<span style="color:#75715e">*]</span>        <span style="color:#75715e"># 所有 toolsets</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 默认：兜底规则</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">default</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">model</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
-</span></span></code></pre></div><p>这个规则表的价值在于：不同场景用不同模型，既保证体验又控制成本。Discord 上随便聊用 Gemini Flash（便宜），飞书工作群用 DeepSeek V4（能打），Telegram 私聊给自己干活也上满配。</p>
-<h3 id="按人员权限控制">按人员权限控制</h3>
-<p>你不想让 Discord 群里的任何陌生人都能调你的 terminal 工具吧？</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">permissions</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">admin</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">telegram:123456789         </span> <span style="color:#75715e"># 你自己，完整权限</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">trusted</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">feishu:ou_xxxxxxx          </span> <span style="color:#75715e"># 同事，可以用 web_search 但不能写文件</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">discord:987654321098765432</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">guest</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">discord:*                  </span> <span style="color:#75715e"># 其他人，只能聊天</span>
-</span></span></code></pre></div><p>每个人群的权限对应不同的 toolsets：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">permission_sets</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">admin</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">toolsets</span>: [<span style="color:#75715e">*]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">skills</span>: [<span style="color:#75715e">*]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">trusted</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">toolsets</span>: [<span style="color:#ae81ff">web, file, search]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">public-*]           </span> <span style="color:#75715e"># 只有 public- 开头的 Skills</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">guest</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">toolsets</span>: [<span style="color:#ae81ff">web]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">skills</span>: []                    <span style="color:#75715e"># 没有任何 Skills</span>
-</span></span></code></pre></div><h2 id="实战用-gateway--cron-搭建个人助理">实战：用 Gateway + Cron 搭建个人助理</h2>
-<p>把前几篇的东西串起来。假设你现在想做一个个人助理，配置如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># ~/.hermes/config.yaml 完整配置</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">gateway</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">listen</span>: <span style="color:#e6db74">&#34;0.0.0.0:8080&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">platforms</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">feishu</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app_id</span>: <span style="color:#ae81ff">${FEISHU_APP_ID}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">app_secret</span>: <span style="color:#ae81ff">${FEISHU_APP_SECRET}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">verification_token</span>: <span style="color:#ae81ff">${FEISHU_VERIFY_TOKEN}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">telegram</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">token</span>: <span style="color:#ae81ff">${TELEGRAM_BOT_TOKEN}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">webhook_url</span>: <span style="color:#e6db74">&#34;https://hermes.yourdomain.com/telegram&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">allowed_users</span>: [<span style="color:#ae81ff">123456789</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">discord</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">false</span>  <span style="color:#75715e"># 先不开</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">routing</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rules</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">cron</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">notify</span>: <span style="color:#e6db74">&#34;{{.task.notify.channel}}&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">feishu</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">chat_id</span>: <span style="color:#e6db74">&#34;oc_xxxxx&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">server-health]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">model</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">source</span>: <span style="color:#ae81ff">telegram</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">chat_type</span>: <span style="color:#ae81ff">private</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">blog-deploy, news-digest, rss-reader]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">model</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">toolsets</span>: [<span style="color:#ae81ff">terminal, web, file]</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">permissions</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">admin</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">telegram:123456789</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">admin_toolsets</span>: [<span style="color:#75715e">*]</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">cron</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">daily-ai-digest</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">schedule</span>: <span style="color:#e6db74">&#34;30 8 * * *&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;每日 AI 资讯摘要&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">model</span>: <span style="color:#ae81ff">deepseek-v4-pro</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">toolsets</span>: [<span style="color:#ae81ff">web]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">news-digest]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">notify</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">channel</span>: <span style="color:#ae81ff">feishu</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">webhook_url</span>: <span style="color:#ae81ff">${FEISHU_WEBHOOK}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">blog-auto-deploy</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">schedule</span>: <span style="color:#e6db74">&#34;0 22 * * *&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;博客自动部署&#34;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">toolsets</span>: [<span style="color:#ae81ff">terminal, file, web]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">skills</span>: [<span style="color:#ae81ff">blog-deploy]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">notify</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">channel</span>: <span style="color:#ae81ff">telegram</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">chat_id</span>: <span style="color:#e6db74">&#34;123456789&#34;</span>
-</span></span></code></pre></div><p>配置完，你的生活变成这样：</p>
-<ul>
-<li><strong>早上 8:30</strong>：飞书群里自动收到 AI 资讯摘要</li>
-<li><strong>随时</strong>：在 Telegram 上问 Hermes 搜东西、查资料、写代码</li>
-<li><strong>晚上 10:00</strong>：Telegram 上收到博客部署结果</li>
-<li><strong>服务器出问题</strong>：飞书运维群收到告警</li>
-</ul>
-<p>全程你不需要打开终端。</p>
-<h2 id="安全和运维">安全和运维</h2>
-<h3 id="不要裸奔">不要裸奔</h3>
-<p>Gateway 监听在 <code>0.0.0.0:8080</code> 上，如果你的服务器有公网 IP，<strong>必须加反向代理</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 最简单的方案：Caddy 反向代理 + 自动 HTTPS</span>
-</span></span><span style="display:flex;"><span>sudo apt install caddy
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># /etc/caddy/Caddyfile</span>
-</span></span><span style="display:flex;"><span>hermes.yourdomain.com <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    reverse_proxy localhost:8080
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Telegram 和飞书的 webhook 指到 <code>https://hermes.yourdomain.com</code>，中间走 HTTPS，Token 不会在明文中传。</p>
-<h3 id="环境变量隔离">环境变量隔离</h3>
-<p>别把 Token 硬编码在配置文件里。用环境变量：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># ~/.bashrc 或 ~/.zshrc</span>
-</span></span><span style="display:flex;"><span>export FEISHU_APP_SECRET<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-secret&#34;</span>
-</span></span><span style="display:flex;"><span>export TELEGRAM_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1234567890:ABCdef...&#34;</span>
-</span></span><span style="display:flex;"><span>export DISCORD_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-discord-token&#34;</span>
-</span></span></code></pre></div><p>配置文件里用 <code>${VAR}</code> 引用。这样配置文件可以提交到 Git，Token 不会泄露。</p>
-<h3 id="监控-gateway-状态">监控 Gateway 状态</h3>
-<p>Gateway 是个独立进程，偶尔会挂（网络波动、平台 API 变更）。建议配一个 cron 健康检查：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hermes cron create <span style="color:#e6db74">&#34;*/5 * * * *&#34;</span> <span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">检查 Gateway 是否在运行：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1. 用 terminal 执行：curl -s http://localhost:8080/health
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">2. 如果返回不是 200，或者连接失败，用 gateway 推送到 Telegram：
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">   &#39;⚠️ Hermes Gateway 挂了，快去重启&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">3. 如果返回 200，什么都不做
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>或者直接用 systemd 的自动重启：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#75715e"># /etc/systemd/system/hermes-gateway.service</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Unit]</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span><span style="color:#f92672">=</span><span style="color:#e6db74">Hermes Gateway</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">After</span><span style="color:#f92672">=</span><span style="color:#e6db74">network.target</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Service]</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Type</span><span style="color:#f92672">=</span><span style="color:#e6db74">simple</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">User</span><span style="color:#f92672">=</span><span style="color:#e6db74">ubuntu</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ExecStart</span><span style="color:#f92672">=</span><span style="color:#e6db74">/usr/local/bin/hermes gateway run</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Restart</span><span style="color:#f92672">=</span><span style="color:#e6db74">always</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">RestartSec</span><span style="color:#f92672">=</span><span style="color:#e6db74">10</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[Install]</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">WantedBy</span><span style="color:#f92672">=</span><span style="color:#e6db74">multi-user.target</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable --now hermes-gateway
-</span></span></code></pre></div><h2 id="一个-gateway-的边界在哪">一个 Gateway 的边界在哪</h2>
-<p>最后聊一个容易被忽略的问题：<strong>哪些事该让 Gateway 做，哪些事不要</strong>。</p>
-<p>正确的边界：</p>
-<table>
-	<thead>
-			<tr>
-					<th>✅ 让 Gateway 做</th>
-					<th>❌ 不要让 Gateway 做</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>消息格式转换</td>
-					<td>业务逻辑判断</td>
-			</tr>
-			<tr>
-					<td>用户身份识别</td>
-					<td>复杂数据处理</td>
-			</tr>
-			<tr>
-					<td>路由分发</td>
-					<td>长时间推理（那是 Agent 的事）</td>
-			</tr>
-			<tr>
-					<td>平台 API 限流</td>
-					<td>文件存储</td>
-			</tr>
-	</tbody>
-</table>
-<p>记住：Gateway 是<strong>消息管道</strong>，不是业务引擎。它只负责「把正确的消息交给正确的 Agent，再把正确的回复送回正确的平台」。任何需要「思考」的事情，交给 Agent 的模型去做。</p>
-<h2 id="下一站">下一站</h2>
-<p>这篇文章把 Gateway 讲透了。下一篇是 Hermes 系列最后一篇——<strong>实战：搭建你的第一个 AI 工作流</strong>。我们会把六篇里讲到的所有东西（配置、Skills、Cron、Gateway）全部串起来，从零搭建一个完整可用的 AI 自动化流程。</p>
-<p>系列导航：<a href="/posts/hermes-agent-guide/">01 入门指南</a> | <a href="/posts/hermes-agent-config/">02 配置详解</a> | <a href="/posts/hermes-agent-skills/">03 Skills 系统</a> | <a href="/posts/hermes-agent-cron/">04 Cron 定时任务</a> | <strong>05 多平台集成</strong> | <a href="/posts/hermes-agent-workflow/">06 实战工作流</a></p>
-
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/hermes-agent-cron/" class="prev">← Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</a>
-  
-  
-  <a href="/posts/hermes-agent-workflow/" class="next">Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流 →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-  <script src="/js/search.js?v=1"></script>
-</body>
-</html>
+</code></pre><h3 id=step-2配置>Step 2：配置</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>telegram</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>token</span>: <span style=color:#ae81ff>${TELEGRAM_BOT_TOKEN}</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 可选：限制只有这些用户能用</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>allowed_users</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>123456789</span>   <span style=color:#75715e># 你的 Telegram user ID</span>
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>987654321</span>
+</span></span></code></pre></div><p>如果你想让 bot 加入群聊也能用，去 BotFather 里 <code>/setprivacy</code> 设为 Disabled。</p><h3 id=step-3设置-webhook>Step 3：设置 Webhook</h3><p>Telegram 支持两种模式：长轮询（polling）和 Webhook。Hermes 推荐 Webhook，你需要一个公网域名或 IP：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>telegram</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>webhook_url</span>: <span style=color:#e6db74>&#34;https://your-server.com/hermes/telegram&#34;</span>
+</span></span></code></pre></div><p>如果没有公网 IP，可以用 Cloudflare Tunnel 或 ngrok 临时穿透：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 用 ngrok 临时测试</span>
+</span></span><span style=display:flex><span>ngrok http <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 拿到 https://xxxx.ngrok.io 后填到 webhook_url</span>
+</span></span></code></pre></div><p>Hermes 启动时会自动调用 Telegram API 注册 webhook，不用手动 curl。</p><h3 id=telegram-特有的坑>Telegram 特有的坑</h3><p><strong>坑 1：消息长度限制</strong>。Telegram 单条消息最多 4096 字符。Hermes 遇到长回复会自动分段，但如果你的回复是代码块，分段会截断代码块标记。解决办法：在任务描述里加一句「如果回复超过 3000 字符，优先精简而不是分段」。</p><p><strong>坑 2：Markdown 解析</strong>。Telegram 的 Markdown 是阉割版——支持 <code>**粗体**</code>、<code>_斜体_</code>、<code>`代码`</code>，但不支持表格、标题。Hermes 会自动降级格式，但你写 prompt 的时候注意别让 Agent 输出表格。</p><h2 id=接入-discord>接入 Discord</h2><p>Discord 的配置介于飞书和 Telegram 之间：比 Telegram 复杂（OAuth2 那一套），比飞书简单（不用等审批）。</p><h3 id=step-1创建应用>Step 1：创建应用</h3><p>去 <a href=https://discord.com/developers/applications>Discord Developer Portal</a>：</p><ol><li>New Application → 起名</li><li>左侧 Bot → Add Bot → Reset Token（复制下来）</li><li>开启 Privileged Gateway Intents：<ul><li>MESSAGE CONTENT INTENT（必须，否则收不到消息内容）</li><li>SERVER MEMBERS INTENT（可选，识别用户）</li></ul></li><li>OAuth2 → URL Generator：<ul><li>勾选 <code>bot</code> + <code>applications.commands</code></li><li>Bot Permissions：Send Messages, Read Messages, Read Message History, Use Slash Commands</li><li>用生成的 URL 邀请 bot 进服务器</li></ul></li></ol><h3 id=step-2配置-1>Step 2：配置</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>discord</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>token</span>: <span style=color:#ae81ff>${DISCORD_BOT_TOKEN}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>application_id</span>: <span style=color:#e6db74>&#34;1234567890123456789&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 可选：监听特定频道</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>allowed_channels</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#e6db74>&#34;1234567890123456789&#34;</span>   <span style=color:#75715e># #hermes-test</span>
+</span></span><span style=display:flex><span>        - <span style=color:#e6db74>&#34;9876543210987654321&#34;</span>   <span style=color:#75715e># #dev-chat</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 可选：只回复 @mention 的消息</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>mention_only</span>: <span style=color:#66d9ef>false</span>
+</span></span></code></pre></div><p>Discord 走的是 WebSocket 长连接，不需要你提供 webhook URL。Hermes 启动后自动连接 Discord Gateway。</p><h3 id=step-3slash-commands>Step 3：Slash Commands</h3><p>Discord 支持 Slash Commands，配置完 Hermes 可以注册一批命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>discord</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>slash_commands</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>commands</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ask</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;直接问 Hermes 一个问题&#34;</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>summarize</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;总结最近的聊天内容&#34;</span>
+</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>translate</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;翻译消息&#34;</span>
+</span></span></code></pre></div><p>注册完后，在 Discord 里打 <code>/ask 怎么用 Python 写一个 WebSocket 客户端</code>，Hermes 就会回复。</p><h3 id=discord-的小细节>Discord 的小细节</h3><p>Discord 的 Embed 消息很炫，Hermes 也能发。在 prompt 里可以这样写：</p><pre tabindex=0><code>用 Discord Embed 格式回复，颜色用 #00ff00，标题加粗，字段用 inline 排列。
+</code></pre><p>但别滥用——Embed 在手机上显示效果一般，大段文字还是用普通消息。</p><h2 id=多平台消息路由>多平台消息路由</h2><p>三个平台接好了，但有个问题：Cron 任务跑完的结果该发到哪？你在 Telegram 上问的东西不该跑到飞书群里去。这就涉及到<strong>消息路由规则</strong>。</p><p>Hermes Gateway 的路由逻辑：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>routing</span>:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 规则从上到下匹配，命中即停止</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>rules</span>:
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 规则 1：Cron 任务的输出，按任务配置的通知渠道发</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>cron</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>notify</span>: <span style=color:#e6db74>&#34;{{.task.notify.channel}}&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 规则 2：来自飞书运维群的消息，只路由到运维相关的 Skills</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>feishu</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>chat_id</span>: <span style=color:#e6db74>&#34;oc_xxxxxxxxxxxx&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>server-health, deployment]</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 规则 3：来自 Discord 的消息，用便宜模型</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>discord</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>model</span>: <span style=color:#ae81ff>gemini-3-flash</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>provider</span>: <span style=color:#ae81ff>google</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 规则 4：Telegram 私聊，完整能力</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>telegram</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>chat_type</span>: <span style=color:#ae81ff>private</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>skills</span>: [<span style=color:#75715e>*]</span>          <span style=color:#75715e># 所有 Skills 都可用</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>toolsets</span>: [<span style=color:#75715e>*]</span>        <span style=color:#75715e># 所有 toolsets</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 默认：兜底规则</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>default</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
+</span></span></code></pre></div><p>这个规则表的价值在于：不同场景用不同模型，既保证体验又控制成本。Discord 上随便聊用 Gemini Flash（便宜），飞书工作群用 DeepSeek V4（能打），Telegram 私聊给自己干活也上满配。</p><h3 id=按人员权限控制>按人员权限控制</h3><p>你不想让 Discord 群里的任何陌生人都能调你的 terminal 工具吧？</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>permissions</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>admin</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>telegram:123456789         </span> <span style=color:#75715e># 你自己，完整权限</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>trusted</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>feishu:ou_xxxxxxx          </span> <span style=color:#75715e># 同事，可以用 web_search 但不能写文件</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>discord:987654321098765432</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>guest</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>discord:*                  </span> <span style=color:#75715e># 其他人，只能聊天</span>
+</span></span></code></pre></div><p>每个人群的权限对应不同的 toolsets：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span>  <span style=color:#f92672>permission_sets</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>admin</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>toolsets</span>: [<span style=color:#75715e>*]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>skills</span>: [<span style=color:#75715e>*]</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>trusted</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>toolsets</span>: [<span style=color:#ae81ff>web, file, search]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>public-*]           </span> <span style=color:#75715e># 只有 public- 开头的 Skills</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>guest</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>toolsets</span>: [<span style=color:#ae81ff>web]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>skills</span>: []                    <span style=color:#75715e># 没有任何 Skills</span>
+</span></span></code></pre></div><h2 id=实战用-gateway--cron-搭建个人助理>实战：用 Gateway + Cron 搭建个人助理</h2><p>把前几篇的东西串起来。假设你现在想做一个个人助理，配置如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># ~/.hermes/config.yaml 完整配置</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>gateway</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>listen</span>: <span style=color:#e6db74>&#34;0.0.0.0:8080&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>platforms</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>feishu</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app_id</span>: <span style=color:#ae81ff>${FEISHU_APP_ID}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>app_secret</span>: <span style=color:#ae81ff>${FEISHU_APP_SECRET}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>verification_token</span>: <span style=color:#ae81ff>${FEISHU_VERIFY_TOKEN}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>telegram</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>token</span>: <span style=color:#ae81ff>${TELEGRAM_BOT_TOKEN}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>webhook_url</span>: <span style=color:#e6db74>&#34;https://hermes.yourdomain.com/telegram&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>allowed_users</span>: [<span style=color:#ae81ff>123456789</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>discord</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>false</span>  <span style=color:#75715e># 先不开</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>routing</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>rules</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>cron</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>notify</span>: <span style=color:#e6db74>&#34;{{.task.notify.channel}}&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>feishu</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>chat_id</span>: <span style=color:#e6db74>&#34;oc_xxxxx&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>server-health]</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>telegram</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>chat_type</span>: <span style=color:#ae81ff>private</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>blog-deploy, news-digest, rss-reader]</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>toolsets</span>: [<span style=color:#ae81ff>terminal, web, file]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>permissions</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>admin</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>telegram:123456789</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>admin_toolsets</span>: [<span style=color:#75715e>*]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>cron</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>daily-ai-digest</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>schedule</span>: <span style=color:#e6db74>&#34;30 8 * * *&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;每日 AI 资讯摘要&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-v4-pro</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>toolsets</span>: [<span style=color:#ae81ff>web]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>news-digest]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>channel</span>: <span style=color:#ae81ff>feishu</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>webhook_url</span>: <span style=color:#ae81ff>${FEISHU_WEBHOOK}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>blog-auto-deploy</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>schedule</span>: <span style=color:#e6db74>&#34;0 22 * * *&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;博客自动部署&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>toolsets</span>: [<span style=color:#ae81ff>terminal, file, web]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>skills</span>: [<span style=color:#ae81ff>blog-deploy]</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>channel</span>: <span style=color:#ae81ff>telegram</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>chat_id</span>: <span style=color:#e6db74>&#34;123456789&#34;</span>
+</span></span></code></pre></div><p>配置完，你的生活变成这样：</p><ul><li><strong>早上 8:30</strong>：飞书群里自动收到 AI 资讯摘要</li><li><strong>随时</strong>：在 Telegram 上问 Hermes 搜东西、查资料、写代码</li><li><strong>晚上 10:00</strong>：Telegram 上收到博客部署结果</li><li><strong>服务器出问题</strong>：飞书运维群收到告警</li></ul><p>全程你不需要打开终端。</p><h2 id=安全和运维>安全和运维</h2><h3 id=不要裸奔>不要裸奔</h3><p>Gateway 监听在 <code>0.0.0.0:8080</code> 上，如果你的服务器有公网 IP，<strong>必须加反向代理</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 最简单的方案：Caddy 反向代理 + 自动 HTTPS</span>
+</span></span><span style=display:flex><span>sudo apt install caddy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># /etc/caddy/Caddyfile</span>
+</span></span><span style=display:flex><span>hermes.yourdomain.com <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    reverse_proxy localhost:8080
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p>Telegram 和飞书的 webhook 指到 <code>https://hermes.yourdomain.com</code>，中间走 HTTPS，Token 不会在明文中传。</p><h3 id=环境变量隔离>环境变量隔离</h3><p>别把 Token 硬编码在配置文件里。用环境变量：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># ~/.bashrc 或 ~/.zshrc</span>
+</span></span><span style=display:flex><span>export FEISHU_APP_SECRET<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;your-secret&#34;</span>
+</span></span><span style=display:flex><span>export TELEGRAM_BOT_TOKEN<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;1234567890:ABCdef...&#34;</span>
+</span></span><span style=display:flex><span>export DISCORD_BOT_TOKEN<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;your-discord-token&#34;</span>
+</span></span></code></pre></div><p>配置文件里用 <code>${VAR}</code> 引用。这样配置文件可以提交到 Git，Token 不会泄露。</p><h3 id=监控-gateway-状态>监控 Gateway 状态</h3><p>Gateway 是个独立进程，偶尔会挂（网络波动、平台 API 变更）。建议配一个 cron 健康检查：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>hermes cron create <span style=color:#e6db74>&#34;*/5 * * * *&#34;</span> <span style=color:#e6db74>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>检查 Gateway 是否在运行：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>1. 用 terminal 执行：curl -s http://localhost:8080/health
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>2. 如果返回不是 200，或者连接失败，用 gateway 推送到 Telegram：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>   &#39;⚠️ Hermes Gateway 挂了，快去重启&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>3. 如果返回 200，什么都不做
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;</span>
+</span></span></code></pre></div><p>或者直接用 systemd 的自动重启：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-ini data-lang=ini><span style=display:flex><span><span style=color:#75715e># /etc/systemd/system/hermes-gateway.service</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>[Unit]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>Description</span><span style=color:#f92672>=</span><span style=color:#e6db74>Hermes Gateway</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>After</span><span style=color:#f92672>=</span><span style=color:#e6db74>network.target</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>[Service]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>Type</span><span style=color:#f92672>=</span><span style=color:#e6db74>simple</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>User</span><span style=color:#f92672>=</span><span style=color:#e6db74>ubuntu</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>ExecStart</span><span style=color:#f92672>=</span><span style=color:#e6db74>/usr/local/bin/hermes gateway run</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>Restart</span><span style=color:#f92672>=</span><span style=color:#e6db74>always</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>RestartSec</span><span style=color:#f92672>=</span><span style=color:#e6db74>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>[Install]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>WantedBy</span><span style=color:#f92672>=</span><span style=color:#e6db74>multi-user.target</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>sudo systemctl enable --now hermes-gateway
+</span></span></code></pre></div><h2 id=一个-gateway-的边界在哪>一个 Gateway 的边界在哪</h2><p>最后聊一个容易被忽略的问题：<strong>哪些事该让 Gateway 做，哪些事不要</strong>。</p><p>正确的边界：</p><table><thead><tr><th>✅ 让 Gateway 做</th><th>❌ 不要让 Gateway 做</th></tr></thead><tbody><tr><td>消息格式转换</td><td>业务逻辑判断</td></tr><tr><td>用户身份识别</td><td>复杂数据处理</td></tr><tr><td>路由分发</td><td>长时间推理（那是 Agent 的事）</td></tr><tr><td>平台 API 限流</td><td>文件存储</td></tr></tbody></table><p>记住：Gateway 是<strong>消息管道</strong>，不是业务引擎。它只负责「把正确的消息交给正确的 Agent，再把正确的回复送回正确的平台」。任何需要「思考」的事情，交给 Agent 的模型去做。</p><h2 id=下一站>下一站</h2><p>这篇文章把 Gateway 讲透了。下一篇是 Hermes 系列最后一篇——<strong>实战：搭建你的第一个 AI 工作流</strong>。我们会把六篇里讲到的所有东西（配置、Skills、Cron、Gateway）全部串起来，从零搭建一个完整可用的 AI 自动化流程。</p><p>系列导航：<a href=/posts/hermes-agent-guide/>01 入门指南</a> | <a href=/posts/hermes-agent-config/>02 配置详解</a> | <a href=/posts/hermes-agent-skills/>03 Skills 系统</a> | <a href=/posts/hermes-agent-cron/>04 Cron 定时任务</a> | <strong>05 多平台集成</strong> | <a href=/posts/hermes-agent-workflow/>06 实战工作流</a></p></div></article><nav class=post-nav><a href=/posts/hermes-agent-cron/ class=prev>← Hermes Agent 深度指南 04：Cron 定时任务 — 让 AI 替你值班</a>
+<a href=/posts/hermes-agent-workflow/ class=next>Hermes Agent 深度指南 06：实战——搭建你的第一个 AI 工作流 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer><script src="/js/search.js?v=1"></script></body></html>

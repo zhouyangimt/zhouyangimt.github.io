@@ -1,24 +1,91 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>入门 on zhouyang — The 25th Frame</title>
-		<link>https://zhouyang.dev/tags/%E5%85%A5%E9%97%A8/</link>
-		<description>Recent content in 入门 on zhouyang — The 25th Frame</description>
-		<generator>Hugo</generator>
-		<language>en</language>
-		
-		
-		
-		
-			<lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://zhouyang.dev/tags/%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title>
-				<link>https://zhouyang.dev/posts/seo-basics-for-blog/</link>
-				<pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/posts/seo-basics-for-blog/</guid>
-				<description>&lt;h2 id=&#34;程序员为什么需要seo&#34;&gt;程序员为什么需要SEO？&lt;/h2&gt;&#xA;&lt;p&gt;你写了很好的技术文章，但如果搜索引擎找不到，就等于没人看。&lt;/p&gt;&#xA;&lt;p&gt;SEO（搜索引擎优化）不是玄学。对程序员来说，它就是一个&lt;strong&gt;匹配问题&lt;/strong&gt;——让用户搜索的词，匹配你写的内容。&lt;/p&gt;&#xA;&lt;h2 id=&#34;基础一关键词研究&#34;&gt;基础一：关键词研究&lt;/h2&gt;&#xA;&lt;h3 id=&#34;什么是关键词&#34;&gt;什么是关键词？&lt;/h3&gt;&#xA;&lt;p&gt;用户在搜索引擎里输入的东西。比如：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;「Python自动化脚本」&lt;/li&gt;&#xA;&lt;li&gt;「GitHub Pages部署教程」&lt;/li&gt;&#xA;&lt;li&gt;「2026年最好的AI编程工具」&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;怎么找关键词&#34;&gt;怎么找关键词？&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;用Google本身&lt;/strong&gt;：搜一个词，看底部的「相关搜索」&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;用「人们也在问」&lt;/strong&gt;：Google搜索结果里的问答板块&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;用工具&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Google Keyword Planner（免费但需要AdWords账号）&lt;/li&gt;&#xA;&lt;li&gt;Ahrefs Free Keyword Generator&lt;/li&gt;&#xA;&lt;li&gt;AnswerThePublic&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;选什么关键词&#34;&gt;选什么关键词？&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;例子&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;难度&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;流量&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;短尾&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;「Python教程」&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;极高&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;极大&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中尾&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;「Python自动化办公」&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;中&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;长尾&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;「Python批量重命名文件代码」&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;低&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;小&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;新站策略：只做长尾关键词。&lt;/strong&gt; 短尾你打不过大站，长尾竞争小、转化高。&lt;/p&gt;&#xA;&lt;h2 id=&#34;基础二标题优化&#34;&gt;基础二：标题优化&lt;/h2&gt;&#xA;&lt;p&gt;标题标签（&lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt;）是SEO最重要的元素。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;公式&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[关键词] - [品牌名]&#xA;或&#xA;[诱人标题包含关键词]&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;好标题&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;「Python自动化脚本：10个日常重复工作的代码解决方案」&lt;/li&gt;&#xA;&lt;li&gt;「GitHub Pages搭建博客：2026年免费部署实战教程」&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;坏标题&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;「我的博客」&lt;/li&gt;&#xA;&lt;li&gt;「随便写写」&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;标题要包含核心关键词，但要自然、吸引点击。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;基础三meta-description&#34;&gt;基础三：Meta Description&lt;/h2&gt;&#xA;&lt;p&gt;搜索结果里标题下面的那两行字。&lt;strong&gt;不直接影响排名，但影响点击率。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;好的Description：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;150-160字符&lt;/li&gt;&#xA;&lt;li&gt;包含关键词&lt;/li&gt;&#xA;&lt;li&gt;告诉用户点进来能得到什么&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;meta&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;description&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;content&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;从零学习Python自动化，10个实战脚本帮你节省每天2小时。含文件整理、邮件发送、数据报表等完整代码。&amp;#34;&lt;/span&gt;&amp;gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;基础四url结构&#34;&gt;基础四：URL结构&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;好URL&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/posts/python-automation-daily-tasks/&#xA;/posts/hugo-static-blog-guide/&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;坏URL&lt;/strong&gt;：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/posts/123/&#xA;/posts/article-2026-06-01/&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>入门 on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/%E5%85%A5%E9%97%A8/</link><description>Recent content in 入门 on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>SEO入门：让搜索引擎找到你的技术博客（写给程序员）</title><link>https://zhouyang.dev/posts/seo-basics-for-blog/</link><pubDate>Sun, 14 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/posts/seo-basics-for-blog/</guid><description>&lt;h2 id="程序员为什么需要seo"&gt;程序员为什么需要SEO？&lt;/h2&gt;
+&lt;p&gt;你写了很好的技术文章，但如果搜索引擎找不到，就等于没人看。&lt;/p&gt;
+&lt;p&gt;SEO（搜索引擎优化）不是玄学。对程序员来说，它就是一个&lt;strong&gt;匹配问题&lt;/strong&gt;——让用户搜索的词，匹配你写的内容。&lt;/p&gt;
+&lt;h2 id="基础一关键词研究"&gt;基础一：关键词研究&lt;/h2&gt;
+&lt;h3 id="什么是关键词"&gt;什么是关键词？&lt;/h3&gt;
+&lt;p&gt;用户在搜索引擎里输入的东西。比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「Python自动化脚本」&lt;/li&gt;
+&lt;li&gt;「GitHub Pages部署教程」&lt;/li&gt;
+&lt;li&gt;「2026年最好的AI编程工具」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="怎么找关键词"&gt;怎么找关键词？&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;用Google本身&lt;/strong&gt;：搜一个词，看底部的「相关搜索」&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用「人们也在问」&lt;/strong&gt;：Google搜索结果里的问答板块&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用工具&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;Google Keyword Planner（免费但需要AdWords账号）&lt;/li&gt;
+&lt;li&gt;Ahrefs Free Keyword Generator&lt;/li&gt;
+&lt;li&gt;AnswerThePublic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="选什么关键词"&gt;选什么关键词？&lt;/h3&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;类型&lt;/th&gt;
+					&lt;th&gt;例子&lt;/th&gt;
+					&lt;th&gt;难度&lt;/th&gt;
+					&lt;th&gt;流量&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;短尾&lt;/td&gt;
+					&lt;td&gt;「Python教程」&lt;/td&gt;
+					&lt;td&gt;极高&lt;/td&gt;
+					&lt;td&gt;极大&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;中尾&lt;/td&gt;
+					&lt;td&gt;「Python自动化办公」&lt;/td&gt;
+					&lt;td&gt;中&lt;/td&gt;
+					&lt;td&gt;中&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;长尾&lt;/td&gt;
+					&lt;td&gt;「Python批量重命名文件代码」&lt;/td&gt;
+					&lt;td&gt;低&lt;/td&gt;
+					&lt;td&gt;小&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;新站策略：只做长尾关键词。&lt;/strong&gt; 短尾你打不过大站，长尾竞争小、转化高。&lt;/p&gt;
+&lt;h2 id="基础二标题优化"&gt;基础二：标题优化&lt;/h2&gt;
+&lt;p&gt;标题标签（&lt;code&gt;&amp;lt;title&amp;gt;&lt;/code&gt;）是SEO最重要的元素。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;公式&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[关键词] - [品牌名]
+或
+[诱人标题包含关键词]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;好标题&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「Python自动化脚本：10个日常重复工作的代码解决方案」&lt;/li&gt;
+&lt;li&gt;「GitHub Pages搭建博客：2026年免费部署实战教程」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;坏标题&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「我的博客」&lt;/li&gt;
+&lt;li&gt;「随便写写」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;标题要包含核心关键词，但要自然、吸引点击。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="基础三meta-description"&gt;基础三：Meta Description&lt;/h2&gt;
+&lt;p&gt;搜索结果里标题下面的那两行字。&lt;strong&gt;不直接影响排名，但影响点击率。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;好的Description：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;150-160字符&lt;/li&gt;
+&lt;li&gt;包含关键词&lt;/li&gt;
+&lt;li&gt;告诉用户点进来能得到什么&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;meta&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;content&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;从零学习Python自动化，10个实战脚本帮你节省每天2小时。含文件整理、邮件发送、数据报表等完整代码。&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="基础四url结构"&gt;基础四：URL结构&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;好URL&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;/posts/python-automation-daily-tasks/
+/posts/hugo-static-blog-guide/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;坏URL&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;/posts/123/
+/posts/article-2026-06-01/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则：&lt;/p&gt;</description></item></channel></rss>

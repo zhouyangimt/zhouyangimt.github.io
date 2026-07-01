@@ -156,36 +156,6 @@ nav {
 }
 .rss-badge:hover { background: var(--border); }
 
-/* Post list — compact (title only, no summary) */
-.post-list-compact { margin-top: 20px; }
-.post-card-compact {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 14px 20px;
-  margin-bottom: 10px;
-  transition: border-color 0.2s;
-}
-.post-card-compact:hover { border-color: var(--accent); }
-.post-title-row {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-}
-.post-title-row time {
-  color: var(--text-muted);
-  font-size: 0.85em;
-  white-space: nowrap;
-  min-width: 85px;
-}
-.post-title-row a {
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 1.05em;
-  line-height: 1.5;
-}
-.post-title-row a:hover { text-decoration: underline; }
-
 /* Post list */
 .post-list { margin-top: 30px; }
 .post-card {

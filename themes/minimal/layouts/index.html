@@ -59,9 +59,15 @@
   </div>
   <p class="section-desc">A visual journey through China's most iconic dishes</p>
 </section>
-<section class="cuisine-grid">
-  {{ $food := where .Site.RegularPages "Section" "cuisine" | first 4 }}
-  {{ range $food }}
+<section class="cuisine-grid cuisine-grid-compact">
+  {{ $allFood := where .Site.RegularPages "Section" "cuisine" }}
+  {{ $food := slice }}
+  {{ range $allFood }}
+    {{ if not (in .Slug "-recipe") }}
+      {{ $food = $food | append . }}
+    {{ end }}
+  {{ end }}
+  {{ range first 4 $food }}
   <article class="cuisine-card">
     {{ $img := "" }}
     {{ if .Params.images }}{{ $img = index .Params.images 0 }}{{ end }}

@@ -227,6 +227,11 @@ nav {
   gap: 20px;
   margin-top: 20px;
 }
+/* Cuisine grid — compact: 2 columns on homepage */
+.cuisine-grid-compact {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
 .cuisine-card {
   background: var(--bg-card);
   border: 1px solid var(--border);

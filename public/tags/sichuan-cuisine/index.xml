@@ -1,24 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Sichuan-Cuisine on zhouyang — The 25th Frame</title>
-		<link>https://zhouyang.dev/tags/sichuan-cuisine/</link>
-		<description>Recent content in Sichuan-Cuisine on zhouyang — The 25th Frame</description>
-		<generator>Hugo</generator>
-		<language>en</language>
-		
-		
-		
-		
-			<lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://zhouyang.dev/tags/sichuan-cuisine/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Laziji: The Dish Where You Hunt for Chicken in a Mountain of Chilies</title>
-				<link>https://zhouyang.dev/cuisine/laziji/</link>
-				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/laziji/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/laziji-1.jpg?v=2&#34; alt=&#34;Laziji — a mountain of dried red chilies hiding crispy golden chicken nuggets in a dark wok&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;The plate lands on your table and you laugh. You can&amp;rsquo;t help it. It&amp;rsquo;s a joke and a threat and an invitation all at once: a small mountain of dried red chilies, piled so high the chicken pieces underneath are just a conspiracy theory. The smell arrives separately, almost late: hot oil, toasted cumin, the back-of-throat prickle of Sichuan peppercorns volatilizing in the air above the wok. A few whole star anise are in there. Ginger slices the size of guitar picks. The oil still crackles.&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sichuan-Cuisine on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/sichuan-cuisine/</link><description>Recent content in Sichuan-Cuisine on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/sichuan-cuisine/index.xml" rel="self" type="application/rss+xml"/><item><title>Laziji: The Dish Where You Hunt for Chicken in a Mountain of Chilies</title><link>https://zhouyang.dev/cuisine/laziji/</link><pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/laziji/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/laziji-1.jpg?v=2" alt="Laziji — a mountain of dried red chilies hiding crispy golden chicken nuggets in a dark wok"&gt;&lt;/p&gt;
+&lt;p&gt;The plate lands on your table and you laugh. You can&amp;rsquo;t help it. It&amp;rsquo;s a joke and a threat and an invitation all at once: a small mountain of dried red chilies, piled so high the chicken pieces underneath are just a conspiracy theory. The smell arrives separately, almost late: hot oil, toasted cumin, the back-of-throat prickle of Sichuan peppercorns volatilizing in the air above the wok. A few whole star anise are in there. Ginger slices the size of guitar picks. The oil still crackles.&lt;/p&gt;</description></item></channel></rss>

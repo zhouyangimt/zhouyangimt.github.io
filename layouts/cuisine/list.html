@@ -17,7 +17,9 @@
 
   <!-- Dish grid -->
   <div class="cuisine-grid" id="cuisine-grid">
+    <!-- Narrative articles first -->
     {{ range .Pages }}
+    {{ if not (in .Slug "-recipe") }}
     <article class="cuisine-card" data-tags="{{ delimit .Params.tags " " }}">
       <a href="{{ .RelPermalink }}">
         {{ $img := index .Params.images 0 }}
@@ -38,8 +40,38 @@
       </a>
     </article>
     {{ end }}
+    {{ end }}
+
+    <!-- Recipe divider + recipe articles second -->
+    {{ $hasRecipe := false }}
+    {{ range .Pages }}
+    {{ if in .Slug "-recipe" }}{{ $hasRecipe = true }}{{ end }}
+    {{ end }}
+    {{ if $hasRecipe }}
+    <div class="cuisine-section-divider">
+      <h3>📖 How to Cook</h3>
+    </div>
+    {{ range .Pages }}
+    {{ if in .Slug "-recipe" }}
+    <article class="cuisine-card cuisine-card-recipe" data-tags="{{ delimit .Params.tags " " }}">
+      <a href="{{ .RelPermalink }}">
+        <div class="cuisine-info">
+          <h3>{{ .Title }}</h3>
+          <div class="cuisine-tags">
+            {{ range .Params.tags }}
+            <span class="cuisine-tag">{{ . }}</span>
+            {{ end }}
+          </div>
+          <p class="cuisine-desc">{{ .Params.description | truncate 80 }}</p>
+        </div>
+      </a>
+    </article>
+    {{ end }}
+    {{ end }}
+    {{ end }}
   </div>
 
+  <hr style="margin:40px 0 20px">
   <!-- Empty state -->
   <div class="cuisine-empty" id="cuisine-empty" style="display:none">
     <p>No dishes found for this region yet. <a href="#" class="cuisine-tab-reset">Show all →</a></p>

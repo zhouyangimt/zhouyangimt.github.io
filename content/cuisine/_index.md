@@ -10,6 +10,8 @@ A journey through China's eight great culinary traditions — from the fiery wok
 
 Each dish comes with a story. Because in China, food isn't fuel — it's geography, history, and family, served on a plate.
 
+Our goal is simple: to show you what these dishes actually taste like in their hometowns — the most authentic version, the way locals eat them.
+
 *This is our roadmap as of today. As the blog grows, so will the collection. One hundred and nine is where we start — not where we finish.*
 
 </div>

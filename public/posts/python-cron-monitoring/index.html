@@ -1,584 +1,387 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python 自动化实战：定时任务 &amp; 监控脚本 | zhouyang — The 25th Frame</title>
-  <meta name="description" content="把前四篇文章写的脚本全部串起来，用 Cron 让它们定时自动跑。加上系统监控和异常告警，打造一个不需要你管的自动化流水线。">
-  <link rel="stylesheet" href="/css/style.css?v=202607010939">
-  <link rel="stylesheet" href="/css/search.css?v=1">
-  
-
-
-  
-  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
-  
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="/" class="logo">zhouyang — The 25th Frame</a>
-      <div class="nav-links">
-        
-        <a href="/">Home</a>
-        
-        <a href="/posts/">Tech</a>
-        
-        <a href="/cuisine/">Chinese Cuisine</a>
-        
-        <a href="/tea/">🍵 Tea</a>
-        
-        <a href="/baijiu/">🥃 Baijiu</a>
-        
-        <a href="/about/">About</a>
-        
-        <a href="/privacy/">Privacy</a>
-        
-        <span class="nav-search">
-          <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
-          <div id="search-results" class="search-dropdown"></div>
-        </span>
-        <span class="rss-links">
-          <span class="rss-label">RSS</span>
-          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
-        </span>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
-<article class="single-post">
-  <header>
-    <h1>Python 自动化实战：定时任务 &amp; 监控脚本</h1>
-    <div class="meta">
-      <time>2026-06-26</time>
-      
-      <span class="tags">
-        <span class="tag">Python</span><span class="tag">自动化</span><span class="tag">Cron</span><span class="tag">监控</span><span class="tag">独立开发</span>
-      </span>
-      
-    </div>
-  </header>
-  <div class="content">
-    <h2 id="你写的那堆脚本还活着吗">你写的那堆脚本还活着吗？</h2>
-<p>回顾一下前面四篇文章你写了什么：</p>
-<ul>
-<li><strong>第一篇</strong>：10 个日常自动化脚本——文件整理、批量改名、邮件发送</li>
-<li><strong>第二篇</strong>：GitHub Trending 爬虫 + 价格监控器</li>
-<li><strong>第三篇</strong>：调用 50+ 免费 API 拉数据</li>
-<li><strong>第四篇</strong>：Pandas 数据分析模板，自动出报表</li>
-</ul>
-<p>现在我问你一个扎心的问题：<strong>这些脚本，你现在还在跑吗？</strong></p>
-<p>我自己的教训是这样的：写完前三篇的脚本后，我把它们扔在服务器上，手动跑了两次，觉得效果不错。然后一个月没碰。等我想起来再跑一次，发现爬虫脚本因为目标网站改版挂了，API key 过期了，数据分析脚本拉到的 CSV 还是一个月前的。</p>
-<p><strong>脚本不自动跑，等于没写。</strong></p>
-<p>这不是鸡汤，是实打实的时间账。你花 2 小时写了个竞品价格监控器，然后每次都手动 <code>python monitor.py</code>，两个月跑了 3 次——平摊下来每次花费 40 分钟。如果写成 Cron 任务每小时自动跑一次，它在一个月内替你执行了 720 次检查。成本摊到每次检查，几乎为零。</p>
-<p>这篇文章就是解决这个问题的。我会把你前面的所有脚本串起来，配上系统监控和异常告警，搭一个完整的自动化流水线。</p>
-<h2 id="自动化调度架构">自动化调度架构</h2>
-<p><img src="/images/cron-scheduling-architecture.png" alt="定时任务调度架构"></p>
-<p>整套架构分四层：<strong>数据获取层</strong>负责拉数据（爬虫、API、数据库导出），<strong>分析处理层</strong>负责把原始数据变成洞察（Pandas 聚合、异常检测），<strong>系统监控层</strong>保证服务器本身不出问题（磁盘、服务、SSL），<strong>通知层</strong>负责在你需要知道的时候把消息推到你的手机上。</p>
-<p>Cron 是所有层的总调度器——它会按你设的时间表，准时把每一层的脚本叫起来干活。</p>
-<h2 id="cron-基础别怕五分钟学会">Cron 基础：别怕，五分钟学会</h2>
-<p>很多人听到 Cron 就觉得是运维的活。其实它简单到可笑——就一个文本文件，每行一条规则。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 编辑你的 crontab</span>
-</span></span><span style="display:flex;"><span>crontab -e
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 格式：分 时 日 月 星期 命令</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ┌──── 分钟 (0-59)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># │ ┌──── 小时 (0-23)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># │ │ ┌──── 日期 (1-31)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># │ │ │ ┌──── 月份 (1-12)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># │ │ │ │ ┌──── 星期 (0=周日, 6=周六)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># │ │ │ │ │</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># * * * * * 要执行的命令</span>
-</span></span></code></pre></div><p>五个时间字段加一个命令。下面是最常用的几种写法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 每天早上 8 点跑一次</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * * /usr/bin/python3 /home/ubuntu/scripts/daily_report.py
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每小时跑一次（在整点）</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/check_prices.py
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每 30 分钟跑一次</span>
-</span></span><span style="display:flex;"><span>*/30 * * * * /usr/bin/python3 /home/ubuntu/scripts/heartbeat.py
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每周一早上 9 点</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">9</span> * * <span style="color:#ae81ff">1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 每月 1 号凌晨 2 点</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> * * /usr/bin/python3 /home/ubuntu/scripts/monthly_cleanup.py
-</span></span></code></pre></div><p>几个关键点：</p>
-<p><strong>一定要写绝对路径</strong>。<code>python3</code> 不行，写 <code>/usr/bin/python3</code>。脚本路径也一样，Cron 的环境变量和你登录 shell 不一样，<code>~</code> 和相对路径都不可靠。</p>
-<p><strong>Cron 不会帮你管理虚拟环境</strong>。如果你用 venv，要显式指定解释器路径：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * * /home/ubuntu/venv/bin/python /home/ubuntu/scripts/daily_report.py
-</span></span></code></pre></div><p>或者用个 shell 包装脚本，先 <code>source venv/bin/activate</code> 再跑 Python。我个人偏好前者——少一层中间文件，出问题更容易定位。</p>
-<p><strong>Cron 日志去哪了？</strong> Cron 默认把 stdout/stderr 发邮件给当前用户。如果你没配邮件服务（大部分 VPS 默认没配），这些输出就丢了。最简单的做法是手动重定向：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * * /usr/bin/python3 /home/ubuntu/scripts/daily_report.py &gt;&gt; /var/log/cron-daily.log 2&gt;&amp;<span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>但是这样日志会无限膨胀。更好的方案后面会说。</p>
-<h2 id="场景一把爬虫变成定时任务">场景一：把爬虫变成定时任务</h2>
-<p>第二篇文章写了两个爬虫——GitHub Trending 抓取器和价格监控器。价格监控器里有个 <code>while True</code> 循环自己靠 <code>time.sleep()</code> 保持运行。这种方式有两个问题：</p>
-<ol>
-<li>脚本挂了就彻底停了，没有人会重启它</li>
-<li><code>while True</code> + <code>sleep(3600)</code> 太粗糙，你想改间隔还得改代码</li>
-</ol>
-<p>正确的做法：把循环去掉，每次跑一次检查，让 Cron 来控制节奏。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;price_check.py —— 由 Cron 每小时调用一次&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> bs4 <span style="color:#f92672">import</span> BeautifulSoup
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://example.com/product-page&#34;</span>
-</span></span><span style="display:flex;"><span>STATE_FILE <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#34;/home/ubuntu/data/last_price.json&#34;</span>)
-</span></span><span style="display:flex;"><span>LOG_FILE <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#34;/var/log/price_check.log&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">log</span>(msg: str):
-</span></span><span style="display:flex;"><span>    timestamp <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M:%S&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(LOG_FILE, <span style="color:#e6db74">&#34;a&#34;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>        f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>timestamp<span style="color:#e6db74">}</span><span style="color:#e6db74">] </span><span style="color:#e6db74">{</span>msg<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>    print(msg)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_price</span>():
-</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
-</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#34;AppleWebKit/537.36 (KHTML, like Gecko) &#34;</span>
-</span></span><span style="display:flex;"><span>                      <span style="color:#e6db74">&#34;Chrome/120.0.0.0 Safari/537.36&#34;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(URL, headers<span style="color:#f92672">=</span>headers, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
-</span></span><span style="display:flex;"><span>    soup <span style="color:#f92672">=</span> BeautifulSoup(resp<span style="color:#f92672">.</span>text, <span style="color:#e6db74">&#34;lxml&#34;</span>)
-</span></span><span style="display:flex;"><span>    price_tag <span style="color:#f92672">=</span> soup<span style="color:#f92672">.</span>find(<span style="color:#e6db74">&#34;span&#34;</span>, class_<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> price_tag:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;未找到价格元素&#34;</span>)
-</span></span><span style="display:flex;"><span>    price_text <span style="color:#f92672">=</span> price_tag<span style="color:#f92672">.</span>get_text(strip<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;¥&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> float(price_text)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">notify_change</span>(old: float, new: float):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 直接调飞书的 Webhook（比 SMTP 邮件快得多，也更可靠）</span>
-</span></span><span style="display:flex;"><span>    webhook_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
-</span></span><span style="display:flex;"><span>    msg <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;msg_type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;content&#34;</span>: {<span style="color:#e6db74">&#34;text&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;📉 价格变动: ¥</span><span style="color:#e6db74">{</span>old<span style="color:#e6db74">}</span><span style="color:#e6db74"> → ¥</span><span style="color:#e6db74">{</span>new<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>URL<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>}
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    requests<span style="color:#f92672">.</span>post(webhook_url, json<span style="color:#f92672">=</span>msg, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>        current_price <span style="color:#f92672">=</span> get_price()
-</span></span><span style="display:flex;"><span>        log(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;当前价格: ¥</span><span style="color:#e6db74">{</span>current_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> STATE_FILE<span style="color:#f92672">.</span>exists():
-</span></span><span style="display:flex;"><span>            last_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(STATE_FILE<span style="color:#f92672">.</span>read_text())
-</span></span><span style="display:flex;"><span>            last_price <span style="color:#f92672">=</span> last_data[<span style="color:#e6db74">&#34;price&#34;</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> current_price <span style="color:#f92672">!=</span> last_price:
-</span></span><span style="display:flex;"><span>                notify_change(last_price, current_price)
-</span></span><span style="display:flex;"><span>                log(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格变动: ¥</span><span style="color:#e6db74">{</span>last_price<span style="color:#e6db74">}</span><span style="color:#e6db74"> → ¥</span><span style="color:#e6db74">{</span>current_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        STATE_FILE<span style="color:#f92672">.</span>write_text(json<span style="color:#f92672">.</span>dumps({
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;price&#34;</span>: current_price,
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;checked_at&#34;</span>: datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>isoformat()
-</span></span><span style="display:flex;"><span>        }))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
-</span></span><span style="display:flex;"><span>        log(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;检查失败: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><p>关键改动：</p>
-<ol>
-<li>
-<p><strong>状态持久化到文件</strong>。每次跑完把当前价格写到 <code>last_price.json</code>，下次跑的时候读出来比较。这比依赖进程内变量可靠一万倍——脚本重启、机器重启都不丢状态。</p>
-</li>
-<li>
-<p><strong>异常退出码</strong>。<code>sys.exit(1)</code> 让 Cron 知道这次执行失败了。配合后面的监控方案，你会在失败时收到告警。</p>
-</li>
-<li>
-<p><strong>飞书 Webhook 代替 SMTP 邮件</strong>。Webhook 比 SMTP 快，不需要配邮件服务，而且消息直接推到手机。飞书、企业微信、钉钉都支持 Incoming Webhook，注册一个 bot 就能拿 URL。</p>
-</li>
-</ol>
-<p>Cron 配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 每小时检查一次价格</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/price_check.py
-</span></span></code></pre></div><h2 id="场景二数据分析定期产出">场景二：数据分析定期产出</h2>
-<p>第四篇文章写了 Pandas 分析模板。现在让它每周自动跑一次，产出报告。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;weekly_analysis.py —— 每周一早上自动跑&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;font.sans-serif&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Noto Sans CJK SC&#39;</span>]
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;axes.unicode_minus&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>OUTPUT_DIR <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#34;/home/ubuntu/reports&#34;</span>)
-</span></span><span style="display:flex;"><span>OUTPUT_DIR<span style="color:#f92672">.</span>mkdir(exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pull_data_from_db</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;从 SQLite 拉取最近 7 天的用户行为数据&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">import</span> sqlite3
-</span></span><span style="display:flex;"><span>    conn <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#34;/home/ubuntu/data/app_events.db&#34;</span>)
-</span></span><span style="display:flex;"><span>    query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        SELECT user_id, event, date, duration_sec
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        FROM user_events
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        WHERE date &gt;= date(&#39;now&#39;, &#39;-7 days&#39;)
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_sql(query, conn)
-</span></span><span style="display:flex;"><span>    conn<span style="color:#f92672">.</span>close()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> df
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">analyze</span>(df: pd<span style="color:#f92672">.</span>DataFrame):
-</span></span><span style="display:flex;"><span>    df[<span style="color:#e6db74">&#39;date&#39;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(df[<span style="color:#e6db74">&#39;date&#39;</span>])
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 每日活跃用户</span>
-</span></span><span style="display:flex;"><span>    dau <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;date&#39;</span>)[<span style="color:#e6db74">&#39;user_id&#39;</span>]<span style="color:#f92672">.</span>nunique()
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 事件分布</span>
-</span></span><span style="display:flex;"><span>    event_counts <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;event&#39;</span>)<span style="color:#f92672">.</span>size()<span style="color:#f92672">.</span>sort_values(ascending<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 用户留存</span>
-</span></span><span style="display:flex;"><span>    user_days <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;user_id&#39;</span>)[<span style="color:#e6db74">&#39;date&#39;</span>]<span style="color:#f92672">.</span>nunique()
-</span></span><span style="display:flex;"><span>    retention <span style="color:#f92672">=</span> (user_days <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>mean() <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e"># 3日留存</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dau, event_counts, retention
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_and_save</span>(dau, event_counts):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;生成 PNG 图表&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    dau<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>], marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;o&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#4A90D9&#39;</span>)
-</span></span><span style="display:flex;"><span>    axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;过去7天 DAU&#39;</span>)
-</span></span><span style="display:flex;"><span>    axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;活跃用户数&#39;</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    event_counts<span style="color:#f92672">.</span>plot(kind<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;barh&#39;</span>, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#E85D3F&#39;</span>)
-</span></span><span style="display:flex;"><span>    axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;事件分布&#39;</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>tight_layout()
-</span></span><span style="display:flex;"><span>    chart_path <span style="color:#f92672">=</span> OUTPUT_DIR <span style="color:#f92672">/</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;weekly_report_</span><span style="color:#e6db74">{</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y%W&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">.png&#34;</span>
-</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>savefig(chart_path, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">150</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> chart_path
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">push_to_feishu</span>(chart_path, dau, retention):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;把图表和关键指标推到飞书&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    today <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%m月</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">日&#34;</span>)
-</span></span><span style="display:flex;"><span>    avg_dau <span style="color:#f92672">=</span> dau<span style="color:#f92672">.</span>mean()
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 先发文本指标</span>
-</span></span><span style="display:flex;"><span>    webhook <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
-</span></span><span style="display:flex;"><span>    msg <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;msg_type&#34;</span>: <span style="color:#e6db74">&#34;interactive&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;card&#34;</span>: {
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;header&#34;</span>: {<span style="color:#e6db74">&#34;title&#34;</span>: {<span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;📊 周报 </span><span style="color:#e6db74">{</span>today<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;plain_text&#34;</span>}},
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;elements&#34;</span>: [
-</span></span><span style="display:flex;"><span>                {<span style="color:#e6db74">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;div&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>: {<span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;平均 DAU：**</span><span style="color:#e6db74">{</span>avg_dau<span style="color:#e6db74">:</span><span style="color:#e6db74">.0f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">**</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">3日留存：**</span><span style="color:#e6db74">{</span>retention<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%**&#34;</span>, <span style="color:#e6db74">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;lark_md&#34;</span>}},
-</span></span><span style="display:flex;"><span>                {<span style="color:#e6db74">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;img&#34;</span>, <span style="color:#e6db74">&#34;img_key&#34;</span>: <span style="color:#e6db74">&#34;NEED_UPLOAD_FIRST&#34;</span>, <span style="color:#e6db74">&#34;alt&#34;</span>: {<span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">&#34;周趋势图&#34;</span>, <span style="color:#e6db74">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;plain_text&#34;</span>}}
-</span></span><span style="display:flex;"><span>            ]
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    requests<span style="color:#f92672">.</span>post(webhook, json<span style="color:#f92672">=</span>msg, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> pull_data_from_db()
-</span></span><span style="display:flex;"><span>    dau, event_counts, retention <span style="color:#f92672">=</span> analyze(df)
-</span></span><span style="display:flex;"><span>    chart_path <span style="color:#f92672">=</span> plot_and_save(dau, event_counts)
-</span></span><span style="display:flex;"><span>    push_to_feishu(chart_path, dau, retention)
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;周报已生成: </span><span style="color:#e6db74">{</span>chart_path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><p>Cron 配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 每周一早上 8 点跑周报</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * <span style="color:#ae81ff">1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
-</span></span></code></pre></div><p>这里有一个实际经验：<strong>飞书卡片消息内嵌图片需要先上传图片获取 image_key</strong>。上面代码里我写了 <code>&quot;NEED_UPLOAD_FIRST&quot;</code> 占位，生产代码需要调用飞书的图片上传 API。如果嫌麻烦，最简单的方式是用飞书文本消息只发数据指标，图存在服务器上你手动看，或者用 Telegram Bot——Telegram 可以直接通过 <code>sendPhoto</code> 接口传本地文件，不需要预上传。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Telegram 发图片——比飞书省一步</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">push_to_telegram</span>(chart_path, text):
-</span></span><span style="display:flex;"><span>    bot_token <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;YOUR_BOT_TOKEN&#34;</span>
-</span></span><span style="display:flex;"><span>    chat_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;YOUR_CHAT_ID&#34;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 发文字</span>
-</span></span><span style="display:flex;"><span>    requests<span style="color:#f92672">.</span>post(
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.telegram.org/bot</span><span style="color:#e6db74">{</span>bot_token<span style="color:#e6db74">}</span><span style="color:#e6db74">/sendMessage&#34;</span>,
-</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;chat_id&#34;</span>: chat_id, <span style="color:#e6db74">&#34;text&#34;</span>: text}
-</span></span><span style="display:flex;"><span>    )
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 直接发图</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(chart_path, <span style="color:#e6db74">&#34;rb&#34;</span>) <span style="color:#66d9ef">as</span> f:
-</span></span><span style="display:flex;"><span>        requests<span style="color:#f92672">.</span>post(
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.telegram.org/bot</span><span style="color:#e6db74">{</span>bot_token<span style="color:#e6db74">}</span><span style="color:#e6db74">/sendPhoto&#34;</span>,
-</span></span><span style="display:flex;"><span>            data<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;chat_id&#34;</span>: chat_id},
-</span></span><span style="display:flex;"><span>            files<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;photo&#34;</span>: f}
-</span></span><span style="display:flex;"><span>        )
-</span></span></code></pre></div><h2 id="场景三系统监控你的服务器还活着吗">场景三：系统监控——你的服务器还活着吗？</h2>
-<p>前面讲的都是业务脚本。但还有一个问题：就算脚本写对了、Cron 配对了，<strong>服务器挂了就全完蛋</strong>。你需要几个最基础的监控脚本。</p>
-<h3 id="磁盘使用率告警">磁盘使用率告警</h3>
-<p>最常见的翻车场景：爬虫跑了几周，存了一堆数据，磁盘满了。SQLite 写入失败、日志写不进去，你完全不知道，直到某天用户说功能坏了。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;disk_monitor.py —— 每小时检查磁盘&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> shutil
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>THRESHOLD <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>  <span style="color:#75715e"># 超过 80% 就告警</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_and_alert</span>():
-</span></span><span style="display:flex;"><span>    usage <span style="color:#f92672">=</span> shutil<span style="color:#f92672">.</span>disk_usage(<span style="color:#e6db74">&#34;/&#34;</span>)
-</span></span><span style="display:flex;"><span>    used_pct <span style="color:#f92672">=</span> (usage<span style="color:#f92672">.</span>used <span style="color:#f92672">/</span> usage<span style="color:#f92672">.</span>total) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> used_pct <span style="color:#f92672">&gt;</span> THRESHOLD:
-</span></span><span style="display:flex;"><span>        webhook <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
-</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;msg_type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;content&#34;</span>: {
-</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;text&#34;</span>: (
-</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;🚨 磁盘告警</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;使用率：</span><span style="color:#e6db74">{</span>used_pct<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%（阈值 </span><span style="color:#e6db74">{</span>THRESHOLD<span style="color:#e6db74">}</span><span style="color:#e6db74">%）</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;已用：</span><span style="color:#e6db74">{</span>usage<span style="color:#f92672">.</span>used <span style="color:#f92672">//</span> (<span style="color:#ae81ff">1024</span><span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">GB / </span><span style="color:#e6db74">{</span>usage<span style="color:#f92672">.</span>total <span style="color:#f92672">//</span> (<span style="color:#ae81ff">1024</span><span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">GB</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;主机：price-monitor-server&#34;</span>
-</span></span><span style="display:flex;"><span>                )
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        requests<span style="color:#f92672">.</span>post(webhook, json<span style="color:#f92672">=</span>msg, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>    ok <span style="color:#f92672">=</span> check_and_alert()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ok:
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;磁盘使用率超过 </span><span style="color:#e6db74">{</span>THRESHOLD<span style="color:#e6db74">}</span><span style="color:#e6db74">%&#34;</span>)
-</span></span><span style="display:flex;"><span>    sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> ok <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)
-</span></span></code></pre></div><h3 id="服务健康检查">服务健康检查</h3>
-<p>如果你还跑了 Web 服务（比如 Flask API、爬虫管理面板），需要确认它还活着：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;health_check.py —— 每5分钟检查服务是否响应&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>SERVICES <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;API 服务&#34;</span>, <span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;http://localhost:5000/health&#34;</span>},
-</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;爬虫面板&#34;</span>, <span style="color:#e6db74">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;http://localhost:8080/ping&#34;</span>},
-</span></span><span style="display:flex;"><span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_services</span>():
-</span></span><span style="display:flex;"><span>    all_ok <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> svc <span style="color:#f92672">in</span> SERVICES:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>            r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(svc[<span style="color:#e6db74">&#34;url&#34;</span>], timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
-</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ </span><span style="color:#e6db74">{</span>svc[<span style="color:#e6db74">&#39;name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74"> 返回 </span><span style="color:#e6db74">{</span>r<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>                all_ok <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ </span><span style="color:#e6db74">{</span>svc[<span style="color:#e6db74">&#39;name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74"> OK&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ </span><span style="color:#e6db74">{</span>svc[<span style="color:#e6db74">&#39;name&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74"> 不可达: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>            all_ok <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> all_ok
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>    ok <span style="color:#f92672">=</span> check_services()
-</span></span><span style="display:flex;"><span>    sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> ok <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)
-</span></span></code></pre></div><h3 id="ssl-证书到期检查">SSL 证书到期检查</h3>
-<p>如果你的产品有自己的域名，证书到期后用户访问会看到安全警告——这对独立产品的转化是致命的。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;ssl_check.py —— 每天检查 SSL 证书到期日&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> ssl
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime, timedelta
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>DOMAINS <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;zhouyang.dev&#34;</span>, <span style="color:#e6db74">&#34;your-product.com&#34;</span>]
-</span></span><span style="display:flex;"><span>WARN_DAYS <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cert_expiry</span>(domain: str):
-</span></span><span style="display:flex;"><span>    ctx <span style="color:#f92672">=</span> ssl<span style="color:#f92672">.</span>create_default_context()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> ctx<span style="color:#f92672">.</span>wrap_socket(socket<span style="color:#f92672">.</span>socket(), server_hostname<span style="color:#f92672">=</span>domain) <span style="color:#66d9ef">as</span> s:
-</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">.</span>connect((domain, <span style="color:#ae81ff">443</span>))
-</span></span><span style="display:flex;"><span>        cert <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>getpeercert()
-</span></span><span style="display:flex;"><span>        expiry_str <span style="color:#f92672">=</span> cert[<span style="color:#e6db74">&#39;notAfter&#39;</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># &#39;Jun 26 23:59:59 2026 GMT&#39; → datetime</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> datetime<span style="color:#f92672">.</span>strptime(expiry_str, <span style="color:#e6db74">&#34;%b </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M:%S %Y %Z&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    alerts <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> domain <span style="color:#f92672">in</span> DOMAINS:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>            expiry <span style="color:#f92672">=</span> get_cert_expiry(domain)
-</span></span><span style="display:flex;"><span>            days_left <span style="color:#f92672">=</span> (expiry <span style="color:#f92672">-</span> datetime<span style="color:#f92672">.</span>now())<span style="color:#f92672">.</span>days
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>days_left<span style="color:#e6db74">}</span><span style="color:#e6db74"> 天后到期 (</span><span style="color:#e6db74">{</span>expiry<span style="color:#f92672">.</span>date()<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> days_left <span style="color:#f92672">&lt;=</span> WARN_DAYS:
-</span></span><span style="display:flex;"><span>                alerts<span style="color:#f92672">.</span>append(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;⚠️ </span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74"> 证书 </span><span style="color:#e6db74">{</span>days_left<span style="color:#e6db74">}</span><span style="color:#e6db74"> 天后到期&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
-</span></span><span style="display:flex;"><span>            alerts<span style="color:#f92672">.</span>append(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ </span><span style="color:#e6db74">{</span>domain<span style="color:#e6db74">}</span><span style="color:#e6db74"> 证书检查失败: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> alerts:
-</span></span><span style="display:flex;"><span>        webhook <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
-</span></span><span style="display:flex;"><span>        requests<span style="color:#f92672">.</span>post(webhook, json<span style="color:#f92672">=</span>{
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;msg_type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>,
-</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;content&#34;</span>: {<span style="color:#e6db74">&#34;text&#34;</span>: <span style="color:#e6db74">&#34;🔒 SSL 证书提醒</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(alerts)}
-</span></span><span style="display:flex;"><span>        }, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
-</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><p>Cron 配置汇总：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 系统监控</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/disk_monitor.py
-</span></span><span style="display:flex;"><span>*/5 * * * * /usr/bin/python3 /home/ubuntu/scripts/health_check.py
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">9</span> * * * /usr/bin/python3 /home/ubuntu/scripts/ssl_check.py
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 业务脚本</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/price_check.py
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">8</span> * * <span style="color:#ae81ff">1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">6</span> * * * /usr/bin/python3 /home/ubuntu/scripts/github_trending.py
-</span></span></code></pre></div><h2 id="最佳实践三个要命的问题">最佳实践：三个要命的问题</h2>
-<p>写了 5 篇自动化文章，我发现有三个问题如果不提前处理，会在你上线两三周后集中爆发。</p>
-<h3 id="1-日志管理">1. 日志管理</h3>
-<p>每个脚本都往日志文件追加，几周后你能收获一个 2GB 的纯文本文件。用 <code>logrotate</code> 解决：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># /etc/logrotate.d/python-cron</span>
-</span></span><span style="display:flex;"><span>/var/log/cron-*.log <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    daily               <span style="color:#75715e"># 每天转储一次</span>
-</span></span><span style="display:flex;"><span>    rotate <span style="color:#ae81ff">14</span>           <span style="color:#75715e"># 保留 14 天</span>
-</span></span><span style="display:flex;"><span>    compress            <span style="color:#75715e"># 压缩旧日志</span>
-</span></span><span style="display:flex;"><span>    delaycompress       <span style="color:#75715e"># 延迟一天再压缩</span>
-</span></span><span style="display:flex;"><span>    missingok           <span style="color:#75715e"># 文件不存在不报错</span>
-</span></span><span style="display:flex;"><span>    notifempty          <span style="color:#75715e"># 空文件不转储</span>
-</span></span><span style="display:flex;"><span>    copytruncate        <span style="color:#75715e"># 复制后清空（不中断正在写入的进程）</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>然后统一日志格式：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> logging
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>logging<span style="color:#f92672">.</span>basicConfig(
-</span></span><span style="display:flex;"><span>    filename<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/var/log/cron-price_check.log&#39;</span>,
-</span></span><span style="display:flex;"><span>    level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>INFO,
-</span></span><span style="display:flex;"><span>    format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74"> [</span><span style="color:#e6db74">%(levelname)s</span><span style="color:#e6db74">] </span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#39;</span>,
-</span></span><span style="display:flex;"><span>    datefmt<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M:%S&#39;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>logger <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(__name__)
-</span></span><span style="display:flex;"><span>logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;价格检查完成: ¥</span><span style="color:#e6db74">{</span>current_price<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span></code></pre></div><h3 id="2-告警风暴">2. 告警风暴</h3>
-<p>凌晨三点磁盘满了一次，你的飞书就收到一条告警。但如果脚本有问题，每次跑都失败，你会在一小时内收到 60 条同样的消息。这叫告警风暴——我亲身经历过，手机直接被震到没电。</p>
-<p>解法是加简单的去重：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">should_alert</span>(message: str, cooldown_minutes: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>) <span style="color:#f92672">-&gt;</span> bool:
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;相同消息在 cooldown 时间内不重复发送&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    alert_dir <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#34;/tmp/alerts_sent&#34;</span>)
-</span></span><span style="display:flex;"><span>    alert_dir<span style="color:#f92672">.</span>mkdir(exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    msg_hash <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>md5(message<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>hexdigest()
-</span></span><span style="display:flex;"><span>    alert_file <span style="color:#f92672">=</span> alert_dir <span style="color:#f92672">/</span> msg_hash
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> alert_file<span style="color:#f92672">.</span>exists():
-</span></span><span style="display:flex;"><span>        mtime <span style="color:#f92672">=</span> alert_file<span style="color:#f92672">.</span>stat()<span style="color:#f92672">.</span>st_mtime
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> time<span style="color:#f92672">.</span>time() <span style="color:#f92672">-</span> mtime <span style="color:#f92672">&lt;</span> cooldown_minutes <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>  <span style="color:#75715e"># 冷却期内，跳过</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    alert_file<span style="color:#f92672">.</span>touch()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用</span>
-</span></span><span style="display:flex;"><span>msg <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;磁盘使用率 </span><span style="color:#e6db74">{</span>used_pct<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> should_alert(msg, cooldown_minutes<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>):
-</span></span><span style="display:flex;"><span>    send_notification(msg)
-</span></span></code></pre></div><h3 id="3-cron-任务互相踩踏">3. Cron 任务互相踩踏</h3>
-<p>如果你的数据分析脚本要跑 10 分钟，但 Cron 每小时跑一次——没问题，它们不会重叠。除非你设了 <code>*/5 * * * *</code>，脚本却要跑 10 分钟。这时新的实例会启动，和旧实例一起跑，两份分析结果互相覆盖。</p>
-<p>用文件锁防止重叠执行：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> fcntl
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">acquire_lock</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;确保同一时间只有一个实例在跑&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    lock_file <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;/tmp/weekly_analysis.lock&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>        fcntl<span style="color:#f92672">.</span>flock(lock_file, fcntl<span style="color:#f92672">.</span>LOCK_EX <span style="color:#f92672">|</span> fcntl<span style="color:#f92672">.</span>LOCK_NB)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> lock_file
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">BlockingIOError</span>:
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;上一个实例还在跑，跳过本次执行&#34;</span>)
-</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 脚本开头</span>
-</span></span><span style="display:flex;"><span>lock <span style="color:#f92672">=</span> acquire_lock()
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ... 业务逻辑 ...</span>
-</span></span></code></pre></div><p><code>fcntl.LOCK_NB</code> 是非阻塞锁——如果拿不到锁就立刻退出，不做任何事，等 Cron 下一次调度。</p>
-<h2 id="从这里开始">从这里开始</h2>
-<p>这篇文章是整个 Python 自动化系列的终点。回顾一下你学到了什么：</p>
-<table>
-	<thead>
-			<tr>
-					<th>篇目</th>
-					<th>能力</th>
-					<th>你能做什么</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>01 日常任务</td>
-					<td>文件系统操作</td>
-					<td>批量改名、整理文件、自动发邮件</td>
-			</tr>
-			<tr>
-					<td>02 Web Scraping</td>
-					<td>数据获取</td>
-					<td>爬公开网页、价格监控、信息聚合</td>
-			</tr>
-			<tr>
-					<td>03 API 自动化</td>
-					<td>结构化数据</td>
-					<td>调用 50+ 免费 API，接入外部数据源</td>
-			</tr>
-			<tr>
-					<td>04 Pandas 分析</td>
-					<td>数据洞察</td>
-					<td>用户行为分析、趋势图、留存报表</td>
-			</tr>
-			<tr>
-					<td>05 定时调度</td>
-					<td>自动化运行</td>
-					<td>让上面所有脚本定时跑，配上监控告警</td>
-			</tr>
-	</tbody>
-</table>
-<p>五篇文章串起来就是一条完整的自动化流水线：<strong>获取数据 → 分析数据 → 产出洞察 → 推送通知</strong>。你现在有模板和工具，差的只是找到一个你想持续追踪的数据源。</p>
-<p>今天建议做的事：从你之前写的脚本里挑一个最有价值的（比如价格监控、数据分析），按这篇文章的方式改写成无状态单次执行脚本，配到 Cron 里，让它明天早上自己跑一次。看着飞书/Telegram 弹出第一条自动化消息的时候，你会感谢自己花了一个小时做这件事的。</p>
-<hr>
-<p><strong>系列导航</strong>：<a href="/posts/python-automation-daily-tasks/">01 日常任务自动化</a> | <a href="/posts/python-web-scraping/">02 Web Scraping 实战</a> | <a href="/posts/python-api-automation/">03 API 自动化</a> | <a href="/posts/python-pandas-analysis/">04 数据分析自动化</a> | <strong>05 定时任务 &amp; 监控</strong></p>
-<p><em>Python 自动化实战系列完结。下一篇系列预告：AI 编程工具链——Prompt Engineering 实战手册。</em></p>
-
-  </div>
-</article>
-
-<nav class="post-nav">
-  
-  <a href="/posts/python-pandas-analysis/" class="prev">← Python 自动化实战：数据分析自动化——Pandas 实战</a>
-  
-  
-  <a href="/posts/prompt-engineering-handbook/" class="next">AI编程工具链：Prompt Engineering 实战手册 →</a>
-  
-</nav>
-
-<section class="comments">
-  <h2>💬 Comments</h2>
-  <script src="https://utteranc.es/client.js"
-          repo="zhouyangimt/zhouyangimt.github.io"
-          issue-term="pathname"
-          label="comment"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async>
-  </script>
-</section>
-
-  </main>
-  <footer>
-    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
-  </footer>
-  <script src="/js/search.js?v=1"></script>
-</body>
-</html>
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Python 自动化实战：定时任务 & 监控脚本 | zhouyang — The 25th Frame</title><meta name=description content="把前四篇文章写的脚本全部串起来，用 Cron 让它们定时自动跑。加上系统监控和异常告警，打造一个不需要你管的自动化流水线。"><link rel=stylesheet href="/css/style.css?v=202607010140"><link rel=stylesheet href="/css/search.css?v=1"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>🍵 Tea</a>
+<a href=/baijiu/>🥃 Baijiu</a>
+<a href=/about/>About</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Python 自动化实战：定时任务 & 监控脚本</h1><div class=meta><time>2026-06-26</time>
+<span class=tags><span class=tag>Python</span><span class=tag>自动化</span><span class=tag>Cron</span><span class=tag>监控</span><span class=tag>独立开发</span></span></div></header><div class=content><h2 id=你写的那堆脚本还活着吗>你写的那堆脚本还活着吗？</h2><p>回顾一下前面四篇文章你写了什么：</p><ul><li><strong>第一篇</strong>：10 个日常自动化脚本——文件整理、批量改名、邮件发送</li><li><strong>第二篇</strong>：GitHub Trending 爬虫 + 价格监控器</li><li><strong>第三篇</strong>：调用 50+ 免费 API 拉数据</li><li><strong>第四篇</strong>：Pandas 数据分析模板，自动出报表</li></ul><p>现在我问你一个扎心的问题：<strong>这些脚本，你现在还在跑吗？</strong></p><p>我自己的教训是这样的：写完前三篇的脚本后，我把它们扔在服务器上，手动跑了两次，觉得效果不错。然后一个月没碰。等我想起来再跑一次，发现爬虫脚本因为目标网站改版挂了，API key 过期了，数据分析脚本拉到的 CSV 还是一个月前的。</p><p><strong>脚本不自动跑，等于没写。</strong></p><p>这不是鸡汤，是实打实的时间账。你花 2 小时写了个竞品价格监控器，然后每次都手动 <code>python monitor.py</code>，两个月跑了 3 次——平摊下来每次花费 40 分钟。如果写成 Cron 任务每小时自动跑一次，它在一个月内替你执行了 720 次检查。成本摊到每次检查，几乎为零。</p><p>这篇文章就是解决这个问题的。我会把你前面的所有脚本串起来，配上系统监控和异常告警，搭一个完整的自动化流水线。</p><h2 id=自动化调度架构>自动化调度架构</h2><p><img src=/images/cron-scheduling-architecture.png alt=定时任务调度架构></p><p>整套架构分四层：<strong>数据获取层</strong>负责拉数据（爬虫、API、数据库导出），<strong>分析处理层</strong>负责把原始数据变成洞察（Pandas 聚合、异常检测），<strong>系统监控层</strong>保证服务器本身不出问题（磁盘、服务、SSL），<strong>通知层</strong>负责在你需要知道的时候把消息推到你的手机上。</p><p>Cron 是所有层的总调度器——它会按你设的时间表，准时把每一层的脚本叫起来干活。</p><h2 id=cron-基础别怕五分钟学会>Cron 基础：别怕，五分钟学会</h2><p>很多人听到 Cron 就觉得是运维的活。其实它简单到可笑——就一个文本文件，每行一条规则。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 编辑你的 crontab</span>
+</span></span><span style=display:flex><span>crontab -e
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 格式：分 时 日 月 星期 命令</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ┌──── 分钟 (0-59)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># │ ┌──── 小时 (0-23)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># │ │ ┌──── 日期 (1-31)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># │ │ │ ┌──── 月份 (1-12)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># │ │ │ │ ┌──── 星期 (0=周日, 6=周六)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># │ │ │ │ │</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># * * * * * 要执行的命令</span>
+</span></span></code></pre></div><p>五个时间字段加一个命令。下面是最常用的几种写法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 每天早上 8 点跑一次</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * /usr/bin/python3 /home/ubuntu/scripts/daily_report.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每小时跑一次（在整点）</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/check_prices.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每 30 分钟跑一次</span>
+</span></span><span style=display:flex><span>*/30 * * * * /usr/bin/python3 /home/ubuntu/scripts/heartbeat.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每周一早上 9 点</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>9</span> * * <span style=color:#ae81ff>1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 每月 1 号凌晨 2 点</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>2</span> <span style=color:#ae81ff>1</span> * * /usr/bin/python3 /home/ubuntu/scripts/monthly_cleanup.py
+</span></span></code></pre></div><p>几个关键点：</p><p><strong>一定要写绝对路径</strong>。<code>python3</code> 不行，写 <code>/usr/bin/python3</code>。脚本路径也一样，Cron 的环境变量和你登录 shell 不一样，<code>~</code> 和相对路径都不可靠。</p><p><strong>Cron 不会帮你管理虚拟环境</strong>。如果你用 venv，要显式指定解释器路径：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * /home/ubuntu/venv/bin/python /home/ubuntu/scripts/daily_report.py
+</span></span></code></pre></div><p>或者用个 shell 包装脚本，先 <code>source venv/bin/activate</code> 再跑 Python。我个人偏好前者——少一层中间文件，出问题更容易定位。</p><p><strong>Cron 日志去哪了？</strong> Cron 默认把 stdout/stderr 发邮件给当前用户。如果你没配邮件服务（大部分 VPS 默认没配），这些输出就丢了。最简单的做法是手动重定向：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * * /usr/bin/python3 /home/ubuntu/scripts/daily_report.py &gt;&gt; /var/log/cron-daily.log 2&gt;&amp;<span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><p>但是这样日志会无限膨胀。更好的方案后面会说。</p><h2 id=场景一把爬虫变成定时任务>场景一：把爬虫变成定时任务</h2><p>第二篇文章写了两个爬虫——GitHub Trending 抓取器和价格监控器。价格监控器里有个 <code>while True</code> 循环自己靠 <code>time.sleep()</code> 保持运行。这种方式有两个问题：</p><ol><li>脚本挂了就彻底停了，没有人会重启它</li><li><code>while True</code> + <code>sleep(3600)</code> 太粗糙，你想改间隔还得改代码</li></ol><p>正确的做法：把循环去掉，每次跑一次检查，让 Cron 来控制节奏。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;price_check.py —— 由 Cron 每小时调用一次&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> bs4 <span style=color:#f92672>import</span> BeautifulSoup
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> json
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pathlib <span style=color:#f92672>import</span> Path
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>URL <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://example.com/product-page&#34;</span>
+</span></span><span style=display:flex><span>STATE_FILE <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#34;/home/ubuntu/data/last_price.json&#34;</span>)
+</span></span><span style=display:flex><span>LOG_FILE <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#34;/var/log/price_check.log&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>log</span>(msg: str):
+</span></span><span style=display:flex><span>    timestamp <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> open(LOG_FILE, <span style=color:#e6db74>&#34;a&#34;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>        f<span style=color:#f92672>.</span>write(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;[</span><span style=color:#e6db74>{</span>timestamp<span style=color:#e6db74>}</span><span style=color:#e6db74>] </span><span style=color:#e6db74>{</span>msg<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    print(msg)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_price</span>():
+</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;User-Agent&#34;</span>: <span style=color:#e6db74>&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
+</span></span><span style=display:flex><span>                      <span style=color:#e6db74>&#34;AppleWebKit/537.36 (KHTML, like Gecko) &#34;</span>
+</span></span><span style=display:flex><span>                      <span style=color:#e6db74>&#34;Chrome/120.0.0.0 Safari/537.36&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    resp <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(URL, headers<span style=color:#f92672>=</span>headers, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>15</span>)
+</span></span><span style=display:flex><span>    soup <span style=color:#f92672>=</span> BeautifulSoup(resp<span style=color:#f92672>.</span>text, <span style=color:#e6db74>&#34;lxml&#34;</span>)
+</span></span><span style=display:flex><span>    price_tag <span style=color:#f92672>=</span> soup<span style=color:#f92672>.</span>find(<span style=color:#e6db74>&#34;span&#34;</span>, class_<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;price&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> price_tag:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;未找到价格元素&#34;</span>)
+</span></span><span style=display:flex><span>    price_text <span style=color:#f92672>=</span> price_tag<span style=color:#f92672>.</span>get_text(strip<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;¥&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;,&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34; &#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> float(price_text)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>notify_change</span>(old: float, new: float):
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 直接调飞书的 Webhook（比 SMTP 邮件快得多，也更可靠）</span>
+</span></span><span style=display:flex><span>    webhook_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
+</span></span><span style=display:flex><span>    msg <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;msg_type&#34;</span>: <span style=color:#e6db74>&#34;text&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;content&#34;</span>: {<span style=color:#e6db74>&#34;text&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📉 价格变动: ¥</span><span style=color:#e6db74>{</span>old<span style=color:#e6db74>}</span><span style=color:#e6db74> → ¥</span><span style=color:#e6db74>{</span>new<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>{</span>URL<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>}
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    requests<span style=color:#f92672>.</span>post(webhook_url, json<span style=color:#f92672>=</span>msg, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        current_price <span style=color:#f92672>=</span> get_price()
+</span></span><span style=display:flex><span>        log(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;当前价格: ¥</span><span style=color:#e6db74>{</span>current_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> STATE_FILE<span style=color:#f92672>.</span>exists():
+</span></span><span style=display:flex><span>            last_data <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>loads(STATE_FILE<span style=color:#f92672>.</span>read_text())
+</span></span><span style=display:flex><span>            last_price <span style=color:#f92672>=</span> last_data[<span style=color:#e6db74>&#34;price&#34;</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> current_price <span style=color:#f92672>!=</span> last_price:
+</span></span><span style=display:flex><span>                notify_change(last_price, current_price)
+</span></span><span style=display:flex><span>                log(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格变动: ¥</span><span style=color:#e6db74>{</span>last_price<span style=color:#e6db74>}</span><span style=color:#e6db74> → ¥</span><span style=color:#e6db74>{</span>current_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        STATE_FILE<span style=color:#f92672>.</span>write_text(json<span style=color:#f92672>.</span>dumps({
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;price&#34;</span>: current_price,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;checked_at&#34;</span>: datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>isoformat()
+</span></span><span style=display:flex><span>        }))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        log(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;检查失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div><p>关键改动：</p><ol><li><p><strong>状态持久化到文件</strong>。每次跑完把当前价格写到 <code>last_price.json</code>，下次跑的时候读出来比较。这比依赖进程内变量可靠一万倍——脚本重启、机器重启都不丢状态。</p></li><li><p><strong>异常退出码</strong>。<code>sys.exit(1)</code> 让 Cron 知道这次执行失败了。配合后面的监控方案，你会在失败时收到告警。</p></li><li><p><strong>飞书 Webhook 代替 SMTP 邮件</strong>。Webhook 比 SMTP 快，不需要配邮件服务，而且消息直接推到手机。飞书、企业微信、钉钉都支持 Incoming Webhook，注册一个 bot 就能拿 URL。</p></li></ol><p>Cron 配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 每小时检查一次价格</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/price_check.py
+</span></span></code></pre></div><h2 id=场景二数据分析定期产出>场景二：数据分析定期产出</h2><p>第四篇文章写了 Pandas 分析模板。现在让它每周自动跑一次，产出报告。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;weekly_analysis.py —— 每周一早上自动跑&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> json
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime, timedelta
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pathlib <span style=color:#f92672>import</span> Path
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;font.sans-serif&#39;</span>] <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;Noto Sans CJK SC&#39;</span>]
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;axes.unicode_minus&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>OUTPUT_DIR <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#34;/home/ubuntu/reports&#34;</span>)
+</span></span><span style=display:flex><span>OUTPUT_DIR<span style=color:#f92672>.</span>mkdir(exist_ok<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>pull_data_from_db</span>():
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;从 SQLite 拉取最近 7 天的用户行为数据&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>import</span> sqlite3
+</span></span><span style=display:flex><span>    conn <span style=color:#f92672>=</span> sqlite3<span style=color:#f92672>.</span>connect(<span style=color:#e6db74>&#34;/home/ubuntu/data/app_events.db&#34;</span>)
+</span></span><span style=display:flex><span>    query <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        SELECT user_id, event, date, duration_sec
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        FROM user_events
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        WHERE date &gt;= date(&#39;now&#39;, &#39;-7 days&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_sql(query, conn)
+</span></span><span style=display:flex><span>    conn<span style=color:#f92672>.</span>close()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> df
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>analyze</span>(df: pd<span style=color:#f92672>.</span>DataFrame):
+</span></span><span style=display:flex><span>    df[<span style=color:#e6db74>&#39;date&#39;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(df[<span style=color:#e6db74>&#39;date&#39;</span>])
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 每日活跃用户</span>
+</span></span><span style=display:flex><span>    dau <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;date&#39;</span>)[<span style=color:#e6db74>&#39;user_id&#39;</span>]<span style=color:#f92672>.</span>nunique()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 事件分布</span>
+</span></span><span style=display:flex><span>    event_counts <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;event&#39;</span>)<span style=color:#f92672>.</span>size()<span style=color:#f92672>.</span>sort_values(ascending<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 用户留存</span>
+</span></span><span style=display:flex><span>    user_days <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>groupby(<span style=color:#e6db74>&#39;user_id&#39;</span>)[<span style=color:#e6db74>&#39;date&#39;</span>]<span style=color:#f92672>.</span>nunique()
+</span></span><span style=display:flex><span>    retention <span style=color:#f92672>=</span> (user_days <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>3</span>)<span style=color:#f92672>.</span>mean() <span style=color:#f92672>*</span> <span style=color:#ae81ff>100</span>  <span style=color:#75715e># 3日留存</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> dau, event_counts, retention
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>plot_and_save</span>(dau, event_counts):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;生成 PNG 图表&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    fig, axes <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>subplots(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>14</span>, <span style=color:#ae81ff>5</span>))
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    dau<span style=color:#f92672>.</span>plot(ax<span style=color:#f92672>=</span>axes[<span style=color:#ae81ff>0</span>], marker<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;o&#39;</span>, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;#4A90D9&#39;</span>)
+</span></span><span style=display:flex><span>    axes[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>set_title(<span style=color:#e6db74>&#39;过去7天 DAU&#39;</span>)
+</span></span><span style=display:flex><span>    axes[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>set_ylabel(<span style=color:#e6db74>&#39;活跃用户数&#39;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    event_counts<span style=color:#f92672>.</span>plot(kind<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;barh&#39;</span>, ax<span style=color:#f92672>=</span>axes[<span style=color:#ae81ff>1</span>], color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;#E85D3F&#39;</span>)
+</span></span><span style=display:flex><span>    axes[<span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>set_title(<span style=color:#e6db74>&#39;事件分布&#39;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    plt<span style=color:#f92672>.</span>tight_layout()
+</span></span><span style=display:flex><span>    chart_path <span style=color:#f92672>=</span> OUTPUT_DIR <span style=color:#f92672>/</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;weekly_report_</span><span style=color:#e6db74>{</span>datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y%W&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>.png&#34;</span>
+</span></span><span style=display:flex><span>    plt<span style=color:#f92672>.</span>savefig(chart_path, dpi<span style=color:#f92672>=</span><span style=color:#ae81ff>150</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> chart_path
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>push_to_feishu</span>(chart_path, dau, retention):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;把图表和关键指标推到飞书&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    today <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m月</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>日&#34;</span>)
+</span></span><span style=display:flex><span>    avg_dau <span style=color:#f92672>=</span> dau<span style=color:#f92672>.</span>mean()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 先发文本指标</span>
+</span></span><span style=display:flex><span>    webhook <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
+</span></span><span style=display:flex><span>    msg <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;msg_type&#34;</span>: <span style=color:#e6db74>&#34;interactive&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;card&#34;</span>: {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;header&#34;</span>: {<span style=color:#e6db74>&#34;title&#34;</span>: {<span style=color:#e6db74>&#34;content&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📊 周报 </span><span style=color:#e6db74>{</span>today<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>, <span style=color:#e6db74>&#34;tag&#34;</span>: <span style=color:#e6db74>&#34;plain_text&#34;</span>}},
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;elements&#34;</span>: [
+</span></span><span style=display:flex><span>                {<span style=color:#e6db74>&#34;tag&#34;</span>: <span style=color:#e6db74>&#34;div&#34;</span>, <span style=color:#e6db74>&#34;text&#34;</span>: {<span style=color:#e6db74>&#34;content&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;平均 DAU：**</span><span style=color:#e6db74>{</span>avg_dau<span style=color:#e6db74>:</span><span style=color:#e6db74>.0f</span><span style=color:#e6db74>}</span><span style=color:#e6db74>**</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>3日留存：**</span><span style=color:#e6db74>{</span>retention<span style=color:#e6db74>:</span><span style=color:#e6db74>.1f</span><span style=color:#e6db74>}</span><span style=color:#e6db74>%**&#34;</span>, <span style=color:#e6db74>&#34;tag&#34;</span>: <span style=color:#e6db74>&#34;lark_md&#34;</span>}},
+</span></span><span style=display:flex><span>                {<span style=color:#e6db74>&#34;tag&#34;</span>: <span style=color:#e6db74>&#34;img&#34;</span>, <span style=color:#e6db74>&#34;img_key&#34;</span>: <span style=color:#e6db74>&#34;NEED_UPLOAD_FIRST&#34;</span>, <span style=color:#e6db74>&#34;alt&#34;</span>: {<span style=color:#e6db74>&#34;content&#34;</span>: <span style=color:#e6db74>&#34;周趋势图&#34;</span>, <span style=color:#e6db74>&#34;tag&#34;</span>: <span style=color:#e6db74>&#34;plain_text&#34;</span>}}
+</span></span><span style=display:flex><span>            ]
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    requests<span style=color:#f92672>.</span>post(webhook, json<span style=color:#f92672>=</span>msg, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    df <span style=color:#f92672>=</span> pull_data_from_db()
+</span></span><span style=display:flex><span>    dau, event_counts, retention <span style=color:#f92672>=</span> analyze(df)
+</span></span><span style=display:flex><span>    chart_path <span style=color:#f92672>=</span> plot_and_save(dau, event_counts)
+</span></span><span style=display:flex><span>    push_to_feishu(chart_path, dau, retention)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;周报已生成: </span><span style=color:#e6db74>{</span>chart_path<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div><p>Cron 配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 每周一早上 8 点跑周报</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * <span style=color:#ae81ff>1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
+</span></span></code></pre></div><p>这里有一个实际经验：<strong>飞书卡片消息内嵌图片需要先上传图片获取 image_key</strong>。上面代码里我写了 <code>"NEED_UPLOAD_FIRST"</code> 占位，生产代码需要调用飞书的图片上传 API。如果嫌麻烦，最简单的方式是用飞书文本消息只发数据指标，图存在服务器上你手动看，或者用 Telegram Bot——Telegram 可以直接通过 <code>sendPhoto</code> 接口传本地文件，不需要预上传。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Telegram 发图片——比飞书省一步</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>push_to_telegram</span>(chart_path, text):
+</span></span><span style=display:flex><span>    bot_token <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;YOUR_BOT_TOKEN&#34;</span>
+</span></span><span style=display:flex><span>    chat_id <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;YOUR_CHAT_ID&#34;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 发文字</span>
+</span></span><span style=display:flex><span>    requests<span style=color:#f92672>.</span>post(
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;https://api.telegram.org/bot</span><span style=color:#e6db74>{</span>bot_token<span style=color:#e6db74>}</span><span style=color:#e6db74>/sendMessage&#34;</span>,
+</span></span><span style=display:flex><span>        json<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;chat_id&#34;</span>: chat_id, <span style=color:#e6db74>&#34;text&#34;</span>: text}
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 直接发图</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> open(chart_path, <span style=color:#e6db74>&#34;rb&#34;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>        requests<span style=color:#f92672>.</span>post(
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;https://api.telegram.org/bot</span><span style=color:#e6db74>{</span>bot_token<span style=color:#e6db74>}</span><span style=color:#e6db74>/sendPhoto&#34;</span>,
+</span></span><span style=display:flex><span>            data<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;chat_id&#34;</span>: chat_id},
+</span></span><span style=display:flex><span>            files<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;photo&#34;</span>: f}
+</span></span><span style=display:flex><span>        )
+</span></span></code></pre></div><h2 id=场景三系统监控你的服务器还活着吗>场景三：系统监控——你的服务器还活着吗？</h2><p>前面讲的都是业务脚本。但还有一个问题：就算脚本写对了、Cron 配对了，<strong>服务器挂了就全完蛋</strong>。你需要几个最基础的监控脚本。</p><h3 id=磁盘使用率告警>磁盘使用率告警</h3><p>最常见的翻车场景：爬虫跑了几周，存了一堆数据，磁盘满了。SQLite 写入失败、日志写不进去，你完全不知道，直到某天用户说功能坏了。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;disk_monitor.py —— 每小时检查磁盘&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> shutil
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>THRESHOLD <span style=color:#f92672>=</span> <span style=color:#ae81ff>80</span>  <span style=color:#75715e># 超过 80% 就告警</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>check_and_alert</span>():
+</span></span><span style=display:flex><span>    usage <span style=color:#f92672>=</span> shutil<span style=color:#f92672>.</span>disk_usage(<span style=color:#e6db74>&#34;/&#34;</span>)
+</span></span><span style=display:flex><span>    used_pct <span style=color:#f92672>=</span> (usage<span style=color:#f92672>.</span>used <span style=color:#f92672>/</span> usage<span style=color:#f92672>.</span>total) <span style=color:#f92672>*</span> <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> used_pct <span style=color:#f92672>&gt;</span> THRESHOLD:
+</span></span><span style=display:flex><span>        webhook <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
+</span></span><span style=display:flex><span>        msg <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;msg_type&#34;</span>: <span style=color:#e6db74>&#34;text&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;content&#34;</span>: {
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;text&#34;</span>: (
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;🚨 磁盘告警</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;使用率：</span><span style=color:#e6db74>{</span>used_pct<span style=color:#e6db74>:</span><span style=color:#e6db74>.1f</span><span style=color:#e6db74>}</span><span style=color:#e6db74>%（阈值 </span><span style=color:#e6db74>{</span>THRESHOLD<span style=color:#e6db74>}</span><span style=color:#e6db74>%）</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;已用：</span><span style=color:#e6db74>{</span>usage<span style=color:#f92672>.</span>used <span style=color:#f92672>//</span> (<span style=color:#ae81ff>1024</span><span style=color:#f92672>**</span><span style=color:#ae81ff>3</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>GB / </span><span style=color:#e6db74>{</span>usage<span style=color:#f92672>.</span>total <span style=color:#f92672>//</span> (<span style=color:#ae81ff>1024</span><span style=color:#f92672>**</span><span style=color:#ae81ff>3</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>GB</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;主机：price-monitor-server&#34;</span>
+</span></span><span style=display:flex><span>                )
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        requests<span style=color:#f92672>.</span>post(webhook, json<span style=color:#f92672>=</span>msg, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    ok <span style=color:#f92672>=</span> check_and_alert()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> ok:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;磁盘使用率超过 </span><span style=color:#e6db74>{</span>THRESHOLD<span style=color:#e6db74>}</span><span style=color:#e6db74>%&#34;</span>)
+</span></span><span style=display:flex><span>    sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>0</span> <span style=color:#66d9ef>if</span> ok <span style=color:#66d9ef>else</span> <span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><h3 id=服务健康检查>服务健康检查</h3><p>如果你还跑了 Web 服务（比如 Flask API、爬虫管理面板），需要确认它还活着：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;health_check.py —— 每5分钟检查服务是否响应&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>SERVICES <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    {<span style=color:#e6db74>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;API 服务&#34;</span>, <span style=color:#e6db74>&#34;url&#34;</span>: <span style=color:#e6db74>&#34;http://localhost:5000/health&#34;</span>},
+</span></span><span style=display:flex><span>    {<span style=color:#e6db74>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;爬虫面板&#34;</span>, <span style=color:#e6db74>&#34;url&#34;</span>: <span style=color:#e6db74>&#34;http://localhost:8080/ping&#34;</span>},
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>check_services</span>():
+</span></span><span style=display:flex><span>    all_ok <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> svc <span style=color:#f92672>in</span> SERVICES:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            r <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(svc[<span style=color:#e6db74>&#34;url&#34;</span>], timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> r<span style=color:#f92672>.</span>status_code <span style=color:#f92672>!=</span> <span style=color:#ae81ff>200</span>:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ </span><span style=color:#e6db74>{</span>svc[<span style=color:#e6db74>&#39;name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74> 返回 </span><span style=color:#e6db74>{</span>r<span style=color:#f92672>.</span>status_code<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                all_ok <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ </span><span style=color:#e6db74>{</span>svc[<span style=color:#e6db74>&#39;name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74> OK&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ </span><span style=color:#e6db74>{</span>svc[<span style=color:#e6db74>&#39;name&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74> 不可达: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            all_ok <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> all_ok
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    ok <span style=color:#f92672>=</span> check_services()
+</span></span><span style=display:flex><span>    sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>0</span> <span style=color:#66d9ef>if</span> ok <span style=color:#66d9ef>else</span> <span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><h3 id=ssl-证书到期检查>SSL 证书到期检查</h3><p>如果你的产品有自己的域名，证书到期后用户访问会看到安全警告——这对独立产品的转化是致命的。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;ssl_check.py —— 每天检查 SSL 证书到期日&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> ssl
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> socket
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime, timedelta
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DOMAINS <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;zhouyang.dev&#34;</span>, <span style=color:#e6db74>&#34;your-product.com&#34;</span>]
+</span></span><span style=display:flex><span>WARN_DAYS <span style=color:#f92672>=</span> <span style=color:#ae81ff>30</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_cert_expiry</span>(domain: str):
+</span></span><span style=display:flex><span>    ctx <span style=color:#f92672>=</span> ssl<span style=color:#f92672>.</span>create_default_context()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> ctx<span style=color:#f92672>.</span>wrap_socket(socket<span style=color:#f92672>.</span>socket(), server_hostname<span style=color:#f92672>=</span>domain) <span style=color:#66d9ef>as</span> s:
+</span></span><span style=display:flex><span>        s<span style=color:#f92672>.</span>settimeout(<span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>        s<span style=color:#f92672>.</span>connect((domain, <span style=color:#ae81ff>443</span>))
+</span></span><span style=display:flex><span>        cert <span style=color:#f92672>=</span> s<span style=color:#f92672>.</span>getpeercert()
+</span></span><span style=display:flex><span>        expiry_str <span style=color:#f92672>=</span> cert[<span style=color:#e6db74>&#39;notAfter&#39;</span>]
+</span></span><span style=display:flex><span>        <span style=color:#75715e># &#39;Jun 26 23:59:59 2026 GMT&#39; → datetime</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> datetime<span style=color:#f92672>.</span>strptime(expiry_str, <span style=color:#e6db74>&#34;%b </span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S %Y %Z&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    alerts <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> domain <span style=color:#f92672>in</span> DOMAINS:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            expiry <span style=color:#f92672>=</span> get_cert_expiry(domain)
+</span></span><span style=display:flex><span>            days_left <span style=color:#f92672>=</span> (expiry <span style=color:#f92672>-</span> datetime<span style=color:#f92672>.</span>now())<span style=color:#f92672>.</span>days
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>domain<span style=color:#e6db74>}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{</span>days_left<span style=color:#e6db74>}</span><span style=color:#e6db74> 天后到期 (</span><span style=color:#e6db74>{</span>expiry<span style=color:#f92672>.</span>date()<span style=color:#e6db74>}</span><span style=color:#e6db74>)&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> days_left <span style=color:#f92672>&lt;=</span> WARN_DAYS:
+</span></span><span style=display:flex><span>                alerts<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ </span><span style=color:#e6db74>{</span>domain<span style=color:#e6db74>}</span><span style=color:#e6db74> 证书 </span><span style=color:#e6db74>{</span>days_left<span style=color:#e6db74>}</span><span style=color:#e6db74> 天后到期&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            alerts<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ </span><span style=color:#e6db74>{</span>domain<span style=color:#e6db74>}</span><span style=color:#e6db74> 证书检查失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> alerts:
+</span></span><span style=display:flex><span>        webhook <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://open.feishu.cn/open-apis/bot/v2/hook/xxx&#34;</span>
+</span></span><span style=display:flex><span>        requests<span style=color:#f92672>.</span>post(webhook, json<span style=color:#f92672>=</span>{
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;msg_type&#34;</span>: <span style=color:#e6db74>&#34;text&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;content&#34;</span>: {<span style=color:#e6db74>&#34;text&#34;</span>: <span style=color:#e6db74>&#34;🔒 SSL 证书提醒</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>join(alerts)}
+</span></span><span style=display:flex><span>        }, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>        sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div><p>Cron 配置汇总：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 系统监控</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/disk_monitor.py
+</span></span><span style=display:flex><span>*/5 * * * * /usr/bin/python3 /home/ubuntu/scripts/health_check.py
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>9</span> * * * /usr/bin/python3 /home/ubuntu/scripts/ssl_check.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 业务脚本</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> * * * * /usr/bin/python3 /home/ubuntu/scripts/price_check.py
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>8</span> * * <span style=color:#ae81ff>1</span> /usr/bin/python3 /home/ubuntu/scripts/weekly_analysis.py
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>6</span> * * * /usr/bin/python3 /home/ubuntu/scripts/github_trending.py
+</span></span></code></pre></div><h2 id=最佳实践三个要命的问题>最佳实践：三个要命的问题</h2><p>写了 5 篇自动化文章，我发现有三个问题如果不提前处理，会在你上线两三周后集中爆发。</p><h3 id=1-日志管理>1. 日志管理</h3><p>每个脚本都往日志文件追加，几周后你能收获一个 2GB 的纯文本文件。用 <code>logrotate</code> 解决：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># /etc/logrotate.d/python-cron</span>
+</span></span><span style=display:flex><span>/var/log/cron-*.log <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    daily               <span style=color:#75715e># 每天转储一次</span>
+</span></span><span style=display:flex><span>    rotate <span style=color:#ae81ff>14</span>           <span style=color:#75715e># 保留 14 天</span>
+</span></span><span style=display:flex><span>    compress            <span style=color:#75715e># 压缩旧日志</span>
+</span></span><span style=display:flex><span>    delaycompress       <span style=color:#75715e># 延迟一天再压缩</span>
+</span></span><span style=display:flex><span>    missingok           <span style=color:#75715e># 文件不存在不报错</span>
+</span></span><span style=display:flex><span>    notifempty          <span style=color:#75715e># 空文件不转储</span>
+</span></span><span style=display:flex><span>    copytruncate        <span style=color:#75715e># 复制后清空（不中断正在写入的进程）</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p>然后统一日志格式：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> logging
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>logging<span style=color:#f92672>.</span>basicConfig(
+</span></span><span style=display:flex><span>    filename<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;/var/log/cron-price_check.log&#39;</span>,
+</span></span><span style=display:flex><span>    level<span style=color:#f92672>=</span>logging<span style=color:#f92672>.</span>INFO,
+</span></span><span style=display:flex><span>    format<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;</span><span style=color:#e6db74>%(asctime)s</span><span style=color:#e6db74> [</span><span style=color:#e6db74>%(levelname)s</span><span style=color:#e6db74>] </span><span style=color:#e6db74>%(message)s</span><span style=color:#e6db74>&#39;</span>,
+</span></span><span style=display:flex><span>    datefmt<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#39;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>logger <span style=color:#f92672>=</span> logging<span style=color:#f92672>.</span>getLogger(__name__)
+</span></span><span style=display:flex><span>logger<span style=color:#f92672>.</span>info(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;价格检查完成: ¥</span><span style=color:#e6db74>{</span>current_price<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span></code></pre></div><h3 id=2-告警风暴>2. 告警风暴</h3><p>凌晨三点磁盘满了一次，你的飞书就收到一条告警。但如果脚本有问题，每次跑都失败，你会在一小时内收到 60 条同样的消息。这叫告警风暴——我亲身经历过，手机直接被震到没电。</p><p>解法是加简单的去重：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> hashlib
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pathlib <span style=color:#f92672>import</span> Path
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>should_alert</span>(message: str, cooldown_minutes: int <span style=color:#f92672>=</span> <span style=color:#ae81ff>60</span>) <span style=color:#f92672>-&gt;</span> bool:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;相同消息在 cooldown 时间内不重复发送&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    alert_dir <span style=color:#f92672>=</span> Path(<span style=color:#e6db74>&#34;/tmp/alerts_sent&#34;</span>)
+</span></span><span style=display:flex><span>    alert_dir<span style=color:#f92672>.</span>mkdir(exist_ok<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    msg_hash <span style=color:#f92672>=</span> hashlib<span style=color:#f92672>.</span>md5(message<span style=color:#f92672>.</span>encode())<span style=color:#f92672>.</span>hexdigest()
+</span></span><span style=display:flex><span>    alert_file <span style=color:#f92672>=</span> alert_dir <span style=color:#f92672>/</span> msg_hash
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> alert_file<span style=color:#f92672>.</span>exists():
+</span></span><span style=display:flex><span>        mtime <span style=color:#f92672>=</span> alert_file<span style=color:#f92672>.</span>stat()<span style=color:#f92672>.</span>st_mtime
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> time<span style=color:#f92672>.</span>time() <span style=color:#f92672>-</span> mtime <span style=color:#f92672>&lt;</span> cooldown_minutes <span style=color:#f92672>*</span> <span style=color:#ae81ff>60</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>  <span style=color:#75715e># 冷却期内，跳过</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    alert_file<span style=color:#f92672>.</span>touch()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用</span>
+</span></span><span style=display:flex><span>msg <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;磁盘使用率 </span><span style=color:#e6db74>{</span>used_pct<span style=color:#e6db74>:</span><span style=color:#e6db74>.1f</span><span style=color:#e6db74>}</span><span style=color:#e6db74>%&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> should_alert(msg, cooldown_minutes<span style=color:#f92672>=</span><span style=color:#ae81ff>60</span>):
+</span></span><span style=display:flex><span>    send_notification(msg)
+</span></span></code></pre></div><h3 id=3-cron-任务互相踩踏>3. Cron 任务互相踩踏</h3><p>如果你的数据分析脚本要跑 10 分钟，但 Cron 每小时跑一次——没问题，它们不会重叠。除非你设了 <code>*/5 * * * *</code>，脚本却要跑 10 分钟。这时新的实例会启动，和旧实例一起跑，两份分析结果互相覆盖。</p><p>用文件锁防止重叠执行：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> fcntl
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>acquire_lock</span>():
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;确保同一时间只有一个实例在跑&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    lock_file <span style=color:#f92672>=</span> open(<span style=color:#e6db74>&#34;/tmp/weekly_analysis.lock&#34;</span>, <span style=color:#e6db74>&#34;w&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        fcntl<span style=color:#f92672>.</span>flock(lock_file, fcntl<span style=color:#f92672>.</span>LOCK_EX <span style=color:#f92672>|</span> fcntl<span style=color:#f92672>.</span>LOCK_NB)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> lock_file
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>BlockingIOError</span>:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;上一个实例还在跑，跳过本次执行&#34;</span>)
+</span></span><span style=display:flex><span>        sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 脚本开头</span>
+</span></span><span style=display:flex><span>lock <span style=color:#f92672>=</span> acquire_lock()
+</span></span><span style=display:flex><span><span style=color:#75715e># ... 业务逻辑 ...</span>
+</span></span></code></pre></div><p><code>fcntl.LOCK_NB</code> 是非阻塞锁——如果拿不到锁就立刻退出，不做任何事，等 Cron 下一次调度。</p><h2 id=从这里开始>从这里开始</h2><p>这篇文章是整个 Python 自动化系列的终点。回顾一下你学到了什么：</p><table><thead><tr><th>篇目</th><th>能力</th><th>你能做什么</th></tr></thead><tbody><tr><td>01 日常任务</td><td>文件系统操作</td><td>批量改名、整理文件、自动发邮件</td></tr><tr><td>02 Web Scraping</td><td>数据获取</td><td>爬公开网页、价格监控、信息聚合</td></tr><tr><td>03 API 自动化</td><td>结构化数据</td><td>调用 50+ 免费 API，接入外部数据源</td></tr><tr><td>04 Pandas 分析</td><td>数据洞察</td><td>用户行为分析、趋势图、留存报表</td></tr><tr><td>05 定时调度</td><td>自动化运行</td><td>让上面所有脚本定时跑，配上监控告警</td></tr></tbody></table><p>五篇文章串起来就是一条完整的自动化流水线：<strong>获取数据 → 分析数据 → 产出洞察 → 推送通知</strong>。你现在有模板和工具，差的只是找到一个你想持续追踪的数据源。</p><p>今天建议做的事：从你之前写的脚本里挑一个最有价值的（比如价格监控、数据分析），按这篇文章的方式改写成无状态单次执行脚本，配到 Cron 里，让它明天早上自己跑一次。看着飞书/Telegram 弹出第一条自动化消息的时候，你会感谢自己花了一个小时做这件事的。</p><hr><p><strong>系列导航</strong>：<a href=/posts/python-automation-daily-tasks/>01 日常任务自动化</a> | <a href=/posts/python-web-scraping/>02 Web Scraping 实战</a> | <a href=/posts/python-api-automation/>03 API 自动化</a> | <a href=/posts/python-pandas-analysis/>04 数据分析自动化</a> | <strong>05 定时任务 & 监控</strong></p><p><em>Python 自动化实战系列完结。下一篇系列预告：AI 编程工具链——Prompt Engineering 实战手册。</em></p></div></article><nav class=post-nav><a href=/posts/python-pandas-analysis/ class=prev>← Python 自动化实战：数据分析自动化——Pandas 实战</a>
+<a href=/posts/prompt-engineering-handbook/ class=next>AI编程工具链：Prompt Engineering 实战手册 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer><script src="/js/search.js?v=1"></script></body></html>

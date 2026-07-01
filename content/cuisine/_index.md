@@ -6,15 +6,11 @@ type: "cuisine"
 
 <div class="cuisine-intro">
 
-A journey through China's eight great culinary traditions — from the fiery woks of Sichuan to the delicate steamers of Cantonese dim sum. We're documenting **109 iconic dishes**, organized by the regions and cooking philosophies that shaped them.
+From Sichuan's fiery woks to Cantonese dim sum steamers — **109 iconic dishes** across China's eight great culinary traditions, each with a story. Because here, food isn't fuel. It's geography, history, and family on a plate.
 
-Each dish comes with a story. Because in China, food isn't fuel — it's geography, history, and family, served on a plate.
+We're chasing the most authentic version of every dish — the way locals eat it in its hometown. But "authentic" isn't a single recipe. Mapo tofu in Sichuan and Guangxi are cousins, not clones. Chinese food is a living conversation between regions, cooks, and generations. Love the version on your plate? It's the right one.
 
-Our goal is simple: to show you what these dishes actually taste like in their hometowns — the most authentic version, the way locals eat them.
-
-And here's the thing: there is no single "correct" recipe. Mapo tofu in Sichuan and mapo tofu in Guangxi are cousins, not clones — and that's the point. Chinese food isn't a checkbox. It's a living conversation between regions, cooks, and generations. If you love the version on your plate, it's the right one.
-
-*This is our roadmap as of today. As the blog grows, so will the collection. One hundred and nine is where we start — not where we finish.*
+*109 is where we start — not where we finish.*
 
 </div>
 

@@ -4,7 +4,7 @@ date: 2026-07-01
 description: "The scent of scallions hitting hot oil, drifting through a lane house window at midnight — this is what home smells like."
 tags: ["shanghai", "noodles", "savory", "comfort-food"]
 slug: scallion-oil-noodles
-images: ["/images/scallion-oil-noodles-1.jpg", "/images/scallion-oil-noodles-2.jpg", "/images/scallion-oil-noodles-3.jpg", "/images/scallion-oil-noodles-4.jpg"]
+images: ["/images/scallion-oil-noodles-1.jpg", "/images/scallion-oil-noodles-2.jpg", "/images/scallion-oil-noodles-3.jpg"]
 ---
 
 ![Scallion Oil Noodles — a bowl of dark, glossy noodles dressed in scallion-infused oil, served on a wooden table](/images/scallion-oil-noodles-1.jpg)
@@ -56,8 +56,6 @@ What you want:
 - **A pinch of sugar** — dissolves into the sauce, rounds the edges. You shouldn't taste it as sugar. You should notice when it's missing.
 
 The Japanese version — negi abura soba — uses thicker noodles and often adds a raw egg yolk. It's good. It's a different dish.
-
-![Scallion oil noodles being lifted with chopsticks, steam rising, a single bite suspended over the bowl](/images/scallion-oil-noodles-4.jpg)
 
 ## How to Eat It
 

@@ -4,6 +4,7 @@ date: 2026-06-21
 description: "Glossy strips of pork collar hanging in a Cantonese BBQ shop window, lacquered in maltose and five-spice, charred at the edges — this is the pork that made strangers press their faces against glass."
 tags: ["cantonese", "pork", "bbq", "classic", "roast"]
 slug: "char-siu"
+images: ["/images/char-siu-1.jpg", "/images/char-siu-2.jpg", "/images/char-siu-3.jpg"]
 ---
 
 ![Char Siu — glossy Cantonese barbecued pork strips with signature red glaze and charred edges](/images/char-siu-1.jpg?v=1)

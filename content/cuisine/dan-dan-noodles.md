@@ -4,6 +4,7 @@ date: 2026-06-21
 description: "Springy wheat noodles drowning in sesame paste, chili oil, and minced pork — a Chengdu alleyway icon that smells like roasted peppercorns and tastes like a controlled burn."
 tags: ["sichuan", "noodles", "spicy", "street-food", "classic"]
 slug: "dan-dan-noodles"
+images: ["/images/dan-dan-noodles-1.jpg", "/images/dan-dan-noodles-2.jpg", "/images/dan-dan-noodles-3.jpg"]
 ---
 
 ![Dan Dan Noodles — a bowl of springy wheat noodles coated in sesame-chili sauce with minced pork and scallions](/images/dan-dan-noodles-1.jpg?v=1)

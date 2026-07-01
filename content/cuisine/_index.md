@@ -6,7 +6,11 @@ type: "cuisine"
 
 <div class="cuisine-intro">
 
-A visual encyclopedia of China's most iconic dishes. **14 published · 95 incoming.** Click a region to filter, or scroll through them all.
+A journey through China's eight great culinary traditions — from the fiery woks of Sichuan to the delicate steamers of Cantonese dim sum. We're documenting **109 iconic dishes**, organized by the regions and cooking philosophies that shaped them.
+
+Each dish comes with a story. Because in China, food isn't fuel — it's geography, history, and family, served on a plate.
+
+*This is our roadmap as of today. As the blog grows, so will the collection. One hundred and nine is where we start — not where we finish.*
 
 </div>
 

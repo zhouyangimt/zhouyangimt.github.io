@@ -1,17 +1,135 @@
-<!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI编程工具链：AI Debugging — 让AI帮你修bug | zhouyang — The 25th Frame</title><meta name=description content="别再盯着Traceback发呆了。系统化地用AI调试——从错误信息到修复方案，覆盖Python、TypeScript等常见场景的实战流程。"><link rel=stylesheet href="/css/style.css?v=202607010347"><link rel=stylesheet href="/css/search.css?v=1"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
-<a href=/posts/>Tech</a>
-<a href=/cuisine/>Chinese Cuisine</a>
-<a href=/tea/>🍵 Tea</a>
-<a href=/baijiu/>🥃 Baijiu</a>
-<a href=/about/>About</a>
-<a href=/privacy/>Privacy</a>
-<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
-<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI Debugging — 让AI帮你修bug</h1><div class=meta><time>2026-06-28</time>
-<span class=tags><span class=tag>AI</span><span class=tag>编程</span><span class=tag>工具教程</span><span class=tag>调试</span></span></div></header><div class=content><h2 id=调试是ai最被低估的能力>调试是AI最被低估的能力</h2><p>大多数人用AI写代码，但很少人用它<strong>修bug</strong>。</p><p>一个反直觉的事实：AI调试往往比AI写代码<strong>更靠谱</strong>。原因很简单——
-写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。</p><p>这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：<strong>拿到报错之后，怎么用AI最快地找到根因并修复。</strong></p><p><img src=/images/ai-debugging-flow.png alt="AI 调试工作流"></p><h2 id=ai擅长修什么bug>AI擅长修什么bug</h2><p>不是所有bug都适合丢给AI。先分清地盘：</p><table><thead><tr><th>类型</th><th>AI表现</th><th>说明</th></tr></thead><tbody><tr><td>语法/类型错误</td><td>⭐⭐⭐⭐⭐</td><td>Traceback 直接给结论</td></tr><tr><td>空指针/AttributeError</td><td>⭐⭐⭐⭐⭐</td><td>AI一眼看出哪里可能为 None</td></tr><tr><td>依赖版本冲突</td><td>⭐⭐⭐⭐</td><td>只要告诉它版本号</td></tr><tr><td>API调用参数错误</td><td>⭐⭐⭐⭐</td><td>训练数据里有大量文档</td></tr><tr><td>并发/竞态条件</td><td>⭐⭐⭐</td><td>需要好的上下文</td></tr><tr><td>业务逻辑错误</td><td>⭐⭐</td><td>需要你解释「什么是对」</td></tr><tr><td>性能瓶颈/内存泄漏</td><td>⭐⭐</td><td>需要 profiling 数据配合</td></tr><tr><td>框架特有行为</td><td>⭐⭐⭐</td><td>取决于框架的文档覆盖率</td></tr></tbody></table><p>一句话总结：<strong>AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。</strong></p><h2 id=标准流程三步法>标准流程：三步法</h2><p>我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。</p><h3 id=第一步给上下文别只贴报错>第一步：给上下文，别只贴报错</h3><p>错误示范——90%的人这么做：</p><pre tabindex=0><code>❌ 用户：我代码报错了，帮我看看
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI编程工具链：AI Debugging — 让AI帮你修bug | zhouyang — The 25th Frame</title>
+  <meta name="description" content="别再盯着Traceback发呆了。系统化地用AI调试——从错误信息到修复方案，覆盖Python、TypeScript等常见场景的实战流程。">
+  <link rel="stylesheet" href="/css/style.css?v=202607011157">
+  <link rel="stylesheet" href="/css/search.css?v=1">
+  
+
+
+  
+  <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="Tech RSS">
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">zhouyang — The 25th Frame</a>
+      <div class="nav-links">
+        
+        <a href="/">Home</a>
+        
+        <a href="/posts/">Tech</a>
+        
+        <a href="/cuisine/">Chinese Cuisine</a>
+        
+        <a href="/tea/">🍵 Tea</a>
+        
+        <a href="/baijiu/">🥃 Baijiu</a>
+        
+        <a href="/about/">About</a>
+        
+        <a href="/privacy/">Privacy</a>
+        
+        <span class="nav-search">
+          <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+          <div id="search-results" class="search-dropdown"></div>
+        </span>
+        <span class="rss-links">
+          <span class="rss-label">RSS</span>
+          <a href="/posts/index.xml" title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+          <a href="/cuisine/index.xml" title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    
+<article class="single-post">
+  <header>
+    <h1>AI编程工具链：AI Debugging — 让AI帮你修bug</h1>
+    <div class="meta">
+      <time>2026-06-28</time>
+      
+      <span class="tags">
+        <span class="tag">AI</span><span class="tag">编程</span><span class="tag">工具教程</span><span class="tag">调试</span>
+      </span>
+      
+    </div>
+  </header>
+  <div class="content">
+    <h2 id="调试是ai最被低估的能力">调试是AI最被低估的能力</h2>
+<p>大多数人用AI写代码，但很少人用它<strong>修bug</strong>。</p>
+<p>一个反直觉的事实：AI调试往往比AI写代码<strong>更靠谱</strong>。原因很简单——
+写代码是生成，AI需要从零创造；修bug是修复，AI只需要理解已有的代码和报错，找出哪里出问题。后者的不确定性远小于前者。</p>
+<p>这篇文章不讲「怎么让AI写更好的代码」，只讲一件事：<strong>拿到报错之后，怎么用AI最快地找到根因并修复。</strong></p>
+<p><img src="/images/ai-debugging-flow.png" alt="AI 调试工作流"></p>
+<h2 id="ai擅长修什么bug">AI擅长修什么bug</h2>
+<p>不是所有bug都适合丢给AI。先分清地盘：</p>
+<table>
+	<thead>
+			<tr>
+					<th>类型</th>
+					<th>AI表现</th>
+					<th>说明</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>语法/类型错误</td>
+					<td>⭐⭐⭐⭐⭐</td>
+					<td>Traceback 直接给结论</td>
+			</tr>
+			<tr>
+					<td>空指针/AttributeError</td>
+					<td>⭐⭐⭐⭐⭐</td>
+					<td>AI一眼看出哪里可能为 None</td>
+			</tr>
+			<tr>
+					<td>依赖版本冲突</td>
+					<td>⭐⭐⭐⭐</td>
+					<td>只要告诉它版本号</td>
+			</tr>
+			<tr>
+					<td>API调用参数错误</td>
+					<td>⭐⭐⭐⭐</td>
+					<td>训练数据里有大量文档</td>
+			</tr>
+			<tr>
+					<td>并发/竞态条件</td>
+					<td>⭐⭐⭐</td>
+					<td>需要好的上下文</td>
+			</tr>
+			<tr>
+					<td>业务逻辑错误</td>
+					<td>⭐⭐</td>
+					<td>需要你解释「什么是对」</td>
+			</tr>
+			<tr>
+					<td>性能瓶颈/内存泄漏</td>
+					<td>⭐⭐</td>
+					<td>需要 profiling 数据配合</td>
+			</tr>
+			<tr>
+					<td>框架特有行为</td>
+					<td>⭐⭐⭐</td>
+					<td>取决于框架的文档覆盖率</td>
+			</tr>
+	</tbody>
+</table>
+<p>一句话总结：<strong>AI最擅长修「代码写错了」的bug，不太擅长修「需求理解错了」的bug。</strong></p>
+<h2 id="标准流程三步法">标准流程：三步法</h2>
+<p>我用了两年AI工具调bug，总结出这个流程，覆盖95%的场景。</p>
+<h3 id="第一步给上下文别只贴报错">第一步：给上下文，别只贴报错</h3>
+<p>错误示范——90%的人这么做：</p>
+<pre tabindex="0"><code>❌ 用户：我代码报错了，帮我看看
 ❌ 用户：（贴了半行报错信息）
-</code></pre><p>AI只能瞎猜。</p><p>正确做法：</p><pre tabindex=0><code>✅  我用 FastAPI 写了一个接口，报错如下：
+</code></pre><p>AI只能瞎猜。</p>
+<p>正确做法：</p>
+<pre tabindex="0"><code>✅  我用 FastAPI 写了一个接口，报错如下：
 ✅  （完整 Traceback）
 ✅
 ✅  相关代码：
@@ -22,44 +140,62 @@
 ✅  - FastAPI 0.115
 ✅  - Pydantic v2
 ✅  - 数据库是 PostgreSQL，用 SQLAlchemy 2.0 async
-</code></pre><p><strong>关键信息清单：</strong> 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。</p><h3 id=第二步让ai先分析根因再给方案>第二步：让AI先分析根因，再给方案</h3><p>很多人急着要答案，但好的prompt是这样的：</p><pre tabindex=0><code>请分两步处理：
+</code></pre><p><strong>关键信息清单：</strong> 完整报错 + 报错位置的代码 + 依赖版本 + 你期望的行为。</p>
+<h3 id="第二步让ai先分析根因再给方案">第二步：让AI先分析根因，再给方案</h3>
+<p>很多人急着要答案，但好的prompt是这样的：</p>
+<pre tabindex="0"><code>请分两步处理：
 
 1. 先分析根因——为什么会报这个错？出问题的代码逻辑链是什么？
 2. 再给出修复方案——精确到修改哪几行，并解释每处修改的原因。
-</code></pre><p>两步走的好处是：如果AI第一步的分析就偏了，你不必浪费时间去试第二步的错误方案。</p><h3 id=第三步反馈循环>第三步：反馈循环</h3><p>AI的修复不一定一次就对。关键是<strong>把测试结果反馈回去</strong>：</p><pre tabindex=0><code>✅ 应用了你的修复后，原来的报错消失了，
+</code></pre><p>两步走的好处是：如果AI第一步的分析就偏了，你不必浪费时间去试第二步的错误方案。</p>
+<h3 id="第三步反馈循环">第三步：反馈循环</h3>
+<p>AI的修复不一定一次就对。关键是<strong>把测试结果反馈回去</strong>：</p>
+<pre tabindex="0"><code>✅ 应用了你的修复后，原来的报错消失了，
 ✅ 但出现了新问题：（贴新报错）
-</code></pre><p>或者：</p><pre tabindex=0><code>✅ 修复方案可以运行，但在 XX 边缘情况下会出问题
+</code></pre><p>或者：</p>
+<pre tabindex="0"><code>✅ 修复方案可以运行，但在 XX 边缘情况下会出问题
 ✅ 具体场景：……
 ✅ 请改进方案，覆盖这种情况。
-</code></pre><p>把AI当成你的pair programming搭档，而不是一次性答疑机器。</p><h2 id=实战案例一python-traceback-调试>实战案例一：Python Traceback 调试</h2><p>真实场景——我有一个 FastAPI 接口时不时 500。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># app/endpoints/user.py</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>@router.get</span>(<span style=color:#e6db74>&#34;/users/</span><span style=color:#e6db74>{user_id}</span><span style=color:#e6db74>/stats&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_user_stats</span>(user_id: int, db: AsyncSession <span style=color:#f92672>=</span> Depends(get_db)):
-</span></span><span style=display:flex><span>    user <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> db<span style=color:#f92672>.</span>execute(
-</span></span><span style=display:flex><span>        select(User)<span style=color:#f92672>.</span>where(User<span style=color:#f92672>.</span>id <span style=color:#f92672>==</span> user_id)
-</span></span><span style=display:flex><span>    )
-</span></span><span style=display:flex><span>    stats <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> calculate_stats(user)  <span style=color:#75715e># ← 这里炸了</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> stats
-</span></span></code></pre></div><p>报错：</p><pre tabindex=0><code>AttributeError: &#39;Result&#39; object has no attribute &#39;email&#39;
-</code></pre><p>把这个丢给AI——带上完整 Traceback 和代码上下文——AI会立刻告诉你：<code>db.execute()</code> 返回的是 <code>Result</code> 对象，需要用 <code>.scalar_one_or_none()</code> 拿实例，而且你还没判空。</p><p>修复后：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#a6e22e>@router.get</span>(<span style=color:#e6db74>&#34;/users/</span><span style=color:#e6db74>{user_id}</span><span style=color:#e6db74>/stats&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_user_stats</span>(user_id: int, db: AsyncSession <span style=color:#f92672>=</span> Depends(get_db)):
-</span></span><span style=display:flex><span>    result <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> db<span style=color:#f92672>.</span>execute(
-</span></span><span style=display:flex><span>        select(User)<span style=color:#f92672>.</span>where(User<span style=color:#f92672>.</span>id <span style=color:#f92672>==</span> user_id)
-</span></span><span style=display:flex><span>    )
-</span></span><span style=display:flex><span>    user <span style=color:#f92672>=</span> result<span style=color:#f92672>.</span>scalar_one_or_none()
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> user <span style=color:#f92672>is</span> <span style=color:#66d9ef>None</span>:
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> HTTPException(status_code<span style=color:#f92672>=</span><span style=color:#ae81ff>404</span>, detail<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;User not found&#34;</span>)
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    stats <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> calculate_stats(user)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> stats
-</span></span></code></pre></div><p>这个bug我用AI修了30秒。换成自己查文档，至少10分钟。</p><h2 id=实战案例二静默逻辑错误没有报错>实战案例二：静默逻辑错误，没有报错</h2><p>更头疼的情况——代码不报错，但结果就是不对。</p><p>场景：一个价格计算函数，测试用例通过，但线上总有用户反馈价格多算了。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>calculate_order_total</span>(items: list[dict]) <span style=color:#f92672>-&gt;</span> float:
-</span></span><span style=display:flex><span>    total <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> item <span style=color:#f92672>in</span> items:
-</span></span><span style=display:flex><span>        price <span style=color:#f92672>=</span> item[<span style=color:#e6db74>&#34;price&#34;</span>]
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> item<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;category&#34;</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;electronics&#34;</span>:
-</span></span><span style=display:flex><span>            price <span style=color:#f92672>*=</span> <span style=color:#ae81ff>0.9</span>  <span style=color:#75715e># 电子商品9折</span>
-</span></span><span style=display:flex><span>        total <span style=color:#f92672>+=</span> price <span style=color:#f92672>*</span> item[<span style=color:#e6db74>&#34;quantity&#34;</span>]
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> total <span style=color:#f92672>*</span> <span style=color:#ae81ff>1.08</span>  <span style=color:#75715e># 8%税费</span>
-</span></span></code></pre></div><p>测试数据跑出来没问题，但线上用户的价格多了。这时候你应该这么问AI：</p><pre tabindex=0><code>这段代码计算订单总价，逻辑是：遍历商品，电子类打9折，最后加8%税。
+</code></pre><p>把AI当成你的pair programming搭档，而不是一次性答疑机器。</p>
+<h2 id="实战案例一python-traceback-调试">实战案例一：Python Traceback 调试</h2>
+<p>真实场景——我有一个 FastAPI 接口时不时 500。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># app/endpoints/user.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@router.get</span>(<span style="color:#e6db74">&#34;/users/</span><span style="color:#e6db74">{user_id}</span><span style="color:#e6db74">/stats&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_user_stats</span>(user_id: int, db: AsyncSession <span style="color:#f92672">=</span> Depends(get_db)):
+</span></span><span style="display:flex;"><span>    user <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> db<span style="color:#f92672">.</span>execute(
+</span></span><span style="display:flex;"><span>        select(User)<span style="color:#f92672">.</span>where(User<span style="color:#f92672">.</span>id <span style="color:#f92672">==</span> user_id)
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    stats <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> calculate_stats(user)  <span style="color:#75715e"># ← 这里炸了</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stats
+</span></span></code></pre></div><p>报错：</p>
+<pre tabindex="0"><code>AttributeError: &#39;Result&#39; object has no attribute &#39;email&#39;
+</code></pre><p>把这个丢给AI——带上完整 Traceback 和代码上下文——AI会立刻告诉你：<code>db.execute()</code> 返回的是 <code>Result</code> 对象，需要用 <code>.scalar_one_or_none()</code> 拿实例，而且你还没判空。</p>
+<p>修复后：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@router.get</span>(<span style="color:#e6db74">&#34;/users/</span><span style="color:#e6db74">{user_id}</span><span style="color:#e6db74">/stats&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_user_stats</span>(user_id: int, db: AsyncSession <span style="color:#f92672">=</span> Depends(get_db)):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> db<span style="color:#f92672">.</span>execute(
+</span></span><span style="display:flex;"><span>        select(User)<span style="color:#f92672">.</span>where(User<span style="color:#f92672">.</span>id <span style="color:#f92672">==</span> user_id)
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    user <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>scalar_one_or_none()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> user <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">404</span>, detail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;User not found&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stats <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> calculate_stats(user)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stats
+</span></span></code></pre></div><p>这个bug我用AI修了30秒。换成自己查文档，至少10分钟。</p>
+<h2 id="实战案例二静默逻辑错误没有报错">实战案例二：静默逻辑错误，没有报错</h2>
+<p>更头疼的情况——代码不报错，但结果就是不对。</p>
+<p>场景：一个价格计算函数，测试用例通过，但线上总有用户反馈价格多算了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_order_total</span>(items: list[dict]) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>    total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> items:
+</span></span><span style="display:flex;"><span>        price <span style="color:#f92672">=</span> item[<span style="color:#e6db74">&#34;price&#34;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;category&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;electronics&#34;</span>:
+</span></span><span style="display:flex;"><span>            price <span style="color:#f92672">*=</span> <span style="color:#ae81ff">0.9</span>  <span style="color:#75715e"># 电子商品9折</span>
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> price <span style="color:#f92672">*</span> item[<span style="color:#e6db74">&#34;quantity&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> total <span style="color:#f92672">*</span> <span style="color:#ae81ff">1.08</span>  <span style="color:#75715e"># 8%税费</span>
+</span></span></code></pre></div><p>测试数据跑出来没问题，但线上用户的价格多了。这时候你应该这么问AI：</p>
+<pre tabindex="0"><code>这段代码计算订单总价，逻辑是：遍历商品，电子类打9折，最后加8%税。
 但我发现某些情况下最终金额比预期高。
 
 输入：items = [{&#34;price&#34;: 200, &#34;quantity&#34;: 3, &#34;category&#34;: &#34;electronics&#34;}]
@@ -67,17 +203,33 @@
 实际输出偏高。
 
 请检查这段代码的浮点数精度问题或逻辑漏洞。
-</code></pre><p>AI会告诉你两个问题：</p><ol><li>浮点数累加导致精度丢失（用 <code>Decimal</code> 解决）</li><li>折扣是 <code>price *= 0.9</code>，这会<strong>修改原字典的price值</strong>——如果同一个items列表被多次调用，第二次调用时会基于已打折的价格再打9折</li></ol><p>第二个问题是真正的根因。这种「静默的数据变异」是最难排查的bug，但AI用几秒钟就指出了。</p><p>修复：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> decimal <span style=color:#f92672>import</span> Decimal
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>calculate_order_total</span>(items: list[dict]) <span style=color:#f92672>-&gt;</span> Decimal:
-</span></span><span style=display:flex><span>    total <span style=color:#f92672>=</span> Decimal(<span style=color:#e6db74>&#34;0&#34;</span>)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> item <span style=color:#f92672>in</span> items:
-</span></span><span style=display:flex><span>        price <span style=color:#f92672>=</span> Decimal(str(item[<span style=color:#e6db74>&#34;price&#34;</span>]))
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> item<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;category&#34;</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;electronics&#34;</span>:
-</span></span><span style=display:flex><span>            price <span style=color:#f92672>*=</span> Decimal(<span style=color:#e6db74>&#34;0.9&#34;</span>)
-</span></span><span style=display:flex><span>        total <span style=color:#f92672>+=</span> price <span style=color:#f92672>*</span> item[<span style=color:#e6db74>&#34;quantity&#34;</span>]
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> total <span style=color:#f92672>*</span> Decimal(<span style=color:#e6db74>&#34;1.08&#34;</span>)
-</span></span></code></pre></div><h2 id=实战案例三用-claude-code-排查多文件-bug>实战案例三：用 Claude Code 排查多文件 bug</h2><p>上面的例子是单文件问题。多文件、跨模块的bug怎么办？</p><p>这时候 Claude Code 的「吃下整个项目」能力就是降维打击。</p><p>场景：一个前端 React 项目，点击「保存」按钮后数据没存进去，没有报错。</p><p>操作步骤：</p><ol><li>在 Claude Code 中加载整个项目</li><li>输入：</li></ol><pre tabindex=0><code>点保存按钮后数据没有持久化。请帮我排查。
+</code></pre><p>AI会告诉你两个问题：</p>
+<ol>
+<li>浮点数累加导致精度丢失（用 <code>Decimal</code> 解决）</li>
+<li>折扣是 <code>price *= 0.9</code>，这会<strong>修改原字典的price值</strong>——如果同一个items列表被多次调用，第二次调用时会基于已打折的价格再打9折</li>
+</ol>
+<p>第二个问题是真正的根因。这种「静默的数据变异」是最难排查的bug，但AI用几秒钟就指出了。</p>
+<p>修复：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> Decimal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_order_total</span>(items: list[dict]) <span style="color:#f92672">-&gt;</span> Decimal:
+</span></span><span style="display:flex;"><span>    total <span style="color:#f92672">=</span> Decimal(<span style="color:#e6db74">&#34;0&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> items:
+</span></span><span style="display:flex;"><span>        price <span style="color:#f92672">=</span> Decimal(str(item[<span style="color:#e6db74">&#34;price&#34;</span>]))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;category&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;electronics&#34;</span>:
+</span></span><span style="display:flex;"><span>            price <span style="color:#f92672">*=</span> Decimal(<span style="color:#e6db74">&#34;0.9&#34;</span>)
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> price <span style="color:#f92672">*</span> item[<span style="color:#e6db74">&#34;quantity&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> total <span style="color:#f92672">*</span> Decimal(<span style="color:#e6db74">&#34;1.08&#34;</span>)
+</span></span></code></pre></div><h2 id="实战案例三用-claude-code-排查多文件-bug">实战案例三：用 Claude Code 排查多文件 bug</h2>
+<p>上面的例子是单文件问题。多文件、跨模块的bug怎么办？</p>
+<p>这时候 Claude Code 的「吃下整个项目」能力就是降维打击。</p>
+<p>场景：一个前端 React 项目，点击「保存」按钮后数据没存进去，没有报错。</p>
+<p>操作步骤：</p>
+<ol>
+<li>在 Claude Code 中加载整个项目</li>
+<li>输入：</li>
+</ol>
+<pre tabindex="0"><code>点保存按钮后数据没有持久化。请帮我排查。
 
 项目结构：
 - 前端 React + Zustand
@@ -86,6 +238,117 @@
 保存按钮在 src/components/Editor.tsx 的 handleSave 函数。
 请从这个函数出发，追踪整个数据流：前端 → API请求 → 后端接口 → 数据库，
 找出断在哪里。
-</code></pre><p>Claude Code 会自己读取相关文件，追踪调用链，然后告诉你根因。可能是：</p><ul><li>前端 <code>fetch</code> 没有 <code>await</code></li><li>API 路由没注册</li><li>数据库 session 没 commit</li><li>状态管理中更新了引用但没触发 re-render</li></ul><p>AI不是猜——它是真的读了你的代码后给出的结论。你用传统调试方式定位跨文件bug可能要30分钟，AI 2分钟。</p><h2 id=工具怎么选>工具怎么选</h2><table><thead><tr><th>工具</th><th>适合的调试场景</th><th>优势</th></tr></thead><tbody><tr><td>Claude Code</td><td>多文件、跨模块、架构级bug</td><td>能读整个项目，理解调用链</td></tr><tr><td>Cursor</td><td>当前文件内bug、日常编码</td><td>Tab补全时顺便发现类型错误</td></tr><tr><td>Copilot Chat</td><td>快速问答、单函数分析</td><td>不必离开IDE</td></tr><tr><td>ChatGPT/Claude Web</td><td>思路型调试、框架问题</td><td>不用打开项目，直接问</td></tr><tr><td>Hermes Agent</td><td>定时巡检、监控日志分析</td><td>自动化，不需要人在</td></tr></tbody></table><h2 id=最容易踩的三个坑>最容易踩的三个坑</h2><h3 id=坑一只贴报错不贴代码>坑一：只贴报错不贴代码</h3><p>AI不是算命先生。没有代码上下文，它的分析最多是「可能原因是……」——你要的不是可能，是确定。</p><h3 id=坑二一次丢太多问题>坑二：一次丢太多问题</h3><pre tabindex=0><code>❌ 我还有另外三个bug你也帮我看看……
-</code></pre><p>每个bug单独处理。混在一起，AI的注意力会被分散，每个bug的分析质量都下降。</p><h3 id=坑三盲目信任ai的修复>坑三：盲目信任AI的修复</h3><p>AI给的修复方案<strong>必须经过你的审查和测试</strong>。AI可能：</p><ul><li>修复了表面症状但没解决根因</li><li>引入了新的安全问题（SQL注入、XSS）</li><li>使用了已废弃的API</li><li>在特定边缘情况下仍然会出错</li></ul><p><strong>AI修bug的正确姿势：AI定位根因 + 提出方案 → 你审查 → 你测试 → 通过才合并。</strong></p><h2 id=总结>总结</h2><p>AI调试不是魔法，而是<strong>系统化的协作流程</strong>：</p><ol><li><strong>给足上下文</strong>：报错 + 代码 + 版本 + 预期行为</li><li><strong>分步推进</strong>：先定位根因，再要方案</li><li><strong>建立反馈循环</strong>：测试结果反馈回去，迭代修复</li><li><strong>你负责决策</strong>：AI提方案，你拍板</li></ol><p>记住：AI最擅长的是「帮你找到你忽略的那个细节」，不是「替你思考」。</p><p>把调试时间从30分钟降到2分钟，这才是AI工具真正的生产力——比AI写代码快了多少倍更有意义。</p><hr><blockquote><p><strong>AI编程工具链系列：</strong></p><ul><li><a href=/posts/ai-coding-assistant-guide-2026/>AI编程助手完全指南</a></li><li><a href=/posts/claude-code-vs-cursor-vs-copilot/>Claude vs Cursor vs Copilot 横评</a></li><li><a href=/posts/ai-build-website-zero/>零代码用AI搭建网站</a></li><li><a href=/posts/prompt-engineering-handbook/>Prompt Engineering 实战手册</a></li><li>👉 AI Debugging：让AI帮你修bug（本文）</li><li>系列完结 ✅</li></ul></blockquote></div></article><nav class=post-nav><a href=/posts/prompt-engineering-handbook/ class=prev>← AI编程工具链：Prompt Engineering 实战手册</a>
-<a href=/posts/product-validation-no-code/ class=next>独立开发者全栈生存指南：产品验证——不写代码先验证需求 →</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p></footer><script src="/js/search.js?v=1"></script></body></html>
+</code></pre><p>Claude Code 会自己读取相关文件，追踪调用链，然后告诉你根因。可能是：</p>
+<ul>
+<li>前端 <code>fetch</code> 没有 <code>await</code></li>
+<li>API 路由没注册</li>
+<li>数据库 session 没 commit</li>
+<li>状态管理中更新了引用但没触发 re-render</li>
+</ul>
+<p>AI不是猜——它是真的读了你的代码后给出的结论。你用传统调试方式定位跨文件bug可能要30分钟，AI 2分钟。</p>
+<h2 id="工具怎么选">工具怎么选</h2>
+<table>
+	<thead>
+			<tr>
+					<th>工具</th>
+					<th>适合的调试场景</th>
+					<th>优势</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Claude Code</td>
+					<td>多文件、跨模块、架构级bug</td>
+					<td>能读整个项目，理解调用链</td>
+			</tr>
+			<tr>
+					<td>Cursor</td>
+					<td>当前文件内bug、日常编码</td>
+					<td>Tab补全时顺便发现类型错误</td>
+			</tr>
+			<tr>
+					<td>Copilot Chat</td>
+					<td>快速问答、单函数分析</td>
+					<td>不必离开IDE</td>
+			</tr>
+			<tr>
+					<td>ChatGPT/Claude Web</td>
+					<td>思路型调试、框架问题</td>
+					<td>不用打开项目，直接问</td>
+			</tr>
+			<tr>
+					<td>Hermes Agent</td>
+					<td>定时巡检、监控日志分析</td>
+					<td>自动化，不需要人在</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="最容易踩的三个坑">最容易踩的三个坑</h2>
+<h3 id="坑一只贴报错不贴代码">坑一：只贴报错不贴代码</h3>
+<p>AI不是算命先生。没有代码上下文，它的分析最多是「可能原因是……」——你要的不是可能，是确定。</p>
+<h3 id="坑二一次丢太多问题">坑二：一次丢太多问题</h3>
+<pre tabindex="0"><code>❌ 我还有另外三个bug你也帮我看看……
+</code></pre><p>每个bug单独处理。混在一起，AI的注意力会被分散，每个bug的分析质量都下降。</p>
+<h3 id="坑三盲目信任ai的修复">坑三：盲目信任AI的修复</h3>
+<p>AI给的修复方案<strong>必须经过你的审查和测试</strong>。AI可能：</p>
+<ul>
+<li>修复了表面症状但没解决根因</li>
+<li>引入了新的安全问题（SQL注入、XSS）</li>
+<li>使用了已废弃的API</li>
+<li>在特定边缘情况下仍然会出错</li>
+</ul>
+<p><strong>AI修bug的正确姿势：AI定位根因 + 提出方案 → 你审查 → 你测试 → 通过才合并。</strong></p>
+<h2 id="总结">总结</h2>
+<p>AI调试不是魔法，而是<strong>系统化的协作流程</strong>：</p>
+<ol>
+<li><strong>给足上下文</strong>：报错 + 代码 + 版本 + 预期行为</li>
+<li><strong>分步推进</strong>：先定位根因，再要方案</li>
+<li><strong>建立反馈循环</strong>：测试结果反馈回去，迭代修复</li>
+<li><strong>你负责决策</strong>：AI提方案，你拍板</li>
+</ol>
+<p>记住：AI最擅长的是「帮你找到你忽略的那个细节」，不是「替你思考」。</p>
+<p>把调试时间从30分钟降到2分钟，这才是AI工具真正的生产力——比AI写代码快了多少倍更有意义。</p>
+<hr>
+<blockquote>
+<p><strong>AI编程工具链系列：</strong></p>
+<ul>
+<li><a href="/posts/ai-coding-assistant-guide-2026/">AI编程助手完全指南</a></li>
+<li><a href="/posts/claude-code-vs-cursor-vs-copilot/">Claude vs Cursor vs Copilot 横评</a></li>
+<li><a href="/posts/ai-build-website-zero/">零代码用AI搭建网站</a></li>
+<li><a href="/posts/prompt-engineering-handbook/">Prompt Engineering 实战手册</a></li>
+<li>👉 AI Debugging：让AI帮你修bug（本文）</li>
+<li>系列完结 ✅</li>
+</ul>
+</blockquote>
+
+  </div>
+</article>
+
+<nav class="post-nav">
+  
+  <a href="/posts/prompt-engineering-handbook/" class="prev">← AI编程工具链：Prompt Engineering 实战手册</a>
+  
+  
+  <a href="/posts/product-validation-no-code/" class="next">独立开发者全栈生存指南：产品验证——不写代码先验证需求 →</a>
+  
+</nav>
+
+<section class="comments">
+  <h2>💬 Comments</h2>
+  <script src="https://utteranc.es/client.js"
+          repo="zhouyangimt/zhouyangimt.github.io"
+          issue-term="pathname"
+          label="comment"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p>
+  </footer>
+  <script src="/js/search.js?v=1"></script>
+</body>
+</html>

@@ -1,45 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Noodles on zhouyang — The 25th Frame</title>
-		<link>https://zhouyang.dev/tags/noodles/</link>
-		<description>Recent content in Noodles on zhouyang — The 25th Frame</description>
-		<generator>Hugo</generator>
-		<language>en</language>
-		
-		
-		
-		
-			<lastBuildDate>Wed, 01 Jul 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://zhouyang.dev/tags/noodles/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Scallion Oil Noodles — Shanghai&#39;s Midnight Alchemy</title>
-				<link>https://zhouyang.dev/cuisine/scallion-oil-noodles/</link>
-				<pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/scallion-oil-noodles/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/scallion-oil-noodles-1.jpg&#34; alt=&#34;Scallion Oil Noodles — a bowl of dark, glossy noodles dressed in scallion-infused oil, served on a wooden table&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2am. You&amp;rsquo;ve just gotten off a late conference call with the Redmond office — the kind where you spent forty minutes explaining the same architecture decision three different ways. Your brain is fried. Your stomach is empty. The only place still open is the noodle cart at the end of the lane, run by an old man who&amp;rsquo;s been there since before your apartment building existed.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Gan Chao Niu He: The Noodle That Tests Every Cantonese Chef</title>
-				<link>https://zhouyang.dev/cuisine/gan-chao-niu-he/</link>
-				<pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/gan-chao-niu-he/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/gan-chao-niu-he-1.jpg?v=4&#34; alt=&#34;Gan Chao Niu He — wide rice noodles with seared beef, scallions, and bean sprouts on a dark plate&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 11:47pm in Mong Kok and the &lt;em&gt;cha chaan teng&lt;/em&gt; is still running at full volume. The cook — a man who has not spoken a complete sentence since 2003 — pulls a jet of flame across the wok and the whole restaurant smells like a controlled burn. You ordered Gan Chao Niu He (干炒牛河, &lt;em&gt;gān chǎo niú hé&lt;/em&gt;) five minutes ago. You will receive it in approximately forty-five seconds.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Lanzhou Beef Noodles: The Five-Color Morning Ritual That Built a City</title>
-				<link>https://zhouyang.dev/cuisine/lanzhou-beef-noodles/</link>
-				<pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/lanzhou-beef-noodles/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/lanzhou-beef-noodles-1.jpg?v=1&#34; alt=&#34;Lanzhou Beef Noodles — a steaming bowl of hand-pulled noodles in clear beef broth with chili oil, sliced radish, and cilantro&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 6:14 in the morning and Lanzhou is seven degrees Celsius. The high-desert cold cuts through whatever jacket you brought, and the sky is still the color of spent charcoal.&lt;/p&gt;&#xA;&lt;p&gt;Then you hear it. &lt;em&gt;Thwack.&lt;/em&gt; A wet slap of dough hitting steel, echoing down an alley off Zhangye Road. You follow the sound. You always follow the sound.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Dan Dan Noodles: The Street Snack That Outran Its Own City</title>
-				<link>https://zhouyang.dev/cuisine/dan-dan-noodles/</link>
-				<pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://zhouyang.dev/cuisine/dan-dan-noodles/</guid>
-				<description>&lt;p&gt;&lt;img src=&#34;https://zhouyang.dev/images/dan-dan-noodles-1.jpg?v=1&#34; alt=&#34;Dan Dan Noodles — a bowl of springy wheat noodles coated in sesame-chili sauce with minced pork and scallions&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 11pm in Chengdu and the alley is mostly dark except for one cart with a single bulb swinging from a wire. The cart has two cabinets — one holds a charcoal stove, the other stacks of blue-rimmed bowls. The man behind it scoops a spoonful of sesame paste into a bowl, then chili oil the color of brake lights, then a splash of black vinegar. The smell hits you ten feet out: roasted &lt;em&gt;huājiāo&lt;/em&gt; sizzling in rendered pork fat, fermented &lt;em&gt;yácài&lt;/em&gt; releasing its funky-sweet depth, garlic crushed rough and still raw.&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Noodles on zhouyang — The 25th Frame</title><link>https://zhouyang.dev/tags/noodles/</link><description>Recent content in Noodles on zhouyang — The 25th Frame</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 01 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhouyang.dev/tags/noodles/index.xml" rel="self" type="application/rss+xml"/><item><title>Scallion Oil Noodles — Shanghai's Midnight Alchemy</title><link>https://zhouyang.dev/cuisine/scallion-oil-noodles/</link><pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/scallion-oil-noodles/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/scallion-oil-noodles-1.jpg" alt="Scallion Oil Noodles — a bowl of dark, glossy noodles dressed in scallion-infused oil, served on a wooden table"&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s 2am. You&amp;rsquo;ve just gotten off a late conference call with the Redmond office — the kind where you spent forty minutes explaining the same architecture decision three different ways. Your brain is fried. Your stomach is empty. The only place still open is the noodle cart at the end of the lane, run by an old man who&amp;rsquo;s been there since before your apartment building existed.&lt;/p&gt;</description></item><item><title>Gan Chao Niu He: The Noodle That Tests Every Cantonese Chef</title><link>https://zhouyang.dev/cuisine/gan-chao-niu-he/</link><pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/gan-chao-niu-he/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/gan-chao-niu-he-1.jpg?v=4" alt="Gan Chao Niu He — wide rice noodles with seared beef, scallions, and bean sprouts on a dark plate"&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s 11:47pm in Mong Kok and the &lt;em&gt;cha chaan teng&lt;/em&gt; is still running at full volume. The cook — a man who has not spoken a complete sentence since 2003 — pulls a jet of flame across the wok and the whole restaurant smells like a controlled burn. You ordered Gan Chao Niu He (干炒牛河, &lt;em&gt;gān chǎo niú hé&lt;/em&gt;) five minutes ago. You will receive it in approximately forty-five seconds.&lt;/p&gt;</description></item><item><title>Lanzhou Beef Noodles: The Five-Color Morning Ritual That Built a City</title><link>https://zhouyang.dev/cuisine/lanzhou-beef-noodles/</link><pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/lanzhou-beef-noodles/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/lanzhou-beef-noodles-1.jpg?v=1" alt="Lanzhou Beef Noodles — a steaming bowl of hand-pulled noodles in clear beef broth with chili oil, sliced radish, and cilantro"&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s 6:14 in the morning and Lanzhou is seven degrees Celsius. The high-desert cold cuts through whatever jacket you brought, and the sky is still the color of spent charcoal.&lt;/p&gt;
+&lt;p&gt;Then you hear it. &lt;em&gt;Thwack.&lt;/em&gt; A wet slap of dough hitting steel, echoing down an alley off Zhangye Road. You follow the sound. You always follow the sound.&lt;/p&gt;</description></item><item><title>Dan Dan Noodles: The Street Snack That Outran Its Own City</title><link>https://zhouyang.dev/cuisine/dan-dan-noodles/</link><pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate><guid>https://zhouyang.dev/cuisine/dan-dan-noodles/</guid><description>&lt;p&gt;&lt;img src="https://zhouyang.dev/images/dan-dan-noodles-1.jpg?v=1" alt="Dan Dan Noodles — a bowl of springy wheat noodles coated in sesame-chili sauce with minced pork and scallions"&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s 11pm in Chengdu and the alley is mostly dark except for one cart with a single bulb swinging from a wire. The cart has two cabinets — one holds a charcoal stove, the other stacks of blue-rimmed bowls. The man behind it scoops a spoonful of sesame paste into a bowl, then chili oil the color of brake lights, then a splash of black vinegar. The smell hits you ten feet out: roasted &lt;em&gt;huājiāo&lt;/em&gt; sizzling in rendered pork fat, fermented &lt;em&gt;yácài&lt;/em&gt; releasing its funky-sweet depth, garlic crushed rough and still raw.&lt;/p&gt;</description></item></channel></rss>

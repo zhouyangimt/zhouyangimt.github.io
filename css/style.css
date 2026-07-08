@@ -134,7 +134,6 @@ nav {
 }
 .section-header:first-of-type { margin-top: 10px; }
 .section-header h2 { font-size: 1.5em; color: var(--accent); }
-.cuisine-header h2 { color: var(--cuisine-accent); }
 .section-title-row {
   display: flex;
   align-items: center;

@@ -8,7 +8,9 @@
 <a href=/privacy/>Privacy</a>
 <span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
 <a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>Hugo静态博客从入门到部署：比WordPress快10倍</h1><div class=meta><time>2026-06-12</time>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>Hugo静态博客从入门到部署：比WordPress快10倍</h1><div class=meta><time>2026-06-12</time>
 <span class=tags><span class=tag>独立开发</span><span class=tag>工具教程</span><span class=tag>Hugo</span></span></div></header><div class=content><h2 id=wordpress-vs-静态博客>WordPress vs 静态博客</h2><p>WordPress的痛点：</p><ul><li>需要服务器/PHP/MySQL</li><li>页面加载慢（除非花钱优化）</li><li>安全漏洞多（插件是重灾区）</li><li>编辑器卡顿</li></ul><p>Hugo等静态博客：</p><ul><li>纯HTML文件，加载飞起</li><li>免费托管（GitHub Pages / Cloudflare Pages）</li><li>没有数据库，没有后端，零漏洞</li><li>Markdown写作，Git版本控制</li></ul><p><strong>结论：做内容站，Hugo是正确答案。</strong></p><h2 id=hugo是什么>Hugo是什么？</h2><p>Go语言写的静态网站生成器。你把Markdown文章放进去，它输出一个完整的HTML网站。</p><p><strong>核心数据</strong>：</p><ul><li>构建速度：1000篇文章 &lt; 1秒</li><li>主题数量：300+</li><li>配置文件：一个 <code>hugo.toml</code></li></ul><h2 id=安装hugo>安装Hugo</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># macOS</span>
 </span></span><span style=display:flex><span>brew install hugo
 </span></span><span style=display:flex><span>

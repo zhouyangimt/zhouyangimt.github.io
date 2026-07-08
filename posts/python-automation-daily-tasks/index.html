@@ -8,7 +8,9 @@
 <a href=/privacy/>Privacy</a>
 <span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
 <a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
-<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a></span></div></nav></header><main><article class=single-post><header><h1>用Python自动化你的10个日常重复工作（附完整代码）</h1><div class=meta><time>2026-06-05</time>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>用Python自动化你的10个日常重复工作（附完整代码）</h1><div class=meta><time>2026-06-05</time>
 <span class=tags><span class=tag>Python</span><span class=tag>自动化</span><span class=tag>独立开发</span></span></div></header><div class=content><p><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&amp;h=630&amp;fit=crop" alt=Python自动化编程></p><h2 id=你每天在浪费多少时间>你每天在浪费多少时间？</h2><p>想一想：重命名一堆文件、整理下载文件夹、定时发邮件、从Excel里提取数据……这些事每天都在消耗你。</p><p>Python最擅长干这个。下面10个脚本，复制即用。</p><h2 id=1-批量重命名文件>1. 批量重命名文件</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
 </span></span><span style=display:flex><span>path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./images&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i, f <span style=color:#f92672>in</span> enumerate(os<span style=color:#f92672>.</span>listdir(path)):

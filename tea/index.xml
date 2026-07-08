@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tea on zhouyang — The 25th Frame</title>
+    <link>https://zhouyang.dev/tea/</link>
+    <description>Recent content in Tea on zhouyang — The 25th Frame</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 08 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://zhouyang.dev/tea/index.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Tieguanyin: The Iron Goddess in Your Cup</title>
+      <link>https://zhouyang.dev/tea/tieguanyin-iron-goddess-orchid/</link>
+      <pubDate>Wed, 08 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://zhouyang.dev/tea/tieguanyin-iron-goddess-orchid/</guid>
+      <description>Oolong tea from Anxi, Fujian — orchid fragrance, iron goddess legend, and the art of gongfu brewing.</description>
+    </item>
+    <item>
+      <title>The Six Types of Chinese Tea: A Complete Guide for People Who Just Want Good Tea</title>
+      <link>https://zhouyang.dev/tea/six-types-chinese-tea-guide/</link>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://zhouyang.dev/tea/six-types-chinese-tea-guide/</guid>
+      <description>Green, white, yellow, oolong, black, and dark — a practical guide to China's six tea categories.</description>
+    </item>
+    <item>
+      <title>Longjing: One Leaf, One Spring</title>
+      <link>https://zhouyang.dev/tea/longjing-one-leaf-one-spring/</link>
+      <pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://zhouyang.dev/tea/longjing-one-leaf-one-spring/</guid>
+      <description>The most famous green tea in China — flat-pressed leaves from Hangzhou's West Lake, roasted chestnut aroma.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,60 @@
+baseURL = 'https://zhouyang.dev/'
+languageCode = 'en-us'
+locale = 'zh-CN'
+title = "zhouyang — The 25th Frame"
+theme = 'minimal'
+buildFuture = true
+
+[params]
+  author = 'zhouyang'
+  description = 'From Shanghai. ex-Microsoft, ex-Google, ex-NVIDIA. Sharing tech with China, and the real taste of Chinese food, tea, and baijiu with the world.'
+
+[outputs]
+  home = ['HTML', 'SearchIndex']
+  section = ['HTML']
+
+[outputFormats.SearchIndex]
+  mediaType = 'application/json'
+  baseName = 'search-index'
+  isPlainText = true
+
+[pagination]
+  pagerSize = 20
+
+[menu]
+  [[menu.main]]
+    name = 'Home'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    name = 'Tech'
+    url = '/posts/'
+    weight = 2
+  [[menu.main]]
+    name = 'Chinese Cuisine'
+    url = '/cuisine/'
+    weight = 3
+  [[menu.main]]
+    name = 'Tea'
+    url = '/tea/'
+    weight = 4
+  [[menu.main]]
+    name = 'Baijiu'
+    url = '/baijiu/'
+    weight = 5
+  [[menu.main]]
+    name = 'About'
+    url = '/about/'
+    weight = 6
+  [[menu.main]]
+    name = 'Disclosure'
+    url = '/affiliate-disclosure/'
+    weight = 7
+  [[menu.main]]
+    name = 'Privacy'
+    url = '/privacy/'
+    weight = 8
+
+[markup.goldmark.renderer]
+  unsafe = true
+paginate = 20

@@ -222,14 +222,21 @@ nav {
 /* Cuisine grid */
 .cuisine-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: 20px;
 }
-/* Cuisine grid — compact: 2 columns on homepage */
+/* Cuisine grid — compact: homepage */
 .cuisine-grid-compact {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+/* Tablet: 2 columns */
+@media (max-width: 1000px) {
+  .cuisine-grid,
+  .cuisine-grid-compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .cuisine-card {
   background: var(--bg-card);
@@ -356,6 +363,7 @@ footer {
 @media (max-width: 600px) {
   .hero h1 { font-size: 1.8em; }
   .post-card { padding: 18px; }
-  .cuisine-grid { grid-template-columns: 1fr; }
+  .cuisine-grid,
+  .cuisine-grid-compact { grid-template-columns: 1fr; }
   nav { flex-direction: column; }
 }

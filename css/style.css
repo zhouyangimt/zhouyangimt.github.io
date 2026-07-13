@@ -315,7 +315,12 @@ nav {
   color: var(--text-muted);
   margin: 16px 0;
 }
-.content img { max-width: 100%; border-radius: 8px; }
+.content img { max-width: 100%; height: auto; border-radius: 8px; }
+.content img[width][height] { height: auto !important; }
+.post-content img { max-width: 100%; height: auto; border-radius: 8px; }
+.post-content img[width][height] { height: auto !important; }
+.tea-type-img { max-width: 100%; height: auto; border-radius: 8px; }
+.tea-type-img[width][height] { height: auto !important; }
 
 .post-nav {
   display: flex;
@@ -365,6 +370,7 @@ footer {
   .post-card { padding: 18px; }
   .cuisine-grid,
   .cuisine-grid-compact { grid-template-columns: 1fr; }
+  .cuisine-thumb { height: 180px; }
   nav { flex-direction: column; }
 }
 

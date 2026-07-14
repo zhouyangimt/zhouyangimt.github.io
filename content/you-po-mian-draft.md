@@ -4,6 +4,7 @@ date: 2026-07-13
 description: "Hand-pulled biang biang noodles, a fistful of chili flakes, raw garlic, and a ladle of smoking oil — the loudest dish in Chinese cooking."
 tags: ["shaanxi", "noodles", "spicy", "street-food", "classic", "wheat"]
 slug: "you-po-mian"
+images: ["/images/you-po-mian-1.jpg", "/images/you-po-mian-2.jpg", "/images/you-po-mian-3.jpg"]
 ---
 
 I was twenty-three, alone in Xi'an for the first time, walking down a back alley behind the Drum Tower at eleven at night. I had no plan. I had a hundred kuai and a stomach that hadn't eaten since lunch on the train.

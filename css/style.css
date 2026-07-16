@@ -222,20 +222,20 @@ nav {
 /* Cuisine grid */
 .cuisine-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 20px;
   margin-top: 20px;
 }
 /* Cuisine grid — compact: homepage */
 .cuisine-grid-compact {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 16px;
 }
 /* Tablet: 2 columns */
 @media (max-width: 1000px) {
   .cuisine-grid,
   .cuisine-grid-compact {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 }
 .cuisine-card {

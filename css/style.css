@@ -370,7 +370,7 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .cuisine-card.science-card .cuisine-thumb {
-  height: 100px;
+  height: 100px !important;
 }
 .cuisine-card.science-card .cuisine-info {
   padding: 10px 14px;

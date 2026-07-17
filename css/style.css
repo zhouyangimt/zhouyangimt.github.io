@@ -385,15 +385,35 @@ footer {
 .cuisine-card.science-card .cuisine-desc {
   display: none;
 }
-.section-divider {
-  border: none;
-  border-top: 2px solid var(--border);
-  margin: 10px 0 24px;
+.science-section, .dish-section {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
 }
-.dish-section-header {
+.science-section-header, .dish-section-header {
+  grid-column: 1 / -1;
   font-size: 1.1em;
   color: var(--text-muted);
-  margin-bottom: 14px;
+  margin-bottom: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.section-divider {
+  grid-column: 1 / -1;
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 0 0 10px;
+}
+@media (max-width: 1000px) {
+  .science-section, .dish-section {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .science-section, .dish-section {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 600px) {

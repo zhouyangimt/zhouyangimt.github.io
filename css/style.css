@@ -358,13 +358,42 @@ footer {
   font-size: 1.2em;
   color: var(--text-muted);
 }
-/* Recipe card — no image, compact */
-.cuisine-card-recipe .cuisine-info {
-  padding: 20px 22px;
+/* Science series cards — compact, half-height */
+.science-section {
+  margin-bottom: 30px;
 }
-.cuisine-card-recipe .cuisine-info h3 {
-  font-size: 1em;
-  color: var(--accent);
+.science-section-header {
+  font-size: 1.1em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.cuisine-card.science-card .cuisine-thumb {
+  height: 100px;
+}
+.cuisine-card.science-card .cuisine-info {
+  padding: 10px 14px;
+}
+.cuisine-card.science-card .cuisine-info h3 {
+  font-size: 0.95em;
+  margin-bottom: 0;
+}
+.cuisine-card.science-card .cuisine-tags,
+.cuisine-card.science-card .meta,
+.cuisine-card.science-card .summary,
+.cuisine-card.science-card .cuisine-desc {
+  display: none;
+}
+.section-divider {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 10px 0 24px;
+}
+.dish-section-header {
+  font-size: 1.1em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
 }
 
 @media (max-width: 600px) {

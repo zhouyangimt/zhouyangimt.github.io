@@ -74,6 +74,7 @@ We're chasing the most authentic version of every dish — the way locals eat it
   var allCards = Array.from(document.querySelectorAll('.cuisine-card'));
   var scienceCards = allCards.filter(function(c) { return c.classList.contains('science-card'); });
   var dishCards = allCards.filter(function(c) { return !c.classList.contains('science-card') && c.getAttribute('data-tags') && !c.getAttribute('data-tags').includes('roadmap'); });
+  var roadmapCard = allCards.filter(function(c) { return c.getAttribute('data-tags') && c.getAttribute('data-tags').includes('roadmap'); })[0];
   var tabs = document.querySelectorAll('.cuisine-tab');
   var grid = document.getElementById('cuisine-grid');
   var scienceSection = document.querySelector('.science-section');
@@ -124,6 +125,7 @@ We're chasing the most authentic version of every dish — the way locals eat it
 
     if (scienceSection) scienceSection.style.display = (currentPage === 1 && currentRegion === 'all') ? '' : 'none';
     if (divider) divider.style.display = (currentPage === 1 && currentRegion === 'all') ? '' : 'none';
+    if (roadmapCard) roadmapCard.style.display = (currentPage === 1 && currentRegion === 'all') ? '' : 'none';
 
     var html = '';
     if (totalPages > 1) {

@@ -259,6 +259,7 @@ nav {
   transition: transform 0.3s;
 }
 .cuisine-card:hover .cuisine-thumb img { transform: scale(1.05); }
+.cover-img { max-width:100%;height:auto;display:block;margin:0 auto 1.5em }
 .cuisine-info { padding: 18px; }
 .cuisine-info h3 { font-size: 1.15em; margin-bottom: 6px; }
 .cuisine-info h3 a { color: var(--cuisine-accent); text-decoration: none; }

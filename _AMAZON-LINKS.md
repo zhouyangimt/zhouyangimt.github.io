@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-08-04
+> Last updated: 2026-08-03
 > Total unique ASINs: 46
 > Store ID: zhouyang01-20
 

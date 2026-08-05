@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-08-03
-> Total unique ASINs: 46
+> Last updated: 2026-08-04
+> Total unique ASINs: 48
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -39,7 +39,7 @@
 | 31 | `B005YR0F40` | Variable Temp Kettle | t/biluochun, t/gaiwan, t/ripe-puer, t/six-types, t/tea-horse-road, t/tieguanyin | 2026-07-15 | `zhouyang01-20` |
 | 32 | `B08592S282` | BiLuoChun Tea | t/biluochun-green-snail-spring | 2026-07-28 | `zhouyang01-20` |
 | 33 | `B0CNS8DMGM` | Yixing Clay Teapot | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
-| 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/dahongpao, t/huangshan-maofeng, t/shuixian | 2026-07-28 | `zhouyang01-20` |
+| 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/huangshan-maofeng | 2026-07-28 | `zhouyang01-20` |
 | 35 | `B0CQRTGM73` | Gaiwan Set | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan, t/ripe-puer, t/tieguanyin | 2026-07-15 | `zhouyang01-20` |
@@ -52,14 +52,16 @@
 | 44 | `B0DN5QWCFY` | Tieguanyin Anxi (via amzn.to/44er0T4) | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 45 | `B09TNR5X93` | Ripe Puerh (via amzn.to/4vY0MAv) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 46 | `B0GDDH91LS` | Puerh Cake (via amzn.to/4wDNQ2H) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
+| 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
+| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 16 |
-| **Total** | **46** |
+| Tea | 18 |
+| **Total** | **48** |
 
 ## Issues
 

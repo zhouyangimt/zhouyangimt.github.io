@@ -1,5 +1,17 @@
 [
   {
+    "title": "独立开发者全栈生存指南：一人公司运营——文档、支持与自动化",
+    "url": "/posts/one-person-company-operations/",
+    "date": "2026-08-05",
+    "tags": [
+      "独立开发",
+      "一人公司",
+      "自动化",
+      "运营"
+    ],
+    "summary": "你是唯一的员工，却要负责产品、开发、文档、客服、运维。怎么用最少的时间搞定一切？文档写一次用一万次，Chatbot 过滤 80% 重复问题，Cron 定时任务让你睡觉也在赚钱——一人公司的完整运营系统。"
+  },
+  {
     "title": "Huangshan Maofeng: Tea From the Mountain Where Clouds Are Born",
     "url": "/tea/huangshan-maofeng-misty-mountain/",
     "summary": "The first time I went to Huangshan, I made the mistake every first-timer makes: I checked the weather forecast. Sunny, 22°C, zero percent chance of rain. Three hours later I was standing in a cloud so thick I couldn't see my own feet.",

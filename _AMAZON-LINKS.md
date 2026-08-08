@@ -53,15 +53,16 @@
 | 45 | `B09TNR5X93` | Ripe Puerh (via amzn.to/4vY0MAv) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 46 | `B0GDDH91LS` | Puerh Cake (via amzn.to/4wDNQ2H) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
-| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
+| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong | 2026-08-04 | `zhouyang01-20` |
+| 49 | `B0FLXBGZK9` | iTeaworld Ya Shi Xiang Dancong | t/fenghuang-dancong-phoenix-oolong | 2026-08-09 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 18 |
-| **Total** | **48** |
+| Tea | 21 |
+| **Total** | **49** |
 
 ## Issues
 

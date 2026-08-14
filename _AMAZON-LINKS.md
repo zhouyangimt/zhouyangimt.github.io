@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-08-04
-> Total unique ASINs: 48
+> Last updated: 2026-08-14
+> Total unique ASINs: 50
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -36,7 +36,7 @@
 | 28 | `B0CQL2T1ZL` | Wok Spatula 17in | c/wok-guide | 2026-07-22 | `zhouyang01-20` |
 | 29 | `B07KVH87K7` | Wok Spatula 14.7in | c/wok-guide | 2026-07-22 | `zhouyang01-20` |
 | 30 | `B098R79V6M` | Wok Burner Ring | c/wok-guide | 2026-07-22 | `zhouyang01-20` |
-| 31 | `B005YR0F40` | Variable Temp Kettle | t/biluochun, t/gaiwan, t/ripe-puer, t/six-types, t/tea-horse-road, t/tieguanyin | 2026-07-15 | `zhouyang01-20` |
+| 31 | `B005YR0F40` | Variable Temp Kettle | t/biluochun, t/gaiwan, t/ripe-puer, t/six-types, t/tea-horse-road, t/tieguanyin, t/anji-baicha-albino-green | 2026-07-15 | `zhouyang01-20` |
 | 32 | `B08592S282` | BiLuoChun Tea | t/biluochun-green-snail-spring | 2026-07-28 | `zhouyang01-20` |
 | 33 | `B0CNS8DMGM` | Yixing Clay Teapot | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/huangshan-maofeng | 2026-07-28 | `zhouyang01-20` |
@@ -44,7 +44,7 @@
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan, t/ripe-puer, t/tieguanyin | 2026-07-15 | `zhouyang01-20` |
 | 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan, t/tea-chan, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
-| 39 | `B08ZKTJ8NN` | Glass Teapot | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
+| 39 | `B08ZKTJ8NN` | Glass Teapot | t/huangshan-maofeng-misty-mountain, t/anji-baicha-albino-green | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 42 | `B0FJQZNNZP` | Tea Sampler Set | t/six-types-chinese-tea-guide | 2026-07-20 | `zhouyang01-20` |
@@ -55,14 +55,15 @@
 | 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
 | 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong | 2026-08-04 | `zhouyang01-20` |
 | 49 | `B0FLXBGZK9` | iTeaworld Ya Shi Xiang Dancong | t/fenghuang-dancong-phoenix-oolong | 2026-08-09 | `zhouyang01-20` |
+| 50 | `B07JHMFKCK` | oriarmcha Anji Bai Cha Green Tea Loose Leaf 225g | t/anji-baicha-albino-green | 2026-08-14 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 21 |
-| **Total** | **49** |
+| Tea | 22 |
+| **Total** | **50** |
 
 ## Issues
 

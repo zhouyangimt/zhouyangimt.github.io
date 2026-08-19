@@ -1,5 +1,20 @@
 [
   {
+    "title": "Taiping Houkui: The Monkey Chief of Green Tea",
+    "url": "/tea/taiping-houkui-monkey-chief/",
+    "summary": "The first time someone handed me Taiping Houkui, I thought they were giving me a pressed flower, not tea. Each leaf lay flat on the white paper, a full hand-width long — deep green, straight as a blade.",
+    "section": "tea",
+    "date": "2026-08-19",
+    "tags": [
+      "green-tea",
+      "taiping-houkui",
+      "anhui",
+      "huangshan",
+      "classic",
+      "high-mountain"
+    ]
+  },
+  {
     "title": "AI编程工具链：AI 代码审查——让 AI 帮你 Code Review",
     "url": "/posts/ai-code-review-guide/",
     "date": "2026-08-18",

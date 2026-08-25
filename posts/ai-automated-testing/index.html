@@ -1,0 +1,129 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI编程工具链：AI 自动化测试——从单元测试到 E2E | zhouyang — The 25th Frame</title><meta name=description content="测试是你明知道该写、却总拖到最后的那件事。让 AI 帮你把单元测试、集成测试到 E2E 一路补齐：怎么给老代码补测试、怎么从 bug 反推回归测试、怎么接进 CI 每次提交自动跑。"><link rel=canonical href=https://zhouyang.dev/posts/ai-automated-testing/><meta property="og:title" content="AI编程工具链：AI 自动化测试——从单元测试到 E2E | zhouyang — The 25th Frame"><meta property="og:description" content="测试是你明知道该写、却总拖到最后的那件事。让 AI 帮你把单元测试、集成测试到 E2E 一路补齐：怎么给老代码补测试、怎么从 bug 反推回归测试、怎么接进 CI 每次提交自动跑。"><meta property="og:url" content="https://zhouyang.dev/posts/ai-automated-testing/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/ai-testing-workflow.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI编程工具链：AI 自动化测试——从单元测试到 E2E | zhouyang — The 25th Frame"><meta name=twitter:description content="测试是你明知道该写、却总拖到最后的那件事。让 AI 帮你把单元测试、集成测试到 E2E 一路补齐：怎么给老代码补测试、怎么从 bug 反推回归测试、怎么接进 CI 每次提交自动跑。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","headline":"AI编程工具链：AI 自动化测试——从单元测试到 E2E","url":"https:\/\/zhouyang.dev\/posts\/ai-automated-testing\/","datePublished":"2026-08-25T00:00:00+00:00","dateModified":"2026-08-25T00:00:00+00:00","author":{"@type":"Person","name":"zhouyang"},"description":"测试是你明知道该写、却总拖到最后的那件事。让 AI 帮你把单元测试、集成测试到 E2E 一路补齐：怎么给老代码补测试、怎么从 bug 反推回归测试、怎么接进 CI 每次提交自动跑。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/baijiu/>Baijiu</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 自动化测试——从单元测试到 E2E</h1><div class=meta><time>2026-08-25</time>
+<span class=tags><span class=tag>AI</span><span class=tag>自动化测试</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=测试是每个独立开发者最想省掉的代码>测试是每个独立开发者「最想省掉」的代码</h2><p>写测试这件事，独立开发者心里都清楚它重要，但就是不想写。为什么？因为写测试不产生新功能——用户看不见，进度却实打实地被拖慢。大厂有专门的 QA 团队、有覆盖率门槛卡着；你一个人写代码，测试大概率排在「有空再补」的清单最后，然后永远没空。</p><p>但测试省不得。你上一个功能改了五行，没跑测试就上线，结果另一个模块崩了。这种事故独立开发者最伤不起——没人给你兜底，出问题得自己半夜爬起来修。我在微软时见过太多「改了 A、崩了 B」的线上事故，几乎都是测试没覆盖到那个交叉点。</p><p>AI 恰好是写测试最好的帮手。写测试和写业务代码不一样：测试更「模板化」、更「确定性」、更「机械」，这正是 AI 最擅长的。你只要把被测函数和期望行为说清楚，AI 能把边界用例、异常路径、Mock 全给你补上，而且写得比你手动快十倍。</p><p>这篇文章讲怎么让 AI 帮你从单元测试一路写到 E2E，最后接进 CI 自动跑。</p><h2 id=ai写测试擅长什么不擅长什么>AI 写测试，擅长什么、不擅长什么</h2><p>先把边界划清楚，别期望过高：</p><table><thead><tr><th>测试类型</th><th>AI 表现</th><th>说明</th></tr></thead><tbody><tr><td>单元测试（纯函数）</td><td>⭐⭐⭐⭐⭐</td><td>输入输出明确，AI 几乎不用想</td></tr><tr><td>边界用例补全</td><td>⭐⭐⭐⭐⭐</td><td>空值、0、负数、超长字符串，AI 想得比人全</td></tr><tr><td>异常路径 / 错误处理</td><td>⭐⭐⭐⭐</td><td>需要你说清楚「什么算异常」</td></tr><tr><td>集成测试（DB / API）</td><td>⭐⭐⭐⭐</td><td>要给出 schema 和接口契约</td></tr><tr><td>Mock / 打桩</td><td>⭐⭐⭐⭐</td><td>给它依赖关系，它能搭好</td></tr><tr><td>E2E 测试</td><td>⭐⭐⭐</td><td>选择器要稳定，AI 写的选择器常碎</td></tr><tr><td>用例的「业务正确性」</td><td>⭐⭐</td><td>期望值对不对，得你自己判断</td></tr></tbody></table><p>一句话：AI 擅长「把测试写出来」，不擅长「判断测试写得对不对」。期望值、业务规则这些，最终要你拍板。</p><h2 id=第一步给老代码补单元测试>第一步：给老代码补单元测试</h2><p>最实用的场景是给现有的、没有测试的代码补测试。直接上例子。这是我从某个订单系统扒出来的折扣计算函数：</p><pre tabindex=0><code>def calculate_discount(order_total: float, user_level: str, coupon_code: str = None) -&gt; float:
+    &quot;&quot;&quot;计算折后价。&quot;&quot;&quot;
+    discount = 0.0
+    if user_level == &quot;vip&quot;:
+        discount = 0.2
+    elif user_level == &quot;regular&quot;:
+        discount = 0.1
+    if coupon_code:
+        discount += 0.05
+    return round(order_total * (1 - discount), 2)</code></pre><p>把它和一个测试生成 prompt 一起丢给 AI。prompt 我贴出来，可以直接复用：</p><pre tabindex=0><code>给下面的函数写 pytest 单元测试。要求：
+1. 覆盖所有分支（vip / regular / 无等级 / 有优惠券 / 无优惠券）
+2. 补边界用例：0、负数、极小值、None
+3. 用 @pytest.mark.parametrize 合并同类用例
+4. 如果发现函数本身有 bug（比如折扣超过 100%、负数金额），明确指出来
+
+函数：
+[粘贴代码]</code></pre><p>AI 返回的测试：</p><pre tabindex=0><code>import pytest
+from order import calculate_discount
+
+def test_vip_20_percent():
+    assert calculate_discount(100, &quot;vip&quot;) == 80.0
+
+def test_regular_10_percent():
+    assert calculate_discount(100, &quot;regular&quot;) == 90.0
+
+def test_guest_no_discount():
+    assert calculate_discount(100, &quot;guest&quot;) == 100.0
+
+def test_coupon_stacks_on_vip():
+    assert calculate_discount(100, &quot;vip&quot;, &quot;SAVE5&quot;) == 75.0
+
+@pytest.mark.parametrize(&quot;total&quot;, [0, -1, 0.01, 999999.99])
+def test_extreme_totals(total):
+    result = calculate_discount(total, &quot;vip&quot;, &quot;SAVE5&quot;)
+    assert result is not None  # 至少不崩溃
+
+def test_none_coupon_ignored():
+    assert calculate_discount(100, &quot;vip&quot;, None) == 80.0</code></pre><p>它顺手还指出了两个函数本身的 bug：一是 <code>order_total</code> 为负数时照算不误，应该抛异常或返回 0；二是 VIP + 优惠券能叠到 25% 的折扣，如果业务上不允许叠加，这是个逻辑漏洞。</p><p>注意，第二个「bug」是业务问题，AI 只是提醒，对不对得你判断。但第一个是实打实的缺陷——没有 AI 补测试，你可能永远想不到有用户会传负数金额进来。</p><h2 id=集成测试让ai连数据库和api>集成测试：让 AI 连数据库和 API</h2><p>单元测试过了，接着是集成测试——验证你的代码和数据库、外部服务连起来还能不能跑。这部分 AI 也能写，前提是你把「契约」给它：接口的入参、返回结构、数据库表结构。</p><p>FastAPI 项目的例子。给 AI 一个接口定义：</p><pre tabindex=0><code>这是 FastAPI 项目。帮我写集成测试，用 httpx 的 AsyncClient：
+- POST /users  入参 {name, email}，201 返回 {id, name, email}
+- GET /users/{id}  200 返回用户，404 返回 {detail: &quot;not found&quot;}
+用测试数据库，每个测试用 fixture 清理数据。</code></pre><p>AI 生成：</p><pre tabindex=0><code>import pytest
+from httpx import AsyncClient
+from app.main import app
+from app.db import engine, Base
+
+@pytest.fixture(autouse=True)
+async def clean_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+
+@pytest.mark.asyncio
+async def test_create_and_get_user():
+    async with AsyncClient(app=app, base_url=&quot;http://test&quot;) as client:
+        resp = await client.post(&quot;/users&quot;, json={&quot;name&quot;: &quot;zhouyang&quot;, &quot;email&quot;: &quot;z@example.com&quot;})
+        assert resp.status_code == 201
+        user_id = resp.json()[&quot;id&quot;]
+
+        got = await client.get(f&quot;/users/{user_id}&quot;)
+        assert got.status_code == 200
+        assert got.json()[&quot;name&quot;] == &quot;zhouyang&quot;
+
+@pytest.mark.asyncio
+async def test_get_missing_user_404():
+    async with AsyncClient(app=app, base_url=&quot;http://test&quot;) as client:
+        resp = await client.get(&quot;/users/99999&quot;)
+        assert resp.status_code == 404
+        assert resp.json()[&quot;detail&quot;] == &quot;not found&quot;</code></pre><p>集成测试的关键是让 AI 看到 schema 和接口文档。信息给得越全，它写的测试越准，跑一次就过的概率越高。</p><h2 id=e2e测试playwright让ai生成>E2E 测试：Playwright 让 AI 生成</h2><p>最顶层的 E2E 测试模拟真实用户操作。这里最顺手的是 Playwright——AI 甚至能给你生成带定位器的完整脚本。但注意，E2E 是 AI 表现最弱的一层，选择器经常碎，需要你自己跑一遍微调。</p><p>给 AI 一个场景描述：</p><pre tabindex=0><code>用 Playwright (Python, sync API) 写一个登录 E2E 测试：
+1. 打开 /login
+2. 填入邮箱和密码
+3. 点提交
+4. 断言跳转到 /dashboard，页面包含 &quot;欢迎回来&quot;</code></pre><p>AI 生成：</p><pre tabindex=0><code>from playwright.sync_api import sync_playwright, expect
+
+def test_login_flow():
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.goto(&quot;http://localhost:3000/login&quot;)
+        page.fill(&quot;input[name=email]&quot;, &quot;test@example.com&quot;)
+        page.fill(&quot;input[name=password]&quot;, &quot;secret123&quot;)
+        page.click(&quot;button[type=submit]&quot;)
+        expect(page).to_have_url(&quot;http://localhost:3000/dashboard&quot;)
+        expect(page.locator(&quot;h1&quot;)).to_contain_text(&quot;欢迎回来&quot;)
+        browser.close()</code></pre><p>E2E 的价值不在覆盖多少，而在守住几条「用户最核心的路径」——注册、登录、下单、支付。这几条路一旦断了，影响的是真金白银。AI 帮你把骨架搭出来，你花十分钟调选择器，比从头写省太多。</p><p>整个流程画成一张图，方便你对照：</p><p><img src=/images/ai-testing-workflow.png alt="AI 自动化测试工作流" width="554" height="1012" decoding="async" loading="lazy"></p><h2 id=从bug反推测试让ai写回归测试>从 bug 反推测试：让 AI 写回归测试</h2><p>AI 写测试最高级的用法，是「从 bug 反推测试」。线上出了一个 bug，修完之后让 AI 把 bug 场景固化成一条回归测试，保证它永远不再复发。</p><p>比如线上报了个问题：订单金额为 0 时，结算接口直接 500 了。修完之后，让 AI 写回归测试：</p><pre tabindex=0><code>我们刚修了一个 bug：订单金额为 0 时，结算接口 /checkout 会 500。
+现在修好了（返回 400 + 提示）。写一条回归测试锁定这个场景，防止将来再犯。</code></pre><p>AI 生成：</p><pre tabindex=0><code>@pytest.mark.asyncio
+async def test_checkout_zero_amount_returns_400():
+    async with AsyncClient(app=app, base_url=&quot;http://test&quot;) as client:
+        resp = await client.post(&quot;/checkout&quot;, json={&quot;order_id&quot;: 1, &quot;amount&quot;: 0})
+        assert resp.status_code == 400
+        assert &quot;金额&quot; in resp.json()[&quot;detail&quot;]</code></pre><p>这条测试的注释里写清楚它对应哪个 bug，半年后有人删掉它，一看注释就知道为什么不能删。这个习惯比覆盖率数字值钱得多。</p><h2 id=覆盖率不是kpi>覆盖率不是 KPI</h2><p>补测试的人最容易掉进一个坑：追求 100% 覆盖率。AI 能帮你把覆盖率刷上去，但那没有意义——覆盖了不代表测对了，一行代码被执行到，和这行代码的行为被验证是两回事。</p><p>我给自己定的规矩是：核心逻辑（钱相关的计算、鉴权、数据迁移）必须高覆盖，并且测试要「断言具体值」而不是「断言不崩溃」；边缘的胶水代码，覆盖不覆盖无所谓。</p><p>所以 AI 分析覆盖率时，我让它只关注「没覆盖到的关键分支」，而不是「把数字刷满」：</p><pre tabindex=0><code>跑一下 pytest --cov，然后只列出核心模块里没被覆盖的分支，别管覆盖率百分比。
+对每个没覆盖的分支，说明它是什么场景，值得不值得补测试。</code></pre><h2 id=接进ci每次提交自动跑>接进 CI，每次提交自动跑</h2><p>测试写完了，最后一步是让它自动跑起来，否则你还是会忘。GitHub Actions 一个最小配置：</p><pre tabindex=0><code># .github/workflows/test.yml
+name: Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.11&quot;
+      - run: pip install -r requirements.txt pytest pytest-cov
+      - run: pytest --cov=app --cov-report=term-missing</code></pre><p>配好之后，每次 push 自动跑全量测试，挂了 merge 按钮直接变红。这跟你上一篇搭的 AI 代码审查正好串成一条线：CI 里 AI 审一遍 diff，机器跑一遍测试，两道门都过了才让合并。</p><h2 id=三个坑>三个坑</h2><h3 id=坑一让ai写测试但不给它期望值>坑一：让 AI 写测试，但不给它「期望值」</h3><p>测试的灵魂是断言里的期望值。你不告诉 AI「什么是对的」，它就只能断言「不报错」，这种测试是空壳。给 prompt 时，务必把业务规则写清楚。</p><h3 id=坑二ai写的测试全绿就以为代码没问题>坑二：AI 写的测试全绿，就以为代码没问题</h3><p>测试全绿只能说明「测试没发现 bug」，不能说明「没有 bug」。AI 可能漏测了关键分支，也可能把期望值写错了（连 bug 一起「验证」为正确）。核心逻辑的测试，期望值你自己过一遍。</p><h3 id=坑三e2e测试的选择器直接照抄>坑三：E2E 测试的选择器直接照抄</h3><p>AI 生成的 CSS 选择器经常太脆——页面一改样式就碎。E2E 测试里尽量用 <code>data-testid</code> 这种稳定的属性，让 AI 写测试时也用这个约定，能少踩很多坑。</p><h2 id=总结>总结</h2><p>AI 帮你写测试，最大的价值不是「多写了几个测试」，而是把「该写测试却没写」这个最普遍的人性问题解决了——因为写测试的边际成本被 AI 打到几乎为零。</p><ol><li>单元测试是 AI 的主场，边界用例让它放开补</li><li>集成测试要给足 schema 和接口契约</li><li>E2E 守住核心路径，选择器用 <code>data-testid</code> 稳定化</li><li>从 bug 反推回归测试，比覆盖率数字更有价值</li><li>接进 CI 自动跑，和 AI 代码审查串成闭环</li></ol><p>下一篇是这个系列的最后一篇：把这些东西串起来，讲一套 AI 驱动的完整开发工作流——从需求到上线，AI 在每个环节到底能接多少活。</p><hr><blockquote><p><strong>AI编程工具链系列：</strong></p><p>1. <a href=/posts/prompt-engineering-handbook/>Prompt Engineering 实战手册</a><br>
+2. <a href=/posts/ai-debugging-guide/>AI Debugging：让AI帮你修bug</a><br>
+3. <a href=/posts/ai-code-review-guide/>AI 代码审查：让AI帮你 Code Review</a><br>
+4. 👉 AI 自动化测试——从单元测试到 E2E（本文）<br>
+5. AI 驱动的完整开发工作流（下一篇）</p></blockquote></div></article><nav class=post-nav><a href=/posts/ai-code-review-guide/ class=prev>← AI编程工具链：AI 代码审查——让 AI 帮你 Code Review</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> · <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

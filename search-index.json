@@ -1,5 +1,17 @@
 [
   {
+    "title": "AI编程工具链：AI 自动化测试——从单元测试到 E2E",
+    "url": "/posts/ai-automated-testing/",
+    "date": "2026-08-25",
+    "tags": [
+      "AI",
+      "自动化测试",
+      "编程",
+      "工具教程"
+    ],
+    "summary": "测试是你明知道该写、却总拖到最后的那件事。让 AI 帮你把单元测试、集成测试到 E2E 一路补齐：怎么给老代码补测试、怎么从 bug 反推回归测试、怎么接进 CI 每次提交自动跑。"
+  },
+  {
     "title": "Lu'an Guapian: The Green Tea That Throws Away Its Buds",
     "url": "/tea/luan-guapian-bare-leaf/",
     "summary": "The man took a leaf out of the basket and held it up to the light before dropping it into my palm. It was a single blade of tea, dark green and slightly curled at the edges, shaped like a melon seed — no bud at its tip, no stem trailing behind it, just the leaf, whole and bare.",

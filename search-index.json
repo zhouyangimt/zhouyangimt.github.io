@@ -1,4 +1,19 @@
 [
+    {
+    "title": "Keemun: The Black Tea That Built English Breakfast",
+    "url": "/tea/keemun-english-breakfast/",
+    "summary": "The smell reached me before the tea did, and it wasn't what I'd trained myself to expect from a black tea. No malt wallop, no tannic bark. Something floral rose out of the drying shed in Qimen instead — orchids, almost, laid over a bed of honey and a thin thread of woodsmoke.",
+    "section": "tea",
+    "date": "2026-08-26",
+    "tags": [
+      "black-tea",
+      "keemun",
+      "anhui",
+      "qimen",
+      "classic",
+      "english-breakfast"
+    ]
+  },
   {
     "title": "AI编程工具链：AI 自动化测试——从单元测试到 E2E",
     "url": "/posts/ai-automated-testing/",

@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-08-26
-> Total unique ASINs: 52
+> Last updated: 2026-08-28
+> Total unique ASINs: 54
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -58,14 +58,16 @@
 | 50 | `B07JHMFKCK` | oriarmcha Anji Bai Cha Green Tea Loose Leaf 225g | t/anji-baicha-albino-green | 2026-08-14 | `zhouyang01-20` |
 | 51 | `B000SARJRY` | Davidson's Keemun Congou Loose Leaf (16 oz) | t/keemun-english-breakfast | 2026-08-26 | `zhouyang01-20` |
 | 52 | `B0DHXDC6NN` | ChaWuWarmSun Keemun Black Tea (QiMen HongCha, 6 oz) | t/keemun-english-breakfast | 2026-08-26 | `zhouyang01-20` |
+| 53 | `B000PYYDJU` | Harney & Sons Lapsang Souchong (3 oz tin) | t/lapsang-souchong-accidental-black-tea | 2026-08-28 | `zhouyang01-20` |
+| 54 | `B00N4LTDOG` | Davidson's Organics Lapsang Souchong Black (16 oz) | t/lapsang-souchong-accidental-black-tea | 2026-08-28 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 24 |
-| **Total** | **52** |
+| Tea | 26 |
+| **Total** | **54** |
 
 ## Issues
 

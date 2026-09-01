@@ -131,7 +131,7 @@
 | 17 | Couple's Beef Offal | 夫妻肺片 | ⬜ |
 | 18 | Mouth-Watering Chicken (Kou Shui Ji) | 口水鸡 | ✅ |
 | 19 | Chongqing Xiaomian | 重庆小面 | ⬜ |
-| 20 | Chairman Mao's Red-Braised Pork | 毛氏红烧肉 | ⬜ |
+| 20 | Chairman Mao's Red-Braised Pork | 毛氏红烧肉 | ✅ |
 | 21 | Duo Jiao Fish Head | 剁椒鱼头 | ⬜ |
 | 22 | Changsha Stinky Tofu | 长沙臭豆腐 | ⬜ |
 

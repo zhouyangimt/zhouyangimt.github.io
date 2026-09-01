@@ -1,0 +1,68 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI编程工具链：AI 驱动的完整开发工作流——从需求到上线 | zhouyang — The 25th Frame</title><meta name=description content="前四篇讲了 Prompt、Debugging、Code Review、Testing，都是单点能力。这篇把它们串成一条流水线：从一句话需求到代码上线，AI 在每个环节接多少活、哪些必须人把关，一套能直接抄的 spec 驱动开发工作流。"><link rel=canonical href=https://zhouyang.dev/posts/ai-driven-dev-workflow/><meta property="og:title" content="AI编程工具链：AI 驱动的完整开发工作流——从需求到上线 | zhouyang — The 25th Frame"><meta property="og:description" content="前四篇讲了 Prompt、Debugging、Code Review、Testing，都是单点能力。这篇把它们串成一条流水线：从一句话需求到代码上线，AI 在每个环节接多少活、哪些必须人把关，一套能直接抄的 spec 驱动开发工作流。"><meta property="og:url" content="https://zhouyang.dev/posts/ai-driven-dev-workflow/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/ai-dev-workflow.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI编程工具链：AI 驱动的完整开发工作流——从需求到上线 | zhouyang — The 25th Frame"><meta name=twitter:description content="前四篇讲了 Prompt、Debugging、Code Review、Testing，都是单点能力。这篇把它们串成一条流水线：从一句话需求到代码上线，AI 在每个环节接多少活、哪些必须人把关，一套能直接抄的 spec 驱动开发工作流。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","headline":"AI编程工具链：AI 驱动的完整开发工作流——从需求到上线","url":"https:\/\/zhouyang.dev\/posts\/ai-driven-dev-workflow\/","datePublished":"2026-09-01T00:00:00+00:00","dateModified":"2026-09-01T00:00:00+00:00","author":{"@type":"Person","name":"zhouyang"},"description":"前四篇讲了 Prompt、Debugging、Code Review、Testing，都是单点能力。这篇把它们串成一条流水线：从一句话需求到代码上线，AI 在每个环节接多少活、哪些必须人把关，一套能直接抄的 spec 驱动开发工作流。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/baijiu/>Baijiu</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 驱动的完整开发工作流——从需求到上线</h1><div class=meta><time>2026-09-01</time>
+<span class=tags><span class=tag>AI</span><span class=tag>工作流</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=四个孤立的能力串起来才是生产力>四个孤立的能力，串起来才是生产力</h2><p>前四篇我把 AI 编程工具链拆成了四个环节单独讲：Prompt Engineering、AI Debugging、AI 代码审查、AI 自动化测试。单独拎出来，每个都能帮你省不少时间——但如果你只用其中一个，效率提升是「加法」；把它们串成一条流水线，效率提升才是「乘法」。</p><p>为什么？因为真实开发里这些环节是环环相扣的：需求没想清楚，代码写得再快也是返工；测试没跟上，审得再细也挡不住线上事故。AI 单独帮你写代码，省的是敲键盘的时间；AI 贯穿全流程，省的是整个返工和沟通的成本。</p><p>这篇是系列的最后一篇：把前四篇串起来，讲一套从「一句话需求」到「代码上线」的 AI 驱动工作流。重点只回答一个问题——<strong>在每个环节，AI 到底能接多少活，哪些活必须人亲自干。</strong></p><h2 id=先看全貌一条流水线两个检查点>先看全貌：一条流水线，两个检查点</h2><p>我把这套工作流画成一张图，六个环节，中间卡着两个必须人参与的「检查点」：</p><p><img src=/images/ai-dev-workflow.png alt="AI 驱动的完整开发工作流" width="288" height="607" decoding="async" loading="lazy"></p><p>这张图最重要的信息不是「AI 能干多少」，而是那两个检查点的位置：<strong>人站在检查点上，不站在键盘前。</strong> AI 负责把每个环节的活干完，人负责在两个关键节点拍板——方案对不对、要不要合并。其余环节 AI 可以全自动跑。</p><p>很多人用 AI 开发失败，不是 AI 不够强，而是把 AI 当成了「一条龙」：丢一句话进去，指望它从头写到尾，结果中间哪个环节跑偏了都不知道。这套工作流的核心，就是把「一条龙」拆成「接力赛」，每一棒之间有个交接检查。</p><h2 id=环节一从一句话需求到技术方案>环节一：从一句话需求到技术方案</h2><p>我习惯先不让 AI 写代码，而是让它产出「共识文档」。直接上例子——给订单系统加优惠券叠加功能：</p><pre tabindex=0><code>我要给订单系统加优惠券叠加功能。折扣逻辑在 order/discount.py，优惠券表在 order/models.py。先别写代码，分三步走：
+
+1. 写一份 PRD：用户故事、验收标准、边界情况（至少 8 个边界）
+2. 写技术方案：涉及哪些文件、改动点、要不要数据库迁移
+3. 把实现拆成 3-6 个可独立提交的小任务，按依赖排序
+
+输出 Markdown，存到 docs/coupon-stacking-spec.md</code></pre><p>这一步的价值不在「文档」，在于<strong>逼着需求在动代码之前被想清楚</strong>。AI 写出来的 PRD 会列出你没想到的边界：优惠券能不能和会员折扣叠加、能不能叠多张、过期时间边界、金额为 0 的订单怎么处理……这些如果你直接让它写代码，它要么漏掉、要么自由发挥。先落成文档，你和它就有了一个共同的「合同」。审完这个 spec 没问题了，才进入下一步——这就是检查点 1。</p><h2 id=环节二按spec实现一次只做一个任务>环节二：按 spec 实现，一次只做一个任务</h2><p>spec 审过了，开始写代码。关键原则：<strong>一次只让 AI 做一个小任务</strong>，任务粒度小到「AI 不会跑偏，你 review 得过来」。</p><pre tabindex=0><code>按 docs/coupon-stacking-spec.md 实现任务 1（优惠券表字段 + 数据库迁移）。
+只做任务 1，不要动其他任务涉及的文件。
+每个函数写 docstring，类型标注风格跟现有代码一致。
+完成后跑一下现有测试，确认没破坏别的模块。</code></pre><p>为什么「一次一个任务」这么重要？因为 AI 的注意力有限，任务越大越容易自由发挥、越容易漏掉约束。你切得越小，它的输出越可控，你 review 的成本越低。反过来，丢一个大任务让它自己拆，它拆出来的顺序和边界不一定是你想要的。</p><h2 id=环节三审查测试交给ci自动跑>环节三：审查 + 测试，交给 CI 自动跑</h2><p>代码写完了，接着是第二、三、四篇讲的审查和测试。这两步别手动触发，接进 CI 每次提交自动跑。一个最小配置：</p><pre tabindex=0><code># .github/workflows/ci.yml
+name: CI
+on: [pull_request]
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: AI Code Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/ai_review.py
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.11&quot;
+      - run: pip install -r requirements.txt pytest pytest-cov
+      - run: pytest --cov=app --cov-report=term-missing</code></pre><p>两道门都过了，PR 才允许合并——这就是检查点 2：AI 审一遍 diff，机器跑一遍测试，你最后拍板合入。高危改动（支付、鉴权、数据迁移）永远自己再过一眼，别把合入权也交出去。</p><h2 id=环节四收尾自动化release-notes和部署>环节四：收尾自动化——release notes 和部署</h2><p>合并之后还有一堆收尾活：写 release notes、更新文档、部署、上线后看日志。这些也都能交给 AI。比如让 AI 生成 changelog：</p><pre tabindex=0><code>读 main 分支最近 20 个 commit，写一份给用户的 changelog：
+- 按「新功能 / 修复 / 改进」分类
+- 每条约 15 字以内，中文，去掉内部技术细节</code></pre><p>部署脚本这种重复性高的东西，让 AI 生成骨架，你审一遍再上：</p><pre tabindex=0><code># deploy.py —— AI 生成的零停机部署脚本骨架
+import subprocess
+
+def deploy():
+    subprocess.run([&quot;git&quot;, &quot;pull&quot;, &quot;origin&quot;, &quot;main&quot;], check=True)
+    subprocess.run([&quot;docker&quot;, &quot;compose&quot;, &quot;build&quot;], check=True)
+    subprocess.run([&quot;docker&quot;, &quot;compose&quot;, &quot;up&quot;, &quot;-d&quot;], check=True)
+    print(&quot;deployed&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    deploy()</code></pre><p>上线后的日志分析也交给 AI：把报错堆栈丢给它定位，把慢查询日志丢给它找瓶颈。这些是定时巡检的拿手活，上一篇讲测试的时候也提过。</p><h2 id=ai能接多少活一张清单>AI 能接多少活？一张清单</h2><p>把六个环节里 AI 的「接活比例」和「人必须干的活」列清楚，方便你对照自己项目调整：</p><table><thead><tr><th>环节</th><th>AI 接活比例</th><th>人必须做的事</th></tr></thead><tbody><tr><td>需求 → PRD</td><td>70%</td><td>拍板需求对不对、验收标准</td></tr><tr><td>PRD → 方案</td><td>60%</td><td>审架构取舍、定技术债边界</td></tr><tr><td>方案 → 代码</td><td>80%</td><td>审 diff、定代码风格</td></tr><tr><td>代码 → 审查</td><td>90%</td><td>高危改动人工兜底</td></tr><tr><td>代码 → 测试</td><td>85%</td><td>定期望值、判断业务正确性</td></tr><tr><td>合并 → 部署</td><td>95%</td><td>配密钥、审部署脚本</td></tr><tr><td>上线 → 监控</td><td>80%</td><td>定告警阈值、判断是否回滚</td></tr></tbody></table><p>规律很明显：<strong>越靠近「机械重复」的环节，AI 接得越多；越靠近「拍板决策」的环节，人的比例越高。</strong> 这不是巧合，是 AI 能力的真实边界——它擅长执行，不擅长负责。所以这套工作流的设计原则就是：让 AI 干执行的活，把决策的位置留给人。</p><h2 id=三个坑>三个坑</h2><h3 id=坑一一条龙让ai从头写到尾中间不看>坑一：一条龙让 AI 从头写到尾，中间不看</h3><p>最大的坑。AI 中途跑偏了，你到最后才发现，返工成本比省的时间还多。检查点就是为了拦住这种事——宁可每个环节多花两分钟确认，也别让错误滚雪球。</p><h3 id=坑二spec写得比代码还长>坑二：spec 写得比代码还长</h3><p>spec 驱动的目的是「想清楚」，不是「写论文」。给 AI 写 PRD 的 prompt 里一定加一句「控制在 500 字以内」。文档一旦超过一屏，就没人真的会读，检查点就形同虚设。</p><h3 id=坑三上下文没管好ai在任务之间丢失记忆>坑三：上下文没管好，AI 在任务之间丢失记忆</h3><p>多个任务连续做，AI 可能忘了前面任务改了哪些文件、定了什么约定。解决办法是每个任务开始前，把 spec 的路径和「当前进度」喂给它，让它先读一遍再动手。别指望它自己记住。</p><h2 id=总结>总结</h2><p>这套工作流的本质，不是「让 AI 替你干活」，而是<strong>把 AI 变成你的团队</strong>。你从「写代码的人」变成「管代码的人」——写 PRD、拆任务、审方案、拍板合入，这些决策才是你的核心价值，剩下的执行交给 AI。</p><p>回顾这个系列：Prompt 让你学会怎么下指令，Debugging 让 AI 帮你定位问题，Code Review 让 AI 当你的第二双眼睛，Testing 让 AI 补上你懒得写的测试，这一篇把它们串成流水线。五篇合起来，就是一套完整的 AI 编程方法论。</p><p>记住一句话：<strong>AI 是高级接线员，不是总指挥。检查点永远握在人手里。</strong></p><hr><blockquote><p><strong>AI编程工具链系列：</strong></p><p>1. <a href=/posts/prompt-engineering-handbook/>Prompt Engineering 实战手册</a><br>
+2. <a href=/posts/ai-debugging-guide/>AI Debugging：让AI帮你修bug</a><br>
+3. <a href=/posts/ai-code-review-guide/>AI 代码审查：让AI帮你 Code Review</a><br>
+4. <a href=/posts/ai-automated-testing/>AI 自动化测试——从单元测试到 E2E</a><br>
+5. 👉 AI 驱动的完整开发工作流——从需求到上线（本文）</p></blockquote></div></article><nav class=post-nav><a href=/posts/ai-automated-testing/ class=prev>← AI编程工具链：AI 自动化测试——从单元测试到 E2E</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> · <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

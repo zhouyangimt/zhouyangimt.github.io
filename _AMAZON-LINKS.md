@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-08-28
+> Last updated: 2026-09-02
 > Total unique ASINs: 54
 > Store ID: zhouyang01-20
 
@@ -42,9 +42,9 @@
 | 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/huangshan-maofeng | 2026-07-28 | `zhouyang01-20` |
 | 35 | `B0CQRTGM73` | Gaiwan Set | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
-| 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan, t/ripe-puer, t/tieguanyin | 2026-07-15 | `zhouyang01-20` |
+| 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan, t/ripe-puer, t/tieguanyin, t/jin-jun-mei-golden-eyebrow | 2026-07-15 | `zhouyang01-20` |
 | 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan, t/tea-chan, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
-| 39 | `B08ZKTJ8NN` | Glass Teapot | t/huangshan-maofeng-misty-mountain, t/anji-baicha-albino-green, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
+| 39 | `B08ZKTJ8NN` | Glass Teapot | t/huangshan-maofeng-misty-mountain, t/anji-baicha-albino-green, t/luan-guapian-bare-leaf, t/jin-jun-mei-golden-eyebrow | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 42 | `B0FJQZNNZP` | Tea Sampler Set | t/six-types-chinese-tea-guide | 2026-07-20 | `zhouyang01-20` |
@@ -53,7 +53,7 @@
 | 45 | `B09TNR5X93` | Ripe Puerh (via amzn.to/4vY0MAv) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 46 | `B0GDDH91LS` | Puerh Cake (via amzn.to/4wDNQ2H) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
-| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong | 2026-08-04 | `zhouyang01-20` |
+| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong, t/jin-jun-mei-golden-eyebrow | 2026-08-04 | `zhouyang01-20` |
 | 49 | `B0FLXBGZK9` | iTeaworld Ya Shi Xiang Dancong | t/fenghuang-dancong-phoenix-oolong | 2026-08-09 | `zhouyang01-20` |
 | 50 | `B07JHMFKCK` | oriarmcha Anji Bai Cha Green Tea Loose Leaf 225g | t/anji-baicha-albino-green | 2026-08-14 | `zhouyang01-20` |
 | 51 | `B000SARJRY` | Davidson's Keemun Congou Loose Leaf (16 oz) | t/keemun-english-breakfast | 2026-08-26 | `zhouyang01-20` |

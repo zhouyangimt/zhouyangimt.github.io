@@ -133,7 +133,7 @@
 | 19 | Chongqing Xiaomian | 重庆小面 | ⬜ |
 | 20 | Chairman Mao's Red-Braised Pork | 毛氏红烧肉 | ✅ |
 | 21 | Duo Jiao Fish Head | 剁椒鱼头 | ⬜ |
-| 22 | Changsha Stinky Tofu | 长沙臭豆腐 | ⬜ |
+| 22 | Changsha Stinky Tofu | 长沙臭豆腐 | ✅ |
 
 #### 三、Cantonese · 镬气与点心（12 道）
 

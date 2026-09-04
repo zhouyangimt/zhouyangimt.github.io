@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-09-02
-> Total unique ASINs: 54
+> Last updated: 2026-09-04
+> Total unique ASINs: 57
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -60,14 +60,17 @@
 | 52 | `B0DHXDC6NN` | ChaWuWarmSun Keemun Black Tea (QiMen HongCha, 6 oz) | t/keemun-english-breakfast | 2026-08-26 | `zhouyang01-20` |
 | 53 | `B000PYYDJU` | Harney & Sons Lapsang Souchong (3 oz tin) | t/lapsang-souchong-accidental-black-tea | 2026-08-28 | `zhouyang01-20` |
 | 54 | `B00N4LTDOG` | Davidson's Organics Lapsang Souchong Black (16 oz) | t/lapsang-souchong-accidental-black-tea | 2026-08-28 | `zhouyang01-20` |
+| 55 | `B06XK4976Z` | Teavivre Dian Hong Gongfu Fragrant Black Tea (100g) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
+| 56 | `B0FSFLWWPX` | Rishi Golden Yunnan Organic Black Tea (4 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
+| 57 | `B076SV6F3P` | Davidson's Organics Yunnan Black (16 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 26 |
-| **Total** | **54** |
+| Tea | 29 |
+| **Total** | **57** |
 
 ## Issues
 

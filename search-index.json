@@ -1,5 +1,17 @@
 [
  {
+  "title": "AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化",
+  "url": "/posts/ai-agent-what-is/",
+  "date": "2026-09-08",
+  "tags": [
+   "AI",
+   "Agent",
+   "大模型",
+   "工具教程"
+  ],
+  "summary": "Agent 不是更强的聊天机器人。这篇讲清 LLM、带工具的 LLM、Agent 三者的区别，用一个 30 行的最小循环代码和天气提醒实战，讲透 Agent 的「思考-行动-观察」本质。"
+ },
+ {
   "title": "Dim Sum: It Was Never About the Dumplings",
   "url": "/cuisine/dim-sum/",
   "summary": "Steam hissing, carts clattering, tea pouring — dim sum isn't dumplings; it's a two-hour Cantonese morning built around a pot of tea and a rotating cast of small dishes.",

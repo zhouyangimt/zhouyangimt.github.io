@@ -42,10 +42,37 @@
 - [x] 05: 多平台集成 (2026-06-21)
 - [x] 06: 实战工作流 (2026-06-22)
 
+## 系列：AI Agent 全解析
+**进度**: 1/23 篇
+
+- [x] 01: AI Agent 是什么——从 LLM 到自主智能体的进化 (2026-09-08)
+- [ ] 02: Agent 的四大核心能力：规划、记忆、工具、执行
+- [ ] 03: 2026 AI Agent 全景图：谁在做什么，谁能用
+- [ ] 04: 选 Agent 还是选 Copilot？不同场景的决策框架
+- [ ] 05: Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent
+- [ ] 06: 工具调用深度解析：Function Calling、MCP 协议与插件生态
+- [ ] 07: Agent 的记忆系统：短期记忆、长期记忆与 RAG
+- [ ] 08: Hermes Agent 入门（已发）
+- [ ] 09: Hermes Agent 配置详解（已发）
+- [ ] 10: Hermes Agent Skills 系统（已发）
+- [ ] 11: LangChain vs CrewAI vs AutoGPT：三大开源框架横评
+- [ ] 12: 用 LangGraph 构建多步骤 Agent 工作流
+- [ ] 13: Claude Code vs Cursor vs Copilot 横评（已发）
+- [ ] 14: Cline + Aider：开源代码 Agent 双子星
+- [ ] 15: Dify 实战：零代码搭建企业 AI 工作流
+- [ ] 16: 钉钉 AI + Coze：中国市场的 Agent 生态
+- [ ] 17: 疯狂又好用的 Agent 实测
+- [ ] 18: 垂直领域 Agent：法律、医疗、金融
+- [ ] 19: 中国 Agent 生态大乱斗
+- [ ] 20: 开源 Agent 奇行种
+- [ ] 21: 2026 最值得关注的 25 个 AI Agent 项目
+- [ ] 22: Agent 的测试与评估
+- [ ] 23: Agent 的未来：多模态、具身智能与 AGI 之路
+
 ---
 
 ## 发文策略
-- 日更 1 篇，优先「独立开发者全栈生存指南」系列
+- 日更 1 篇，优先「AI Agent 全解析」系列
 - 字数 1500-3000，简体中文
 - 架构/流程/对比 → 必须配 Kroki 图
 - 纯代码教程 → 可不配图

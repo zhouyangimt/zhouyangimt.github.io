@@ -1,0 +1,114 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化 | zhouyang — The 25th Frame</title><meta name=description content="Agent 不是更强的聊天机器人。这篇讲清 LLM、带工具的 LLM、Agent 三者的区别，用一个 30 行的最小循环代码和天气提醒实战，讲透 Agent 的「思考-行动-观察」本质。"><link rel=canonical href=https://zhouyang.dev/posts/ai-agent-what-is/><meta property="og:title" content="AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化 | zhouyang — The 25th Frame"><meta property="og:description" content="Agent 不是更强的聊天机器人。这篇讲清 LLM、带工具的 LLM、Agent 三者的区别，用一个 30 行的最小循环代码和天气提醒实战，讲透 Agent 的「思考-行动-观察」本质。"><meta property="og:url" content="https://zhouyang.dev/posts/ai-agent-what-is/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/ai-agent-loop.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化 | zhouyang — The 25th Frame"><meta name=twitter:description content="Agent 不是更强的聊天机器人。这篇讲清 LLM、带工具的 LLM、Agent 三者的区别，用一个 30 行的最小循环代码和天气提醒实战，讲透 Agent 的「思考-行动-观察」本质。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","headline":"AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化","url":"https:\/\/zhouyang.dev\/posts\/ai-agent-what-is\/","datePublished":"2026-09-08T00:00:00+00:00","dateModified":"2026-09-08T00:00:00+00:00","author":{"@type":"Person","name":"zhouyang"},"description":"Agent 不是更强的聊天机器人。这篇讲清 LLM、带工具的 LLM、Agent 三者的区别，用一个 30 行的最小循环代码和天气提醒实战，讲透 Agent 的「思考-行动-观察」本质。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/baijiu/>Baijiu</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI Agent 全解析：AI Agent 是什么——从 LLM 到自主智能体的进化</h1><div class=meta><time>2026-09-08</time>
+<span class=tags><span class=tag>AI</span><span class=tag>Agent</span><span class=tag>大模型</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=agent这个词已经被用烂了>Agent 这个词，已经被用烂了</h2>
+<p>2026 年，只要是个能聊天的 AI 应用，都敢管自己叫 Agent。你在 Product Hunt 上看到有人吹「我用 Agent 自动帮我运营了整个公司的客服」，点进去下载，发现就是个套壳 ChatGPT，一个工具都不会调。</p>
+<p>这个词已经被用烂了。但它恰恰是这两年 AI 里最重要的概念——真正搞懂它的人，正在用「一个人等于一个团队」的方式干活。所以我决定开一个系列，把 Agent 从概念到实战完整拆一遍。</p>
+<p>这是第一篇，先解决最基础、也最容易被跳过的问题：<strong>到底什么才算 Agent？它和普通的 AI 聊天机器人差在哪？</strong> 后面 22 篇讲的架构、框架、实战，全建立在这个定义之上。</p>
+<h2 id=三个概念先分清楚>三个概念，先分清楚</h2>
+<p>很多人分不清这三个东西，结果该用 Agent 的时候用了聊天框，该用聊天框的时候被 Agent 坑了。</p>
+<h3 id=1-llm只有大脑没有手脚>1. LLM：只有大脑，没有手脚</h3>
+<p>GPT、Claude、DeepSeek 这些大语言模型，本质是一个「文字进、文字出」的函数。你给它一段话，它回你一段话。</p>
+<p>它强在理解、推理、生成。它弱在——<strong>没有任何办法影响外部世界</strong>。它查不了今天的天气（除非你手动告诉它），发不了邮件，跑不了一段代码。它只能「说」。</p>
+<h3 id=2-带工具的llm有手脚但每一步都要你推>2. 带工具的 LLM：有手脚，但每一步都要你推</h3>
+<p>很多「AI 助手」是这个形态——在 LLM 外面包了一层工具调用（Function Calling）。它能查天气、搜网页，但<strong>每一步动作都要你来触发</strong>。</p>
+<p>你跟它说「查下上海天气」，它调工具返回结果，然后停下等你下一句。它不会自己决定「查完发现下雨，顺手提醒家人带伞」。那个「顺手」得你自己想、自己说。</p>
+<h3 id=3-agent有目标能自己跑完一整个循环>3. Agent：有目标，能自己跑完一整个循环</h3>
+<p>Agent 的本质不是模型更强，而是<strong>多了一个「循环」</strong>。你把一个「目标」丢给它，它自己完成「思考 → 行动 → 观察 → 再思考」的循环，直到目标达成或者卡住。</p>
+<p>区别不在能力，在<strong>谁在驱动</strong>。LLM 是你推着它一步步走；Agent 是它推着自己直到干完。</p>
+<h2 id=agent的本质一个循环>Agent 的本质：一个循环</h2>
+<p>把 Agent 拆到最底层，就是一个循环。这个循环有个名字叫 ReAct（Reasoning + Acting），是 2022 年一篇论文提出来的，到今天依然是几乎所有 Agent 框架的骨架。</p>
+<p><img src=/images/ai-agent-loop.png alt="AI Agent 的思考-行动-观察循环" width="503" height="583" decoding="async" loading="lazy"></p>
+<p>循环就三步，无限重复：</p>
+<ol><li><strong>思考（Reason）</strong>：把当前状态——目标、已经做了什么、观察到了什么——喂给 LLM，让它决定「下一步该干什么」。</li><li><strong>行动（Act）</strong>：按 LLM 的决定去调用工具——查数据库、搜网页、跑代码、调 API。</li><li><strong>观察（Observe）</strong>：把工具返回的结果拼回上下文，进入下一轮思考。</li></ol>
+<p>关键就在这一步：<strong>观察到的结果会喂回给模型，影响它下一次的思考。</strong> 这就是 Agent 和「带工具的 LLM」最根本的区别——不是多会调工具，而是它会把工具的结果消化掉，用来修正下一步。</p>
+<h2 id=一个最小agent30行代码>一个最小 Agent，30 行代码</h2>
+<p>理论讲完，直接看代码。下面是一个能跑的最小 Agent，核心就是这个循环：</p>
+<pre tabindex=0><code># minimal_agent.py —— 一个能自己&quot;想一步做一步&quot;的最小 Agent
+import json
+
+# 工具：Agent 的&quot;手&quot;。真实项目里这里是查数据库、搜网页、跑代码
+TOOLS = {
+    &quot;get_weather&quot;: lambda city: {&quot;city&quot;: city, &quot;temp&quot;: 28, &quot;rain&quot;: True},
+    &quot;send_reminder&quot;: lambda text: {&quot;sent&quot;: True, &quot;text&quot;: text},
+}
+
+def run_agent(goal: str, llm, max_steps: int = 5):
+    &quot;&quot;&quot;llm 是真正的模型调用，作为参数传入，方便你换模型。&quot;&quot;&quot;
+    messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;目标：{goal}&quot;}]
+
+    for _ in range(max_steps):
+        reply = llm(messages)              # 1. 思考
+        action = json.loads(reply)         # 模型输出结构化决策
+
+        if action[&quot;type&quot;] == &quot;final&quot;:      # 它觉得任务完成了
+            return action[&quot;answer&quot;]
+
+        # 2. 行动
+        result = TOOLS[action[&quot;name&quot;]](**action[&quot;args&quot;])
+        # 3. 观察：把工具结果喂回上下文，让它继续想
+        messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: reply})
+        messages.append({&quot;role&quot;: &quot;tool&quot;, &quot;content&quot;: json.dumps(result)})
+
+    return &quot;达到最大步数，任务未完成&quot;
+</code></pre>
+<p>这段代码的关键不是 <code>llm</code> 函数（真实项目里就是一行 API 调用），而是那个 <code>for</code> 循环和最后两行 <code>messages.append</code>。<strong>把工具结果喂回上下文，就是 Agent 的全部秘密。</strong> 删掉那两行 append，Agent 就退化成一个只会调一次工具的聊天框。</p>
+<h2 id=实战场景一个会看天气决定提醒的agent>实战场景：一个会「看天气决定提醒」的 Agent</h2>
+<p>光有骨架不够，看一个完整场景。我想做个「出门提醒」Agent，目标一句话：<strong>明早出门前，根据天气告诉我该不该带伞</strong>。</p>
+<p>把它丢进上面的循环，跑起来是这样——每一步都是模型自己决定的：</p>
+<pre tabindex=0><code># demo.py —— 用一个假模型，把 Agent 的思考过程完整打出来
+import json
+from minimal_agent import run_agent
+
+def fake_llm(messages):
+    # 真实的模型会自己判断；这里用规则模拟它的&quot;思考&quot;，
+    # 只是为了让你看清循环怎么转。
+    history = [m[&quot;content&quot;] for m in messages]
+    if not any(&quot;get_weather&quot; in h for h in history):
+        return json.dumps({&quot;type&quot;: &quot;tool&quot;, &quot;name&quot;: &quot;get_weather&quot;,
+                           &quot;args&quot;: {&quot;city&quot;: &quot;上海&quot;}})
+    if not any(&quot;send_reminder&quot; in h for h in history):
+        return json.dumps({&quot;type&quot;: &quot;tool&quot;, &quot;name&quot;: &quot;send_reminder&quot;,
+                           &quot;args&quot;: {&quot;text&quot;: &quot;明早有雨，记得带伞&quot;}})
+    return json.dumps({&quot;type&quot;: &quot;final&quot;,
+                       &quot;answer&quot;: &quot;已查天气：有雨。已提醒你带伞。&quot;})
+
+print(run_agent(&quot;明早出门前，根据天气告诉我该不该带伞&quot;, fake_llm))
+</code></pre>
+<p>输出：</p>
+<pre tabindex=0><code>已查天气：有雨。已提醒你带伞。</code></pre>
+<p>三次思考、两步工具调用、一个最终答案，<strong>全程零人工干预</strong>。这就是 Agent 和聊天框的区别——你不用一步步指挥它，给它一个目标，它自己把中间那些「查一下」「顺手提醒一下」补全了。</p>
+<h2 id=agent的四大核心能力下一篇预告>Agent 的四大核心能力（下一篇预告）</h2>
+<p>这个循环要真正能干活，缺不了四样东西。下一篇逐个拆，这里先立个框：</p>
+<ul><li><strong>规划（Planning）</strong>：把大目标拆成小步骤，决定先干什么后干什么。</li><li><strong>工具（Tools）</strong>：能调用的「手」——查数据、跑代码、操作软件。</li><li><strong>记忆（Memory）</strong>：记住上下文、历史、用户偏好，跨轮次不丢。</li><li><strong>执行（Execution）</strong>：把步骤真正落实，包括失败重试、纠错。</li></ul>
+<p>循环是骨架，这四样是血肉。有骨架没血肉，Agent 就是花架子。</p>
+<h2 id=agent现在能做什么不能做什么>Agent 现在能做什么、不能做什么</h2>
+<p>最后说点实在的，别被「Agent 取代一切」的营销话术带偏。</p>
+<p><strong>它已经能做好的：</strong></p>
+<ul><li>多步工具调用的确定性任务：查信息 → 汇总 → 出报告。</li><li>长文档的分析和问答（配合 RAG）。</li><li>代码的读写改、跑测试、提 PR——这也是程序员是 Agent 第一批重度用户的原因。</li><li>定时自动化的流水线（我上一个 Hermes Agent 系列就是干这个的）。</li></ul>
+<p><strong>它现在还做不好的：</strong></p>
+<ul><li>长期、跨天的自主任务——上下文会丢，中途出错没人兜底。</li><li>需要承担责任的决策——Agent 不会为「发错了」负责，责任人得是你。</li><li>一次做对的开放性任务——它擅长在循环里试错，但不保证「一次成型」。</li></ul>
+<p>一句话收尾：<strong>Agent 是高级执行者，不是决策者。</strong> 你负责定目标、拍板、兜底；它负责把中间那些「查、跑、写、发」的活干完。这个分工，是这个系列后面所有文章的前提。</p>
+<h2 id=记住这一件事>记住这一件事</h2>
+<p>这篇要记住的就一件事：Agent 和聊天框的区别，不在模型强弱，而在<strong>那个「思考-行动-观察」的循环</strong>，以及它有没有「手脚」去影响外部世界。</p>
+<p>下一篇讲 Agent 的四大核心能力——规划、工具、记忆、执行，把它拆到能动手实现的程度。</p>
+<hr><blockquote><p><strong>AI Agent 全解析系列：</strong></p><p>1. 👉 AI Agent 是什么——从 LLM 到自主智能体的进化（本文）<br>2. Agent 的四大核心能力：规划、记忆、工具、执行（下一篇）</p></blockquote></div></article><nav class=post-nav><a href=/posts/ai-driven-dev-workflow/ class=prev>← AI编程工具链：AI 驱动的完整开发工作流——从需求到上线</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>© 2026 zhouyang · Shanghai · Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> · <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

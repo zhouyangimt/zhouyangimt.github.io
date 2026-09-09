@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-09-04
-> Total unique ASINs: 57
+> Last updated: 2026-09-09
+> Total unique ASINs: 60
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -63,14 +63,17 @@
 | 55 | `B06XK4976Z` | Teavivre Dian Hong Gongfu Fragrant Black Tea (100g) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
 | 56 | `B0FSFLWWPX` | Rishi Golden Yunnan Organic Black Tea (4 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
 | 57 | `B076SV6F3P` | Davidson's Organics Yunnan Black (16 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
+| 58 | `B0BYT2L5QF` | 2007 Big Tree Raw Pu-erh Tea Cake (380g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
+| 59 | `B0DKCSX7YF` | Yiwu Raw Pu-erh Cake (357g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
+| 60 | `B0894KBRQC` | SANRAN Raw Pu-erh Tea Cake (7.1oz) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 29 |
-| **Total** | **57** |
+| Tea | 32 |
+| **Total** | **60** |
 
 ## Issues
 

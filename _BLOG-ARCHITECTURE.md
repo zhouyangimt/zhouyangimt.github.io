@@ -1,6 +1,6 @@
 # zhouyang.dev 博客 · 四大板块完整架构
 
-> 最后更新：2026-09-10
+> 最后更新：2026-09-11
 
 ---
 
@@ -113,10 +113,10 @@
 | 4 | Xiaolongbao | 小笼包 | ✅ |
 | 5 | Sweet and Sour Pork | 咕咾肉 | ✅ |
 | 6 | Yangzhou Fried Rice | 扬州炒饭 | ✅ |
-| 7 | Dumplings | 饺子 | ⬜ |
-| 8 | Hot Pot | 火锅 | ⬜ |
-| 9 | Spring Rolls | 春卷 | ⬜ |
-| 10 | Chow Mein | 炒面 | ⬜ |
+| 7 | Dumplings | 饺子 | ✅ |
+| 8 | Hot Pot | 火锅 | ✅ |
+| 9 | Spring Rolls | 春卷 | ✅ |
+| 10 | Chow Mein | 炒面 | ✅ |
 
 #### 二、Sichuan & The Spice Belt · 川湘渝（12 道）
 
@@ -125,10 +125,10 @@
 | 11 | Dan Dan Noodles | 担担面 | ✅ |
 | 12 | Twice-Cooked Pork | 回锅肉 | ✅ |
 | 13 | Chongqing Spicy Chicken (Laziji) | 辣子鸡 | ✅ |
-| 14 | Fish-Fragrant Eggplant | 鱼香茄子 | ⬜ |
+| 14 | Fish-Fragrant Eggplant | 鱼香茄子 | ✅ |
 | 15 | Yu Xiang Rou Si | 鱼香肉丝 | ✅ |
 | 16 | Sichuan Boiled Fish | 水煮鱼 | ✅ |
-| 17 | Couple's Beef Offal | 夫妻肺片 | ⬜ |
+| 17 | Couple's Beef Offal | 夫妻肺片 | ✅ |
 | 18 | Mouth-Watering Chicken (Kou Shui Ji) | 口水鸡 | ✅ |
 | 19 | Chongqing Xiaomian | 重庆小面 | ✅ |
 | 20 | Chairman Mao's Red-Braised Pork | 毛氏红烧肉 | ✅ |
@@ -139,11 +139,11 @@
 
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
-| 23 | Dim Sum 全解 | 点心 | ⬜ |
+| 23 | Dim Sum 全解 | 点心 | ✅ |
 | 24 | Char Siu | 叉烧 | ✅ |
-| 25 | Wonton Noodles | 云吞面 | ⬜ |
+| 25 | Wonton Noodles | 云吞面 | ✅ |
 | 26 | Beef Chow Fun (Gan Chao Niu He) | 干炒牛河 | ✅ |
-| 27 | White Cut Chicken | 白切鸡 | ⬜ |
+| 27 | White Cut Chicken | 白切鸡 | ✅ |
 | 28 | Claypot Rice | 煲仔饭 | ⬜ |
 | 29 | Roast Goose | 深井烧鹅 | ⬜ |
 | 30 | Salt-Baked Chicken | 盐焗鸡 | ⬜ |
@@ -157,7 +157,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 35 | Shengjianbao | 生煎包 | ✅ |
-| 36 | Hairy Crab | 大闸蟹 | ⬜ |
+| 36 | Hairy Crab | 大闸蟹 | ✅ |
 | 37 | Drunken Crab | 醉蟹 | ⬜ |
 | 38 | Yan Du Xian | 腌笃鲜 | ⬜ |
 | 39 | Lion's Head Meatball | 狮子头 | ✅ |
@@ -167,7 +167,7 @@
 | 43 | Sweet and Sour Ribs (Tang Cu Pai Gu) | 糖醋排骨 | ✅ |
 | 44 | Wensi Tofu | 文思豆腐 | ⬜ |
 | 45 | Crab Roe Soup Dumpling | 蟹黄汤包 | ⬜ |
-| 46 | Crayfish | 小龙虾 | ⬜ |
+| 46 | Crayfish | 小龙虾 | ✅ |
 
 #### 五、The Noodle Belt · 面食帝国（10 道）
 
@@ -181,7 +181,7 @@
 | 52 | Shanxi Sliced Noodles | 刀削面 | ⬜ |
 | 53 | Sweet Water Noodles | 甜水面 | ⬜ |
 | 54 | Wuhan Hot-Dry Noodles | 热干面 | ⬜ |
-| 55 | Luosifen | 螺蛳粉 | ⬜ |
+| 55 | Luosifen | 螺蛳粉 | ✅ |
 | 56 | Guilin Rice Noodles | 桂林米粉 | ⬜ |
 
 #### 六、The Imperial North · 帝都·齐鲁·东北（10 道）
@@ -218,7 +218,7 @@
 
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
-| 77 | Xinjiang Lamb Skewers | 羊肉串 | ⬜ |
+| 77 | Xinjiang Lamb Skewers | 羊肉串 | ✅ |
 | 78 | Big-Plate Chicken | 大盘鸡 | ⬜ |
 | 79 | Lamb Pilaf | 手抓饭 | ⬜ |
 | 80 | Samsa / Kao Baozi | 烤包子 | ⬜ |
@@ -236,7 +236,7 @@
 | 87 | Sichuan Chuan Chuan | 串串香 | ⬜ |
 | 88 | Garlic-White Pork | 蒜泥白肉 | ⬜ |
 | 89 | Century Egg Tofu | 皮蛋豆腐 | ⬜ |
-| 90 | Century Egg | 皮蛋 | ⬜ |
+| 90 | Century Egg | 皮蛋 | ✅ |
 | 91 | Chicken Feet | 凤爪 | ⬜ |
 | 92 | Tanghulu | 冰糖葫芦 | ⬜ |
 | 93 | Tianjin Jianbing | 煎饼果子 | ✅ |

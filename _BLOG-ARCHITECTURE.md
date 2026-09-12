@@ -144,7 +144,7 @@
 | 25 | Wonton Noodles | 云吞面 | ✅ |
 | 26 | Beef Chow Fun (Gan Chao Niu He) | 干炒牛河 | ✅ |
 | 27 | White Cut Chicken | 白切鸡 | ✅ |
-| 28 | Claypot Rice | 煲仔饭 | ⬜ |
+| 28 | Claypot Rice | 煲仔饭 | ✅ |
 | 29 | Roast Goose | 深井烧鹅 | ⬜ |
 | 30 | Salt-Baked Chicken | 盐焗鸡 | ⬜ |
 | 31 | Poon Choi | 盆菜 | ⬜ |

@@ -1,6 +1,6 @@
 # zhouyang.dev 博客 · 四大板块完整架构
 
-> 最后更新：2026-09-11
+> 最后更新：2026-09-14
 
 ---
 
@@ -146,7 +146,7 @@
 | 27 | White Cut Chicken | 白切鸡 | ✅ |
 | 28 | Claypot Rice | 煲仔饭 | ✅ |
 | 29 | Roast Goose | 深井烧鹅 | ✅ |
-| 30 | Salt-Baked Chicken | 盐焗鸡 | ⬜ |
+| 30 | Salt-Baked Chicken | 盐焗鸡 | ✅ |
 | 31 | Poon Choi | 盆菜 | ⬜ |
 | 32 | Egg Tart | 蛋挞 | ⬜ |
 | 33 | Double-Skin Milk | 双皮奶 | ⬜ |

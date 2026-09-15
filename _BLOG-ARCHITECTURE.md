@@ -148,7 +148,7 @@
 | 29 | Roast Goose | 深井烧鹅 | ✅ |
 | 30 | Salt-Baked Chicken | 盐焗鸡 | ✅ |
 | 31 | Poon Choi | 盆菜 | ✅ |
-| 32 | Egg Tart | 蛋挞 | ⬜ |
+| 32 | Egg Tart | 蛋挞 | ✅ |
 | 33 | Double-Skin Milk | 双皮奶 | ⬜ |
 | 34 | Mango Pomelo Sago | 杨枝甘露 | ⬜ |
 

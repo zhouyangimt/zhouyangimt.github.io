@@ -1,5 +1,21 @@
 [
  {
+  "title": "White Peony: The White Tea Fujian Families Actually Drink",
+  "url": "/tea/bai-mudan-white-peony/",
+  "summary": "Bai Mudan — White Peony — is the white tea that keeps two leaves on the bud: more body and less money than Silver Needle, and the tea sitting next to the rice in every Fujian kitchen.",
+  "section": "tea",
+  "date": "2026-09-16",
+  "tags": [
+   "white-tea",
+   "bai-mudan",
+   "white-peony",
+   "fuding",
+   "zhenghe",
+   "fujian",
+   "aged-white-tea"
+  ]
+ },
+ {
   "title": "AI Agent 全解析：Agent 的四大核心能力——规划、记忆、工具、执行",
   "url": "/posts/ai-agent-four-capabilities/",
   "summary": "上一篇讲完 Agent 的循环骨架。这篇拆开血肉：规划、记忆、工具、执行各自管什么、缺一块会怎么坏、怎么写代码。文末是一个跑通的竞品日报 Agent，四能力合体，含三张 Kroki 架构图。",

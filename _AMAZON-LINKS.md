@@ -53,7 +53,7 @@
 | 45 | `B09TNR5X93` | Ripe Puerh (via amzn.to/4vY0MAv) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 46 | `B0GDDH91LS` | Puerh Cake (via amzn.to/4wDNQ2H) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
-| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong, t/jin-jun-mei-golden-eyebrow | 2026-08-04 | `zhouyang01-20` |
+| 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong, t/jin-jun-mei-golden-eyebrow, t/baihao-yinzhen-silver-needle, t/bai-mudan-white-peony | 2026-08-04 | `zhouyang01-20` |
 | 49 | `B0FLXBGZK9` | iTeaworld Ya Shi Xiang Dancong | t/fenghuang-dancong-phoenix-oolong | 2026-08-09 | `zhouyang01-20` |
 | 50 | `B07JHMFKCK` | oriarmcha Anji Bai Cha Green Tea Loose Leaf 225g | t/anji-baicha-albino-green | 2026-08-14 | `zhouyang01-20` |
 | 51 | `B000SARJRY` | Davidson's Keemun Congou Loose Leaf (16 oz) | t/keemun-english-breakfast | 2026-08-26 | `zhouyang01-20` |
@@ -66,19 +66,21 @@
 | 58 | `B0BYT2L5QF` | 2007 Big Tree Raw Pu-erh Tea Cake (380g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
 | 59 | `B0DKCSX7YF` | Yiwu Raw Pu-erh Cake (357g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
 | 60 | `B0894KBRQC` | SANRAN Raw Pu-erh Tea Cake (7.1oz) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
+| 61 | `B010RYT8VU` | Tealyra White Peony Bai Mu Tan Loose Leaf (100g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
+| 62 | `B0G7WGB8H1` | CHADUO Fuding White Peony 2013 Aged (150g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 32 |
-| **Total** | **60** |
+| Tea | 34 |
+| **Total** | **62** |
 
 ## Issues
 
 - **Short links**: 4 amzn.to links in tea section — resolved to full ASINs above (#43–#46). Consider replacing with full URLs.
-- **Search link**: `shuixian-water-sprite-wuyi` has `amazon.com/s?k=teavivre+shui+xian+oolong` (search page, not product) — not tracked.
+- **~~Search link~~ RESOLVED (verified 2026-09-16)**: `shuixian-water-sprite-wuyi` no longer carries a search link. Repo-wide audit `grep -rl 'amazon\.com/s?k=' tea/` returns zero matches — no `/s?k=` links remain anywhere in the tea section.
 
 ## 180-Day Rule
 

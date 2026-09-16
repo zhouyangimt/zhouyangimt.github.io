@@ -25,9 +25,39 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度
+## 当前进度（2026-09-16 更新）
 
-- Phase 1：7/6 已发布（总览 ✓ / 龙井 ✓ / 铁观音 ✓ / 熟普 ✓ / 盖碗指南 ✓ / 茶与禅 ✓ / 茶马古道 ✓）
-- Phase 2：18 篇已发布（碧螺春 ✓ / 黄山毛峰 ✓ / 信阳毛尖 ✓ / 大红袍 ✓ / 水仙 ✓ / 肉桂 ✓ / 凤凰单丛 ✓ / 竹叶青 ✓ / 安吉白茶 ✓ / 太平猴魁 ✓ / 六安瓜片 ✓ / 祁门红茶 ✓ / 正山小种 ✓ / 金骏眉 ✓ / 滇红 ✓ / 生普 ✓ / 白毫银针 ✓ / 白牡丹 ✓ 2026-09-16）
-- 下一篇：寿眉（Shou Mei / Longevity Eyebrow，白茶第三篇 — 白牡丹文末 Next hook 已预告）
-- 待办：白牡丹配图为占位图（银青→杏金渐变），需换真图；换图时替换 images/bai-mudan-cover.jpg + images/bai-mudan-thumb.jpg 并 bump 三处 ?v=N（og:image / JSON-LD / body img）
+- **已发布 25 篇**（Phase 1：7 篇 / Phase 2：18 篇）
+- 全部 25 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图）
+- **下一篇：寿眉（Shou Mei / Longevity Eyebrow，白茶第三篇）** — 白牡丹文末 Next hook 已预告
+
+### 已发布清单（25 篇）
+
+| 区块 | 篇数 | slug |
+|---|---|---|
+| Guides & Teaware | 2 | six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid |
+| Tea Culture | 2 | tea-chan-one-cup · tea-horse-road |
+| Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
+| Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
+| Black Teas | 4 | lapsang-souchong · jin-jun-mei · keemun · dianhong |
+| White Teas | 2 | baihao-yinzhen · bai-mudan |
+| Dark Teas | 2 | ripe-puer · sheng-puer |
+
+### 距离路线的缺口（按五大支柱）
+
+| 支柱 | 目标 | 已发 | 剩余 |
+|---|---|---|---|
+| 茶 101（流量入口 / AdSense 主力） | 5–8 | 1（six-types） | 4–7 |
+| 茶种类 · 单品 | 20+ | 21 | **已达标** |
+| 茶种类 · 集合文 | 5–8 | 0 | 5–8 |
+| 茶具（佣金主力） | 8–10 | 1（gaiwan） | 7–9 |
+| 茶文化 | 10–15 | 2 | 8–13 |
+| 送礼指南（Phase 3，等 DA 权重） | 3–5 | 0 | 3–5 |
+
+**剩余合计约 27–42 篇**（中位 ~35）。按周三 + 周五每周 2 篇，约 14–21 周（3.5–5 个月）。扣除 Phase 3 送礼指南 3–5 篇（需等域名权重上来），可立即排期的约 **24–37 篇**。
+
+**⚠️ 选题方向已转移**：单品茶支柱已达标（21/20+），**不要继续只写单品**。剩余工作的主体在 **茶 101、茶具、集合文、茶文化** 这四个支柱（合计 24–37 篇）——尤其茶具（你定的佣金主力）和茶 101（流量入口）目前各只有 1 篇。
+
+### 已完成的历史待办（无需再处理）
+
+- ~~白牡丹封面为占位图（银青→杏金渐变），需换真图~~ → **2026-09-16 已完成**：8 篇占位封面（白牡丹 / 白毫银针 / 滇红 / 金骏眉 / 祁门红茶 / 正山小种 / 六安瓜片 / 生普）全部换成真实照片并 bump 到 `?v=2`。

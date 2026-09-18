@@ -1,6 +1,6 @@
 # zhouyang.dev 博客 · 四大板块完整架构
 
-> 最后更新：2026-09-14
+> 最后更新：2026-09-18
 
 ---
 
@@ -158,7 +158,7 @@
 |---|------|---------|------|
 | 35 | Shengjianbao | 生煎包 | ✅ |
 | 36 | Hairy Crab | 大闸蟹 | ✅ |
-| 37 | Drunken Crab | 醉蟹 | ⬜ |
+| 37 | Drunken Crab | 醉蟹 | ✅ |
 | 38 | Yan Du Xian | 腌笃鲜 | ⬜ |
 | 39 | Lion's Head Meatball | 狮子头 | ✅ |
 | 40 | Dongpo Pork | 东坡肉 | ✅ |

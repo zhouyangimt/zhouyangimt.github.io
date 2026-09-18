@@ -25,13 +25,14 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-09-16 更新）
+## 当前进度（2026-09-18 更新）
 
-- **已发布 25 篇**（Phase 1：7 篇 / Phase 2：18 篇）
-- 全部 25 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图）
-- **下一篇：寿眉（Shou Mei / Longevity Eyebrow，白茶第三篇）** — 白牡丹文末 Next hook 已预告
+- **已发布 26 篇**（Phase 1：7 篇 / Phase 2：19 篇）
+- 全部 26 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图）
+- **下一篇：茶叶存储指南（Tea Storage，茶 101 + 茶具）** — 寿眉文末 Next hook 已预告
+- ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（25 篇）
+### 已发布清单（26 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
@@ -40,7 +41,7 @@
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
 | Black Teas | 4 | lapsang-souchong · jin-jun-mei · keemun · dianhong |
-| White Teas | 2 | baihao-yinzhen · bai-mudan |
+| White Teas | 3 | baihao-yinzhen · bai-mudan · shou-mei-longevity-eyebrow |
 | Dark Teas | 2 | ripe-puer · sheng-puer |
 
 ### 距离路线的缺口（按五大支柱）
@@ -48,7 +49,7 @@
 | 支柱 | 目标 | 已发 | 剩余 |
 |---|---|---|---|
 | 茶 101（流量入口 / AdSense 主力） | 5–8 | 1（six-types） | 4–7 |
-| 茶种类 · 单品 | 20+ | 21 | **已达标** |
+| 茶种类 · 单品 | 20+ | 22 | **已达标（已收尾，不再取题）** |
 | 茶种类 · 集合文 | 5–8 | 0 | 5–8 |
 | 茶具（佣金主力） | 8–10 | 1（gaiwan） | 7–9 |
 | 茶文化 | 10–15 | 2 | 8–13 |

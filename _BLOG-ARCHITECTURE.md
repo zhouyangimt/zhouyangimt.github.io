@@ -159,7 +159,7 @@
 | 35 | Shengjianbao | 生煎包 | ✅ |
 | 36 | Hairy Crab | 大闸蟹 | ✅ |
 | 37 | Drunken Crab | 醉蟹 | ✅ |
-| 38 | Yan Du Xian | 腌笃鲜 | ⬜ |
+| 38 | Yan Du Xian | 腌笃鲜 | ✅ |
 | 39 | Lion's Head Meatball | 狮子头 | ✅ |
 | 40 | Dongpo Pork | 东坡肉 | ✅ |
 | 41 | Beggar's Chicken | 叫花鸡 | ⬜ |

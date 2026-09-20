@@ -162,7 +162,7 @@
 | 38 | Yan Du Xian | 腌笃鲜 | ✅ |
 | 39 | Lion's Head Meatball | 狮子头 | ✅ |
 | 40 | Dongpo Pork | 东坡肉 | ✅ |
-| 41 | Beggar's Chicken | 叫花鸡 | ⬜ |
+| 41 | Beggar's Chicken | 叫花鸡 | ✅ |
 | 42 | Squirrel Mandarin Fish | 松鼠桂鱼 | ⬜ |
 | 43 | Sweet and Sour Ribs (Tang Cu Pai Gu) | 糖醋排骨 | ✅ |
 | 44 | Wensi Tofu | 文思豆腐 | ⬜ |

@@ -165,7 +165,7 @@
 | 41 | Beggar's Chicken | 叫花鸡 | ✅ |
 | 42 | Squirrel Mandarin Fish | 松鼠桂鱼 | ✅ |
 | 43 | Sweet and Sour Ribs (Tang Cu Pai Gu) | 糖醋排骨 | ✅ |
-| 44 | Wensi Tofu | 文思豆腐 | ⬜ |
+| 44 | Wensi Tofu | 文思豆腐 | ✅ |
 | 45 | Crab Roe Soup Dumpling | 蟹黄汤包 | ⬜ |
 | 46 | Crayfish | 小龙虾 | ✅ |
 

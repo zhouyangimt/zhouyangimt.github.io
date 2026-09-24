@@ -174,7 +174,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 47 | Lanzhou Hand-Pulled Noodles | 兰州拉面 | ✅ |
-| 48 | Biang Biang Noodles | 裤带面 | ⬜ |
+| 48 | Biang Biang Noodles | 裤带面 | ✅ |
 | 49 | Oil-Splash Noodles (You Po Mian) | 油泼面 | ✅ |
 | 50 | Beijing Zhajiang Noodles | 炸酱面 | ✅ |
 | 51 | Qishan Saozi Noodles | 岐山臊子面 | ⬜ |

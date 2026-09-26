@@ -428,7 +428,7 @@
 | 1 | **The Moutai Puzzle: Why a Bottle Costs More Than Your Graphics Card** | ✅ 已发布 |
 | 2 | **Baijiu 101：中国白酒入门** — 四大香型（酱香/浓香/清香/米香）、固态发酵工艺、产区地图、入门品鉴 | ✅ 2026-09-19 · [Baijiu 101: The Four Aromas](/baijiu/baijiu-101/) |
 | 3 | **人物故事** — 季克良与茅台的半个世纪 / 泸州老窖的 450 年窖池 / 一个酿酒师的日常 | ✅ 2026-09-20 · [The Pit That Never Stopped: 450 Years of Mud, and the Men Who Tend It](/baijiu/the-pit-that-never-stopped/)（泸州 4 口明窖 + 舒承宗 1573 / 赖高淮人工培育窖泥 / 师傅「前缓中挺后缓落」的手感；封面=窖池车间，缩略图=高粱入坛）|
-| 4 | **品鉴笔记** — 如何喝白酒：闻香/入口/回味 / 茅台 vs 五粮液 vs 国窖 1573 横评 / 白酒与餐食搭配 | ⬜ 待写 |
+| 4 | **品鉴笔记** — 如何喝白酒：闻香/入口/回味 / 茅台 vs 五粮液 vs 国窖 1573 横评 / 白酒与餐食搭配 | ✅ 2026-09-26 · [Three Glasses, One Table: How to Actually Drink Baijiu](/baijiu/three-glasses/)（封面=举杯碰杯实拍，图2=车间翻拌粮醅，图3=家常餐桌俯拍；标签 baijiu/tasting/sauce-aroma/strong-aroma/pairing） |
 | 5 | **买酒指南** — 海外购买渠道（Drizly/Wine.com/当地中国超市）/ 入门口粮酒推荐（100-300 元档）/ 送礼场景选酒 | ⬜ 待写 |
 
 ---

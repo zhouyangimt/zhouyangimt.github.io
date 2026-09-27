@@ -1,6 +1,6 @@
 # zhouyang.dev 博客 · 四大板块完整架构
 
-> 最后更新：2026-09-18
+> 最后更新：2026-09-27
 
 ---
 
@@ -179,7 +179,7 @@
 | 50 | Beijing Zhajiang Noodles | 炸酱面 | ✅ |
 | 51 | Qishan Saozi Noodles | 岐山臊子面 | ✅ |
 | 52 | Shanxi Sliced Noodles | 刀削面 | ✅ |
-| 53 | Sweet Water Noodles | 甜水面 | ⬜ |
+| 53 | Sweet Water Noodles | 甜水面 | ✅ |
 | 54 | Wuhan Hot-Dry Noodles | 热干面 | ⬜ |
 | 55 | Luosifen | 螺蛳粉 | ✅ |
 | 56 | Guilin Rice Noodles | 桂林米粉 | ⬜ |

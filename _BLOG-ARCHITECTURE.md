@@ -180,7 +180,7 @@
 | 51 | Qishan Saozi Noodles | 岐山臊子面 | ✅ |
 | 52 | Shanxi Sliced Noodles | 刀削面 | ✅ |
 | 53 | Sweet Water Noodles | 甜水面 | ✅ |
-| 54 | Wuhan Hot-Dry Noodles | 热干面 | ⬜ |
+| 54 | Wuhan Hot-Dry Noodles | 热干面 | ✅ |
 | 55 | Luosifen | 螺蛳粉 | ✅ |
 | 56 | Guilin Rice Noodles | 桂林米粉 | ⬜ |
 

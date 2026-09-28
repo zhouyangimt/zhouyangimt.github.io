@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-09-09
-> Total unique ASINs: 60
+> Last updated: 2026-09-28
+> Total unique ASINs: 73
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -38,20 +38,20 @@
 | 30 | `B098R79V6M` | Wok Burner Ring | c/wok-guide | 2026-07-22 | `zhouyang01-20` |
 | 31 | `B005YR0F40` | Variable Temp Kettle | t/biluochun, t/gaiwan, t/ripe-puer, t/six-types, t/tea-horse-road, t/tieguanyin, t/anji-baicha-albino-green, t/luan-guapian-bare-leaf, t/keemun-english-breakfast | 2026-07-15 | `zhouyang01-20` |
 | 32 | `B08592S282` | BiLuoChun Tea | t/biluochun-green-snail-spring | 2026-07-28 | `zhouyang01-20` |
-| 33 | `B0CNS8DMGM` | Yixing Clay Teapot | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
+| 33 | `B0CNS8DMGM` | Yixing Clay Teapot ⚠️ 404 — listing dead since 2026-08-17, link still live in article, needs replacement or removal | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/huangshan-maofeng | 2026-07-28 | `zhouyang01-20` |
-| 35 | `B0CQRTGM73` | Gaiwan Set | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
-| 36 | `B00CEC77EM` | Da Hong Pao Oolong | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
+| 35 | `B0CQRTGM73` | Gaiwan Set ⚠️ removed from site 2026-09, ledger row kept for history | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
+| 36 | `B00CEC77EM` | Da Hong Pao Oolong ⚠️ 404 — listing dead since 2026-08-17, link still live in article, needs replacement or removal | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan, t/ripe-puer, t/tieguanyin, t/jin-jun-mei-golden-eyebrow | 2026-07-15 | `zhouyang01-20` |
 | 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan, t/tea-chan, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
 | 39 | `B08ZKTJ8NN` | Glass Teapot | t/huangshan-maofeng-misty-mountain, t/anji-baicha-albino-green, t/luan-guapian-bare-leaf, t/jin-jun-mei-golden-eyebrow | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 42 | `B0FJQZNNZP` | Tea Sampler Set | t/six-types-chinese-tea-guide | 2026-07-20 | `zhouyang01-20` |
-| 43 | `B0D9N5MQPZ` | Tieguanyin Oolong (via amzn.to/3T7FEZP) | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
-| 44 | `B0DN5QWCFY` | Tieguanyin Anxi (via amzn.to/44er0T4) | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
-| 45 | `B09TNR5X93` | Ripe Puerh (via amzn.to/4vY0MAv) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
-| 46 | `B0GDDH91LS` | Puerh Cake (via amzn.to/4wDNQ2H) | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
+| 43 | `B0D9N5MQPZ` | Tieguanyin Oolong ✅ short link amzn.to/3T7FEZP normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
+| 44 | `B0DN5QWCFY` | Tieguanyin Anxi ✅ short link amzn.to/44er0T4 normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
+| 45 | `B09TNR5X93` | Ripe Puerh ✅ short link amzn.to/4vY0MAv normalised to /dp/ in HTML 2026-09-28 | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
+| 46 | `B0GDDH91LS` | Puerh Cake ✅ short link amzn.to/4wDNQ2H normalised to /dp/ in HTML 2026-09-28 | t/ripe-puer, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
 | 47 | `B0F2TCLDVX` | Oriarm Xinyang Maojian Green Tea | t/xinyang-maojian-needle-leaf | 2026-08-04 | `zhouyang01-20` |
 | 48 | `B09TSKDKCL` | Govee Smart Electric Kettle | t/dahongpao, t/shuixian, t/rougui, t/xinyang-maojian-needle-leaf, t/fenghuang-dancong-phoenix-oolong, t/jin-jun-mei-golden-eyebrow, t/baihao-yinzhen-silver-needle, t/bai-mudan-white-peony | 2026-08-04 | `zhouyang01-20` |
 | 49 | `B0FLXBGZK9` | iTeaworld Ya Shi Xiang Dancong | t/fenghuang-dancong-phoenix-oolong | 2026-08-09 | `zhouyang01-20` |
@@ -68,18 +68,31 @@
 | 60 | `B0894KBRQC` | SANRAN Raw Pu-erh Tea Cake (7.1oz) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
 | 61 | `B010RYT8VU` | Tealyra White Peony Bai Mu Tan Loose Leaf (100g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
 | 62 | `B0G7WGB8H1` | CHADUO Fuding White Peony 2013 Aged (150g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
+| 63 | `B00GXVTA06` | Teavac Vacuum Tea Container | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
+| 64 | `B073713G5F` | TDS Pen (water hardness meter) | t/water-for-tea | 2026-09-25 | `zhouyang01-20` |
+| 65 | `B074W74MXL` | 2016 Fuding Shou Mei Cake | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
+| 66 | `B07T1HRTRX` | Wuyi Rou Gui (YAN CHA) | t/rougui-cinnamon-fire-wuyi | 2026-08-05 | `zhouyang01-20` |
+| 67 | `B07Y36FWTT` | Hygrometer (tea storage) | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
+| 68 | `B09GK7PQWF` | Glazed Ceramic Tea Caddy | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
+| 69 | `B0B3GS15GL` | Brita Carbon Water Pitcher | t/water-for-tea | 2026-09-25 | `zhouyang01-20` |
+| 70 | `B0B89JJ9Z2` | Two-way Humidity Pack (62%) | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
+| 71 | `B0F2G4CZV2` | Shui Xian Oolong (Wuyi) | t/shuixian-water-sprite-wuyi | 2026-07-31 | `zhouyang01-20` |
+| 72 | `B0FSDVSJ3J` | Taiping Houkui Green Tea | t/taiping-houkui-monkey-chief | 2026-08-19 | `zhouyang01-20` |
+| 73 | `B0H1MKQNXK` | Yulongsheng Fuding Shou Mei Loose Leaf | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 34 |
-| **Total** | **62** |
+| Tea | 45 |
+| **Total** | **73** |
 
 ## Issues
 
-- **Short links**: 4 amzn.to links in tea section — resolved to full ASINs above (#43–#46). Consider replacing with full URLs.
+- **~~Short links~~ RESOLVED (2026-09-28)**: the 6 `amzn.to` occurrences (4 unique short links) in `tea/tieguanyin-iron-goddess-orchid/`, `tea/tea-horse-road/`, `tea/ripe-puer-old-libraries-rain-wet-earth/` were replaced in the HTML with `https://www.amazon.com/dp/{ASIN}?tag=zhouyang01-20` (all 4 resolved and re-verified by `curl -sL` before the swap, commit `86af859`). Repo-wide `amzn.to` count is now **0**.
+- **~~Ledger drift~~ RESOLVED (2026-09-28)**: 11 unreported site ASINs added as #63–#73; counts corrected; rows #33/#36 (both 404) and #35 (removed from site) annotated in place.
+- ⚠️ **Open**: rows #33 `B0CNS8DMGM` and #36 `B00CEC77EM` are dead listings (stable 404 since 2026-08-17) and their anchors are still live on `tea/dahongpao-wuyi-rock-tea/` — that page has only 3 links, so 2 of its 3 monetised links are broken. Needs a replacement product or link removal (user decision, flagged every week since 2026-08-17).
 - **~~Search link~~ RESOLVED (verified 2026-09-16)**: `shuixian-water-sprite-wuyi` no longer carries a search link. Repo-wide audit `grep -rl 'amazon\.com/s?k=' tea/` returns zero matches — no `/s?k=` links remain anywhere in the tea section.
 
 ## 180-Day Rule
@@ -89,8 +102,8 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 | Milestone | Date | Countdown |
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
-| 180-day deadline | **2026-01-11** | — |
-| Today (2026-08-04) | Day 20 | 160 days remaining |
+| 180-day deadline | **2027-01-11** | — |
+| Today (2026-09-28) | Day 75 | 105 days remaining |
 
 ## Notes
 

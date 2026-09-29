@@ -1,5 +1,20 @@
 [
   {
+    "title": "Guilin Rice Noodles: You Eat It Dry, Then You Add the Broth",
+    "url": "/cuisine/guilin-rice-noodles/",
+    "summary": "Slippery rice noodles under a spoonful of dark master braise, crackling pork belly and cold sour pickles — a five-yuan Guilin breakfast you eat dry first, then finish with broth.",
+    "section": "cuisine",
+    "date": "2026-09-29",
+    "tags": [
+      "guilin-rice-noodles",
+      "guangxi",
+      "noodles",
+      "breakfast",
+      "street-food",
+      "braised"
+    ]
+  },
+  {
     "title": "AI Agent 全解析：选 Agent 还是选 Copilot？不同场景的决策框架",
     "url": "/posts/ai-agent-vs-copilot/",
     "summary": "Agent 让它掌舵，Copilot 让你掌舵——区别不在谁更强，在每一步走完之后谁来验证。两条回路、五个变量、一张决策树，外加一个能跑的分工决策脚本。",

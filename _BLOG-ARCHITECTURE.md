@@ -182,7 +182,7 @@
 | 53 | Sweet Water Noodles | 甜水面 | ✅ |
 | 54 | Wuhan Hot-Dry Noodles | 热干面 | ✅ |
 | 55 | Luosifen | 螺蛳粉 | ✅ |
-| 56 | Guilin Rice Noodles | 桂林米粉 | ⬜ |
+| 56 | Guilin Rice Noodles | 桂林米粉 | ✅ |
 
 #### 六、The Imperial North · 帝都·齐鲁·东北（10 道）
 

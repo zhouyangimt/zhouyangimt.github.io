@@ -25,18 +25,18 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-09-25 更新）
+## 当前进度（2026-09-30 更新）
 
-- **已发布 28 篇**（Phase 1：7 篇 / Phase 2：21 篇）
-- 全部 28 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图）
-- **下一篇：茶壶 / 煮水壶（The Kettle）** — 茶具支柱，水篇文末 Next hook 已预告。茶具支柱目前只有盖碗 1 篇，是佣金主力，优先补（水篇自然引到壶：壶嘴形状、银壶/铁壶/陶壶、保温与温度控制）
+- **已发布 29 篇**（Phase 1：7 篇 / Phase 2：22 篇）
+- 全部 29 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图）
+- **下一篇：公道杯（The Fairness Cup）** — 茶具支柱，壶篇文末 Next hook 已预告。茶具支柱已 2 篇（盖碗 + 茶壶），仍是最薄的支柱（目标 8–10 篇），继续补：公道杯 → 品茗杯 → 茶盘/茶巾 → 茶滤
 - ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（28 篇）
+### 已发布清单（29 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
-| Guides & Teaware | 4 | six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea |
+| Guides & Teaware | 5 | six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle |
 | Tea Culture | 2 | tea-chan-one-cup · tea-horse-road |
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |

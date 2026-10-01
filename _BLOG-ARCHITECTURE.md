@@ -189,7 +189,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 57 | Beijing Mutton Hot Pot | 铜锅涮肉 | ⬜✅ |
-| 58 | Braised Sea Cucumber | 葱烧海参 | ⬜ |
+| 58 | Braised Sea Cucumber | 葱烧海参 | ✅ |
 | 59 | Nine-Turn Intestine | 九转大肠 | ⬜ |
 | 60 | Sweet-and-Sour Yellow River Carp | 糖醋鲤鱼 | ⬜ |
 | 61 | Dezhou Braised Chicken | 德州扒鸡 | ⬜ |

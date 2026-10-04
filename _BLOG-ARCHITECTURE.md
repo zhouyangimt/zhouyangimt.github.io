@@ -192,7 +192,7 @@
 | 58 | Braised Sea Cucumber | 葱烧海参 | ✅ |
 | 59 | Nine-Turn Intestine | 九转大肠 | ✅ |
 | 60 | Sweet-and-Sour Yellow River Carp | 糖醋鲤鱼 | ✅ |
-| 61 | Dezhou Braised Chicken | 德州扒鸡 | ⬜ |
+| 61 | Dezhou Braised Chicken | 德州扒鸡 | ✅ |
 | 62 | Oil-Braised Prawns | 油焖大虾 | ⬜ |
 | 63 | Guo Bao Rou | 锅包肉 | ✅ |
 | 64 | Earth's Three Fresh | 地三鲜 | ⬜ |

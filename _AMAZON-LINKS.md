@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-03
+> Last updated: 2026-10-05
 > Total unique ASINs: 75
 > Store ID: zhouyang01-20
 
@@ -87,7 +87,7 @@
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 47 |
+| Tea | 45 |
 | **Total** | **75** |
 
 ## Issues
@@ -105,7 +105,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-03) | Day 80 | 100 days remaining |
+| Today (2026-10-05) | Day 82 | 98 days remaining |
 
 ## Notes
 

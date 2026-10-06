@@ -195,7 +195,7 @@
 | 61 | Dezhou Braised Chicken | 德州扒鸡 | ✅ |
 | 62 | Oil-Braised Prawns | 油焖大虾 | ✅ |
 | 63 | Guo Bao Rou | 锅包肉 | ✅ |
-| 64 | Earth's Three Fresh | 地三鲜 | ⬜ |
+| 64 | Earth's Three Fresh | 地三鲜 | ✅ |
 | 65 | Chicken & Mushroom Stew | 小鸡炖蘑菇 | ⬜ |
 | 66 | Suan Cai Bai Rou | 酸菜白肉 | ⬜ |
 

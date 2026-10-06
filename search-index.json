@@ -1,5 +1,22 @@
 [
   {
+    "title": "Earth's Three Fresh: The Vegetable Dish That Isn't One",
+    "url": "/cuisine/earth-three-fresh/",
+    "summary": "Eggplant, potato and green pepper, each flash-fried on its own, then tumbled together in a glossy garlic-soy glaze — soft, salty, sweet, and nothing like the health food the name promises.",
+    "section": "cuisine",
+    "date": "2026-10-06",
+    "tags": [
+      "earth-three-fresh",
+      "dongbei",
+      "eggplant",
+      "potato",
+      "vegetable",
+      "home-cooking",
+      "stir-fry",
+      "classic"
+    ]
+  },
+  {
     "title": "AI Agent 全解析：Agent 的架构模式——ReAct、Plan-Execute、Multi-Agent",
     "url": "/posts/ai-agent-architecture-patterns/",
     "summary": "同一个「思考—行动—观察」的循环，装法不同会长出三台完全不同的机器。ReAct 边做边想、Plan-Execute 先画地图、Multi-Agent 把活拆给一组人——附一张选型决策图和一段三种模式都能跑的对照代码。",

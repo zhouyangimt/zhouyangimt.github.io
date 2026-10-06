@@ -1,5 +1,17 @@
 [
   {
+    "title": "AI Agent 全解析：Agent 的架构模式——ReAct、Plan-Execute、Multi-Agent",
+    "url": "/posts/ai-agent-architecture-patterns/",
+    "summary": "同一个「思考—行动—观察」的循环，装法不同会长出三台完全不同的机器。ReAct 边做边想、Plan-Execute 先画地图、Multi-Agent 把活拆给一组人——附一张选型决策图和一段三种模式都能跑的对照代码。",
+    "section": "posts",
+    "date": "2026-10-06",
+    "tags": [
+      "AI",
+      "Agent",
+      "工具教程"
+    ]
+  },
+  {
     "title": "Oil-Braised Prawns: The Sauce Is the Prawn",
     "url": "/cuisine/oil-braised-prawns/",
     "summary": "Shandong prawns seared hard in hot oil until their own heads bleed a deep red roe into the pan — sweet, briny, barely sauced, and gone in ten minutes.",

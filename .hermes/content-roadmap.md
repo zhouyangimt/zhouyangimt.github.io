@@ -43,13 +43,13 @@
 - [x] 06: 实战工作流 (2026-06-22)
 
 ## 系列：AI Agent 全解析
-**进度**: 4/23 篇
+**进度**: 5/23 篇
 
 - [x] 01: AI Agent 是什么——从 LLM 到自主智能体的进化 (2026-09-08)
 - [x] 02: Agent 的四大核心能力：规划、记忆、工具、执行 (2026-09-15)
 - [x] 03: 2026 AI Agent 全景图：谁在做什么，谁能用 (2026-09-22)
 - [x] 04: 选 Agent 还是选 Copilot？不同场景的决策框架 (2026-09-29)
-- [ ] 05: Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent
+- [x] 05: Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent (2026-10-06)
 - [ ] 06: 工具调用深度解析：Function Calling、MCP 协议与插件生态
 - [ ] 07: Agent 的记忆系统：短期记忆、长期记忆与 RAG
 - [ ] 08: Hermes Agent 入门（已发）

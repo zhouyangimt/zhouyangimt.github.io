@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-05
-> Total unique ASINs: 75
+> Last updated: 2026-10-07
+> Total unique ASINs: 77
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -81,14 +81,16 @@
 | 73 | `B0H1MKQNXK` | Yulongsheng Fuding Shou Mei Loose Leaf | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
 | 74 | `B08RYQW4FX` | Sizikato 8oz Glass Sharing Cup (gongdao) | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
 | 75 | `B0G6WZ5WFB` | Glazed Ceramic Gongdao Cup | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
+| 76 | `B0FSXHVH1K` | Chinese Gongfu Tasting Cup Set (white porcelain, four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
+| 77 | `B0CWGGBQQ5` | Blue-and-White Peony Tasting Cup Set (four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 45 |
-| **Total** | **75** |
+| Tea | 47 |
+| **Total** | **77** |
 
 ## Issues
 
@@ -105,7 +107,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-05) | Day 82 | 98 days remaining |
+| Today (2026-10-07) | Day 84 | 96 days remaining |
 
 ## Notes
 

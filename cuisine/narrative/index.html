@@ -139,7 +139,7 @@ We're chasing the most authentic version of every dish — the way locals eat it
   function getFilteredDish() {
     if (currentRegion === 'all') return dishCards;
     return dishCards.filter(function(c) {
-      var tags = c.getAttribute('data-tags') || '';
+      var tags = (c.getAttribute('data-tags') || '').split(' ');
       return tags.indexOf(currentRegion) !== -1;
     });
   }

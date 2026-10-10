@@ -11,7 +11,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
 <a href=/tea/>Tea</a>
-<a href=/baijiu/>Baijiu</a>
+<a href=/drinks/>Chinese Drinks</a>
 <a href=/about/>About</a>
 <a href=/affiliate-disclosure/>Disclosure</a>
 <a href=/privacy/>Privacy</a>
@@ -19,7 +19,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/index.xml title="Tech RSS feed &#8212; copy this link into your feed reader">Tech</a>
 <a href=/cuisine/index.xml title="Chinese Cuisine RSS feed &#8212; copy this link into your feed reader">Food</a>
 <a href=/tea/index.xml title="Chinese Tea RSS feed &#8212; copy this link into your feed reader">Tea</a>
-<a href=/baijiu/index.xml title="Baijiu RSS feed &#8212; copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>独立开发者全栈生存指南：一人公司运营——文档、支持与自动化</h1><div class=meta><time>2026-08-05</time>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed &#8212; copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>独立开发者全栈生存指南：一人公司运营——文档、支持与自动化</h1><div class=meta><time>2026-08-05</time>
 <span class=tags><span class=tag>独立开发</span><span class=tag>一人公司</span><span class=tag>自动化</span><span class=tag>运营</span></span></div></header><div class=content><h2 id=你最大的敌人是时间>你最大的敌人是时间</h2><p>前五篇我们走完了独立开发者的核心链路——选技术栈、验证需求、定价、获客、留存。你的产品有用户了，有人付钱了。</p><p>然后新的问题来了。</p><p>用户 A 发邮件：「登录不了，急。」</p><p>用户 B 在 Twitter 上 @ 你：「这功能怎么用？文档在哪？」</p><p>服务器凌晨 3 点挂了，你睡醒才发现，丢了 6 小时的付费流量。</p><p>发票还没开，税务 deadline 快到了。</p><p><strong>你不是 CEO，你是客服、运维、财务、法务、内容运营——而你一天只有 24 小时。</strong></p><p>这篇文章不聊怎么扩张团队。聊的是：当你只有一个人的时候，怎么用最少的时间把所有「非开发」的事搞定。</p><hr><h2 id=全局视图一人公司的运营系统>全局视图：一人公司的运营系统</h2><p>一句话总结：<strong>能用文档的别私聊，能用 Chatbot 的别亲回，能用 Cron 的别定时手动点。</strong></p><p>整个运营系统可以拆成两条线，一张图说清楚：</p><p><img src=/images/one-person-ops-flow.png alt="一人公司运营系统：用户支持分层 + 自动化运营" width="1192" height="1341" decoding="async" loading="lazy"></p><p>左边是用户支持线——让每一个问题都走最短路径解决。右边是自动化运维线——让机器替你盯着，挂了叫醒你，没挂别烦你。</p><hr><h2 id=文档你最好的员工>文档：你最好的「员工」</h2><p>独立开发者最容易忽视的东西，也是 ROI 最高的东西。</p><h3 id=为什么文档是第一优先级>为什么文档是第一优先级？</h3><p>算一笔账：</p><ul><li>你花 3 小时写一份 FAQ，覆盖 10 个高频问题</li><li>每个问题如果靠私聊解决，平均耗时 15 分钟（理解问题 + 打字 + 确认解决）</li><li>你的产品每天有 5 个新用户，30% 会遇到这些问题</li><li>一个月就是 5 × 30% × 30 = 45 次私聊</li><li>45 × 15min = 11.25 小时</li></ul><p>一份 FAQ，3 小时投入，每月节省 11 小时。年化 ROI 接近 4400%。这比你的任何功能迭代都划算。</p><h3 id=faq-该怎么写>FAQ 该怎么写？</h3><p>不是「把问题列出来，写答案」那么简单。好的 FAQ 有几个原则：</p><p><strong>1. 问题来自真实用户，不是你的想象</strong></p><p>不要坐在那里「我觉得用户可能问什么」。翻你的邮件、私信、Issue 记录。把真实的原话摘出来当问题标题。比如：</p><ul><li>好：「为什么我付款成功了但账户还是 Free Plan？」</li><li>差：「关于账户升级的相关问题」</li></ul><p>前者是用户真的会搜的句子，后者是文档写手的自嗨。</p><p><strong>2. 每个答案的背后是一个可操作的步骤，不是一个解释</strong></p><p>用户不想知道「为什么」，他想知道「怎么做」。不要写一段原理，直接给步骤：</p><pre tabindex=0><code>❌ 差：我们的支付系统与 Stripe 集成，在支付成功后通过 Webhook 回调更新账户状态，由于网络延迟可能产生 1-2 分钟的同步延迟。
 ✅ 好：
 1. 确认你收到了 Stripe 的付款成功邮件

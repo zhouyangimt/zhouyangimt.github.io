@@ -11,7 +11,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
 <a href=/tea/>Tea</a>
-<a href=/baijiu/>Baijiu</a>
+<a href=/drinks/>Chinese Drinks</a>
 <a href=/about/>About</a>
 <a href=/affiliate-disclosure/>Disclosure</a>
 <a href=/privacy/>Privacy</a>
@@ -19,7 +19,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
 <a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
 <a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
-<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 自动化测试——从单元测试到 E2E</h1><div class=meta><time>2026-08-25</time>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 自动化测试——从单元测试到 E2E</h1><div class=meta><time>2026-08-25</time>
 <span class=tags><span class=tag>AI</span><span class=tag>自动化测试</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=测试是每个独立开发者最想省掉的代码>测试是每个独立开发者「最想省掉」的代码</h2><p>写测试这件事，独立开发者心里都清楚它重要，但就是不想写。为什么？因为写测试不产生新功能——用户看不见，进度却实打实地被拖慢。大厂有专门的 QA 团队、有覆盖率门槛卡着；你一个人写代码，测试大概率排在「有空再补」的清单最后，然后永远没空。</p><p>但测试省不得。你上一个功能改了五行，没跑测试就上线，结果另一个模块崩了。这种事故独立开发者最伤不起——没人给你兜底，出问题得自己半夜爬起来修。我在微软时见过太多「改了 A、崩了 B」的线上事故，几乎都是测试没覆盖到那个交叉点。</p><p>AI 恰好是写测试最好的帮手。写测试和写业务代码不一样：测试更「模板化」、更「确定性」、更「机械」，这正是 AI 最擅长的。你只要把被测函数和期望行为说清楚，AI 能把边界用例、异常路径、Mock 全给你补上，而且写得比你手动快十倍。</p><p>这篇文章讲怎么让 AI 帮你从单元测试一路写到 E2E，最后接进 CI 自动跑。</p><h2 id=ai写测试擅长什么不擅长什么>AI 写测试，擅长什么、不擅长什么</h2><p>先把边界划清楚，别期望过高：</p><table><thead><tr><th>测试类型</th><th>AI 表现</th><th>说明</th></tr></thead><tbody><tr><td>单元测试（纯函数）</td><td>⭐⭐⭐⭐⭐</td><td>输入输出明确，AI 几乎不用想</td></tr><tr><td>边界用例补全</td><td>⭐⭐⭐⭐⭐</td><td>空值、0、负数、超长字符串，AI 想得比人全</td></tr><tr><td>异常路径 / 错误处理</td><td>⭐⭐⭐⭐</td><td>需要你说清楚「什么算异常」</td></tr><tr><td>集成测试（DB / API）</td><td>⭐⭐⭐⭐</td><td>要给出 schema 和接口契约</td></tr><tr><td>Mock / 打桩</td><td>⭐⭐⭐⭐</td><td>给它依赖关系，它能搭好</td></tr><tr><td>E2E 测试</td><td>⭐⭐⭐</td><td>选择器要稳定，AI 写的选择器常碎</td></tr><tr><td>用例的「业务正确性」</td><td>⭐⭐</td><td>期望值对不对，得你自己判断</td></tr></tbody></table><p>一句话：AI 擅长「把测试写出来」，不擅长「判断测试写得对不对」。期望值、业务规则这些，最终要你拍板。</p><h2 id=第一步给老代码补单元测试>第一步：给老代码补单元测试</h2><p>最实用的场景是给现有的、没有测试的代码补测试。直接上例子。这是我从某个订单系统扒出来的折扣计算函数：</p><pre tabindex=0><code>def calculate_discount(order_total: float, user_level: str, coupon_code: str = None) -&gt; float:
     &quot;&quot;&quot;计算折后价。&quot;&quot;&quot;
     discount = 0.0

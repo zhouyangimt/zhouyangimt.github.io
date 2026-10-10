@@ -11,7 +11,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
 <a href=/tea/>Tea</a>
-<a href=/baijiu/>Baijiu</a>
+<a href=/drinks/>Chinese Drinks</a>
 <a href=/about/>About</a>
 <a href=/affiliate-disclosure/>Disclosure</a>
 <a href=/privacy/>Privacy</a>
@@ -19,7 +19,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
 <a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
 <a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
-<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 驱动的完整开发工作流——从需求到上线</h1><div class=meta><time>2026-09-01</time>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 驱动的完整开发工作流——从需求到上线</h1><div class=meta><time>2026-09-01</time>
 <span class=tags><span class=tag>AI</span><span class=tag>工作流</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=四个孤立的能力串起来才是生产力>四个孤立的能力，串起来才是生产力</h2><p>前四篇我把 AI 编程工具链拆成了四个环节单独讲：Prompt Engineering、AI Debugging、AI 代码审查、AI 自动化测试。单独拎出来，每个都能帮你省不少时间——但如果你只用其中一个，效率提升是「加法」；把它们串成一条流水线，效率提升才是「乘法」。</p><p>为什么？因为真实开发里这些环节是环环相扣的：需求没想清楚，代码写得再快也是返工；测试没跟上，审得再细也挡不住线上事故。AI 单独帮你写代码，省的是敲键盘的时间；AI 贯穿全流程，省的是整个返工和沟通的成本。</p><p>这篇是系列的最后一篇：把前四篇串起来，讲一套从「一句话需求」到「代码上线」的 AI 驱动工作流。重点只回答一个问题——<strong>在每个环节，AI 到底能接多少活，哪些活必须人亲自干。</strong></p><h2 id=先看全貌一条流水线两个检查点>先看全貌：一条流水线，两个检查点</h2><p>我把这套工作流画成一张图，六个环节，中间卡着两个必须人参与的「检查点」：</p><p><img src=/images/ai-dev-workflow.png alt="AI 驱动的完整开发工作流" width="288" height="607" decoding="async" loading="lazy"></p><p>这张图最重要的信息不是「AI 能干多少」，而是那两个检查点的位置：<strong>人站在检查点上，不站在键盘前。</strong> AI 负责把每个环节的活干完，人负责在两个关键节点拍板——方案对不对、要不要合并。其余环节 AI 可以全自动跑。</p><p>很多人用 AI 开发失败，不是 AI 不够强，而是把 AI 当成了「一条龙」：丢一句话进去，指望它从头写到尾，结果中间哪个环节跑偏了都不知道。这套工作流的核心，就是把「一条龙」拆成「接力赛」，每一棒之间有个交接检查。</p><h2 id=环节一从一句话需求到技术方案>环节一：从一句话需求到技术方案</h2><p>我习惯先不让 AI 写代码，而是让它产出「共识文档」。直接上例子——给订单系统加优惠券叠加功能：</p><pre tabindex=0><code>我要给订单系统加优惠券叠加功能。折扣逻辑在 order/discount.py，优惠券表在 order/models.py。先别写代码，分三步走：
 
 1. 写一份 PRD：用户故事、验收标准、边界情况（至少 8 个边界）

@@ -11,7 +11,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/>Tech</a>
 <a href=/cuisine/>Chinese Cuisine</a>
 <a href=/tea/>Tea</a>
-<a href=/baijiu/>Baijiu</a>
+<a href=/drinks/>Chinese Drinks</a>
 <a href=/about/>About</a>
 <a href=/affiliate-disclosure/>Disclosure</a>
 <a href=/privacy/>Privacy</a>
@@ -19,7 +19,7 @@ gtag('config', 'G-R77QY66D94');
 <a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
 <a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
 <a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
-<a href=/baijiu/index.xml title="Baijiu RSS feed — copy this link into your feed reader">Baijiu</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 代码审查——让 AI 帮你 Code Review</h1><div class=meta><time>2026-08-18</time>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI编程工具链：AI 代码审查——让 AI 帮你 Code Review</h1><div class=meta><time>2026-08-18</time>
 <span class=tags><span class=tag>AI</span><span class=tag>代码审查</span><span class=tag>编程</span><span class=tag>工具教程</span></span></div></header><div class=content><h2 id=没人帮你看代码是独立开发者最大的隐性风险>没人帮你看代码，是独立开发者最大的隐性风险</h2><p>写代码的人都承认 Code Review 有用，但独立开发者和小团队有个尴尬的现实：<strong>没人帮你审。</strong></p><p>大厂有专职的 review 流程，每个 PR 至少两个同事过目，过不了别想合主干。你一个人写代码，写完自己点「合并」，bug 直接进生产。我在微软那几年养成的习惯是「没有 review 的代码不进主干」，出来做独立开发后，这个习惯差点没保住——因为你找不到那个帮你看代码的人。</p><p>AI 恰好补上了这个空位。而且它有一个人类同事没有的优势：<strong>24 小时在线，审一次不要钱，永远不会嫌你代码写得烂。</strong></p><p>但这篇文章得先把丑话说在前面：AI 审查不是万能的。它审得出你漏掉的空指针，审不出你产品方向对不对。搞清楚它的能力边界，你才知道该信它哪句话、该忽略哪句话。</p><h2 id=ai擅长审什么不擅长审什么>AI 擅长审什么，不擅长审什么</h2><p>先把边界划清楚。这张表是我用 AI 审了快一年代码后的真实感受：</p><table><thead><tr><th>审查类型</th><th>AI 表现</th><th>说明</th></tr></thead><tbody><tr><td>语法 / 类型错误</td><td>⭐⭐⭐⭐⭐</td><td>静态检查器都能干的活</td></tr><tr><td>空指针 / None 处理</td><td>⭐⭐⭐⭐⭐</td><td>一眼看出哪里可能为 None</td></tr><tr><td>SQL 注入 / XSS 等安全漏洞</td><td>⭐⭐⭐⭐⭐</td><td>训练数据里有海量安全案例</td></tr><tr><td>资源泄漏（文件、连接）</td><td>⭐⭐⭐⭐</td><td>能发现没 close 的句柄</td></tr><tr><td>代码坏味道（重复、过长函数）</td><td>⭐⭐⭐⭐</td><td>能给出重构建议</td></tr><tr><td>命名 / 可读性</td><td>⭐⭐⭐⭐</td><td>主观，但通常靠谱</td></tr><tr><td>并发 / 竞态条件</td><td>⭐⭐⭐</td><td>需要给足上下文</td></tr><tr><td>业务逻辑正确性</td><td>⭐⭐</td><td>需要你解释「什么是对」</td></tr><tr><td>架构权衡</td><td>⭐⭐</td><td>见仁见智，AI 只会给教科书答案</td></tr><tr><td>性能瓶颈</td><td>⭐⭐</td><td>需要 profiling 数据配合</td></tr></tbody></table><p>一句话总结：<strong>AI 擅长审「代码写得对不对」，不擅长审「需求理解得对不对」。</strong> 前者是确定性的技术问题，后者是判断力问题。</p><h2 id=ai代码审查的标准流程>AI 代码审查的标准流程</h2><p>我用 AI 审代码的完整流程画成一张图，下面逐环节讲：</p><p><img src=/images/ai-code-review-flow.png alt="AI 代码审查工作流" width="420" height="1174" decoding="async" loading="lazy"></p><h3 id=第一层静态检查免费别跳过>第一层：静态检查（免费，别跳过）</h3><p>在让 AI「深度审」之前，先把机器能自动查的查掉。语法、类型、依赖漏洞、代码格式——这些是确定性的，不需要 AI，用现成工具就能跑：</p><pre tabindex=0><code># Python：ruff 一站式搞定 lint + 格式
 pip install ruff
 ruff check .          # 检查

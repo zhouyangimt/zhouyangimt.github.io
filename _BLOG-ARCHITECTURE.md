@@ -205,7 +205,7 @@
 |---|------|---------|------|
 | 67 | Crossing-Bridge Noodles | 过桥米线 | ✅ |
 | 68 | Steam-Pot Chicken | 汽锅鸡 | ✅ |
-| 69 | Xuanwei Ham | 宣威火腿 | ⬜ |
+| 69 | Xuanwei Ham | 宣威火腿 | ✅ |
 | 70 | Sour Soup Fish | 酸汤鱼 | ⬜ |
 | 71 | Intestine Blood Noodles | 肠旺面 | ⬜ |
 | 72 | Hairy Tofu | 毛豆腐 | ⬜ |

@@ -95,8 +95,8 @@
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 50 |
-| **Total** | **80** |
+| Tea | 53 |
+| **Total** | **83** |
 
 ## Issues
 
@@ -113,7 +113,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-09) | Day 86 | 94 days remaining |
+| Today (2026-10-14) | Day 91 | 89 days remaining |
 
 ## Notes
 

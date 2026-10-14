@@ -208,7 +208,7 @@
 | 69 | Xuanwei Ham | 宣威火腿 | ✅ |
 | 70 | Sour Soup Fish | 酸汤鱼 | ✅ |
 | 71 | Intestine Blood Noodles | 肠旺面 | ✅ |
-| 72 | Hairy Tofu | 毛豆腐 | ⬜ |
+| 72 | Hairy Tofu | 毛豆腐 | ✅ |
 | 73 | Stinky Mandarin Fish | 臭鳜鱼 | ⬜ |
 | 74 | Li Hongzhang Chop Suey | 李鸿章大杂烩 | ⬜ |
 | 75 | Jinhua Ham | 金华火腿 | ⬜ |

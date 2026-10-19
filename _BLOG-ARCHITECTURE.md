@@ -211,8 +211,8 @@
 | 72 | Hairy Tofu | 毛豆腐 | ✅ |
 | 73 | Stinky Mandarin Fish | 臭鳜鱼 | ✅ |
 | 74 | Li Hongzhang Chop Suey | 李鸿章大杂烩 | ✅ |
-| 75 | Jinhua Ham | 金华火腿 | ⬜ |
-| 76 | Hu La Tang | 胡辣汤 | ⬜ |
+| 75 | Jinhua Ham | 金华火腿 | ✅ |
+| 76 | Hu La Tang | 胡辣汤 | ✅ |
 
 #### 八、The Far West · 新疆·陕西（8 道）
 

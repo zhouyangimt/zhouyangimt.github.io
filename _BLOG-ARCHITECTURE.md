@@ -220,7 +220,7 @@
 |---|------|---------|------|
 | 77 | Xinjiang Lamb Skewers | 羊肉串 | ✅ |
 | 78 | Big-Plate Chicken | 大盘鸡 | ✅ |
-| 79 | Lamb Pilaf | 手抓饭 | ⬜ |
+| 79 | Lamb Pilaf | 手抓饭 | ✅ |
 | 80 | Samsa / Kao Baozi | 烤包子 | ⬜ |
 | 81 | Xi'an Roujiamo | 肉夹馍 | ✅ |
 | 82 | Yangrou Paomo | 羊肉泡馍 | ⬜ |

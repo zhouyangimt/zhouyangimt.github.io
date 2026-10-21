@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-19
+> Last updated: 2026-10-21
 > Total unique ASINs: 83
 > Store ID: zhouyang01-20
 
@@ -85,7 +85,7 @@
 | 77 | `B0CWGGBQQ5` | Blue-and-White Peony Tasting Cup Set (four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
 | 78 | `B0CL4H4XJQ` | 17-inch Gongfu Tea Board | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
 | 79 | `B093PKSLVG` | Portable Tea Tray | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
-| 80 | `B0CLD12Z57` | Hardwood Tea Tray | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
+| 80 | `B0CLD12Z57` | Hardwood Tea Tray | t/tea-towel, t/tea-tray | 2026-10-09 | `zhouyang01-20` |
 | 81 | `B0B5ZTZL6G` | Reinmoson Extra Fine Mesh Tea Infuser (basket) | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
 | 82 | `B0FM63TD3L` | Retro Japanese Ceramic Tea Strainer (gongfu) | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
 | 83 | `B01LQ7NQTW` | Extra Fine 18/8 Stainless Pour-Through Tea Strainer | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
@@ -113,7 +113,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-19) | Day 96 | 84 days remaining |
+| Today (2026-10-21) | Day 98 | 82 days remaining |
 
 ## Notes
 

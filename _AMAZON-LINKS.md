@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-21
+> Last updated: 2026-10-23
 > Total unique ASINs: 83
 > Store ID: zhouyang01-20
 
@@ -47,7 +47,7 @@
 | 39 | `B08ZKTJ8NN` | Glass Teapot | t/anji-baicha-albino-green, t/huangshan-maofeng-misty-mountain, t/jin-jun-mei-golden-eyebrow, t/luan-guapian-bare-leaf, t/taiping-houkui-monkey-chief | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
-| 42 | `B0FJQZNNZP` | Tea Sampler Set | t/baihao-yinzhen-silver-needle, t/six-types-chinese-tea-guide | 2026-07-20 | `zhouyang01-20` |
+| 42 | `B0FJQZNNZP` | Tea Sampler Set | t/baihao-yinzhen-silver-needle, t/six-types-chinese-tea-guide, t/tea-scoop | 2026-07-20 | `zhouyang01-20` |
 | 43 | `B0D9N5MQPZ` | Tieguanyin Oolong ✅ short link amzn.to/3T7FEZP normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 44 | `B0DN5QWCFY` | Tieguanyin Anxi ✅ short link amzn.to/44er0T4 normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 45 | `B09TNR5X93` | Ripe Puerh ✅ short link amzn.to/4vY0MAv normalised to /dp/ in HTML 2026-09-28 | t/ripe-puer-old-libraries-rain-wet-earth, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
@@ -81,7 +81,7 @@
 | 73 | `B0H1MKQNXK` | Yulongsheng Fuding Shou Mei Loose Leaf | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
 | 74 | `B08RYQW4FX` | Sizikato 8oz Glass Sharing Cup (gongdao) | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
 | 75 | `B0G6WZ5WFB` | Glazed Ceramic Gongdao Cup | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
-| 76 | `B0FSXHVH1K` | Chinese Gongfu Tasting Cup Set (white porcelain, four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
+| 76 | `B0FSXHVH1K` | Chinese Gongfu Tasting Cup Set (white porcelain, four) | t/tasting-cup, t/tea-scoop | 2026-10-07 | `zhouyang01-20` |
 | 77 | `B0CWGGBQQ5` | Blue-and-White Peony Tasting Cup Set (four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
 | 78 | `B0CL4H4XJQ` | 17-inch Gongfu Tea Board | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
 | 79 | `B093PKSLVG` | Portable Tea Tray | t/tea-tray | 2026-10-09 | `zhouyang01-20` |

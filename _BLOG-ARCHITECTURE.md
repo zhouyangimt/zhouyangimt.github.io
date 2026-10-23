@@ -223,7 +223,7 @@
 | 79 | Lamb Pilaf | 手抓饭 | ✅ |
 | 80 | Samsa / Kao Baozi | 烤包子 | ✅ |⬜ |
 | 81 | Xi'an Roujiamo | 肉夹馍 | ✅ |
-| 82 | Yangrou Paomo | 羊肉泡馍 | ⬜ |
+| 82 | Yangrou Paomo | 羊肉泡馍 | ✅ |
 | 83 | Liangpi | 凉皮 | ⬜ |
 | 84 | Xinjiang Naan Bread | 馕 | ⬜ |
 

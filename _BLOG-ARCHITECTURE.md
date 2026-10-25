@@ -225,7 +225,7 @@
 | 81 | Xi'an Roujiamo | 肉夹馍 | ✅ |
 | 82 | Yangrou Paomo | 羊肉泡馍 | ✅ |
 | 83 | Liangpi | 凉皮 | ✅ |
-| 84 | Xinjiang Naan Bread | 馕 | ⬜ |
+| 84 | Xinjiang Naan Bread | 馕 | ✅ |
 
 #### 九、Hot Pot, Cold Dishes & Dark Arts · 锅·冷·暗（10 道）
 

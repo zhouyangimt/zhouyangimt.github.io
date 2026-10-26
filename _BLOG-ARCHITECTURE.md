@@ -231,7 +231,7 @@
 
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
-| 85 | Chongqing Hot Pot | 重庆火锅 | ⬜ |
+| 85 | Chongqing Hot Pot | 重庆火锅 | ✅ |
 | 86 | Chaoshan Beef Hot Pot | 潮汕牛肉火锅 | ⬜ |
 | 87 | Sichuan Chuan Chuan | 串串香 | ⬜ |
 | 88 | Garlic-White Pork | 蒜泥白肉 | ⬜ |

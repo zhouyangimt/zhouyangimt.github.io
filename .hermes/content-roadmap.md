@@ -43,7 +43,7 @@
 - [x] 06: 实战工作流 (2026-06-22)
 
 ## 系列：AI Agent 全解析
-**进度**: 7/23 篇
+**进度**: 11/23 篇
 
 - [x] 01: AI Agent 是什么——从 LLM 到自主智能体的进化 (2026-09-08)
 - [x] 02: Agent 的四大核心能力：规划、记忆、工具、执行 (2026-09-15)
@@ -52,12 +52,12 @@
 - [x] 05: Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent (2026-10-06)
 - [x] 06: 工具调用深度解析：Function Calling、MCP 协议与插件生态 (2026-10-13)
 - [x] 07: Agent 的记忆系统：短期记忆、长期记忆与 RAG (2026-10-20)
-- [ ] 08: Hermes Agent 入门（已发）
-- [ ] 09: Hermes Agent 配置详解（已发）
-- [ ] 10: Hermes Agent Skills 系统（已发）
+- [x] 08: Hermes Agent 入门（= 深度指南 01，2026-06-18 已发 posts/hermes-agent-guide）
+- [x] 09: Hermes Agent 配置详解（= 深度指南 02，2026-06-19 已发 posts/hermes-agent-config）
+- [x] 10: Hermes Agent Skills 系统（= 深度指南 03，2026-06-19 已发 posts/hermes-agent-skills）
 - [ ] 11: LangChain vs CrewAI vs AutoGPT：三大开源框架横评
 - [ ] 12: 用 LangGraph 构建多步骤 Agent 工作流
-- [ ] 13: Claude Code vs Cursor vs Copilot 横评（已发）
+- [x] 13: Claude Code vs Cursor vs Copilot 横评（2026-06-01 已发 posts/claude-code-vs-cursor-vs-copilot）
 - [ ] 14: Cline + Aider：开源代码 Agent 双子星
 - [ ] 15: Dify 实战：零代码搭建企业 AI 工作流
 - [ ] 16: 钉钉 AI + Coze：中国市场的 Agent 生态

@@ -55,7 +55,7 @@
 - [x] 08: Hermes Agent 入门（= 深度指南 01，2026-06-18 已发 posts/hermes-agent-guide）
 - [x] 09: Hermes Agent 配置详解（= 深度指南 02，2026-06-19 已发 posts/hermes-agent-config）
 - [x] 10: Hermes Agent Skills 系统（= 深度指南 03，2026-06-19 已发 posts/hermes-agent-skills）
-- [ ] 11: LangChain vs CrewAI vs AutoGPT：三大开源框架横评
+- [x] 11: LangChain vs CrewAI vs AutoGPT：三大开源框架横评 (2026-10-27)
 - [ ] 12: 用 LangGraph 构建多步骤 Agent 工作流
 - [x] 13: Claude Code vs Cursor vs Copilot 横评（2026-06-01 已发 posts/claude-code-vs-cursor-vs-copilot）
 - [ ] 14: Cline + Aider：开源代码 Agent 双子星

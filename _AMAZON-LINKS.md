@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-23
+> Last updated: 2026-10-28
 > Total unique ASINs: 85
 > Store ID: zhouyang01-20
 
@@ -64,7 +64,7 @@
 | 56 | `B0FSFLWWPX` | Rishi Golden Yunnan Organic Black Tea (4 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
 | 57 | `B076SV6F3P` | Davidson's Organics Yunnan Black (16 oz) | t/dianhong-yunnan-black-tea | 2026-09-04 | `zhouyang01-20` |
 | 58 | `B0BYT2L5QF` | 2007 Big Tree Raw Pu-erh Tea Cake (380g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
-| 59 | `B0DKCSX7YF` | Yiwu Raw Pu-erh Cake (357g) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
+| 59 | `B0DKCSX7YF` | Yiwu Raw Pu-erh Cake (357g) | t/sheng-puer-raw-aged-tea, t/tea-knife | 2026-09-09 | `zhouyang01-20` |
 | 60 | `B0894KBRQC` | SANRAN Raw Pu-erh Tea Cake (7.1oz) | t/sheng-puer-raw-aged-tea | 2026-09-09 | `zhouyang01-20` |
 | 61 | `B010RYT8VU` | Tealyra White Peony Bai Mu Tan Loose Leaf (100g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
 | 62 | `B0G7WGB8H1` | CHADUO Fuding White Peony 2013 Aged (150g) | t/bai-mudan-white-peony | 2026-09-16 | `zhouyang01-20` |
@@ -97,8 +97,8 @@
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 53 |
-| **Total** | **83** |
+| Tea | 55 |
+| **Total** | **85** |
 
 ## Issues
 
@@ -115,7 +115,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-21) | Day 98 | 82 days remaining |
+| Today (2026-10-28) | Day 105 | 75 days remaining |
 
 ## Notes
 

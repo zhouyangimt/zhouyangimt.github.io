@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
 > Last updated: 2026-10-23
-> Total unique ASINs: 83
+> Total unique ASINs: 85
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -89,6 +89,8 @@
 | 81 | `B0B5ZTZL6G` | Reinmoson Extra Fine Mesh Tea Infuser (basket) | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
 | 82 | `B0FM63TD3L` | Retro Japanese Ceramic Tea Strainer (gongfu) | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
 | 83 | `B01LQ7NQTW` | Extra Fine 18/8 Stainless Pour-Through Tea Strainer | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
+| 84 | `B0777N5YH2` | Rosewood Puer Tea Knife Needle ($9.99) | t/tea-knife | 2026-10-28 | `zhouyang01-20` |
+| 85 | `B0793RR3LS` | MBB Tea Knife & Tea Needle Set ($17.29) | t/tea-knife | 2026-10-28 | `zhouyang01-20` |
 
 ## Statistics
 

@@ -234,7 +234,7 @@
 | 85 | Chongqing Hot Pot | 重庆火锅 | ✅ |
 | 86 | Chaoshan Beef Hot Pot | 潮汕牛肉火锅 | ✅ |
 | 87 | Sichuan Chuan Chuan | 串串香 | ✅ |
-| 88 | Garlic-White Pork | 蒜泥白肉 | ⬜ |
+| 88 | Garlic-White Pork | 蒜泥白肉 | ✅ |
 | 89 | Century Egg Tofu | 皮蛋豆腐 | ⬜ |
 | 90 | Century Egg | 皮蛋 | ✅ |
 | 91 | Chicken Feet | 凤爪 | ⬜ |

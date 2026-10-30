@@ -25,18 +25,18 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-10-28 更新）
+## 当前进度（2026-10-30 更新）
 
-- **已发布 36 篇**（Phase 1：7 篇 / Phase 2：29 篇）
-- 全部 36 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
-- **下一篇：茶宠（The Tea Pet）** — 茶具支柱第 10 篇，茶刀篇文末 Next hook 已预告。茶具已 9 篇（盖碗 + 茶壶 + 公道杯 + 品茗杯 + 茶盘 + 茶滤 + 茶巾 + 茶荷/茶则 + 茶刀），目标 8–10 篇已基本填满；茶宠写完后茶具支柱收口，转入**集合文 / 茶 101 / 茶文化**（集合文 0/5–8 是最大缺口）
+- **已发布 37 篇**（Phase 1：7 篇 / Phase 2：30 篇）
+- 全部 37 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
+- **下一篇：集合文 #1《Six Teas, One Shelf》** — 六种茶色全覆盖的最短购买清单（100g 装 vs 250g 装、最容易买多的一类）。茶宠（10-30 已发）是茶具支柱第 10 篇、收口之作，**茶具支柱已满，不再取题**；接下来只写集合文（0/5–8，最大缺口）、茶 101（3/5–8）、茶文化（2/10–15）
 - ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（36 篇）
+### 已发布清单（37 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
-| Guides & Teaware | 12 | six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife |
+| Guides & Teaware | 13 | six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet |
 | Tea Culture | 2 | tea-chan-one-cup · tea-horse-road |
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
@@ -51,7 +51,7 @@
 | 茶 101（流量入口 / AdSense 主力） | 5–8 | 3（six-types · tea-storage-guide · water-for-tea） | 2–5 |
 | 茶种类 · 单品 | 20+ | 22 | **已达标（已收尾，不再取题）** |
 | 茶种类 · 集合文 | 5–8 | 0 | 5–8 |
-| 茶具（佣金主力） | 8–10 | 9（gaiwan · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife） | 0–1 |
+| 茶具（佣金主力） | 8–10 | 10（gaiwan · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet） | **已满，收口** |
 | 茶文化 | 10–15 | 2 | 8–13 |
 | 送礼指南（Phase 3，等 DA 权重） | 3–5 | 0 | 3–5 |
 
@@ -61,4 +61,5 @@
 
 ### 已完成的历史待办（无需再处理）
 
+- 2026-10-30：茶宠（tea-pet）发布，封面/缩略图取自百家号茶宠实拍（紫砂金蟾 + 小壶 + 竹茶席，vision 全分辨率核验：无文字、无水印、真实照片）。
 - ~~白牡丹封面为占位图（银青→杏金渐变），需换真图~~ → **2026-09-16 已完成**：8 篇占位封面（白牡丹 / 白毫银针 / 滇红 / 金骏眉 / 祁门红茶 / 正山小种 / 六安瓜片 / 生普）全部换成真实照片并 bump 到 `?v=2`。

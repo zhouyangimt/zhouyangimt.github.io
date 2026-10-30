@@ -1,7 +1,7 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-28
-> Total unique ASINs: 85
+> Last updated: 2026-10-30
+> Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
 | # | ASIN | Product | Page(s) | First Registered | Tag |
@@ -91,14 +91,17 @@
 | 83 | `B01LQ7NQTW` | Extra Fine 18/8 Stainless Pour-Through Tea Strainer | t/tea-strainer | 2026-10-14 | `zhouyang01-20` |
 | 84 | `B0777N5YH2` | Rosewood Puer Tea Knife Needle ($9.99) | t/tea-knife | 2026-10-28 | `zhouyang01-20` |
 | 85 | `B0793RR3LS` | MBB Tea Knife & Tea Needle Set ($17.29) | t/tea-knife | 2026-10-28 | `zhouyang01-20` |
+| 86 | `B09TKR9FYG` | Zisha Golden Toad Tea Pet (unglazed clay) | t/tea-pet | 2026-10-30 | `zhouyang01-20` |
+| 87 | `B0BFN968R9` | Zisha Sun Wukong Tea Pet (unglazed clay) | t/tea-pet | 2026-10-30 | `zhouyang01-20` |
+| 88 | `B0DS28XCG8` | Colour-Changing Koi Tea Pet (thermochromic) | t/tea-pet | 2026-10-30 | `zhouyang01-20` |
 
 ## Statistics
 
 | Category | Count |
 |----------|-------|
 | Cuisine (science series) | 30 |
-| Tea | 55 |
-| **Total** | **85** |
+| Tea | 58 |
+| **Total** | **88** |
 
 ## Issues
 
@@ -115,7 +118,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-28) | Day 105 | 75 days remaining |
+| Today (2026-10-30) | Day 107 | 73 days remaining |
 
 ## Notes
 

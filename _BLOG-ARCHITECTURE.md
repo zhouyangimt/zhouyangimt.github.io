@@ -237,8 +237,8 @@
 | 88 | Garlic-White Pork | 蒜泥白肉 | ✅ |
 | 89 | Century Egg Tofu | 皮蛋豆腐 | ✅ |
 | 90 | Century Egg | 皮蛋 | ✅ |
-| 91 | Chicken Feet | 凤爪 | ⬜ |
-| 92 | Tanghulu | 冰糖葫芦 | ⬜ |
+| 91 | Chicken Feet | 凤爪 | ✅ |
+| 92 | Tanghulu | 冰糖葫芦 | ✅ |
 | 93 | Tianjin Jianbing | 煎饼果子 | ✅ |
 | 94 | Buddha's Delight | 罗汉斋 | ⬜ |
 

@@ -240,7 +240,7 @@
 | 91 | Chicken Feet | 凤爪 | ✅ |
 | 92 | Tanghulu | 冰糖葫芦 | ✅ |
 | 93 | Tianjin Jianbing | 煎饼果子 | ✅ |
-| 94 | Buddha's Delight | 罗汉斋 | ⬜ |
+| 94 | Buddha's Delight | 罗汉斋 | ✅ |
 
 #### 十、Sweet Endings & Morning Rituals · 早与甜（7 道）
 

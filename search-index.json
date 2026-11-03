@@ -1,5 +1,426 @@
 [
  {
+  "title": "Zongzi: The Dumpling That Has to Be Tied Shut",
+  "url": "/cuisine/zongzi/",
+  "summary": "Reed leaves soaked overnight, glutinous rice packed around a slab of pork belly, four hours in the pot — and a knot you cannot tie too tight or too loose.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "zongzi",
+   "sticky-rice",
+   "shanghai",
+   "dragon-boat",
+   "festival",
+   "home-cooking"
+  ]
+ },
+ {
+  "title": "Biang Biang Noodles: Rest the Dough, Then Slap It",
+  "url": "/cuisine/biang-biang-noodles-recipe/",
+  "summary": "Biang biang noodles depend on two rests, an oiled bench, and a slap that stretches the belt to 1.5 metres before it hits the water for 90 seconds.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shaanxi",
+   "noodles",
+   "spicy",
+   "classic",
+   "recipe",
+   "home-cooking"
+  ]
+ },
+ {
+  "title": "Braised Chicken Feet: The Gelatin Window",
+  "url": "/cuisine/chicken-feet-recipe/",
+  "summary": "Chicken feet trimmed, blanched, fried at 180°C for twenty seconds, then braised for ninety until the skin wrinkles and the sauce sets to jelly.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "cantonese",
+   "chicken",
+   "braised",
+   "street-food",
+   "recipe",
+   "classic"
+  ]
+ },
+ {
+  "title": "Cantonese Steamed Fish: Eight Minutes and a Splash of Oil",
+  "url": "/cuisine/steamed-fish-cantonese-recipe/",
+  "summary": "Cantonese steamed fish: a 600g sea bass dried, racked above boiling water, steamed eight minutes, then finished with seasoned soy and oil at 200°C.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "cantonese",
+   "fish",
+   "seafood",
+   "steamed",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Century Egg Tofu: A Five-Minute Cold Dish",
+  "url": "/cuisine/century-egg-tofu-recipe/",
+  "summary": "Cold silken tofu with century egg and a five-part dressing, assembled in five minutes and served before the tofu has time to weep into the sauce.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "tofu",
+   "egg",
+   "home-cooking",
+   "beginner",
+   "recipe",
+   "quick"
+  ]
+ },
+ {
+  "title": "Chongqing Xiaomian: The Bowl Is the Recipe",
+  "url": "/cuisine/chongqing-xiaomian-recipe/",
+  "summary": "Chongqing breakfast in a bowl: seasoning laid down first, starchy water for broth, 90 seconds of noodles, and a teaspoon of lard. Always lard.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "chongqing",
+   "noodles",
+   "spicy",
+   "breakfast",
+   "street-food",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Chow Mein: Chasing Wok Hei on a Home Burner",
+  "url": "/cuisine/chow-mein-recipe/",
+  "summary": "Dry noodles, a wok heated until it smokes, soy poured down the metal instead of onto the noodles, and two 150g batches that fit the burner you actually own.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "cantonese",
+   "noodles",
+   "stir-fry",
+   "street-food",
+   "recipe",
+   "home-cooking"
+  ]
+ },
+ {
+  "title": "Da Pan Ji: The Noodles Go In Last",
+  "url": "/cuisine/big-plate-chicken-recipe/",
+  "summary": "Xinjiang da pan ji: bone-in chicken braised with rock sugar caramel and Pixian bean paste, potato wedges in at the end, belt noodles laid underneath.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "xinjiang",
+   "chicken",
+   "braised",
+   "spicy",
+   "recipe",
+   "family"
+  ]
+ },
+ {
+  "title": "Dan Dan Noodles: Build the Bowl From the Bottom",
+  "url": "/cuisine/dan-dan-noodles-recipe/",
+  "summary": "Sichuan dan dan noodles assembled in order: chilli oil, loosened sesame paste, soy, vinegar and ground pepper under the noodles, crisp pork on top.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "noodles",
+   "spicy",
+   "classic",
+   "recipe",
+   "street-food"
+  ]
+ },
+ {
+  "title": "Di San Xian: Eggplant That Does Not Drink the Oil",
+  "url": "/cuisine/earth-three-fresh-recipe/",
+  "summary": "Di san xian done properly: potato fried at 160°C, salted eggplant at 175°C, green pepper for ten seconds, and a starch sauce that thickens in twenty.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "dongbei",
+   "home-cooking",
+   "stir-fry",
+   "classic",
+   "recipe",
+   "savory"
+  ]
+ },
+ {
+  "title": "Double-Skin Milk: Two Skins, No Oven",
+  "url": "/cuisine/double-skin-milk-recipe/",
+  "summary": "Whole milk rested until a wrinkled skin forms, poured out from under it, set with egg white, then steamed at 85°C until a second skin closes over the top.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "cantonese",
+   "classic",
+   "family",
+   "comfort-food",
+   "recipe",
+   "egg"
+  ]
+ },
+ {
+  "title": "Garlic White Pork: Slicing It Thin Enough",
+  "url": "/cuisine/garlic-white-pork-recipe/",
+  "summary": "Suan ni bai rou: skin-on belly held at 88°C for 38 minutes, chilled firm, sliced 2mm, and dressed with pounded garlic, chilli oil and black vinegar.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "pork",
+   "classic",
+   "recipe",
+   "home-cooking",
+   "spicy"
+  ]
+ },
+ {
+  "title": "Hong Shao Rou: Caramel First, Soy Second",
+  "url": "/cuisine/hong-shao-rou-recipe/",
+  "summary": "Shanghai red-braised pork belly where rock sugar, not dark soy, makes the colour: 3cm cubes, a 170°C caramel, then 70 minutes at a bare simmer.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "pork",
+   "braised",
+   "classic",
+   "recipe",
+   "home-cooking"
+  ]
+ },
+ {
+  "title": "How to Cook Scallion Oil Noodles: Twenty Minutes of Patience",
+  "url": "/cuisine/scallion-oil-noodles-recipe/",
+  "summary": "Scallion oil noodles from a Shanghai kitchen: 100ml oil to 60g scallions, twenty minutes at low heat, then tossed with a 2:1 soy sauce.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "noodles",
+   "home-cooking",
+   "beginner",
+   "recipe",
+   "savory"
+  ]
+ },
+ {
+  "title": "How to Cook Tomato and Egg Stir-Fry: The Two-Pan Method",
+  "url": "/cuisine/tomato-egg-stir-fry-recipe/",
+  "summary": "A Shanghai home method for tomato and egg stir-fry: eggs pulled at 70 percent set, tomatoes salted alone for four minutes, one teaspoon of sugar to round it.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "egg",
+   "tomato",
+   "home-cooking",
+   "stir-fry",
+   "recipe",
+   "beginner"
+  ]
+ },
+ {
+  "title": "Jiaozi: The Pleat, the Filling, the Water",
+  "url": "/cuisine/jiaozi-recipe/",
+  "summary": "Hand-minced pork at 30 percent fat, 150ml of ginger-scallion water worked in three spoons at a time, and a one-sided pleat that keeps the seam thin.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "beijing",
+   "dumpling",
+   "pork",
+   "family",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Kou Shui Ji: The Chicken You Serve Cold",
+  "url": "/cuisine/kou-shui-ji-recipe/",
+  "summary": "Sichuan kou shui ji: bone-in legs poached at 85 to 90°C, chilled hard, sliced cold, dressed at the last minute in chilli oil loosened with poaching liquid.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "chicken",
+   "spicy",
+   "classic",
+   "recipe",
+   "street-food"
+  ]
+ },
+ {
+  "title": "La Zi Ji: Finding the Chicken in the Chilies",
+  "url": "/cuisine/laziji-recipe/",
+  "summary": "Sichuan la zi ji: thigh cubed and marinated, fried at 160°C then 190°C, tossed with 80g of dried chillies and a teaspoon of sugar in the last thirty seconds.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "chicken",
+   "fried",
+   "spicy",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Mango Pomelo Sago: A Hong Kong Invention",
+  "url": "/cuisine/mango-pomelo-sago-recipe/",
+  "summary": "Mango pomelo sago: blended mango with coconut and evaporated milk, sago rinsed cold, and pomelo torn into sacs by hand, chilled for two hours.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "hong-kong",
+   "cantonese",
+   "family",
+   "comfort-food",
+   "recipe",
+   "classic"
+  ]
+ },
+ {
+  "title": "Mao-Style Red-Braised Pork: No Dark Soy, All Caramel",
+  "url": "/cuisine/mao-shi-hong-shao-rou-recipe/",
+  "summary": "The Hunan red-braised pork: no dark soy and no blanching, 50g of rock sugar taken to deep amber, then 40 minutes in a wok and 30 in clay.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "hunan",
+   "pork",
+   "braised",
+   "classic",
+   "recipe",
+   "spicy"
+  ]
+ },
+ {
+  "title": "Spring Rolls: Dry Filling, Hot Oil, No Explosion",
+  "url": "/cuisine/spring-rolls-recipe/",
+  "summary": "Pork, cabbage, shiitake and bamboo cooked until the pan is dry, chilled 30 minutes, rolled tight and fried at 170°C until the seams are the colour of straw.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "fried",
+   "pork",
+   "family",
+   "recipe",
+   "street-food"
+  ]
+ },
+ {
+  "title": "Tang Cu Pai Gu: The Vinegar Goes In Twice",
+  "url": "/cuisine/tang-cu-pai-gu-recipe/",
+  "summary": "Shanghai sweet-and-sour ribs on the 1:2:3:4 ratio, with Chinkiang vinegar split in two: half braised in for depth, half added off heat for aroma.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shanghai",
+   "pork",
+   "sweet-sour",
+   "braised",
+   "recipe",
+   "classic"
+  ]
+ },
+ {
+  "title": "White Cut Chicken: The 90-Degree Poach",
+  "url": "/cuisine/white-cut-chicken-recipe/",
+  "summary": "Cantonese white cut chicken: a whole bird held at 90°C for 25 to 30 minutes, rested off heat, iced, chopped through the bone, served with ginger-scallion oil.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "cantonese",
+   "chicken",
+   "classic",
+   "recipe",
+   "family"
+  ]
+ },
+ {
+  "title": "Yangzhou Fried Rice: Cold Rice, One Egg at a Time",
+  "url": "/cuisine/yangzhou-fried-rice-recipe/",
+  "summary": "Yangzhou fried rice built on two rules: day-old rice broken up by hand, and beaten egg poured over the grains before the wok, not scrambled in it.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "jiangsu",
+   "rice",
+   "egg",
+   "stir-fry",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "You Po Mian: The Oil Has to Smoke",
+  "url": "/cuisine/you-po-mian-recipe/",
+  "summary": "A Shaanxi hand-pulled noodle built on two rests and one 200°C pour: chilli, garlic, black vinegar, and oil taken right to the smoke point.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "shaanxi",
+   "noodles",
+   "spicy",
+   "classic",
+   "recipe",
+   "home-cooking"
+  ]
+ },
+ {
+  "title": "Yu Xiang Eggplant: Frying It Without Drinking Oil",
+  "url": "/cuisine/yu-xiang-qie-zi-recipe/",
+  "summary": "Yu xiang eggplant without a cup of oil: salt or microwave the batons first, shallow-fry at 175°C in three batches, then finish with pickled chilli.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "home-cooking",
+   "stir-fry",
+   "spicy",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Yu Xiang Rou Si: The Sauce That Never Had Fish",
+  "url": "/cuisine/yu-xiang-rou-si-recipe/",
+  "summary": "Shredded pork loin velveted for 15 minutes, seared in a loose layer for 30 seconds, then glazed with the fish-fragrant sauce in the last half minute.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "sichuan",
+   "pork",
+   "stir-fry",
+   "spicy",
+   "classic",
+   "recipe"
+  ]
+ },
+ {
+  "title": "Zha Jiang Mian: Twenty Minutes of Stirring",
+  "url": "/cuisine/zha-jiang-mian-recipe/",
+  "summary": "Beijing noodles with hand-diced pork belly and two bean pastes, fried low and slow for 20 minutes until the oil separates and the sauce turns dark.",
+  "section": "cuisine",
+  "date": "2026-11-03",
+  "tags": [
+   "beijing",
+   "noodles",
+   "pork",
+   "classic",
+   "recipe",
+   "home-cooking"
+  ]
+ },
+ {
   "title": "AI Agent 全解析：用 LangGraph 构建多步骤 Agent 工作流——状态、条件边与中断恢复",
   "url": "/posts/langgraph-multi-step-agent-workflow/",
   "summary": "手写 while 循环崩在第三步，不是跑不起来，是不知道自己在哪。用 StateGraph 把状态、条件边、checkpoint 显式化：条件边做打回重试、interrupt 停在等人审批、checkpoint 让审批等待不烧 token——附可运行代码与真实终端输出。",

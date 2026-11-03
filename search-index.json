@@ -1,5 +1,18 @@
 [
  {
+  "title": "AI Agent 全解析：用 LangGraph 构建多步骤 Agent 工作流——状态、条件边与中断恢复",
+  "url": "/posts/langgraph-multi-step-agent-workflow/",
+  "summary": "手写 while 循环崩在第三步，不是跑不起来，是不知道自己在哪。用 StateGraph 把状态、条件边、checkpoint 显式化：条件边做打回重试、interrupt 停在等人审批、checkpoint 让审批等待不烧 token——附可运行代码与真实终端输出。",
+  "section": "posts",
+  "date": "2026-11-03",
+  "tags": [
+   "ai",
+   "agent",
+   "langgraph",
+   "工具教程"
+  ]
+ },
+ {
   "title": "Buddha's Delight: The Temple Dish That Fakes Meat Better Than Meat",
   "url": "/cuisine/buddhas-delight/",
   "summary": "Eighteen vegetables, three kinds of wheat gluten, and a wok that never holds more than one ingredient at a time — the Buddhist banquet dish that makes fake goose taste better than the real thing.",

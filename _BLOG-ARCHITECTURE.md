@@ -247,7 +247,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 95 | Zongzi | 粽子 | ✅ |
-| 96 | Mooncake | 月饼 | ⬜ |
+| 96 | Mooncake | 月饼 | ✅ |
 | 97 | Buddha Jumps Over the Wall | 佛跳墙 | ⬜ |
 | 98 | Almond Tofu | 杏仁豆腐 | ⬜ |
 | 99 | Fermented Mung Bean Milk | 豆汁儿 | ⬜ |

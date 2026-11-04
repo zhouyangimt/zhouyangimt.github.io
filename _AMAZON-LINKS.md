@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-10-30
+> Last updated: 2026-11-04
 > Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
@@ -43,7 +43,7 @@
 | 35 | `B0CQRTGM73` | Gaiwan Set ⚠️ removed from site 2026-09, ledger row kept for history | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong ⚠️ 404 — listing dead since 2026-08-17, link still live in article, needs replacement or removal | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan-three-fingers-one-lid, t/jin-jun-mei-golden-eyebrow, t/ripe-puer-old-libraries-rain-wet-earth, t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
-| 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan-three-fingers-one-lid, t/tea-chan-one-cup, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
+| 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan-three-fingers-one-lid, t/six-teas-one-shelf, t/tea-chan-one-cup, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
 | 39 | `B08ZKTJ8NN` | Glass Teapot | t/anji-baicha-albino-green, t/huangshan-maofeng-misty-mountain, t/jin-jun-mei-golden-eyebrow, t/luan-guapian-bare-leaf, t/taiping-houkui-monkey-chief | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
@@ -73,7 +73,7 @@
 | 65 | `B074W74MXL` | 2016 Fuding Shou Mei Cake | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
 | 66 | `B07T1HRTRX` | Wuyi Rou Gui (YAN CHA) | t/rougui-cinnamon-fire-wuyi | 2026-08-05 | `zhouyang01-20` |
 | 67 | `B07Y36FWTT` | Hygrometer (tea storage) | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
-| 68 | `B09GK7PQWF` | Glazed Ceramic Tea Caddy | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
+| 68 | `B09GK7PQWF` | Glazed Ceramic Tea Caddy | t/six-teas-one-shelf, t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
 | 69 | `B0B3GS15GL` | Brita Carbon Water Pitcher | t/water-for-tea | 2026-09-25 | `zhouyang01-20` |
 | 70 | `B0B89JJ9Z2` | Two-way Humidity Pack (62%) | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
 | 71 | `B0F2G4CZV2` | Shui Xian Oolong (Wuyi) | t/shuixian-water-sprite-wuyi | 2026-07-31 | `zhouyang01-20` |
@@ -118,7 +118,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-10-30) | Day 107 | 73 days remaining |
+| Today (2026-11-04) | Day 112 | 68 days remaining |
 
 ## Notes
 

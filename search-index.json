@@ -2614,15 +2614,14 @@
  {
   "title": "How to Cook Real Lion's Head Meatballs: The Tender Way",
   "url": "/cuisine/hong-shao-shi-zi-tou-recipe/",
-  "summary": "\nEditor&rsquo;s Note: This is the step-by-step companion to Lion&rsquo;s Head Meatballs — The Giant Pork Meatball That Collapses Under a Spoon . If you haven&rsquo;t read the story behind these …",
+  "summary": "Eight hundred grams of hand-chopped pork, 200ml of ginger-scallion water worked in four goes, and a 90–95°C braise that never boils.",
   "section": "cuisine",
   "date": "2026-06-29",
   "tags": [
+   "huaiyang",
    "jiangsu",
    "pork",
    "braised",
-   "savory",
-   "huaiyang",
    "classic",
    "recipe"
   ]
@@ -2809,51 +2808,52 @@
  {
   "title": "How to Cook Dongpo Pork: The Poet's Recipe",
   "url": "/cuisine/dongpo-rou-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "A kilo of skin-on belly, 60g of rock sugar taken to amber, and 90 minutes at 95°C before an overnight rest in the sauce that sets to jelly.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
    "hangzhou",
+   "zhejiang",
    "pork",
    "braised",
    "classic",
-   "zhejiang",
    "recipe"
   ]
  },
  {
   "title": "How to Cook Kung Pao Chicken: The Real Way",
   "url": "/cuisine/kung-pao-chicken-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "Four hundred grams of thigh, a bowl of sauce mixed before the wok is lit, and 45 seconds of stillness that decide the texture.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
    "sichuan",
    "chicken",
-   "spicy",
    "stir-fry",
-   "recipe",
-   "classic"
+   "spicy",
+   "classic",
+   "recipe"
   ]
  },
  {
   "title": "How to Cook Real Mapo Tofu: The Sichuan Way",
   "url": "/cuisine/mapo-tofu-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "Mapo tofu by temperature: 200°C for the beef and doubanjiang, 90°C for the braise, and a three-stage starch slurry that makes the sauce cling.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
    "sichuan",
    "tofu",
    "spicy",
-   "recipe",
-   "classic"
+   "mala",
+   "classic",
+   "recipe"
   ]
  },
  {
   "title": "How to Cook Sichuan Boiled Fish: The Chili Oil Bath",
   "url": "/cuisine/sichuan-boiled-fish-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "Sichuan boiled fish: 4mm slices poached at 85°C in a strained doubanjiang broth, then 200°C rapeseed oil poured over chillies at the table.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
@@ -2861,39 +2861,38 @@
    "fish",
    "spicy",
    "mala",
-   "recipe",
-   "classic"
+   "classic",
+   "recipe"
   ]
  },
  {
   "title": "How to Cook Sweet and Sour Pork: The Real Cantonese Way",
   "url": "/cuisine/sweet-and-sour-pork-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "Cantonese sweet and sour pork: shoulder cut into 2.5cm cubes, a rested starch coat, a 160°C then 190°C double fry, and a sharp glaze in the last 20 seconds.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
    "cantonese",
    "pork",
    "sweet-sour",
-   "recipe",
+   "fried",
    "classic",
-   "fried"
+   "recipe"
   ]
  },
  {
   "title": "How to Cook Twice-Cooked Pork: The Sichuan Way",
   "url": "/cuisine/twice-cooked-pork-recipe/",
-  "summary": "\nEditor&rsquo;s Note: Since launching this column, we&rsquo;ve heard one request more than any other: the stories are great, but how do we actually cook these? Today we&rsquo;re fixing that — six …",
+  "summary": "Twice-cooked pork: belly simmered 25 minutes, chilled, sliced 2mm, then rendered until the edges curl and the doubanjiang turns the oil red.",
   "section": "cuisine",
   "date": "2026-06-24",
   "tags": [
    "sichuan",
    "pork",
-   "spicy",
-   "recipe",
-   "classic",
    "stir-fry",
-   "home-cooking"
+   "spicy",
+   "classic",
+   "recipe"
   ]
  },
  {

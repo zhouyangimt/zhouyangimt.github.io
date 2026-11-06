@@ -25,18 +25,18 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-10-30 更新）
+## 当前进度（2026-11-06 更新）
 
-- **已发布 38 篇**（Phase 1：7 篇 / Phase 2：31 篇）
-- 全部 38 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
-- **下一篇：集合文 #2《The Tea Year》** — 按季节买茶的日历：春天到的是什么、秋天该补的是什么、反季买茶为什么是最安静的浪费。茶宠（10-30 已发）是茶具支柱第 10 篇、收口之作，**茶具支柱已满，不再取题**；接下来只写集合文（1/5–8，最大缺口）、茶 101（3/5–8）、茶文化（2/10–15）
+- **已发布 39 篇**（Phase 1：7 篇 / Phase 2：32 篇）
+- 全部 39 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
+- **下一篇：茶 101《How to Read a Chinese Tea Label》** — 明前 / 特级 / 一芽一叶 到底承诺了什么、哪些有国标定义、铁罐上哪两个词其实什么都没说。（集合文 #2《The Tea Year》已于 2026-11-06 发布，集合文还剩 3–6 篇）**茶具支柱已满（茶宠 10-30 收口），不再取题**；接下来只写集合文（2/5–8，最大缺口）、茶 101（3/5–8）、茶文化（2/10–15）
 - ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（38 篇）
+### 已发布清单（39 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
-| Guides & Teaware | 14 | six-teas-one-shelf · six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet |
+| Guides & Teaware | 15 | six-teas-one-shelf · six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet · the-tea-year |
 | Tea Culture | 2 | tea-chan-one-cup · tea-horse-road |
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
@@ -50,7 +50,7 @@
 |---|---|---|---|
 | 茶 101（流量入口 / AdSense 主力） | 5–8 | 3（six-types · tea-storage-guide · water-for-tea） | 2–5 |
 | 茶种类 · 单品 | 20+ | 22 | **已达标（已收尾，不再取题）** |
-| 茶种类 · 集合文 | 5–8 | 1（six-teas-one-shelf） | 4–7 |
+| 茶种类 · 集合文 | 5–8 | 2（six-teas-one-shelf · the-tea-year） | 3–6 |
 | 茶具（佣金主力） | 8–10 | 10（gaiwan · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet） | **已满，收口** |
 | 茶文化 | 10–15 | 2 | 8–13 |
 | 送礼指南（Phase 3，等 DA 权重） | 3–5 | 0 | 3–5 |
@@ -61,6 +61,7 @@
 
 ### 已完成的历史待办（无需再处理）
 
+- 2026-11-06：集合文 #2《The Tea Year》发布（`tea/the-tea-year/`，约 1,300 词）。封面为贵州/渝水明前茶采摘实拍（茶山雾中采茶人，vision 全分辨率核验：无文字无水印无正脸），正文配图为一篮刚采的一芽一叶，缩略图取同一源的 2:1 裁切。
 - 2026-11-04：集合文 #1《Six Teas, One Shelf》发布。封面为天山茶城式六杯审评实拍（6 杯 2×3 排列，vision 全分辨率核验：无文字、无水印、真实照片），缩略图取同一源图右下角 2:1 裁切。
 
 - 2026-10-30：茶宠（tea-pet）发布，封面/缩略图取自百家号茶宠实拍（紫砂金蟾 + 小壶 + 竹茶席，vision 全分辨率核验：无文字、无水印、真实照片）。

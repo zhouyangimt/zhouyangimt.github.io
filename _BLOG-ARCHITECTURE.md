@@ -250,7 +250,7 @@
 | 96 | Mooncake | 月饼 | ✅ |
 | 97 | Buddha Jumps Over the Wall | 佛跳墙 | ✅ |
 | 98 | Almond Tofu | 杏仁豆腐 | ✅ |
-| 99 | Fermented Mung Bean Milk | 豆汁儿 | ⬜ |
+| 99 | Fermented Mung Bean Milk | 豆汁儿 | ✅ |
 | 100 | Soy Milk + Youtiao | 豆浆油条 | ⬜ |
 | 101 | Dragon's Beard Candy | 龙须糖 | ⬜ |
 

@@ -251,7 +251,7 @@
 | 97 | Buddha Jumps Over the Wall | 佛跳墙 | ✅ |
 | 98 | Almond Tofu | 杏仁豆腐 | ✅ |
 | 99 | Fermented Mung Bean Milk | 豆汁儿 | ✅ |
-| 100 | Soy Milk + Youtiao | 豆浆油条 | ⬜ |
+| 100 | Soy Milk + Youtiao | 豆浆油条 | ✅ |
 | 101 | Dragon's Beard Candy | 龙须糖 | ⬜ |
 
 #### 十一、🆕 BBQ World · 烧烤江湖 — China on Charcoal（8 道）

@@ -1,5 +1,20 @@
 [
  {
+  "title": "Zhanjiang Grilled Oysters: The Three Minutes Between Sea and Smoke",
+  "url": "/cuisine/zhanjiang-oysters/",
+  "summary": "Oysters opened live on the half shell, set over charcoal and flooded with garlic — the smell of the South China Sea meeting smoke at two in the morning.",
+  "section": "cuisine",
+  "date": "2026-11-10",
+  "tags": [
+   "seafood",
+   "cantonese",
+   "grilled",
+   "street-food",
+   "bbq",
+   "charcoal"
+  ]
+ },
+ {
   "title": "AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里",
   "url": "/posts/cline-vs-aider-open-source-agents/",
   "summary": "同一句「把 requests 换成 httpx」：Cline 要十九次 approve，Aider 四十秒五个 commit。差别在上下文从哪来、补丁怎么落、错了怎么回头。附 50 行复刻 SEARCH/REPLACE 协议的实测输出。",

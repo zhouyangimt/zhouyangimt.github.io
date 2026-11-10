@@ -1,0 +1,143 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里 | zhouyang — The 25th Frame</title><meta name=description content="同一句「把 requests 换成 httpx」：Cline 要你点十九次 approve，Aider 四十秒给你五个 commit。差别不在模型，在上下文从哪来、补丁怎么落、错了怎么回头。附 50 行复刻 SEARCH/REPLACE 协议的实测输出。"><link rel=canonical href=https://zhouyang.dev/posts/cline-vs-aider-open-source-agents/><meta property="og:title" content="AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里 | zhouyang — The 25th Frame"><meta property="og:description" content="Cline 拆在审批上，Aider 拆在 git 上。两个开源代码 Agent 的循环、编辑协议与回滚机制对照，以及静默失败这个最该盯的坑。"><meta property="og:url" content="https://zhouyang.dev/posts/cline-vs-aider-open-source-agents/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/cline-vs-aider-architecture.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里"><meta name=twitter:description content="四个 SEARCH/REPLACE 块，三种结果：精确命中、差一个行尾空格、缩进漂移。最后一种不会报错，它只是静默跳过。"><script type=application/ld+json>{"@context": "https://schema.org", "@type": "Article", "headline": "AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里", "url": "https://zhouyang.dev/posts/cline-vs-aider-open-source-agents/", "datePublished": "2026-11-10T00:00:00+00:00", "dateModified": "2026-11-10T00:00:00+00:00", "author": {"@type": "Person", "name": "zhouyang"}, "description": "Cline 拆在审批上，Aider 拆在 git 上。两个开源代码 Agent 的循环、编辑协议与回滚机制对照。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"><link rel=alternate type=application/rss+xml href=/cuisine/index.xml title="Chinese Cuisine RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/drinks/>Chinese Drinks</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里</h1><div class=meta><time>2026-11-10</time>
+<span class=tags><span class=tag>AI</span><span class=tag>Agent</span><span class=tag>工具教程</span><span class=tag>编程</span></span></div></header><div class=content><h2 id="同一句话两种下场">同一句话，两种下场</h2>
+<p>需求就一句：<strong>把 <code>requests</code> 换成 <code>httpx</code>，<code>app/</code> 下面五个文件。</strong></p>
+<p>在 Cline 里，它先把五个文件读一遍，然后把改动一条一条摆出来：改 import、改调用、改测试里的 mock、跑 <code>pytest</code>、报错、再改。你在旁边点 approve，一共点了十九次。二十分钟过去，它交付了，你每一行都看过。</p>
+<p>在 Aider 里，<code>aider app/*.py</code>，敲同一句话，回车。四十秒后终端回到提示符，<code>git log</code> 多了五个 commit，<code>pytest -q</code> 全绿。</p>
+<p>这不是「谁更强」。这是两个工具对同一个问题给出的两种答案：<strong>人站在循环的哪个位置</strong>。Cline 把每一步都摆到你面前等你签字；Aider 把人挪出循环，改用 git 提交当作「可撤销的签字」。</p>
+<p>上一篇（<a href="/posts/langgraph-multi-step-agent-workflow/">LangGraph 多步骤工作流</a>）结尾说「回到工具侧」。这篇就拆这两个开源代码 Agent，两个都装过、都用废过，坑是真踩出来的。</p>
+<h2 id="两个循环">两个循环长什么样</h2>
+<p>先把两台机器的骨架并排画出来，后面每一节都对应图里某个位置：</p>
+<p><img src=/images/cline-vs-aider-architecture.png alt="Cline 与 Aider 工作循环对照图：Cline 在编辑器内收集上下文、模型返回 tool_use、人工逐条审批后执行并回灌结果；Aider 在终端用 repo map 构建上下文、模型输出 SEARCH/REPLACE 块、就地打补丁、每回合一个 git commit、再跑 lint 与测试、失败则回灌报错" width="919" height="1021" decoding="async" loading="lazy"></p>
+<p>注意两条流程里「人」出现的位置：左边每个方框之间都卡着一次审批，右边人只在最开始说一句话、在最后看一眼。骨架的其余部分几乎一样——都是「上下文 → 模型 → 动作 → 观察 → 再来一轮」。</p>
+<p>所以真正的差别只有三处：<strong>上下文从哪来、代码怎么落盘、错了怎么回头。</strong> 下面一节一个。</p>
+<h2 id="上下文">上下文：你手边的东西 vs repo map</h2>
+<p>Cline 的上下文就是<strong>你手边的东西</strong>：打开的文件、目录树、终端输出、你截的图。你 <code>@</code> 一下文件它就读，你在终端里报错它能看见。好处是「你正在看的，就是它看的」；坏处是<strong>它不知道你没打开的那些文件里发生了什么</strong>。</p>
+<p>这个活的失败形态特别典型：改完能跑，测试也过，但线上另一个 entrypoint 还在 <code>import requests</code>，因为那个文件你没开、它也没找。等你发现的时候，报错信息指向的是一个它从没读过的模块。</p>
+<p>Aider 走另一条路：<strong>repo map</strong>。用 tree-sitter 把整个仓库解析成符号树（函数、类、方法、调用点），再按引用关系排序，在最相关的位置上花 token 预算，把「地图」塞进提示词，然后才按需读具体文件内容。配置里那个 <code>map-tokens</code>，就是这张地图的预算，不是整个上下文窗口：</p>
+<pre tabindex=0><code># .aider.conf.yml
+model: deepseek/deepseek-chat
+map-tokens: 2048          # 地图预算，不是上下文窗口
+read: [CONVENTIONS.md]    # 只读不写：约定、命名、禁区
+auto-commits: true
+test-cmd: "pytest -q"
+auto-test: true           # 改完自动跑，失败把输出塞回对话</code></pre>
+<p>2048 这个数要按仓库大小调。地图给太大，会挤掉真正的文件内容，模型开始「看着地图猜代码」——症状是它引用一个函数名，但那个函数签名它其实没见过。我的经验区间是 1k~3k；再大就该用 <code>--read</code> 明确点名，把预算花在你确定相关的那几个文件上。</p>
+<h2 id="编辑协议">编辑协议：整文件重写 vs SEARCH/REPLACE</h2>
+<p>这是两者最本质的差别，也是 Aider 最值得学的地方。</p>
+<p>Cline 的写文件工具就两种：<code>write_to_file</code> 整文件覆盖，<code>replace_in_file</code> 片段替换。整文件覆盖对模型最省心——不用精确匹配任何东西——但一个 600 行的文件改三行，它要吐出六千 token，而且<strong>抄错一行的概率随输出长度线性上升</strong>。我在一个 800 行的数据处理脚本上见过它把两个几乎同名的变量在中间某段对调了，语法完全合法，跑起来结果错得很安静。</p>
+<p>Aider 反过来，强制模型只输出补丁块：</p>
+<pre tabindex=0><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; SEARCH
+import requests
+=======
+import httpx
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; REPLACE</code></pre>
+<p>配合「SEARCH 段必须在文件里唯一匹配」的规则，输出量小一个数量级，改三行就是改三行。代价是匹配必须精确。我用五十行把这个协议复刻了一遍，专门看它怎么失败：</p>
+<pre tabindex=0><code>def parse(text):
+    blocks, cur, mode = [], None, None
+    for line in text.splitlines():
+        s = line.strip()
+        if s == "&lt;&lt;&lt;&lt;&lt;&lt;&lt; SEARCH":
+            cur, mode = {"search": [], "replace": []}, "search"
+        elif s == "=======" and cur is not None:
+            mode = "replace"
+        elif s == "&gt;&gt;&gt;&gt;&gt;&gt;&gt; REPLACE" and cur is not None:
+            blocks.append((cur["search"], cur["replace"])); cur = None
+        elif cur is not None:
+            cur[mode].append(line)
+    return blocks
+
+def apply(src, search, replace, fuzzy):
+    find, repl = "\n".join(search), "\n".join(replace)
+    if find in src:
+        return src.replace(find, repl, 1), "exact"
+    if fuzzy:                                  # 只容错行尾空白
+        lines = src.splitlines()
+        want = [l.rstrip() for l in search]
+        for i in range(len(lines) - len(want) + 1):
+            if [l.rstrip() for l in lines[i:i + len(want)]] == want:
+                return "\n".join(lines[:i] + replace + lines[i + len(want):]), "rstrip"
+    return src, "MISS"</code></pre>
+<p>源文件是一个用 <code>requests</code> 抓价格的小模块，模型回了一个含四个块的补丁。逐个块跑匹配，终端里是这样：</p>
+<pre tabindex=0><code>$ python3 mini_edit.py payload.json
+block#1: exact=exact  rstrip=exact
+block#2: exact=exact  rstrip=exact
+block#3: exact=MISS  rstrip=rstrip
+block#4: exact=MISS  rstrip=MISS</code></pre>
+<p>四种情况，三种结局：</p>
+<p><strong>block#1、#2 精确命中。</strong> 正常路径，没什么可说。</p>
+<p><strong>block#3 的 SEARCH 段末尾多了一个空格。</strong> 精确匹配失败，<code>rstrip</code> 那层容错把它救回来了。这也是真实 Aider 里最常见的「我以为它没改，其实改了」。</p>
+<p><strong>block#4 的 SEARCH 段缩进是八格，源文件里是四格。</strong> <code>rstrip</code> 只管行尾，缩进差在行首，两层都救不回来——直接 MISS。</p>
+<p>然后是最要命的部分。加上容错重跑一遍，把每个块应用后的文件打出来：</p>
+<pre tabindex=0><code>block#1 -&gt; exact
+block#2 -&gt; exact
+block#3 -&gt; rstrip
+block#4 -&gt; MISS
+import httpx
+
+def fetch_price(symbol):
+    url = f"https://api.example.com/quote/{symbol}"
+    r = httpx.get(url, timeout=10)
+    r.raise_for_status()
+    return r.json()["price"]       # ← block#4 想改成 float(...)，没改成
+
+def fetch_many(symbols):
+    return {s: fetch_price(s) for s in symbols if s}</code></pre>
+<p>文件能 import、能跑、语法没坏，<code>import httpx</code> 和调用都改对了，<strong>只有第 4 处修改不在</strong>。这就是 diff 式编辑的<strong>静默失败</strong>：它不抛异常，不打断流程，命令照样退出 0。</p>
+<p>所以 review 这类改动时，别只看「它改了什么」，要数「该改几处、改了几处」。Aider 官方也吃这个亏——它的处理是把 MISS 的块报给模型重试，但模型第二次抄错同样的缩进并不罕见。这也是我给它配 <code>--auto-test</code> 的原因：<strong>类型和测试是唯一不撒谎的验收方</strong>，返回值从 float 变回字符串这种事，跑一次断言比看十遍 diff 都管用。</p>
+<p>反过来说，Cline 的整文件重写没有这个失败模式，但它有另一个：模型顺手「优化」了文件里它没被要求动的二十行。你 diff 里能看出来，但得逐行看。它给你逐条 approve，就是为了让你在这个位置上抓住它。</p>
+<h2 id="一个回合">一个回合的完整往返</h2>
+<p>Aider 单次交互里最值钱的一步不是生成代码，是 commit。把它摊开成时序：</p>
+<p><img src=/images/aider-edit-loop-sequence.png alt="Aider 单回合时序图：用户下指令后 aider 用 tree-sitter 解析仓库并按引用关系排序生成 repo map，模型返回若干 SEARCH/REPLACE 块，逐块匹配打补丁，匹配失败则报错回灌只重发失败部分，成功后自动 git commit 并运行 lint 与测试，不通过则把报错塞回对话" width="1272" height="800" decoding="async" loading="lazy"></p>
+<p>「一个回合一个 commit」听起来像洁癖，实际上是它整套安全模型的地基：<code>/undo</code> 就是 <code>git reset --hard HEAD~1</code>，「AI 改坏了」从事故降级成一次操作。Cline 也有 checkpoint，但那是 VS Code 内部的影子快照，不进版本历史——换台机器、换个编辑器就没了，也没法 <code>git bisect</code> 出「哪一回合引入的 bug」。</p>
+<p>代价是 history 会脏。长任务里我会关掉自动提交（<code>--no-auto-commits</code>），改完自己 <code>git add -p</code> 分组，压成两三个有意义的提交再进 PR。毕竟给同事 review 的是你的提交历史，不是 Aider 的工作日志。</p>
+<h2 id="实战">实战：两个场景，两种用法</h2>
+<p><strong>场景 A：跨文件机械替换，用 Aider。</strong></p>
+<pre tabindex=0><code>git status --short          # 必须先干净，否则回滚点不明确
+aider app/*.py tests/*.py \
+      --model deepseek/deepseek-chat \
+      --map-tokens 2048 \
+      --test-cmd "pytest -q" --auto-test</code></pre>
+<p>进去之后只说一句「把 requests 换成 httpx，同步改测试里的 mock」。观察三件事：每回合的 commit 消息是不是说清了改了什么、pytest 是不是它自己跑的、失败之后它是不是只重发失败的那一块而不是整个文件。第三个最能看出工具成熟度——重发整个文件，等于把 diff 式编辑省下的 token 又还回去了。</p>
+<p><strong>场景 B：不熟的代码库、要眼看 UI，用 Cline。</strong></p>
+<p>这时候在仓库根目录放一个 <code>.clinerules</code>，把它能自由发挥的空间先压小：</p>
+<pre tabindex=0><code>- 禁止 write_to_file 整文件重写，只允许 replace_in_file
+- 禁止执行 rm / git reset --hard / docker / 任何 npm publish
+- 改完必须跑 `pytest -q`，把原始输出贴出来，不要总结
+- API 不确定就先读源码，禁止按记忆写参数名
+- 每次改动不超过两个文件，超了先问我</code></pre>
+<p>最后一条尤其重要。<strong>Cline 真正的敌人是 approve 疲劳</strong>：点到第十五次的时候你已经不看 diff 了，手指比脑子快，那时候它和「无人审批」没有任何区别。规则的目的不是限制它，是让前十四次审批都值得看。</p>
+<h2 id="怎么选">怎么选：一句话</h2>
+<p><strong>要看得见每一行，选 Cline；要一次改一片，选 Aider。</strong></p>
+<p>更准确一点，看任务需要人在哪里：</p>
+<p>· 需要「人在中途做判断」——不熟的库、要亲眼看 UI、要跑危险命令 → <strong>Cline</strong>。<br>· 任务是「人已经想清楚了，只差手」——批量重构、补测试、改 API 调用 → <strong>Aider</strong>。<br>· 服务器上没有 IDE、只有 SSH → 只能 <strong>Aider</strong>。<br>· 老项目还没有 git → 两个都别用，先 <code>git init</code>。</p>
+<p>它们也不冲突。我上周那篇博客的数据迁移就是这么干的：Cline 在编辑器里摸清两个 schema 的差异、写第一版适配层（我需要随时打断它、随时看它读的文件）；路线清楚之后，把剩下 23 个文件的机械改动丢给 Aider 批量铺开。一个负责想清楚，一个负责做完。</p>
+<h2 id="三个坑">三个坑</h2>
+<p><strong>一、没 git 别碰 Aider。</strong> 它的安全感和回滚全建在 commit 上，没有 git 它就是个会直接覆盖你文件的黑盒。新项目第一件事 <code>git init</code> 加一个空 commit，再做别的。</p>
+<p><strong>二、repo map 不是越大越好。</strong> 我在一个 400 多个 Python 文件的仓库上把 <code>map-tokens</code> 拉到 8000，结果模型开始引用不存在的函数——地图占满了窗口，真正的代码反而进不来。降到 2000 并显式 <code>--read</code> 三个文件，问题立刻消失。<strong>上下文塞满的模型，比上下文干净的模型更笨。</strong></p>
+<p><strong>三、静默失败要靠测试抓，不能靠眼睛。</strong> 就是上面 block#4 那种。我的规矩是：凡是 Aider 的改动，合并前必须看到一次真实的 <code>pytest</code> 输出，如果没有测试就先补一个最笨的断言。看完 diff 就合并，迟早会漏一处——漏的那处通常正好是边界条件。</p>
+<h2 id="一句话">一句话</h2>
+<p><strong>这两个工具都没有让模型变强，它们干的是同一件事：把「AI 改代码」这件不可控的事，拆成可审、可撤回、可复现的步骤。</strong> Cline 拆在审批上，Aider 拆在 git 上。你选哪个，其实是在选自己愿意在哪一步花注意力——是十九次点击，还是事后一次 <code>git diff HEAD~5</code>。</p>
+<p>下一篇（15）进另一条线：<strong>Dify 实战</strong>——同一个思路的极端版本，把 Agent 的工作流从代码里搬到画布上，看零代码编排到底在哪一步开始漏气。</p>
+<hr>
+<blockquote><p><strong>AI Agent 全解析系列：</strong></p><p>1. <a href="/posts/ai-agent-what-is/">AI Agent 是什么——从 LLM 到自主智能体的进化</a><br>2. <a href="/posts/ai-agent-four-capabilities/">Agent 的四大核心能力：规划、记忆、工具、执行</a><br>3. <a href="/posts/ai-agent-2026-landscape/">2026 AI Agent 全景图：谁在做什么，谁能用</a><br>4. <a href="/posts/ai-agent-vs-copilot/">选 Agent 还是选 Copilot？不同场景的决策框架</a><br>5. <a href="/posts/ai-agent-architecture-patterns/">Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent</a><br>6. <a href="/posts/ai-agent-tool-calling/">工具调用深度解析：Function Calling、MCP 协议与插件生态</a><br>7. <a href="/posts/ai-agent-memory-system/">Agent 的记忆系统：短期记忆、长期记忆与 RAG</a><br>8–10. Hermes Agent 入门 / 配置 / Skills（<a href="/posts/hermes-agent-guide/">从这里开始</a>）<br>11. <a href="/posts/ai-agent-frameworks-langchain-crewai-autogpt/">LangChain vs CrewAI vs AutoGPT：三个框架把复杂度藏在了哪里</a><br>12. <a href="/posts/langgraph-multi-step-agent-workflow/">用 LangGraph 构建多步骤 Agent 工作流</a><br>13. <a href="/posts/claude-code-vs-cursor-vs-copilot/">Claude Code vs Cursor vs Copilot</a><br>14. 👉 Cline + Aider：一个活在编辑器里，一个活在终端里（本文）</p></blockquote></div></article><nav class=post-nav><a href=/posts/langgraph-multi-step-agent-workflow/ class=prev>← AI Agent 全解析：用 LangGraph 构建多步骤 Agent 工作流——状态、条件边与中断恢复</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>&copy; 2026 zhouyang &middot; Shanghai &middot; Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> &middot; <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

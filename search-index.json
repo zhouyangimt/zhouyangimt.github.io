@@ -1,5 +1,18 @@
 [
  {
+  "title": "AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里",
+  "url": "/posts/cline-vs-aider-open-source-agents/",
+  "summary": "同一句「把 requests 换成 httpx」：Cline 要十九次 approve，Aider 四十秒五个 commit。差别在上下文从哪来、补丁怎么落、错了怎么回头。附 50 行复刻 SEARCH/REPLACE 协议的实测输出。",
+  "section": "posts",
+  "date": "2026-11-10",
+  "tags": [
+   "ai",
+   "agent",
+   "工具教程",
+   "编程"
+  ]
+ },
+ {
   "title": "Dragon's Beard Candy: A Sweet With a Four-Minute Shelf Life",
   "url": "/cuisine/dragons-beard-candy/",
   "summary": "Amber maltose pulled fourteen times into 16,384 threads, dusted with roasted rice flour and eaten fast — because this candy starts dying the second the last pull ends.",

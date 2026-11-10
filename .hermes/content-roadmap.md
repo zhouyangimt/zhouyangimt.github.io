@@ -43,7 +43,7 @@
 - [x] 06: 实战工作流 (2026-06-22)
 
 ## 系列：AI Agent 全解析
-**进度**: 11/23 篇
+**进度**: 14/23 篇
 
 - [x] 01: AI Agent 是什么——从 LLM 到自主智能体的进化 (2026-09-08)
 - [x] 02: Agent 的四大核心能力：规划、记忆、工具、执行 (2026-09-15)
@@ -59,7 +59,8 @@
 - [x] 12: 用 LangGraph 构建多步骤 Agent 工作流 (2026-11-03)
   posts/langgraph-multi-step-agent-workflow
 - [x] 13: Claude Code vs Cursor vs Copilot 横评（2026-06-01 已发 posts/claude-code-vs-cursor-vs-copilot）
-- [ ] 14: Cline + Aider：开源代码 Agent 双子星
+- [x] 14: Cline + Aider：开源代码 Agent 双子星 (2026-11-10)
+  posts/cline-vs-aider-open-source-agents
 - [ ] 15: Dify 实战：零代码搭建企业 AI 工作流
 - [ ] 16: 钉钉 AI + Coze：中国市场的 Agent 生态
 - [ ] 17: 疯狂又好用的 Agent 实测

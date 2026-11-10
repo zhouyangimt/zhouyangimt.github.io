@@ -188,7 +188,7 @@
 
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
-| 57 | Beijing Mutton Hot Pot | 铜锅涮肉 | ⬜✅ |
+| 57 | Beijing Mutton Hot Pot | 铜锅涮肉 | ✅ |
 | 58 | Braised Sea Cucumber | 葱烧海参 | ✅ |
 | 59 | Nine-Turn Intestine | 九转大肠 | ✅ |
 | 60 | Sweet-and-Sour Yellow River Carp | 糖醋鲤鱼 | ✅ |
@@ -221,7 +221,7 @@
 | 77 | Xinjiang Lamb Skewers | 羊肉串 | ✅ |
 | 78 | Big-Plate Chicken | 大盘鸡 | ✅ |
 | 79 | Lamb Pilaf | 手抓饭 | ✅ |
-| 80 | Samsa / Kao Baozi | 烤包子 | ✅ |⬜ |
+| 80 | Samsa / Kao Baozi | 烤包子 | ✅ |
 | 81 | Xi'an Roujiamo | 肉夹馍 | ✅ |
 | 82 | Yangrou Paomo | 羊肉泡馍 | ✅ |
 | 83 | Liangpi | 凉皮 | ✅ |

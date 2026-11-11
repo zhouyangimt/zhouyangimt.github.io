@@ -8,7 +8,14 @@
     <language>zh-CN</language>
     <lastBuildDate>Wed, 04 Nov 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="https://zhouyang.dev/tea/index.xml" rel="self" type="application/rss+xml"/>
-    <item>
+        <item>
+      <title>The Words on the Tin: How to Read a Chinese Tea Label</title>
+      <link>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</link>
+      <pubDate>Wed, 11 Nov 2026 10:00:00 +0800</pubDate>
+      <guid>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</guid>
+      <description>Nine fields are required by law on every Chinese tea tin, and only one of them grades the tea — the product standard code, the SC number, and the two words that mean nothing.</description>
+    </item>
+<item>
       <title>Water: The Ingredient Nobody Prints on the Tin</title>
       <link>https://zhouyang.dev/tea/water-for-tea/</link>
       <pubDate>Fri, 25 Sep 2026 10:00:00 +0800</pubDate>

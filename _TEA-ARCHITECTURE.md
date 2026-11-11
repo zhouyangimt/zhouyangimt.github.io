@@ -25,18 +25,18 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-11-06 更新）
+## 当前进度（2026-11-11 更新）
 
-- **已发布 39 篇**（Phase 1：7 篇 / Phase 2：32 篇）
-- 全部 39 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
-- **下一篇：茶 101《How to Read a Chinese Tea Label》** — 明前 / 特级 / 一芽一叶 到底承诺了什么、哪些有国标定义、铁罐上哪两个词其实什么都没说。（集合文 #2《The Tea Year》已于 2026-11-06 发布，集合文还剩 3–6 篇）**茶具支柱已满（茶宠 10-30 收口），不再取题**；接下来只写集合文（2/5–8，最大缺口）、茶 101（3/5–8）、茶文化（2/10–15）
+- **已发布 40 篇**（Phase 1：7 篇 / Phase 2：33 篇）
+- 全部 40 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
+- **下一篇：茶文化《The Two-Finger Knock》** — 别人给你倒茶时为什么用两根手指敲桌面、皇帝微服私访的传说从哪来、以及叩手礼在今天茶馆里的真实用法。（茶 101 已到 4/5–8：six-types · tea-storage · water-for-tea · how-to-read-chinese-tea-label；集合文 2/5–8；茶文化 2/10–15 —— **茶文化是最大缺口，接下来优先取**）**茶具支柱已满（茶宠 10-30 收口），不再取题**
 - ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（39 篇）
+### 已发布清单（40 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
-| Guides & Teaware | 15 | six-teas-one-shelf · six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet · the-tea-year |
+| Guides & Teaware | 16 | six-teas-one-shelf · six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · how-to-read-chinese-tea-label · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet · the-tea-year |
 | Tea Culture | 2 | tea-chan-one-cup · tea-horse-road |
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
@@ -48,7 +48,7 @@
 
 | 支柱 | 目标 | 已发 | 剩余 |
 |---|---|---|---|
-| 茶 101（流量入口 / AdSense 主力） | 5–8 | 3（six-types · tea-storage-guide · water-for-tea） | 2–5 |
+| 茶 101（流量入口 / AdSense 主力） | 5–8 | 4（six-types · tea-storage-guide · water-for-tea · how-to-read-chinese-tea-label） | 1–4 |
 | 茶种类 · 单品 | 20+ | 22 | **已达标（已收尾，不再取题）** |
 | 茶种类 · 集合文 | 5–8 | 2（six-teas-one-shelf · the-tea-year） | 3–6 |
 | 茶具（佣金主力） | 8–10 | 10（gaiwan · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet） | **已满，收口** |

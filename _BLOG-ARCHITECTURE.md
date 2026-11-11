@@ -259,7 +259,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 102 | Zhanjiang Grilled Oysters | 湛江烤生蚝 | ✅ |
-| 103 | Jinzhou BBQ Chicken Frame | 锦州烤鸡架 | ⬜ |
+| 103 | Jinzhou BBQ Chicken Frame | 锦州烤鸡架 | ✅ |
 | 104 | Zibo BBQ | 淄博烧烤 | ⬜ |
 | 105 | Yibin Hand-Held Roast | 宜宾把把烧 | ⬜ |
 | 106 | Dai Minority Herb BBQ | 德宏傣味烧烤 | ⬜ |

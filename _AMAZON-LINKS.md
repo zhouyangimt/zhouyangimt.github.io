@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-11-11
+> Last updated: 2026-11-13
 > Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
@@ -82,7 +82,7 @@
 | 74 | `B08RYQW4FX` | Sizikato 8oz Glass Sharing Cup (gongdao) | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
 | 75 | `B0G6WZ5WFB` | Glazed Ceramic Gongdao Cup | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
 | 76 | `B0FSXHVH1K` | Chinese Gongfu Tasting Cup Set (white porcelain, four) | t/tasting-cup, t/tea-scoop | 2026-10-07 | `zhouyang01-20` |
-| 77 | `B0CWGGBQQ5` | Blue-and-White Peony Tasting Cup Set (four) | t/tasting-cup | 2026-10-07 | `zhouyang01-20` |
+| 77 | `B0CWGGBQQ5` | Blue-and-White Peony Tasting Cup Set (four) | t/tasting-cup, t/two-finger-knock | 2026-10-07 | `zhouyang01-20` |
 | 78 | `B0CL4H4XJQ` | 17-inch Gongfu Tea Board | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
 | 79 | `B093PKSLVG` | Portable Tea Tray | t/tea-tray | 2026-10-09 | `zhouyang01-20` |
 | 80 | `B0CLD12Z57` | Hardwood Tea Tray | t/tea-towel, t/tea-tray | 2026-10-09 | `zhouyang01-20` |
@@ -118,7 +118,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-11-11) | Day 119 | 61 days remaining |
+| Today (2026-11-13) | Day 121 | 59 days remaining |
 
 ## Notes
 

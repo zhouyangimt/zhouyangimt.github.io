@@ -9,13 +9,6 @@
     <lastBuildDate>Fri, 13 Nov 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="https://zhouyang.dev/tea/index.xml" rel="self" type="application/rss+xml"/>
         <item>
-      <title>The Words on the Tin: How to Read a Chinese Tea Label</title>
-      <link>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</link>
-      <pubDate>Wed, 11 Nov 2026 10:00:00 +0800</pubDate>
-      <guid>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</guid>
-      <description>Nine fields are required by law on every Chinese tea tin, and only one of them grades the tea — the product standard code, the SC number, and the two words that mean nothing.</description>
-    </item>
-<item>
       <title>The Two-Finger Knock: The Bow You Perform With Two Fingers</title>
       <link>https://zhouyang.dev/tea/two-finger-knock/</link>
       <pubDate>Fri, 13 Nov 2026 10:00:00 +0800</pubDate>
@@ -24,13 +17,13 @@
     </item>
 
 <item>
-      <title>Water: The Ingredient Nobody Prints on the Tin</title>
-      <link>https://zhouyang.dev/tea/water-for-tea/</link>
-      <pubDate>Fri, 25 Sep 2026 10:00:00 +0800</pubDate>
-      <guid>https://zhouyang.dev/tea/water-for-tea/</guid>
-      <description>A brewed cup of tea is 99 percent water, and nobody prints that on the tin. What hardness, alkalinity and tired old water do to the leaf, why the same Longjing tastes different in two Chinese cities, and the one change worth making before you buy another tin.</description>
+      <title>The Words on the Tin: How to Read a Chinese Tea Label</title>
+      <link>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</link>
+      <pubDate>Wed, 11 Nov 2026 10:00:00 +0800</pubDate>
+      <guid>https://zhouyang.dev/tea/how-to-read-chinese-tea-label/</guid>
+      <description>Nine fields are required by law on every Chinese tea tin, and only one of them grades the tea — the product standard code, the SC number, and the two words that mean nothing.</description>
     </item>
-    <item>
+<item>
       <title>The Tea Year: A Calendar for Buying Chinese Tea at the Right Moment</title>
       <link>https://zhouyang.dev/tea/the-tea-year/</link>
       <pubDate>Fri, 06 Nov 2026 10:00:00 +0800</pubDate>
@@ -109,6 +102,13 @@
       <pubDate>Wed, 30 Sep 2026 08:30:00 +0800</pubDate>
       <guid>https://zhouyang.dev/tea/the-kettle/</guid>
       <description>The kettle is the piece of teaware everyone owns and nobody thinks about. Why the spout shape matters more than the pot, what silver and cast iron actually do to water, the thousand-year-old vocabulary for a boiling kettle, and four rules for the kettle you already have.</description>
+    </item>
+    <item>
+      <title>Water: The Ingredient Nobody Prints on the Tin</title>
+      <link>https://zhouyang.dev/tea/water-for-tea/</link>
+      <pubDate>Fri, 25 Sep 2026 10:00:00 +0800</pubDate>
+      <guid>https://zhouyang.dev/tea/water-for-tea/</guid>
+      <description>A brewed cup of tea is 99 percent water, and nobody prints that on the tin. What hardness, alkalinity and tired old water do to the leaf, why the same Longjing tastes different in two Chinese cities, and the one change worth making before you buy another tin.</description>
     </item>
     <item>
       <title>Tea Storage: Four Enemies in Your Kitchen, and the Jar That Beats Them</title>
@@ -251,13 +251,6 @@
       <description>Rolled into tight spirals, covered in silver down, and grown among fruit trees on a lake island in Suzhou — the green tea so fragrant the Kangxi Emperor had to rename it.</description>
     </item>
     <item>
-      <title>Gaiwan: Three Fingers, One Lid, and a Thousand Years of Tea</title>
-      <link>https://zhouyang.dev/tea/gaiwan-three-fingers-one-lid/</link>
-      <pubDate>Wed, 15 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>https://zhouyang.dev/tea/gaiwan-three-fingers-one-lid/</guid>
-      <description>The three-piece porcelain teapot that fits in your palm — how to brew any Chinese tea with a bowl, a lid, and three fingers.</description>
-    </item>
-    <item>
       <title>Sitting Still With Tea: What a Chengdu Tea House Taught Me About Chan Buddhism</title>
       <link>https://zhouyang.dev/tea/tea-chan-one-cup/</link>
       <description>Two hours in a Chengdu tea house, one cup of oolong, and a thousand-year-old question: what does Buddhism have to do with tea? Everything, it turns out — if you sit still long enough to notice.</description>
@@ -273,6 +266,13 @@
       <guid>https://zhouyang.dev/tea/tea-horse-road/</guid>
     </item>
 
+    <item>
+      <title>Gaiwan: Three Fingers, One Lid, and a Thousand Years of Tea</title>
+      <link>https://zhouyang.dev/tea/gaiwan-three-fingers-one-lid/</link>
+      <pubDate>Wed, 15 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://zhouyang.dev/tea/gaiwan-three-fingers-one-lid/</guid>
+      <description>The three-piece porcelain teapot that fits in your palm — how to brew any Chinese tea with a bowl, a lid, and three fingers.</description>
+    </item>
     <item>
       <title>Ripe Pu&#x27;er: Old Libraries, Rain-Wet Earth</title>
       <link>https://zhouyang.dev/tea/ripe-puer-old-libraries-rain-wet-earth/</link>

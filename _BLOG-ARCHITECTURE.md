@@ -264,7 +264,7 @@
 | 105 | Yibin Hand-Held Roast | 宜宾把把烧 | ✅ |
 | 106 | Dai Minority Herb BBQ | 德宏傣味烧烤 | ✅ |
 | 107 | Grilled Pig Brain | 烤脑花 | ✅ |
-| 108 | Red Willow Branch Lamb | 红柳烤肉 | ⬜ |
+| 108 | Red Willow Lamb | 红柳烤肉 | ✅ |
 | 109 | Grilled Pig Eyes | 烤猪眼 | ✅ |
 
 #### 其他已发（待归类）

@@ -1,5 +1,18 @@
 [
  {
+  "title": "AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气",
+  "url": "/posts/dify-zero-code-workflow/",
+  "summary": "给 HR 搭简历初筛，画布上四十分钟跑通。第三天加两个需求，第三条分支就把图撑破了——5 类岗位 × 2 种结果 × 2 档年限，是 20 条路径。拆 Dify 的编排引擎、变量引用、迭代节点与成本账，附 40 行 DSL 扫描器和真实输出。",
+  "section": "posts",
+  "date": "2026-11-17",
+  "tags": [
+   "AI",
+   "Agent",
+   "工具教程",
+   "编程"
+  ]
+ },
+ {
   "title": "Grilled Pig Eyes: The Burst Is the Whole Point",
   "url": "/cuisine/grilled-pig-eyes/",
   "summary": "In Baise, Guangxi, whole pig heads go over charcoal until the skin crackles and the eyes tighten into warm, salty spheres. One bite and they burst.",

@@ -1,0 +1,200 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气 | zhouyang — The 25th Frame</title><meta name=description content="给 HR 搭简历初筛，画布上四十分钟跑通。第二天加两个需求，第三条分支就把图撑破了。拆 Dify 的编排引擎、变量引用、迭代节点与成本账，附一个 40 行的 DSL 扫描器和真实输出。"><link rel=canonical href=https://zhouyang.dev/posts/dify-zero-code-workflow/><meta property="og:title" content="AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气 | zhouyang — The 25th Frame"><meta property="og:description" content="零代码省下的不是写代码的时间，是「让不懂代码的人参与修改」的沟通成本。所以判断标准不是复杂度，是谁要改它。"><meta property="og:url" content="https://zhouyang.dev/posts/dify-zero-code-workflow/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/dify-architecture.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气"><meta name=twitter:description content="5 类岗位 × 2 种结果 × 2 档年限 = 20 条路径，而画布上一次只显示得下 6 个框。分支爆炸是零代码平台的通病，不是 Dify 的 bug。"><script type=application/ld+json>{"@context": "https://schema.org", "@type": "Article", "headline": "AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气", "url": "https://zhouyang.dev/posts/dify-zero-code-workflow/", "datePublished": "2026-11-17T00:00:00+00:00", "dateModified": "2026-11-17T00:00:00+00:00", "author": {"@type": "Person", "name": "zhouyang"}, "description": "Dify 的编排引擎、变量引用、迭代节点与成本账，以及它在哪一步开始漏气。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"><link rel=alternate type=application/rss+xml href=/cuisine/index.xml title="Chinese Cuisine RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/drinks/>Chinese Drinks</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气</h1><div class=meta><time>2026-11-17</time>
+<span class=tags><span class=tag>AI</span><span class=tag>Agent</span><span class=tag>工具教程</span><span class=tag>编程</span></span></div></header><div class=content><h2 id="四十分钟和第三天">四十分钟，和第三天</h2>
+<p>需求是 HR 提的：一堆简历，先按岗位打分，够分的生成五个面试追问，不够的进人工复核队列。</p>
+<p>我在 Dify 画布上搭了七个框：Start 收 <code>resume_text</code> 和 <code>job_code</code>，LLM 打分，Code 节点把模型吐的 JSON 解析成结构体，IF-ELSE 卡 75 分，通过走生成面试题，不通过走复核，最后 End 汇总输出。四十分钟，跑通，HR 看完说「就是这个」。</p>
+<p>第三天，需求变成了这样：五个岗位类别各走各的追问模板；被拒的要发邮件；同一份简历要能重跑；还要接内部 HR 系统，并且能看见每一步花了多少 token。</p>
+<p>前两条我加了六个框，画布开始横向铺开，缩到 60% 才看得全。第四条我放弃了画布，改调 API。</p>
+<p>这篇就讲这条线：<strong>Dify 哪些活干得漂亮，从第几个需求开始漏气，以及漏气的时候怎么判断该补还是该搬。</strong></p>
+<p>上一篇（<a href="/posts/cline-vs-aider-open-source-agents/">Cline + Aider</a>）说的是「把 AI 改代码拆成可审可退回的步骤」，这篇是同一个思路往极端的另一端走：把步骤画成图，让不写代码的人也能改。</p>
+<h2 id="四块拼起来">Dify 是哪四块拼起来的</h2>
+<p>先说清它不是什么。它不是「用界面代替代码」的低代码平台，四块东西拼在一起，缺哪块都不成立：</p>
+<p><img src=/images/dify-architecture.png alt="Dify 架构图：上层是画布 Studio，支持 Workflow、Chatflow、Agent、Chatbot 四种应用形态；中间是编排引擎，负责变量池、节点调度、单步调试与会话状态；编排引擎向下接三个资源：节点库（LLM、知识检索、代码、HTTP、分支、迭代）、知识库（分段、向量化、召回）、模型供应商适配；运行期把 inputs 送进各节点再产出 outputs，对外暴露 /v1/workflows/run 接口，并支持导出 DSL YAML 进 git" width="675" height="764" decoding="async" loading="lazy"></p>
+<p>画布是最不值钱的那块——它只是编排引擎的一个视图。真正决定你能干什么的是下面三层：<strong>节点库有多少种动作、知识库怎么切和召回、模型适配层支不支持你要的那个模型</strong>。</p>
+<p>图里还有两个容易被忽略的出口，这篇后面全靠它们：</p>
+<p><strong>一是对外 API。</strong> 任何应用发布后都是一个 <code>POST /v1/workflows/run</code> 的接口，带 <code>Bearer app-xxx</code>。你的后端、定时任务、别的 Agent 都能调它，它会变成一个普通函数。</p>
+<p><strong>二是 DSL 导出。</strong> 整个应用能导成一个 YAML 文件，包含全部节点、连线、提示词、变量引用。这意味着<strong>零代码不等于零版本控制</strong>——文件能进 git，能 diff，能 code review，能回滚到上周三那一版。这一点是它和大部分国内「拖拽平台」最本质的差别，也是我肯在上面搭真东西的原因。</p>
+<h2 id="变量">地基是变量，也是第一个坑</h2>
+<p>画布上每个节点都活在一个共享变量池里，引用有两种写法，长得完全不一样但指的是同一件事：</p>
+<pre tabindex=0><code># 节点配置里：数组形式，上游节点 id + 输出字段
+variables:
+  - variable: score
+    value_selector: [llm_grade, text]
+
+# 提示词文本里：内联形式
+你是招聘助理，按岗位 {{#start.job_code#}} 给这份简历打分：
+{{#start.resume_text#}}</code></pre>
+<p>坑就在这：<strong>你改了节点 id，引用不会跟着改。</strong></p>
+<p>我在一个已经有十二个节点的流程里，把 <code>llm_score</code> 重命名成 <code>llm_grade</code>（觉得语义更准），画布上的连线一根没断，看着一切正常。点运行，跑到第三层才炸，报的是一个我根本没打开过的节点的变量找不到——因为报错位置在<strong>下游</strong>，而被改的是上游。</p>
+<p>更糟的是它不总是炸。如果那个引用在一条这次没走到的分支里，你永远不会知道它断了，直到某个客户走到那条路径上。</p>
+<p>所以别指望画布。DSL 是 YAML，写四十行就能把它当代码检查——这是我给所有 Dify 项目配的第一件工具：</p>
+<pre tabindex=0><code>"""扫一遍 Dify DSL：找出断了变量引用的节点、跑不到的节点、没人用的输出。"""
+import re, sys, yaml
+
+REF = re.compile(r"\{\{#([A-Za-z0-9_\-]+)\.([A-Za-z0-9_\-]+)#\}\}")
+
+def strings(obj, path=""):
+    if isinstance(obj, str):
+        yield path, obj
+    elif isinstance(obj, dict):
+        for k, v in obj.items():
+            yield from strings(v, f"{path}.{k}")
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            yield from strings(v, f"{path}[{i}]")
+
+def main(path):
+    dsl = yaml.safe_load(open(path))
+    g = dsl["workflow"]["graph"]
+    nodes = {n["id"]: n for n in g["nodes"]}
+    edges = g.get("edges", [])
+    has_in = {e["target"] for e in edges}
+    used = {(e["source"], e.get("sourceHandle")) for e in edges}
+
+    print(f"nodes: {len(nodes)}  edges: {len(edges)}")
+    fails = warns = 0
+    for nid, node in nodes.items():
+        for _, text in strings(node):
+            for src, var in REF.findall(text):
+                if src not in nodes:
+                    print(f"[FAIL] {nid}: 引用了不存在的节点 {src}  ({{{{#{src}.{var}#}}}})")
+                    fails += 1
+        if nid != "start" and nid not in has_in:
+            print(f"[WARN] {nid}: 没有入边，运行期永远到不了")
+            warns += 1
+
+    # 反查：每个 LLM/Code 节点的输出有没有被下游挑走
+    for nid, node in nodes.items():
+        t = node["data"]["type"]
+        if t in ("llm", "code", "knowledge-retrieval") and \
+           not any(s == nid for s, _ in used):
+            print(f"[WARN] {nid}: {t} 的输出没有任何下游节点引用，白跑一次调用")
+            warns += 1
+    print(f"\nsummary: {fails} broken refs, {warns} warnings")
+    return 1 if fails else 0
+
+sys.exit(main(sys.argv[1]))</code></pre>
+<p>拿那个被重命名过的流程导出的 DSL 跑一遍（我把 <code>llm_reject_mail</code> 这个婉拒邮件节点留在流程里，但忘了连边、也忘了改它里面那句引用）：</p>
+<pre tabindex=0><code>$ python3 scan_dsl.py dify_sample.yml
+nodes: 7  edges: 6
+[FAIL] llm_reject_mail: 引用了不存在的节点 llm_score  ({{#llm_score.text#}})
+[WARN] llm_reject_mail: 没有入边，运行期永远到不了
+[WARN] llm_reject_mail: llm 的输出没有任何下游节点引用，白跑一次调用
+
+summary: 1 broken refs, 2 warnings
+exit=1</code></pre>
+<p>三条报错，指的全是同一个东西：<strong>一个永远跑不到、跑到了也引用不到东西、还白花了钱配提示词的节点</strong>。画布上它安安静静躺在那儿，看着像做好了的功能。</p>
+<p>这个脚本现在挂在 CI 里：改完 DSL，导出、提交、跑一遍，非零退出就拦住。四十行代码换掉了一整类「上线三个月后才发现某条分支早就断了」的事故，是我这两年在零代码平台上做过最划算的投资。</p>
+<h2 id="搭出来的样子">搭出来的样子</h2>
+<p>回到那条主流程。真正跑起来之后，画布比需求描述要多两个节点，多出来的两个都是被现实逼出来的：</p>
+<p><img src=/images/dify-resume-workflow.png alt="简历初筛工作流图：Start 收 resume_text 与 job_code，进入 LLM 打分节点（temperature 0.2，要求只输出 JSON），再进 Code 节点做 json.loads 与字段校验，然后由 IF-ELSE 按 score ≥ 75 分成两支：pass 走向 LLM 生成五个面试追问，review 走向人工复核队列并由变量聚合器拼接，两支在 End 节点汇总输出 questions；Code 节点解析失败时有一条虚线指向 LLM 修复节点，再落回人工复核" width="1366" height="326" decoding="async" loading="lazy"></p>
+<p><strong>第一个被逼出来的节点是那个 Code。</strong> 我原本以为「让模型输出 JSON」就够了，实际上模型会给你三种它自认为合法的 JSON：包在 <code>```json</code> 围栏里、末尾多一个逗号、字段名从 <code>score</code> 变成 <code>总分</code>。Dify 的 LLM 节点有「JSON 输出」开关，但它只影响提示词，不做解析校验。所以必须插一个 Code 节点，四行：</p>
+<pre tabindex=0><code>import json, re
+
+def main(text: str) -&gt; dict:
+    raw = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
+    try:
+        d = json.loads(raw)
+    except json.JSONDecodeError:
+        return {"ok": False, "score": 0, "reason": "unparsable"}
+    score = d.get("score", d.get("总分", 0))
+    if not isinstance(score, (int, float)):
+        return {"ok": False, "score": 0, "reason": "score_not_number"}
+    return {"ok": True, "score": float(score), "reason": str(d.get("reason", ""))[:120]}</code></pre>
+<p>关键不是那几行解析，是 <code>ok</code> 这个字段。<strong>它把「模型没按要求说话」从一个异常降级成一个可以走分支的数据</strong>——下游的 IF-ELSE 先看 <code>ok</code>，false 就直接进人工，不让脏数据污染评分。零代码平台最危险的地方就是没有类型系统，你只能在每个节点手搓一层软校验。</p>
+<p><strong>第二个是那个「LLM 修复一次」。</strong> 解析失败时先给模型一次机会，把原始输出和报错一起塞回去让它重写。实测大概能救回六成——剩下四成不是格式问题，是它确实没读懂简历。这个节点存在与否，决定了你的失败率是 4% 还是 11%。</p>
+<p>调试的时候别整条跑。<strong>单步运行</strong>（每个节点右上角那个播放键）是这个产品里第二值钱的功能：它只跑当前节点，你可以在变量面板里手改上游输入，把「空简历」「三年两跳」「英文简历」这些边界值一个个喂进去。我搭流程的时间大概三成在连框，七成在这种单点上。</p>
+<h2 id="漏气一">漏气第一处：分支不是分支，是路径</h2>
+<p>第三天那条需求——「五个岗位各走各的模板」——听上去是两个 IF-ELSE 的事。实际是：</p>
+<p><img src=/images/dify-branch-explosion.png alt="分支爆炸示意图：一个 IF-ELSE 分出后端通过、后端复核、前端通过、前端复核、数据通过、数据复核六条支路，各自接不同的面试题模板或组长待办，其中三条再汇入第二层判断「工作年限是否三年以上」，再分出高级岗与基础岗追问两支，节点数量呈乘法增长" width="1128" height="756" decoding="async" loading="lazy"></p>
+<p>5 类岗位 × 2 种结果 × 2 档年限 = 20 条路径。图上只画了 6 个框就已经开始打结了，而真实需求还会长。</p>
+<p>这不是 Dify 的 bug，是所有画布式编排的共同上限：<strong>图能表达「树」，表达不了「表」。</strong> 每加一个维度，节点数是乘法；而人类看图的带宽是固定的，超过十来个框，你就只剩「连线对不对」这个层次的判断力，看不见流程本身了。</p>
+<p>我最后没在画布上开二十个口。做法是把分支降级成参数：</p>
+<pre tabindex=0><code># 一个 LLM 节点，模板从知识库取，而不是在图上分叉
+system: |
+  你在给「{{#start.job_code#}}」岗位出面试追问。
+  下面是这个岗位的追问要点，逐条覆盖，每条出 1 个问题：
+  {{#knowledge_retrieval.result#}}
+  候选人工作年限 {{#start.years#}} 年，问题难度按此调整。</code></pre>
+<p>五份岗位要点文档进知识库，按 <code>job_code</code> 检索，一个节点替代二十个。代价是：模板改了要重新灌知识库，而且你失去了「在图上肉眼确认走了哪条路」的能力——只能看日志里的 <code>job_code</code> 和检索命中。这笔交易我认为划算，但要知道自己换掉了什么。</p>
+<p>一句话总结这一节：<strong>能用数据表达的差异，别用图表达。</strong> 画布上的每一个菱形，都在向未来的自己收利息。</p>
+<h2 id="漏气二">漏气第二处：迭代节点的错误语义</h2>
+<p>「同一份简历要能重跑」很快变成了「一次跑五十份」。Dify 有 Iteration 节点，把数组拆成一个个 item 顺序或并行执行，看起来正合适。踩到的两个点：</p>
+<p><strong>一、一个 item 抛异常，整轮的结果是「部分成功」。</strong> 节点状态不一定标红，输出是个变短的数组，而你在 End 节点里拿到的就是那半截。对策是让 item 永远不抛异常——把 try/except 写进被迭代的 LLM 节点后面的 Code 里，失败也返回一个结构完整的对象：</p>
+<pre tabindex=0><code>def main(text: str, resume_id: str) -&gt; dict:
+    # 这个节点在 Iteration 里，永远返回完整结构，绝不 raise
+    return {"resume_id": resume_id, "text": text, "ok": bool(text)}</code></pre>
+<p>然后在迭代外面用变量聚合器统计 <code>ok</code> 的比例，低于 90% 就整批作废重跑，而不是拿着半截结果往下走。</p>
+<p><strong>二、没有 per-item 重试。</strong> 五十份里失败三份，只能整批重跑——那四十七份的 token 白花了，而且模型是随机的，重跑的结果和上次不完全一样，你的中间数据对不上。真要做增量，就得把 <code>resume_id</code> 和已完成的标记落到外部（自己的数据库或一张表），每次跑之前先过滤。这一步一旦需要，说明你已经到了画布的边界，见下一节。</p>
+<p>顺带说并行度：Iteration 的并行数调高会直接顶到模型的 RPM 限制，报的还是 429。默认值保守是有道理的，别一上来拉到 10。</p>
+<h2 id="漏气三">漏气第三处：成本账在画布外面</h2>
+<p>这条流程六个 LLM 节点。改一句提示词、重跑一次 = 六次调用。我调那个打分提示词调了大概二十轮，一百二十次调用，账单上是真金白银。</p>
+<p>Dify 的运行记录里能看到每次 run 的 <code>total_tokens</code> 和总耗时，但它是<strong>按 run 汇总的，不告诉你哪个节点最贵</strong>。而你要优化的往往就是那一个节点——比如打分节点如果你把整份简历连着两轮对话塞进去，它一份就是三千 token，占掉整条流程的七成。</p>
+<p>要按节点看，只能走 API 拿 run 明细。这是「用 Dify 搭」和「用 Dify 当函数」的分界线，也是我第三条需求最后落到的地方：</p>
+<pre tabindex=0><code>import os, time, requests
+
+BASE = os.environ.get("DIFY_BASE", "http://127.0.0.1/v1")
+KEY  = os.environ["DIFY_API_KEY"]          # app-xxxxxxxx
+
+def run(resume_text: str, job_code: str = "backend", years: int = 0) -&gt; dict:
+    r = requests.post(
+        f"{BASE}/workflows/run",
+        headers={"Authorization": f"Bearer {KEY}"},
+        json={
+            "inputs": {"resume_text": resume_text,
+                       "job_code": job_code,
+                       "years": str(years)},
+            "response_mode": "blocking",     # 或 streaming，长流程建议后者
+            "user": "hr-batch-01",           # 用来在后台区分调用方
+        },
+        timeout=120,
+    )
+    r.raise_for_status()
+    d = r.json()["data"]
+    return {
+        "status": d["status"],               # succeeded / failed / stopped
+        "outputs": d.get("outputs", {}),
+        "tokens": d.get("total_tokens", 0),
+        "steps": d.get("total_steps", 0),
+        "elapsed": d.get("elapsed_time", 0.0),
+    }
+
+if __name__ == "__main__":
+    t0 = time.time()
+    for i in range(3):
+        out = run(open("sample_resume.txt").read(), job_code="data", years=2)
+        print(f"run{i}: status={out['status']} tokens={out['tokens']} "
+              f"steps={out['steps']} elapsed={out['elapsed']:.1f}s")
+    print(f"wall={time.time()-t0:.1f}s")</code></pre>
+<p>注意三件事。<code>response_mode</code> 选 <code>blocking</code> 上手快，但长流程会被网关超时砍掉，超过一分钟就换 <code>streaming</code> 自己拼 SSE。<code>user</code> 字段别乱填，它决定后台的调用方统计，批量任务和线上请求必须分开，否则出问题时分不清是谁在打。<code>inputs</code> 里的数字一律传字符串——Dify 的表单变量是字符串类型，传 int 会在校验层被拒，这个错我犯过两次。</p>
+<p>有了这个函数，批量、重试、增量、按人统计成本，全都是普通 Python 的事，不需要在画布上表达。画布退回它最擅长的位置：定义流程长什么样。</p>
+<h2 id="什么时候搬走">什么时候该搬走</h2>
+<p>搭过四五个之后，我有个挺硬的判断线。命中左边任意一条，就别在画布上加框了，把编排搬到代码里，Dify 只当一个「有版本的提示词 + 知识库」后端：</p>
+<p>· 需要循环套循环，或者递归 → 搬。<br>· 需要 per-item 重试、幂等、断点续跑 → 搬。<br>· 需要断言中间结果（比如「解析出的 score 必须落在 0~100」），并且要 CI 拦 → 搬。<br>· 分支维度超过两个，路径数超过十条 → 搬一半：把分支挪进提示词或代码，画布只留主干。<br>· 一天要改三次提示词，业务方自己在改 → <strong>留</strong>。这是它唯一不可替代的价值。<br>· 知识库的文档由非技术同事维护 → <strong>留</strong>。</p>
+<p>看不出来吗？换个问法就行：<strong>这个东西接下来主要由谁改？</strong> 是我改，代码里改更快；是 HR 改，画布上改才成立。Dify 卖的不是「不用写代码」，是「把修改权交给不写代码的人」——你为这件事付的代价，就是图表达不了的东西你也表达不了。</p>
+<h2 id="一句话">一句话</h2>
+<p><strong>零代码平台把编排变成了图，于是你的架构上限就变成了图的表达力上限。</strong> 它省下的不是写代码的时间，是沟通成本：让业务方能自己进去改一句话、加一个分支、换一份知识库文档，而不用排期等你。</p>
+<p>所以搭之前先答一个问题：这条流程三个月后是谁在维护。答「我」，直接写代码，LangGraph 那套（<a href="/posts/langgraph-multi-step-agent-workflow/">第 12 篇</a>）比画布扎实得多；答「HR 自己」或者「运营」，Dify 是当前最省事的选择——但记得把那四十行扫描器挂上，图是会悄悄断的。</p>
+<p>下一篇（16）换到国内这一侧：<strong>钉钉 AI + Coze</strong>，看同一个「把编排交给业务方」的思路，长在一个 IM 里会变成什么样。</p>
+<hr>
+<blockquote><p><strong>AI Agent 全解析系列：</strong></p><p>1. <a href="/posts/ai-agent-what-is/">AI Agent 是什么——从 LLM 到自主智能体的进化</a><br>2. <a href="/posts/ai-agent-four-capabilities/">Agent 的四大核心能力：规划、记忆、工具、执行</a><br>3. <a href="/posts/ai-agent-2026-landscape/">2026 AI Agent 全景图：谁在做什么，谁能用</a><br>4. <a href="/posts/ai-agent-vs-copilot/">选 Agent 还是选 Copilot？不同场景的决策框架</a><br>5. <a href="/posts/ai-agent-architecture-patterns/">Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent</a><br>6. <a href="/posts/ai-agent-tool-calling/">工具调用深度解析：Function Calling、MCP 协议与插件生态</a><br>7. <a href="/posts/ai-agent-memory-system/">Agent 的记忆系统：短期记忆、长期记忆与 RAG</a><br>8–10. Hermes Agent 入门 / 配置 / Skills（<a href="/posts/hermes-agent-guide/">从这里开始</a>）<br>11. <a href="/posts/ai-agent-frameworks-langchain-crewai-autogpt/">LangChain vs CrewAI vs AutoGPT：三个框架把复杂度藏在了哪里</a><br>12. <a href="/posts/langgraph-multi-step-agent-workflow/">用 LangGraph 构建多步骤 Agent 工作流</a><br>13. <a href="/posts/claude-code-vs-cursor-vs-copilot/">Claude Code vs Cursor vs Copilot</a><br>14. <a href="/posts/cline-vs-aider-open-source-agents/">Cline + Aider：一个活在编辑器里，一个活在终端里</a><br>15. 👉 Dify 实战：零代码搭工作流，先看清它从第几步开始漏气（本文）</p></blockquote></div></article><nav class=post-nav><a href=/posts/cline-vs-aider-open-source-agents/ class=prev>← AI Agent 全解析：Cline + Aider——一个活在编辑器里，一个活在终端里</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>&copy; 2026 zhouyang &middot; Shanghai &middot; Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> &middot; <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

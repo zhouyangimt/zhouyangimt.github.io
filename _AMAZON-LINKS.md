@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-11-13
+> Last updated: 2026-11-18
 > Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
@@ -44,7 +44,7 @@
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong ⚠️ 404 — listing dead since 2026-08-17, link still live in article, needs replacement or removal | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
 | 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan-three-fingers-one-lid, t/jin-jun-mei-golden-eyebrow, t/ripe-puer-old-libraries-rain-wet-earth, t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan-three-fingers-one-lid, t/six-teas-one-shelf, t/tea-chan-one-cup, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
-| 39 | `B08ZKTJ8NN` | Glass Teapot | t/anji-baicha-albino-green, t/huangshan-maofeng-misty-mountain, t/jin-jun-mei-golden-eyebrow, t/luan-guapian-bare-leaf, t/taiping-houkui-monkey-chief | 2026-07-28 | `zhouyang01-20` |
+| 39 | `B08ZKTJ8NN` | Glass Teapot | t/anji-baicha-albino-green, t/huangshan-maofeng-misty-mountain, t/jin-jun-mei-golden-eyebrow, t/lid-left-open, t/luan-guapian-bare-leaf, t/taiping-houkui-monkey-chief | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 42 | `B0FJQZNNZP` | Tea Sampler Set | t/baihao-yinzhen-silver-needle, t/six-types-chinese-tea-guide, t/tea-scoop | 2026-07-20 | `zhouyang01-20` |

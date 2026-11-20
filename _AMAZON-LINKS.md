@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-11-18
+> Last updated: 2026-11-20
 > Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
@@ -76,7 +76,7 @@
 | 68 | `B09GK7PQWF` | Glazed Ceramic Tea Caddy | t/how-to-read-chinese-tea-label, t/six-teas-one-shelf, t/tea-storage-guide, t/the-tea-year | 2026-09-23 | `zhouyang01-20` |
 | 69 | `B0B3GS15GL` | Brita Carbon Water Pitcher | t/water-for-tea | 2026-09-25 | `zhouyang01-20` |
 | 70 | `B0B89JJ9Z2` | Two-way Humidity Pack (62%) | t/tea-storage-guide | 2026-09-23 | `zhouyang01-20` |
-| 71 | `B0F2G4CZV2` | Shui Xian Oolong (Wuyi) | t/shuixian-water-sprite-wuyi | 2026-07-31 | `zhouyang01-20` |
+| 71 | `B0F2G4CZV2` | Shui Xian Oolong (Wuyi) | t/shuixian-water-sprite-wuyi, t/yixing-pot-never-wash | 2026-07-31 | `zhouyang01-20` |
 | 72 | `B0FSDVSJ3J` | Taiping Houkui Green Tea | t/taiping-houkui-monkey-chief | 2026-08-19 | `zhouyang01-20` |
 | 73 | `B0H1MKQNXK` | Yulongsheng Fuding Shou Mei Loose Leaf | t/shou-mei-longevity-eyebrow | 2026-09-18 | `zhouyang01-20` |
 | 74 | `B08RYQW4FX` | Sizikato 8oz Glass Sharing Cup (gongdao) | t/fairness-cup | 2026-10-02 | `zhouyang01-20` |
@@ -118,7 +118,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-11-13) | Day 121 | 59 days remaining |
+| Today (2026-11-20) | Day 128 | 52 days remaining |
 
 ## Notes
 

@@ -267,6 +267,15 @@
 | 108 | Red Willow Lamb | 红柳烤肉 | ✅ |
 | 109 | Grilled Pig Eyes | 烤猪眼 | ✅ |
 
+#### 十二、補遺 v2 · The Gap Fillers（2026-11-21 起，10 道，🟢=已发）
+
+> 109 本完结后 11-18/19/20 连续三天空档；2026-11-21 按两次独立 run 的收敛候选自立首批 10 道，其余 9 行待用户确认。区隔角度见 `cuisine_ROADMAP.md` §十二。
+
+| # | Dish | Chinese | 状态 |
+|---|------|---------|------|
+| 110 | Hakka Stuffed Tofu | 客家酿豆腐 | 🟢 |
+| 111 | Mao Xue Wang | 毛血旺 | ⬜ |
+
 #### 其他已发（待归类）
 
 | Dish | Chinese | 状态 |

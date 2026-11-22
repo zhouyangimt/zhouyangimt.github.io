@@ -274,7 +274,7 @@
 | # | Dish | Chinese | 状态 |
 |---|------|---------|------|
 | 110 | Hakka Stuffed Tofu | 客家酿豆腐 | 🟢 |
-| 111 | Mao Xue Wang | 毛血旺 | ⬜ |
+| 111 | Mao Xue Wang | 毛血旺 | 🟢 |
 
 #### 其他已发（待归类）
 

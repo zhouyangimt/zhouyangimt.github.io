@@ -1,5 +1,20 @@
 [
  {
+  "title": "Ginger Milk Curd: The Dessert You Don't Cook, You Collide",
+  "url": "/cuisine/ginger-milk-curd/",
+  "summary": "Hot buffalo milk poured from a foot above into fresh ginger juice, setting by itself in ten minutes — sweet milk first, then ginger at the back of your throat.",
+  "section": "cuisine",
+  "date": "2026-11-24",
+  "tags": [
+   "shunde",
+   "cantonese",
+   "guangdong",
+   "dessert",
+   "ginger",
+   "milk"
+  ]
+ },
+ {
   "title": "AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上",
   "url": "/posts/dingtalk-ai-coze-china-agents/",
   "summary": "需求是群里一句话：XX 客户要报价。Coze 一个下午跑通，钉钉一个上午通了身份和审批——同一条流程两边各成一半。拆 Coze 的渠道边界、钉钉的组织边界、Chat API 异步坑、Stream 模式与审批 API，附选型决策树。",

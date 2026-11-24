@@ -1,0 +1,142 @@
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R77QY66D94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R77QY66D94');
+</script>
+
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上 | zhouyang — The 25th Frame</title><meta name=description content="给销售搭一个报价助理，Coze 一个下午跑通，钉钉自带身份和审批。拆两个平台的架构边界、Coze Chat/Workflow API 的异步坑、钉钉 Stream 模式与审批 API，附可运行代码和一张选型决策树。"><link rel=canonical href=https://zhouyang.dev/posts/dingtalk-ai-coze-china-agents/><meta property="og:title" content="AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上 | zhouyang — The 25th Frame"><meta property="og:description" content="Coze 的边界在渠道，钉钉的边界在组织——选哪个不取决于模型，取决于你的用户用手机号还是工号登录。"><meta property="og:url" content="https://zhouyang.dev/posts/dingtalk-ai-coze-china-agents/"><meta property="og:type" content="article"><meta property="og:site_name" content="zhouyang — The 25th Frame"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://zhouyang.dev/images/coze-dingtalk-architecture.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上"><meta name=twitter:description content="同一条报价流程在两个平台各搭一遍：Coze 有编排没身份，钉钉有身份没编排，最后收敛成「钉钉当入口、Coze 当脑袋」。"><script type=application/ld+json>{"@context": "https://schema.org", "@type": "Article", "headline": "AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上", "url": "https://zhouyang.dev/posts/dingtalk-ai-coze-china-agents/", "datePublished": "2026-11-24T00:00:00+00:00", "dateModified": "2026-11-24T00:00:00+00:00", "author": {"@type": "Person", "name": "zhouyang"}, "description": "Coze 与钉钉 AI 助理的架构边界、API 实战与选型判据。"}</script><link rel=stylesheet href="/css/style.css?v=20260722"><link rel=stylesheet href="/css/search.css?v=1"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2636431011760510" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Tech RSS"><link rel=alternate type=application/rss+xml href=/cuisine/index.xml title="Chinese Cuisine RSS"></head><body><header><nav><a href=/ class=logo>zhouyang — The 25th Frame</a><div class=nav-links><a href=/>Home</a>
+<a href=/posts/>Tech</a>
+<a href=/cuisine/>Chinese Cuisine</a>
+<a href=/tea/>Tea</a>
+<a href=/drinks/>Chinese Drinks</a>
+<a href=/about/>About</a>
+<a href=/affiliate-disclosure/>Disclosure</a>
+<a href=/privacy/>Privacy</a>
+<span class=nav-search><input type=text id=search-input placeholder=Search... autocomplete=off><div id=search-results class=search-dropdown></div></span><span class=rss-links><span class=rss-label>RSS</span>
+<a href=/posts/index.xml title="Tech RSS feed — copy this link into your feed reader">Tech</a>
+<a href=/cuisine/index.xml title="Chinese Cuisine RSS feed — copy this link into your feed reader">Food</a>
+<a href=/tea/index.xml title="Chinese Tea RSS feed — copy this link into your feed reader">Tea</a>
+<a href=/drinks/index.xml title="Chinese Drinks RSS feed — copy this link into your feed reader">Chinese Drinks</a></span></div></nav></header><main><article class=single-post><header><h1>AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上</h1><div class=meta><time>2026-11-24</time>
+<span class=tags><span class=tag>AI</span><span class=tag>Agent</span><span class=tag>工具教程</span><span class=tag>编程</span></span></div></header><div class=content><h2 id="一句话的需求">一句话的需求，两边的结果</h2>
+<p>需求是群里的一句话：「XX 客户要报价，走一遍流程。」</p>
+<p>翻译成人话：从这句话里认出客户名，查 CRM 拿历史成交价和折扣档，按产品线出一版报价草稿，建一条折扣审批，再把「已报价、等审批」写回客户跟进记录。</p>
+<p>我先用 Coze 搭。Bot 收话，Workflow 里五个节点：意图识别、查客户、算价、生成文案、回消息。插件用 OpenAPI schema 接 CRM，报价规则拆成三份文档进知识库。发布到网页 SDK，微信客服也能接。一个下午，跑通。</p>
+<p>然后销售说：能不能直接在我们的群里？能不能点一下就把审批提了？</p>
+<p>Coze 也能进群（发布到飞书、企微都有通道），但进去之后你会撞上一堵墙：<strong>它不知道说话的人是谁。</strong> Coze 的会话里只有一个你自己编的 <code>user_id</code> 字符串，它没有你们公司的通讯录，不知道这个人是华东区的销售还是实习生，也不知道他能批多少钱的单。这些你得自己在插件里查、自己校验、自己兜住越权。</p>
+<p>反过来在钉钉做，身份是免费的：群里 @ 一下，回调里直接带 <code>senderStaffId</code>，通讯录、部门、主管、审批权限全都在。但编排是收费的——钉钉的工作流节点远没有 Coze 密，稍微复杂的逻辑就得外挂一个自己的服务。</p>
+<p>两边都只成了一半。这篇讲这条裂缝在哪，以及怎么选。</p>
+<p>上一篇（<a href="/posts/dify-zero-code-workflow/">Dify 实战</a>）说的是「零代码的上限是图的表达力」；这篇往前一步，看两个把「编排权交给业务方」的平台，一个把边界画在渠道上，一个把边界画在组织上。</p>
+<h2 id="骨架">两个平台的骨架长在哪</h2>
+<p>先把它们摆在一起看。你会发现它们的边界根本不在同一个地方：</p>
+<p><img src=/images/coze-dingtalk-architecture.png alt="Coze 与钉钉的架构对比图：左侧 Coze 自上而下是发布渠道（网页 SDK、飞书、微信客服、API）、Bot 层（人设、开场白、变量、记忆）、编排层（Workflow DAG、多 Agent 模式）、资源层（插件 OpenAPI、知识库、数据库）、模型层（豆包、通义、Kimi、DeepSeek），编排层另有分支指向托管运行与按 token 计费；右侧钉钉自上而下是入口（群 @、单聊、定时、Webhook）、AI 助理（人设、知识、工作流、连接器）、组织能力（通讯录、审批、日程、AI 表格）与模型层（通义系为主），权限与审计用虚线同时约束 AI 助理和组织能力" width="860" height="727" decoding="async" loading="lazy"></p>
+<p>Coze 是一条竖着的流水线：<strong>渠道 → Bot → 编排 → 资源 → 模型</strong>。它从外面接流量，往外发射。所以强项是「一次编排、多渠道发布」，弱项是所有跟组织有关的东西——身份、权限、审批、审计，全在你的插件里。</p>
+<p>钉钉是横着长在组织里的：<strong>入口 → AI 助理 → 组织能力</strong>，外面罩一层权限与审计。它不关心你有几个渠道，它关心这个助理能看哪个部门的数据、能被谁用、说了什么话有没有留痕。</p>
+<p>一句话：<strong>Coze 的边界在渠道，钉钉的边界在组织。</strong> 这句也是全文的判据，后面每个结论都能从它推出来。</p>
+<p>还有个容易忽略的差别：两边都能对程序暴露能力，但性质不同。Coze 的 Bot 发布后是一个标准的 Chat API，<code>POST /v3/chat</code> 带个 token，你的后端、定时任务、别的 Agent 都能把它当函数调。钉钉的 AI 助理更多是「在钉钉里被触发」，外部要调它得走开放平台的应用授权，绕一圈。<strong>Coze 天生是给别人调的，钉钉天生是给里面人用的。</strong></p>
+<h2 id="coze">Coze：把编排做成了一门生意</h2>
+<p>Coze 最值钱的东西不是 Bot，是 Workflow。Bot 只是壳（人设、开场白、变量、记忆），真正干活的是那张 DAG，而 DAG 里最好用的是 Code 节点——它让「零代码」在需要的时候能撕开一个口子写 Python。这个口子有多大，决定了你能在上面走多远。</p>
+<p>先用 API 把它当函数调。这里有两个我踩过的坑，文档里不会用红字标出来：</p>
+<pre tabindex=0><code>import os, json, requests
+
+BASE   = "https://api.coze.cn"
+TOKEN  = os.environ["COZE_TOKEN"]
+BOT_ID = os.environ["COZE_BOT_ID"]
+
+def chat(text: str, user_id: str, conversation_id: str | None = None) -> dict:
+    payload = {
+        "bot_id": BOT_ID,
+        "user_id": user_id,          # 坑 1：这是你自己编的字符串
+        "stream": False,
+        "auto_save_history": True,
+        "additional_messages": [
+            {"role": "user", "content": text, "content_type": "text"}],
+    }
+    if conversation_id:
+        payload["conversation_id"] = conversation_id
+    r = requests.post(f"{BASE}/v3/chat",
+                      headers={"Authorization": f"Bearer {TOKEN}"},
+                      json=payload, timeout=60)
+    r.raise_for_status()
+    return r.json()["data"]
+
+def run_flow(workflow_id: str, params: dict) -> dict:
+    r = requests.post(f"{BASE}/v1/workflow/run",
+                      headers={"Authorization": f"Bearer {TOKEN}"},
+                      json={"workflow_id": workflow_id, "parameters": params},
+                      timeout=120)
+    d = r.json()
+    if d["code"] != 0:
+        raise RuntimeError(f'{d["code"]}: {d["msg"]}')
+    return json.loads(d["data"])   # 坑 2：data 是字符串，不是对象</code></pre>
+<p><strong>坑 1 是身份。</strong> <code>user_id</code> 是任意字符串，Coze 不校验它是不是真人。这意味着会话隔离全靠这个值——我在一个内部工具里图省事写死了 <code>"admin"</code>，结果所有人的对话历史串进同一个 conversation，A 客户问的报价被 B 客户看见了。它不是 bug，是这个平台压根没有「用户」这个概念，只有「你传进来的那串字符」。要补，就得在调它之前先过一遍自己的鉴权，再把真实身份映射成一个稳定且唯一的 id。</p>
+<p><strong>坑 2 是类型。</strong> Workflow 的 <code>data</code> 是一个 JSON 字符串，里面才是你的输出对象。不 <code>json.loads</code> 就直接取字段，会得到一个「字符串没有 get 方法」的报错，然后再浪费二十分钟怀疑是不是 workflow 没跑。</p>
+<p>还有第三个坑不在代码里：<strong><code>/v3/chat</code> 非流式是异步的。</strong> <code>stream=False</code> 返回的是 <code>status: "in_progress"</code> 和一个 chat id，你得再调 <code>/v3/chat/retrieve</code> 轮询状态，好了之后调 <code>/v3/chat/message/list</code> 取消息。很多人卡在这，以为「接口没返回内容」，其实内容还在生成。要一把梭就开 SSE，自己拼流。</p>
+<p>Coze 真正爽的地方在发布：同一个 Bot，网页 SDK、微信客服、飞书、掘金、API 几个出口，配置一下就有。这是它「渠道」定位的直接体现，也是我第一个下午就能给销售看 Demo 的原因——先让人看见，再谈正确。</p>
+<h2 id="dingtalk">钉钉：事件是入口，权限是护城河</h2>
+<p>钉钉这边完全是另一种写法。不是「我做一个 Bot 然后发到群里」，而是「群里有人 @ 了一个应用，钉钉把事件推给我」。</p>
+<p>推的方式有两种：传统的 HTTP 回调（要公网地址、要验签），和 Stream 模式——SDK 主动向钉钉建一条长连接，事件从这条连接上流过来。后者对内网服务是救命稻草：不用公网 IP、不用备案、不用内网穿透，一台能出网的机器就够了。</p>
+<pre tabindex=0><code>import dingtalk_stream
+from dingtalk_stream import AckMessage
+
+class QuoteBot(dingtalk_stream.ChatbotHandler):
+    async def process(self, callback: dingtalk_stream.CallbackMessage):
+        msg  = dingtalk_stream.ChatbotMessage.from_dict(callback.data)
+        text = (msg.text.content or "").strip()
+        staff = msg.sender_staff_id      # 组织内唯一，直接能查人
+        conv  = msg.conversation_id      # 群会话 id，回写消息要用
+
+        self.reply_text("收到，我查一下历史成交价", msg)   # 先回，别让人干等
+        # 这里接自己的业务：CRM / 报价规则 / 调 Coze / 建审批
+        return AckMessage.STATUS_OK, "OK"
+
+credential = dingtalk_stream.Credential(APP_KEY, APP_SECRET)
+client = dingtalk_stream.DingTalkStreamClient(credential)
+client.register_callback_handler(
+    dingtalk_stream.chatbot.ChatbotMessage.TOPIC, QuoteBot())
+client.start_forever()</code></pre>
+<p>注意 <code>reply_text</code> 的位置：在真正干活的代码<strong>之前</strong>。钉钉对回调有超时，超过几秒没 ack 就重推；而「查 CRM + 算价 + 调模型」很容易超过这个时间。正确姿势是先 ack、先回一句「收到」，活干完了再发一条消息或一张卡片。这个模式跟微信客服、Slack 都通，但在钉钉里尤其致命——重推意味着你的审批被建两遍。</p>
+<p>「能建审批」是钉钉和 Coze 最本质的能力差。Coze 当然也能调一个建审批的 HTTP 接口，前提是你自己有一套审批系统、并且它暴露在公网；钉钉是<strong>审批本身就是平台的一部分</strong>：</p>
+<pre tabindex=0><code>def create_approval(token: str, process_code: str,
+                    user_id: str, form: dict) -> str:
+    body = {
+        "processCode": process_code,      # 审批模板 id，后台建好
+        "originatorUserId": user_id,      # 就是上面的 sender_staff_id
+        "deptId": -1,                     # -1 = 用发起人主部门
+        "formComponentValues": [
+            {"name": k, "value": str(v)} for k, v in form.items()],
+    }
+    r = requests.post(
+        "https://api.dingtalk.com/v1.0/workflow/processInstances",
+        headers={"x-acs-dingtalk-access-token": token},
+        json=body, timeout=30)
+    r.raise_for_status()
+    return r.json()["instanceId"]</code></pre>
+<p>token 来自 <code>POST /v1.0/oauth2/accessToken</code>，有效期 7200 秒。<strong>必须缓存</strong>——我见过每分钟换一次 token 的服务，钉钉那边会限流，报的还是一个跟 token 毫无关系的错。</p>
+<p>还有两个「文档里写了一行、上线才疼」的小坑：</p>
+<p>· 互动卡片的 <code>sampleText</code> 不填，手机通知栏就是空的。用户看到一条没有内容的推送，不会点。<br>· 卡片回调必须在 3 秒内响应，否则钉钉认为失败并重试。要调模型，一律「先 ack、后异步补发」。</p>
+<h2 id="岔口">同一条流程，五个岔口</h2>
+<p>把两条路画在一张图上，落差就很清楚了：</p>
+<p><img src=/images/quote-agent-two-platforms.png alt="报价助理在两条路线上的流程对比图：顶部是销售说「XX 客户要报价」，按入口分左右两栏。左栏钉钉路线为群 @ 机器人、senderStaffId 直接换通讯录、连接器调 CRM 内网要打通、建审批实例并回写 AI 表格、收到互动卡片且待办已建好；右栏 Coze 路线为网页或微信客服、自建 user_id 权限自己校验、插件调 CRM 接口需公网、只能回消息写回要自己写、收到一段文字但数据没落地" width="646" height="923" decoding="async" loading="lazy"></p>
+<p>五个环节，钉钉赢四个：<strong>入口</strong>（人已经在群里，不需要拉新）、<strong>身份</strong>（senderStaffId 直接换通讯录）、<strong>执行</strong>（审批、待办、日程、AI 表格都是原生 API）、<strong>回写</strong>（数据直接落在钉钉里，不用另建库）。Coze 只赢一个，但那个很值钱：<strong>编排</strong>。它有 Code 节点、有真正的分支循环、有多 Agent 模式，还有一张能画出来给非技术同事看的 DAG。</p>
+<p>所以最省事的组合其实是<strong>两个都用</strong>：钉钉当入口和出口（接人、建审批、回卡片），Coze 当脑袋（Workflow 里做意图识别、报价计算、文案生成），中间用 Coze 的 Chat/Workflow API 连起来。这不是架构洁癖，是我在三个项目里最后都收敛到的形状——两边的强项恰好互补，弱项恰好是对方的强项。</p>
+<p>代价是多一个故障点、多一份账单、多一层「出问题先看哪」的迷茫。所以只有当一个条件成立时才值得拆：<strong>你的流程里既有组织身份，又有复杂编排。</strong> 只有前者，纯钉钉；只有后者，纯 Coze。</p>
+<h2 id="账">成本与治理：两本不同的账</h2>
+<p>Coze 的账是 token 账：按模型单价乘调用量，看得见、算得清。调提示词那几天账单会跳一下，但幅度可预期，也能靠缓存和降级压回去。</p>
+<p>钉钉的账是采购账：席位、版本、AI 算力包，走的是企业采购流程，个人开发者几乎没法按量试。两边的具体价格都常改，以官网为准，但<strong>计费口径的差别比价格差别更重要</strong>——一个是「用了多少」，一个是「买了多少」。前者让你敢做实验，后者让你必须先立项。</p>
+<p>治理的差别更大。钉钉有管理后台：应用能被授权给哪些部门、谁能装、会话能不能审计、敏感词拦不拦。这些是给 IT 和安全部门看的，也是它能进大公司的原因。Coze 企业版有空间、成员、发布审批，但落到「某个员工跟 Bot 说了什么」这个粒度，得你自己在插件或 API 层记日志。做 to B 生意时，这一条经常是招标文件里的一行硬指标。</p>
+<p>私有化是第三个岔口。Coze Studio 已经开源，可以自己部署，代价是 MySQL、Redis、向量库、对象存储一套都得自己运维；钉钉有专属版，价格是另一个量级。真走到这一步，通常说明你卖的已经不是「一个 Bot」，而是「一套系统」。</p>
+<h2 id="选型">选型：先问用户拿什么登录</h2>
+<p>别看功能列表，看这一件事：<strong>你的用户是用手机号登录，还是用工号登录。</strong></p>
+<p><img src=/images/china-agent-decision-tree.png alt="选型决策树：先问外部客户还是内部员工。外部客户再问要几个渠道，网页加微信加飞书选 Coze，只有一个网页则两边都行但 Coze 上线更快；内部员工再问流程要不要审批、待办、日程，要就选钉钉 AI 助理，不要则看逻辑里有没有循环、重试、断言，有就选 Coze Workflow 或 LangGraph，没有就选钉钉、一天能上线" width="875" height="1178" decoding="async" loading="lazy"></p>
+<p>用工号登录 → 他在一个组织里，有部门、有主管、有审批链 → 钉钉。用手机号登录 → 他是一个独立的消费者，你可能在网页、微信、抖音三个地方都能碰到他 → Coze。</p>
+<p>再补四条硬判据：<br>· 流程要落到「审批 / 待办 / 日程 / 组织数据」→ 钉钉，没有第二种选择。<br>· 流程里有循环、重试、断言、多步工具调用 → Coze Workflow 的 Code 节点，或者干脆 LangGraph（<a href="/posts/langgraph-multi-step-agent-workflow/">第 12 篇</a>），别指望工作流画布。<br>· 要给外部客户用，并且不止一个入口 → Coze，它的渠道分发是免费的。<br>· 公司要求数据不出内网 → 两边都要私有化，先算清运维成本再谈。</p>
+<p>有个反直觉的观察：这两年在国内落地的 Agent 项目，失败最多的不是模型不行，是选错了入口。在钉钉里做一个要拉外部用户的客服 Bot，推广成本高得离谱；在 Coze 里做一个要读组织架构的内部工具，光权限校验就能拖两个月。<strong>平台选错，模型再强也救不回来。</strong></p>
+<h2 id="一句话">一句话</h2>
+<p><strong>Coze 把 Agent 做成了一颗能发射到任何渠道的子弹，钉钉把 Agent 做成了组织里的一个新同事。</strong> 子弹关心打到哪里，同事关心他是谁、能进哪个会议室、说的话要不要留档。</p>
+<p>这两件事在 2026 年还没被同一家做好。所以现实里的正确答案往往是拼起来：钉钉管人和权限，Coze 管脑子和渠道，中间一条 API。难看，但能跑——而且比任何一边单独硬撑都活得久。</p>
+<p>下一篇（17）换个口味，不再比平台：直接拿一批疯狂但真的好用的 Agent 上手实测，看它们在真实任务里是帮忙、还是添乱。</p>
+<hr>
+<blockquote><p><strong>AI Agent 全解析系列：</strong></p><p>1. <a href="/posts/ai-agent-what-is/">AI Agent 是什么——从 LLM 到自主智能体的进化</a><br>2. <a href="/posts/ai-agent-four-capabilities/">Agent 的四大核心能力：规划、记忆、工具、执行</a><br>3. <a href="/posts/ai-agent-2026-landscape/">2026 AI Agent 全景图：谁在做什么，谁能用</a><br>4. <a href="/posts/ai-agent-vs-copilot/">选 Agent 还是选 Copilot？不同场景的决策框架</a><br>5. <a href="/posts/ai-agent-architecture-patterns/">Agent 的架构模式：ReAct、Plan-Execute、Multi-Agent</a><br>6. <a href="/posts/ai-agent-tool-calling/">工具调用深度解析：Function Calling、MCP 协议与插件生态</a><br>7. <a href="/posts/ai-agent-memory-system/">Agent 的记忆系统：短期记忆、长期记忆与 RAG</a><br>8–10. Hermes Agent 入门 / 配置 / Skills（<a href="/posts/hermes-agent-guide/">从这里开始</a>）<br>11. <a href="/posts/ai-agent-frameworks-langchain-crewai-autogpt/">LangChain vs CrewAI vs AutoGPT：三个框架把复杂度藏在了哪里</a><br>12. <a href="/posts/langgraph-multi-step-agent-workflow/">用 LangGraph 构建多步骤 Agent 工作流</a><br>13. <a href="/posts/claude-code-vs-cursor-vs-copilot/">Claude Code vs Cursor vs Copilot</a><br>14. <a href="/posts/cline-vs-aider-open-source-agents/">Cline + Aider：一个活在编辑器里，一个活在终端里</a><br>15. <a href="/posts/dify-zero-code-workflow/">Dify 实战：零代码搭工作流，先看清它从第几步开始漏气</a><br>16. 👉 钉钉 AI + Coze：一个长在组织里，一个长在渠道上（本文）</p></blockquote></div></article><nav class=post-nav><a href=/posts/dify-zero-code-workflow/ class=prev>← AI Agent 全解析：Dify 实战——零代码搭工作流，先看清它从第几步开始漏气</a></nav><section class=comments><h2>💬 Comments</h2><script src=https://utteranc.es/client.js repo=zhouyangimt/zhouyangimt.github.io issue-term=pathname label=comment theme=github-dark crossorigin=anonymous async></script></section></main><footer><p>&copy; 2026 zhouyang &middot; Shanghai &middot; Chasing the 25th frame</p><p class=footer-links><a href=/affiliate-disclosure/>Affiliate Disclosure</a> &middot; <a href=/privacy/>Privacy</a></p></footer><script src="/js/search.js?v=1"></script></body></html>

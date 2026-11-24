@@ -63,7 +63,8 @@
   posts/cline-vs-aider-open-source-agents
 - [x] 15: Dify 实战——零代码搭工作流，先看清它从第几步开始漏气 (2026-11-17)
   posts/dify-zero-code-workflow
-- [ ] 16: 钉钉 AI + Coze：中国市场的 Agent 生态
+- [x] 16: 钉钉 AI + Coze：一个长在组织里，一个长在渠道上 (2026-11-24)
+  posts/dingtalk-ai-coze-china-agents
 - [ ] 17: 疯狂又好用的 Agent 实测
 - [ ] 18: 垂直领域 Agent：法律、医疗、金融
 - [ ] 19: 中国 Agent 生态大乱斗

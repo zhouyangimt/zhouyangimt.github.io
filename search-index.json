@@ -1,5 +1,18 @@
 [
  {
+  "title": "AI Agent 全解析：钉钉 AI + Coze——一个长在组织里，一个长在渠道上",
+  "url": "/posts/dingtalk-ai-coze-china-agents/",
+  "summary": "需求是群里一句话：XX 客户要报价。Coze 一个下午跑通，钉钉一个上午通了身份和审批——同一条流程两边各成一半。拆 Coze 的渠道边界、钉钉的组织边界、Chat API 异步坑、Stream 模式与审批 API，附选型决策树。",
+  "section": "posts",
+  "date": "2026-11-24",
+  "tags": [
+   "AI",
+   "Agent",
+   "工具教程",
+   "编程"
+  ]
+ },
+ {
   "title": "Tangyuan: The South Wraps Them, the North Shakes Them",
   "url": "/cuisine/tangyuan/",
   "summary": "A brick of black sesame and pork fat melts into lava inside a skin thin enough to see the dark through it, and the north and south have never agreed on how to make one.",

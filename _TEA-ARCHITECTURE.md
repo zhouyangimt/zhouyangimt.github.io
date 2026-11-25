@@ -25,19 +25,19 @@
 - 每篇有 zhouyang 个人叙事段落
 - 送礼指南推到 Phase 3
 
-## 当前进度（2026-11-13 更新）
+## 当前进度（2026-11-25 更新）
 
-- **已发布 43 篇**（Phase 1：7 篇 / Phase 2：36 篇）
-- 全部 43 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
-- **下一篇：茶文化 #6《The First Pour Goes Down the Drain》** — 洗茶／醒茶：第一泡为什么倒掉（紧压茶、老茶、焙火茶 vs 绿茶），「醒」在物理上是湿润与升温而不是洗尘，以及哪些茶倒掉第一泡等于糟蹋。（茶 101 4/5–8；集合文 2/5–8；**茶文化 5/10–15，仍是最大缺口**）
+- **已发布 44 篇**（Phase 1：7 篇 / Phase 2：37 篇）
+- 全部 44 篇的封面与独立缩略图**均为真实照片，零占位图**（2026-09-16 补齐 8 篇封面 + 9 篇缩略图；10-28 茶刀封面取自搜狐茶刀专题实拍，vision 核验无文字无水印）
+- **下一篇：集合文 #3《Five Cups to Start With》** — 五款入门茶：按「每克学到的东西」排序（不说「最好的茶」，说最会教人的茶），从绿茶到熟普的饮用顺序、每款第一个该买的量（100g，不是 357g 饼），以及新手最常一次买错的那一类。（茶 101 4/5–8；集合文 3/5–8；**茶文化 6/10–15**）
 - ⚠️ **单品茶支柱就此收尾**（22 篇，早已超过 20+ 目标）。第 26 篇寿眉是白茶的收口之作（银针 → 白牡丹 → 寿眉，三篇成组）。**之后不再从单品里取题**，只写茶 101 / 茶具 / 集合文 / 茶文化这四个空支柱。
 
-### 已发布清单（43 篇）
+### 已发布清单（44 篇）
 
 | 区块 | 篇数 | slug |
 |---|---|---|
 | Guides & Teaware | 16 | six-teas-one-shelf · six-types-chinese-tea-guide · gaiwan-three-fingers-one-lid · tea-storage-guide · water-for-tea · how-to-read-chinese-tea-label · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet · the-tea-year |
-| Tea Culture | 5 | tea-chan-one-cup · tea-horse-road · two-finger-knock · lid-left-open · yixing-pot-never-wash |
+| Tea Culture | 6 | tea-chan-one-cup · tea-horse-road · two-finger-knock · lid-left-open · yixing-pot-never-wash · first-pour-rinse |
 | Green Teas | 8 | longjing · biluochun · huangshan-maofeng · xinyang-maojian · zhuyeqing · anji-baicha · taiping-houkui · luan-guapian |
 | Oolong Teas | 5 | tieguanyin · dahongpao · shuixian · rougui · fenghuang-dancong |
 | Black Teas | 4 | lapsang-souchong · jin-jun-mei · keemun · dianhong |
@@ -52,7 +52,7 @@
 | 茶种类 · 单品 | 20+ | 22 | **已达标（已收尾，不再取题）** |
 | 茶种类 · 集合文 | 5–8 | 2（six-teas-one-shelf · the-tea-year） | 3–6 |
 | 茶具（佣金主力） | 8–10 | 10（gaiwan · the-kettle · fairness-cup · tasting-cup · tea-tray · tea-strainer · tea-towel · tea-scoop · tea-knife · tea-pet） | **已满，收口** |
-| 茶文化 | 10–15 | 5 | 5–10 |
+| 茶文化 | 10–15 | 6 | 4–9 |
 | 送礼指南（Phase 3，等 DA 权重） | 3–5 | 0 | 3–5 |
 
 **剩余合计约 27–42 篇**（中位 ~35）。按周三 + 周五每周 2 篇，约 14–21 周（3.5–5 个月）。扣除 Phase 3 送礼指南 3–5 篇（需等域名权重上来），可立即排期的约 **24–37 篇**。
@@ -61,6 +61,7 @@
 
 
 ### 已完成的历史待办（无需再处理）
+- 2026-11-25：茶文化 #6《The First Pour Goes Down the Drain》发布（`tea/first-pour-rinse/`，正文约 1,200 词）。写洗茶／醒茶：三个词（洗茶 / 润茶 / 醒茶）指的是同一个动作、三种理论；物理上是湿润＋升温（冷盖碗会吃掉约 10°C，紧结的球／357g 饼／焙火条索内部第一泡还是干的）；引陆羽《茶经·六之饮》「九难」原文证明「洗」不在其列、引赵佶《大观茶论》「茶有真香，非龙麝可拟」论证第一泡才是香气所在；实操五条（沸水／三秒／洗茶水去温杯／紧压茶两道／坏茶洗不成好茶），反向清单（龙井、碧螺春、银针、黄茶不倒第一泡）。封面为盖碗＋紫砂壶＋公道杯实拍（1707×1280，搜狐 itc.cn 2025-08，vision 全分辨率核验：无文字无水印无正脸无 AI 痕迹），缩略图同源 2:1 顶部略偏下取景。Amazon 仅 1 条（玻璃公道杯 B08RYQW4FX）。
 - 2026-11-20：茶文化 #5《The Pot You Never Wash》发布（`tea/yixing-pot-never-wash/`，正文约 1,445 词）。写养壶：紫砂是未玻化的多孔陶（气孔率约 2% vs 瓷器 <1%）、包浆是茶多酚／多糖／矿物 + 手油 + 布擦的吸附层而非涂层、「一壶不事二茶」查不到明清出处（引许次纾《茶疏》1597「一壶之茶，只堪再巡」对照）、实操五条（只用热水／倒扣晾干／避免惊裂／选一种茶／开壶别煮豆腐）。原始文献两条：文震亨《长物志》「既不夺香，又无熟汤气」、周高起《阳羡茗壶系》「壶经用久，涤拭日加，自发暗然之光」。硬数据：烧成 1150–1200°C、2006 年宜兴紫砂陶制作技艺入首批国家级非遗。封面为紫砂壶＋竹茶盘实拍（1921×1280，vision 全分辨率核验：无文字无水印无人物无 AI 痕迹），缩略图同源 2:1 右下取景。Amazon 仅 1 条（水仙乌龙 B0F2G4CZV2）。
 - 2026-11-18：茶文化 #4《The Lid Left Open》发布（`tea/lid-left-open/`，约 1,500 词）。写广东茶楼「揭盖续水」：盖子三个位置（扣上／掀开立起／翻转＝收壶）、为什么盖子是视觉状态位而叩手礼是声音 ACK、续水的本质是温度（引《茶经·五之煮》三沸原文）、茶位费使「掀盖」成为已购权利、陶陶居 1880 / 莲香楼 1889、老舍《茶馆》1957「莫谈国事」对照北方；正文含 6 条实操。封面为紫砂壶＋青瓷碟木桌实拍（2736×1824，vision 全分辨率核验：无文字无水印无人物），缩略图同源 2:1 居中裁切。Amazon 仅 1 条（玻璃壶 B08ZKTJ8NN）。
 - 2026-11-13：茶文化 #3《The Two-Finger Knock》发布（`tea/two-finger-knock/`，约 1,250 词）。写叩手礼：三种指法的等级编码、乾隆微服倒茶传说及其无清代文献依据、《礼记·曲礼上》的引文、以及实操六条。封面为广式茶楼桌面实拍（青花茶壶+黄绳+白瓷杯，搜狐 itc.cn，vision 全分辨率核验：无文字无水印无正脸，实拍）；缩略图同源 2:1 顶部对齐裁切。

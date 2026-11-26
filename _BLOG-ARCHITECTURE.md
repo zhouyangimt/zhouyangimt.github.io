@@ -348,8 +348,8 @@
 | 2 | Longjing: One Leaf, One Spring | ✅ 已发布 |
 | 3 | Tieguanyin: The Iron Goddess in Your Cup | ✅ 已发布 |
 | 4 | Ripe Pu'er: Old Libraries, Rain-Wet Earth | ✅ 已发布 |
-| 5 | Gaiwan Brewing Guide | ⬜ 待写 |
-| 6 | 1 篇文化文（工夫茶仪式 / 茶马古道 / 茶与禅——三选一） | ⬜ 待写 |
+| 5 | Gaiwan Brewing Guide | ✅ 2026-07-15 · [Gaiwan: Three Fingers, One Lid](/tea/gaiwan-three-fingers-one-lid/) |
+| 6 | 1 篇文化文（工夫茶仪式 / 茶马古道 / 茶与禅——三选一） | ✅ 2026-07-15 · [Tea Horse Road](/tea/tea-horse-road/) |
 
 ### Phase 2：扩展（目标 ~25 篇）
 
@@ -460,7 +460,7 @@
 | # | 内容 | 状态 |
 |---|------|------|
 | 6 | **Fenjiu: The Clean One** — 清香型纵深，兑现 Moutai 篇结尾「Next: Fenjiu」的预告。汾酒 1500 年 / 曹操「何以解忧」/ 1915 巴拿马 / 地缸发酵与泥窖的根本差别 | ✅ 2026-11-07（`/baijiu/fenjiu-the-clean-one/`） |
-| 7 | **The Pork-Fat Baijiu** — 豉香型玉冰烧：用肥猪肉浸泡陈化的酒。工艺为什么成立、珠三角怎么喝、外国人第一口的反应 | ⬜ |
+| 7 | **The Pork-Fat Baijiu** — 豉香型玉冰烧：用肥猪肉浸泡陈化的酒。工艺为什么成立、珠三角怎么喝、外国人第一口的反应 | ✅ 2026-10-17（`/baijiu/jade-ice-burn/`） |
 | 8 | **The Rules of the Table** — 酒桌礼仪与身体：谁先敬谁、干杯为什么必须空杯、52 度是怎么定下来的、三钱小杯的由来、怎么不被灌倒 | ✅ 2026-10-31（`/drinks/the-rules-of-the-table/`） |
 | 9 | **Old Bottles** — 年份酒与老酒市场：怎么看真假、值不值得存、拍卖行里的白酒、家里那瓶放了十年的还能不能喝 | ✅ 2026-11-01（`/baijiu/old-bottles/`） |
 | 10 | **After You Buy It** — 承接 #5 买酒指南：开瓶后能放多久、怎么存、要不要醒、剩下的半瓶怎么办、剩菜怎么配 | ✅ 2026-10-25（`/baijiu/after-you-buy-it/`） |

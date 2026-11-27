@@ -1,6 +1,6 @@
 # Amazon Associates Link Ledger
 
-> Last updated: 2026-11-25
+> Last updated: 2026-11-27
 > Total unique ASINs: 88
 > Store ID: zhouyang01-20
 
@@ -42,12 +42,12 @@
 | 34 | `B0CKY7KSCV` | Variable Temp Kettle (Elite Gourmet) | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
 | 35 | `B0CQRTGM73` | Gaiwan Set ⚠️ removed from site 2026-09, ledger row kept for history | t/dahongpao, t/shuixian | 2026-07-30 | `zhouyang01-20` |
 | 36 | `B00CEC77EM` | Da Hong Pao Oolong ⚠️ 404 — listing dead since 2026-08-17, link still live in article, needs replacement or removal | t/dahongpao-wuyi-rock-tea | 2026-07-30 | `zhouyang01-20` |
-| 37 | `B07FTJTBB1` | Gaiwan | t/gaiwan-three-fingers-one-lid, t/jin-jun-mei-golden-eyebrow, t/ripe-puer-old-libraries-rain-wet-earth, t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
+| 37 | `B07FTJTBB1` | Gaiwan | t/five-cups-to-start-with, t/gaiwan-three-fingers-one-lid, t/jin-jun-mei-golden-eyebrow, t/ripe-puer-old-libraries-rain-wet-earth, t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 38 | `B0BDZ4GKM8` | Tea Tray | t/gaiwan-three-fingers-one-lid, t/six-teas-one-shelf, t/tea-chan-one-cup, t/tea-horse-road | 2026-07-15 | `zhouyang01-20` |
 | 39 | `B08ZKTJ8NN` | Glass Teapot | t/anji-baicha-albino-green, t/huangshan-maofeng-misty-mountain, t/jin-jun-mei-golden-eyebrow, t/lid-left-open, t/luan-guapian-bare-leaf, t/taiping-houkui-monkey-chief | 2026-07-28 | `zhouyang01-20` |
 | 40 | `B08594J16T` | Huangshan Maofeng Tea | t/huangshan-maofeng-misty-mountain, t/luan-guapian-bare-leaf | 2026-07-28 | `zhouyang01-20` |
 | 41 | `B0DGPL1GNS` | Tea Pet | t/huangshan-maofeng-misty-mountain | 2026-07-28 | `zhouyang01-20` |
-| 42 | `B0FJQZNNZP` | Tea Sampler Set | t/baihao-yinzhen-silver-needle, t/six-types-chinese-tea-guide, t/tea-scoop | 2026-07-20 | `zhouyang01-20` |
+| 42 | `B0FJQZNNZP` | Tea Sampler Set | t/baihao-yinzhen-silver-needle, t/five-cups-to-start-with, t/six-types-chinese-tea-guide, t/tea-scoop | 2026-07-20 | `zhouyang01-20` |
 | 43 | `B0D9N5MQPZ` | Tieguanyin Oolong ✅ short link amzn.to/3T7FEZP normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 44 | `B0DN5QWCFY` | Tieguanyin Anxi ✅ short link amzn.to/44er0T4 normalised to /dp/ in HTML 2026-09-28 | t/tieguanyin-iron-goddess-orchid | 2026-07-15 | `zhouyang01-20` |
 | 45 | `B09TNR5X93` | Ripe Puerh ✅ short link amzn.to/4vY0MAv normalised to /dp/ in HTML 2026-09-28 | t/ripe-puer-old-libraries-rain-wet-earth, t/tea-horse-road | 2026-07-22 | `zhouyang01-20` |
@@ -118,7 +118,7 @@ Amazon requires 3 qualifying sales within 180 days of first referral.
 |-----------|------|-----------|
 | First ASINs registered | 2026-07-15 | Day 0 |
 | 180-day deadline | **2027-01-11** | — |
-| Today (2026-11-25) | Day 133 | 47 days remaining |
+| Today (2026-11-27) | Day 135 | 45 days remaining |
 
 ## Notes
 
